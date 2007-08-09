@@ -1,0 +1,55 @@
+/*------------------------------------------------------------------------------
+
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2004
+  License:   BSD License, see ../docs/license.html
+
+  ------------------------------------------------------------------------------*/
+#include "persistent_int.hpp"
+
+////////////////////////////////////////////////////////////////////////////////
+// format: data msB first, packed into bytes with lowest index at the byte's lsb
+
+// Note: the interface does not provide access to the internal storage and yet
+// to be efficient the std::bitset must be packed as bytes. Thus I have to do it the
+// hard way.
+
+template<size_t N>
+void stlplus::dump_bitset(stlplus::dump_context& context, const std::bitset<N>& data)
+  throw(stlplus::persistent_dump_failed)
+{
+  size_t bits = data.size();
+  size_t bytes = (bits+7)/8;
+  for (size_t B = bytes; B--; )
+  {
+    unsigned char ch = 0;
+    for (size_t b = 0; b < 8; b++)
+    {
+      size_t bit = B*8+b;
+      if (bit < bits && data[bit])
+        ch |= (0x01 << b);
+    }
+    stlplus::dump_unsigned_char(context,ch);
+  }
+}
+
+template<size_t N>
+void stlplus::restore_bitset(stlplus::restore_context& context, std::bitset<N>& data)
+  throw(stlplus::persistent_restore_failed)
+{
+  size_t bits = data.size();
+  size_t bytes = (bits+7)/8;
+  for (size_t B = bytes; B--; )
+  {
+    unsigned char ch = 0;
+    stlplus::restore_unsigned_char(context,ch);
+    for (size_t b = 0; b < 8; b++)
+    {
+      size_t bit = B*8+b;
+      if (bit >= bits) break;
+      data.set(bit, ch & (0x01 << b) ? true : false);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
