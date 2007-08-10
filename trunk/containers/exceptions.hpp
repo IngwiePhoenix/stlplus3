@@ -11,6 +11,7 @@
   ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"
 #include <stdexcept>
+#include <string>
 
 namespace stlplus
 {

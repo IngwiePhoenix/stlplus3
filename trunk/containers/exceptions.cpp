@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 stlplus::null_dereference::null_dereference(const std::string& description) throw() :
-  std::logic_error("null dereference: " + description)
+std::logic_error(std::string("null dereference: ") + description)
 {
 }
 
