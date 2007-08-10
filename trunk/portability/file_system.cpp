@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <algorithm>
+#include <ctype.h>
 
 #ifdef MSWINDOWS
 #include <windows.h>
@@ -61,6 +62,18 @@ static bool is_separator (char ch)
 
 ////////////////////////////////////////////////////////////////////////////////
 // implement string comparison of paths - Unix is case-sensitive, Windoze is case-insensitive
+
+#ifdef MSWINDOWS
+
+static std::string lowercase(const std::string& val)
+{
+  std::string text = val;
+  for (unsigned i = 0; i < text.size(); i++)
+    text[i] = tolower(text[i]);
+  return text;
+}
+
+#endif
 
 bool stlplus::path_compare(const std::string& l, const std::string& r)
 {
@@ -497,17 +510,17 @@ const int stlplus::read_mode = 0444;
 const int stlplus::write_mode = 0222;
 const int stlplus::execute_mode = 0111;
 const int stlplus::none_mode = 0000;
-const int stlplus::read_write_mode = read_mode | write_mode;
-const int stlplus::all_mode = read_mode | write_mode | execute_mode;
+const int stlplus::read_write_mode = stlplus::read_mode | stlplus::write_mode;
+const int stlplus::all_mode = stlplus::read_mode | stlplus::write_mode | stlplus::execute_mode;
 const int stlplus::owner_mask = 0700;
 const int stlplus::group_mask = 0070;
 const int stlplus::other_mask = 0007;
-const int stlplus::non_owner_mask = group_mask | other_mask;
-const int stlplus::all_mask = owner_mask | group_mask | other_mask;
-const int stlplus::read_mode_all = read_mode & all_mask;
-const int stlplus::read_write_mode_owner_read_mode_all = (read_write_mode & owner_mask) | (read_mode & non_owner_mask);
-const int stlplus::read_mode_owner_only = read_mode & owner_mask;
-const int stlplus::read_write_mode_owner_only = read_write_mode & owner_mask;
+const int stlplus::non_owner_mask = stlplus::group_mask | stlplus::other_mask;
+const int stlplus::all_mask = stlplus::owner_mask | stlplus::group_mask | stlplus::other_mask;
+const int stlplus::read_mode_all = stlplus::read_mode & stlplus::all_mask;
+const int stlplus::read_write_mode_owner_read_mode_all = (stlplus::read_write_mode & stlplus::owner_mask) | (stlplus::read_mode & stlplus::non_owner_mask);
+const int stlplus::read_mode_owner_only = stlplus::read_mode & stlplus::owner_mask;
+const int stlplus::read_write_mode_owner_only = stlplus::read_write_mode & stlplus::owner_mask;
 
 bool stlplus::file_set_mode (const std::string& filespec, int mode)
 {

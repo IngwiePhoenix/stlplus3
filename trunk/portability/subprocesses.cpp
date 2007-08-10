@@ -33,6 +33,14 @@ static std::string to_string(int number)
   return result;
 }
 
+static std::string lowercase(const std::string& val)
+{
+  std::string text = val;
+  for (unsigned i = 0; i < text.size(); i++)
+    text[i] = tolower(text[i]);
+  return text;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // argument-vector related stuff
 

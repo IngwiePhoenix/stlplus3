@@ -117,7 +117,7 @@ std::vector<std::string> stlplus::message_position::show(void) const
     {
       if (!source.good())
         return result;
-      getline(source,current_line);
+      std::getline(source,current_line);
     }
     result.push_back(current_line);
     // now put an up-arrow at the appropriate column
@@ -432,7 +432,7 @@ public:
       unsigned l = 0;
       while(input.good())
       {
-        getline(input,line);
+        std::getline(input,line);
         l++;
         if (line.size() > 0 && isalpha(line[0]))
         {

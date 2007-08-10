@@ -531,9 +531,9 @@ bool stlplus::lm_dependencies::write(std::ostream& context) const
     context << std::endl;
   }
   context << m_units.size() << std::endl;
-  for (unsigned i = 0; i < m_units.size(); i++)
+  for (unsigned j = 0; j < m_units.size(); j++)
   {
-    m_units[i].write(context);
+    m_units[j].write(context);
     context << std::endl;
   }
   return !context.fail();
@@ -558,7 +558,7 @@ bool stlplus::lm_dependencies::read(std::istream& context)
   }
   unsigned units_size = 0;
   context >> units_size;
-  for (unsigned i = 0; i < units_size; i++)
+  for (unsigned j = 0; j < units_size; j++)
   {
     m_units.push_back(lm_unit_dependency());
     m_units.back().read(context);
@@ -572,8 +572,8 @@ bool stlplus::lm_dependencies::print(std::ostream& str) const
     str << "  source file: " << *m_source << std::endl;
   for (unsigned i = 0; i < m_files.size(); i++)
     str << "  " << m_files[i] << std::endl;
-  for (unsigned i = 0; i < m_units.size(); i++)
-    str << "  " << m_units[i] << std::endl;
+  for (unsigned j = 0; j < m_units.size(); j++)
+    str << "  " << m_units[j] << std::endl;
   return !str.fail();
 }
 
@@ -924,7 +924,7 @@ bool stlplus::lm_unit::read_header(void)
     std::ifstream input(header_filename().c_str());
     m_dependencies.read(input);
     input.get();
-    getline(input, m_supplement);
+    std::getline(input, m_supplement);
   }
   m_header_modified = false;
   return true;
@@ -1611,11 +1611,11 @@ bool stlplus::library_manager::load_mappings(const std::string& mapping_file)
   // mappings are saved as paths relative to the mapping file and converted to full paths on load
   bool result = true;
   unsigned line = 1;
-  for (std::string path = ""; getline(input,path); line++)
+  for (std::string path = ""; std::getline(input,path); line++)
   {
     if (path.empty()) continue;
     std::string full_path = folder_to_path(folder_part(m_mapping_file), path);
-    if (!stlplus::library_manager::is_library(full_path))
+    if (!is_library(full_path))
     {
       result = false;
     }
@@ -1670,7 +1670,7 @@ bool stlplus::library_manager::set_ini_manager(ini_manager* ini_files, const std
         // then combine this with the library path from that ini file to the library to get a full path to the library
         // whew!
         std::string full_path = folder_to_path(folder_part(filename),value);
-        if (!stlplus::library_manager::is_library(full_path))
+        if (!is_library(full_path))
           result = false;
         else
         {
