@@ -8,6 +8,7 @@
 #include "persistent_contexts.hpp"
 #include "persistent.hpp"
 #include <map>
+#include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
 // File format version
