@@ -12,6 +12,18 @@
   ------------------------------------------------------------------------------*/
 
 ////////////////////////////////////////////////////////////////////////////////
+// Unnecessary compiler warnings
+////////////////////////////////////////////////////////////////////////////////
+
+#if defined(_MSC_VER)
+// Microsoft Visual Studio
+// shut up the following irritating warnings
+//   4786 - VC6, identifier string exceeded maximum allowable length and was truncated (only affects debugger)
+//   4503 - VC6, decorated name was longer than the maximum the compiler allows (only affects debugger)
+#pragma warning(disable: 4786 4503)
+#endif
+
+////////////////////////////////////////////////////////////////////////////////
 // Problems with the typename keyword
 ////////////////////////////////////////////////////////////////////////////////
 
