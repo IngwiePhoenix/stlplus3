@@ -6,12 +6,12 @@
 
 ------------------------------------------------------------------------------*/
 
+namespace stlplus
+{
+
 ////////////////////////////////////////////////////////////////////////////////
 // internal holder data structure
 ////////////////////////////////////////////////////////////////////////////////
-
-namespace stlplus
-{
 
 template<typename T>
 class smart_ptr_holder
@@ -97,8 +97,6 @@ public:
     }
 };
 
-} // end namespace stlplus
-
 ////////////////////////////////////////////////////////////////////////////////
 // smart_ptr_base class
 ////////////////////////////////////////////////////////////////////////////////
@@ -108,32 +106,32 @@ public:
 
 // create a null pointer
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::smart_ptr_base(void) :
-  m_holder(new stlplus::smart_ptr_holder<T>)
+smart_ptr_base<T,C>::smart_ptr_base(void) :
+  m_holder(new smart_ptr_holder<T>)
 {
 }
 
 // create a pointer containing a *copy* of the object pointer
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::smart_ptr_base(const T& data) throw(stlplus::illegal_copy) :
-  m_holder(new stlplus::smart_ptr_holder<T>)
+smart_ptr_base<T,C>::smart_ptr_base(const T& data) throw(illegal_copy) :
+  m_holder(new smart_ptr_holder<T>)
 {
   m_holder->set(C()(data));
 }
 
 // create a pointer containing a dynamically created object
 // Note: the object must be allocated *by the user* with new
-// constructor form - must be called in the form stlplus::smart_ptr<type> x(new type(args))
+// constructor form - must be called in the form smart_ptr<type> x(new type(args))
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::smart_ptr_base(T* data) :
-  m_holder(new stlplus::smart_ptr_holder<T>)
+smart_ptr_base<T,C>::smart_ptr_base(T* data) :
+  m_holder(new smart_ptr_holder<T>)
 {
   m_holder->set(data);
 }
 
 // copy constructor implements counted referencing - no copy is made
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::smart_ptr_base(const stlplus::smart_ptr_base<T,C>& r) :
+smart_ptr_base<T,C>::smart_ptr_base(const smart_ptr_base<T,C>& r) :
   m_holder(0)
 {
   m_holder = r.m_holder;
@@ -142,7 +140,7 @@ stlplus::smart_ptr_base<T,C>::smart_ptr_base(const stlplus::smart_ptr_base<T,C>&
 
 // destructor decrements the reference count and delete only when the last reference is destroyed
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::~smart_ptr_base(void)
+smart_ptr_base<T,C>::~smart_ptr_base(void)
 {
   if(m_holder->decrement())
     delete m_holder;
@@ -152,25 +150,25 @@ stlplus::smart_ptr_base<T,C>::~smart_ptr_base(void)
 // logical tests to see if there is anything contained in the pointer since it can be null
 
 template <typename T, typename C>
-bool stlplus::smart_ptr_base<T,C>::null(void) const
+bool smart_ptr_base<T,C>::null(void) const
 {
   return m_holder->null();
 }
 
 template <typename T, typename C>
-bool stlplus::smart_ptr_base<T,C>::present(void) const
+bool smart_ptr_base<T,C>::present(void) const
 {
   return !m_holder->null();
 }
 
 template <typename T, typename C>
-bool stlplus::smart_ptr_base<T,C>::operator!(void) const
+bool smart_ptr_base<T,C>::operator!(void) const
 {
   return m_holder->null();
 }
 
 template <typename T, typename C>
-stlplus::smart_ptr_base<T,C>::operator bool(void) const
+smart_ptr_base<T,C>::operator bool(void) const
 {
   return !m_holder->null();
 }
@@ -179,30 +177,30 @@ stlplus::smart_ptr_base<T,C>::operator bool(void) const
 // dereference operators and functions
 
 template <typename T, typename C>
-T& stlplus::smart_ptr_base<T,C>::operator*(void) throw(stlplus::null_dereference)
+T& smart_ptr_base<T,C>::operator*(void) throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::operator*");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::operator*");
   return m_holder->value();
 }
 
 template <typename T, typename C>
-const T& stlplus::smart_ptr_base<T,C>::operator*(void) const throw(stlplus::null_dereference)
+const T& smart_ptr_base<T,C>::operator*(void) const throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::operator*");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::operator*");
   return m_holder->value();
 }
 
 template <typename T, typename C>
-T* stlplus::smart_ptr_base<T,C>::operator->(void) throw(stlplus::null_dereference)
+T* smart_ptr_base<T,C>::operator->(void) throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::operator->");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::operator->");
   return m_holder->pointer();
 }
 
 template <typename T, typename C>
-const T* stlplus::smart_ptr_base<T,C>::operator->(void) const throw(stlplus::null_dereference)
+const T* smart_ptr_base<T,C>::operator->(void) const throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::operator->");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::operator->");
   return m_holder->pointer();
 }
 
@@ -210,39 +208,39 @@ const T* stlplus::smart_ptr_base<T,C>::operator->(void) const throw(stlplus::nul
 // explicit function forms of the above assignment dereference operators
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::set_value(const T& data) throw(stlplus::illegal_copy)
+void smart_ptr_base<T,C>::set_value(const T& data) throw(illegal_copy)
 {
   m_holder->set(C()(data));
 }
 
 template <typename T, typename C>
-T& stlplus::smart_ptr_base<T,C>::value(void) throw(stlplus::null_dereference)
+T& smart_ptr_base<T,C>::value(void) throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::value");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::value");
   return m_holder->value();
 }
 
 template <typename T, typename C>
-const T& stlplus::smart_ptr_base<T,C>::value(void) const throw(stlplus::null_dereference)
+const T& smart_ptr_base<T,C>::value(void) const throw(null_dereference)
 {
-  if (m_holder->null()) throw stlplus::null_dereference("null pointer dereferenced in smart_ptr::value");
+  if (m_holder->null()) throw null_dereference("null pointer dereferenced in smart_ptr::value");
   return m_holder->value();
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::set(T* data)
+void smart_ptr_base<T,C>::set(T* data)
 {
   m_holder->set(data);
 }
 
 template <typename T, typename C>
-T* stlplus::smart_ptr_base<T,C>::pointer(void)
+T* smart_ptr_base<T,C>::pointer(void)
 {
   return m_holder->pointer();
 }
 
 template <typename T, typename C>
-const T* stlplus::smart_ptr_base<T,C>::pointer(void) const
+const T* smart_ptr_base<T,C>::pointer(void) const
 {
   return m_holder->pointer();
 }
@@ -252,7 +250,7 @@ const T* stlplus::smart_ptr_base<T,C>::pointer(void) const
 
 // make this an alias of the passed object
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::alias(const stlplus::smart_ptr_base<T,C>& r)
+void smart_ptr_base<T,C>::alias(const smart_ptr_base<T,C>& r)
 {
   // make it alias-copy safe - this means that I don't try to do the
   // assignment if r is either the same object or an alias of it
@@ -265,25 +263,25 @@ void stlplus::smart_ptr_base<T,C>::alias(const stlplus::smart_ptr_base<T,C>& r)
 }
 
 template <typename T, typename C>
-bool stlplus::smart_ptr_base<T,C>::aliases(const stlplus::smart_ptr_base<T,C>& r) const
+bool smart_ptr_base<T,C>::aliases(const smart_ptr_base<T,C>& r) const
 {
   return m_holder == r.m_holder;
 }
 
 template <typename T, typename C>
-unsigned stlplus::smart_ptr_base<T,C>::alias_count(void) const
+unsigned smart_ptr_base<T,C>::alias_count(void) const
 {
   return m_holder->count();
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::clear(void)
+void smart_ptr_base<T,C>::clear(void)
 {
   m_holder->clear();
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::clear_unique(void)
+void smart_ptr_base<T,C>::clear_unique(void)
 {
   if (m_holder->count() == 1)
     m_holder->clear();
@@ -291,26 +289,26 @@ void stlplus::smart_ptr_base<T,C>::clear_unique(void)
   {
     m_holder->decrement();
     m_holder = 0;
-    m_holder = new stlplus::smart_ptr_holder<T>;
+    m_holder = new smart_ptr_holder<T>;
   }
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::make_unique(void) throw(stlplus::illegal_copy)
+void smart_ptr_base<T,C>::make_unique(void) throw(illegal_copy)
 {
   if (m_holder->count() > 1)
   {
-    stlplus::smart_ptr_holder<T>* old_holder = m_holder;
+    smart_ptr_holder<T>* old_holder = m_holder;
     m_holder->decrement();
     m_holder = 0;
-    m_holder = new stlplus::smart_ptr_holder<T>;
+    m_holder = new smart_ptr_holder<T>;
     if (old_holder->pointer())
       m_holder->set(C()(old_holder->value()));
   }
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::copy(const stlplus::smart_ptr_base<T,C>& data) throw(stlplus::illegal_copy)
+void smart_ptr_base<T,C>::copy(const smart_ptr_base<T,C>& data) throw(illegal_copy)
 {
   alias(data);
   make_unique();
@@ -320,13 +318,13 @@ void stlplus::smart_ptr_base<T,C>::copy(const stlplus::smart_ptr_base<T,C>& data
 // used for example in persistence routines
 
 template <typename T, typename C>
-void* stlplus::smart_ptr_base<T,C>::handle(void) const
+void* smart_ptr_base<T,C>::handle(void) const
 {
   return m_holder;
 }
 
 template <typename T, typename C>
-void stlplus::smart_ptr_base<T,C>::make_alias(void* handle)
+void smart_ptr_base<T,C>::make_alias(void* handle)
 {
   smart_ptr_holder<T>* r_holder = (smart_ptr_holder<T>*)handle;
   if (m_holder == r_holder) return;
@@ -337,3 +335,6 @@ void stlplus::smart_ptr_base<T,C>::make_alias(void* handle)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus
+

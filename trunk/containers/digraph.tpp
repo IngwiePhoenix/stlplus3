@@ -84,8 +84,6 @@ public:
     data(d), m_prev(0), m_next(0), m_from(f), m_to(t) {}
 };
 
-} // end namespace stlplus
-
 ////////////////////////////////////////////////////////////////////////////////
 // Iterators
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,102 +92,102 @@ public:
 // Node iterator
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_iterator<NT,AT,NRef,NPtr>::check_owner(const digraph<NT,AT>* owner) const
-  throw(stlplus::wrong_object)
+void digraph_iterator<NT,AT,NRef,NPtr>::check_owner(const digraph<NT,AT>* owner) const
+  throw(wrong_object)
 {
   if (owner != m_owner)
-    throw stlplus::wrong_object("digraph node iterator");
+    throw wrong_object("digraph node iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_iterator<NT,AT,NRef,NPtr>::check_non_null(void) const
-  throw(stlplus::null_dereference)
+void digraph_iterator<NT,AT,NRef,NPtr>::check_non_null(void) const
+  throw(null_dereference)
 {
   if (null())
-    throw stlplus::null_dereference("digraph node iterator");
+    throw null_dereference("digraph node iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_iterator<NT,AT,NRef,NPtr>::check_non_end(void) const
-  throw(stlplus::end_dereference)
+void digraph_iterator<NT,AT,NRef,NPtr>::check_non_end(void) const
+  throw(end_dereference)
 {
   if (end())
-    throw stlplus::end_dereference("digraph node iterator");
+    throw end_dereference("digraph node iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_iterator<NT,AT,NRef,NPtr>::check_valid(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+void digraph_iterator<NT,AT,NRef,NPtr>::check_valid(void) const
+  throw(null_dereference,end_dereference)
 {
   check_non_null();
   check_non_end();
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_iterator<NT,AT,NRef,NPtr>::check(const digraph<NT,AT>* owner) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph_iterator<NT,AT,NRef,NPtr>::check(const digraph<NT,AT>* owner) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   check_valid();
   if (owner) check_owner(owner);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-stlplus::digraph_iterator<NT,AT,NRef,NPtr>::digraph_iterator(void) :
+digraph_iterator<NT,AT,NRef,NPtr>::digraph_iterator(void) :
   m_owner(0), m_node(0)
 {
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-stlplus::digraph_iterator<NT,AT,NRef,NPtr>::~digraph_iterator(void)
+digraph_iterator<NT,AT,NRef,NPtr>::~digraph_iterator(void)
 {
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-stlplus::digraph_iterator<NT,AT,NRef,NPtr>::digraph_iterator(const digraph<NT,AT>* owner, digraph_node<NT,AT>* node) : 
+digraph_iterator<NT,AT,NRef,NPtr>::digraph_iterator(const digraph<NT,AT>* owner, digraph_node<NT,AT>* node) : 
   m_owner(owner), m_node(node)
 {
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::null (void) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::null (void) const
 {
   return m_node == 0;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::end (void) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::end (void) const
 {
   if (m_node == 0) return false;
   return m_node == m_owner->m_nodes;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::valid (void) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::valid (void) const
 {
   return !null() && !end();
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-const stlplus::digraph<NT,AT>* stlplus::digraph_iterator<NT,AT,NRef,NPtr>::owner(void) const
+const digraph<NT,AT>* digraph_iterator<NT,AT,NRef,NPtr>::owner(void) const
 {
   return m_owner;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::const_iterator stlplus::digraph_iterator<NT,AT,NRef,NPtr>::constify (void) const
+typename digraph_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_iterator<NT,AT,NRef,NPtr>::constify (void) const
 {
-  return TYPENAME stlplus::digraph_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner,m_node);
+  return TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner,m_node);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::iterator stlplus::digraph_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
+typename digraph_iterator<NT,AT,NRef,NPtr>::iterator digraph_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
 {
-  return TYPENAME stlplus::digraph_iterator<NT,AT,NRef,NPtr>::iterator(m_owner,m_node);
+  return TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::iterator(m_owner,m_node);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (void)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (void)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   m_node = m_node->m_next;
@@ -197,18 +195,18 @@ typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& stlplus::dig
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (int)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (int)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
-  stlplus::digraph_iterator<NT,AT,NRef,NPtr> old = *this;
+  digraph_iterator<NT,AT,NRef,NPtr> old = *this;
   m_node = m_node->m_next;
   return old;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator -- (void)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator -- (void)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   m_node = m_node->m_prev;
@@ -216,44 +214,44 @@ typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& stlplus::dig
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator -- (int)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator -- (int)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
-  stlplus::digraph_iterator<NT,AT,NRef,NPtr> old = *this;
+  digraph_iterator<NT,AT,NRef,NPtr> old = *this;
   m_node = m_node->m_prev;
   return old;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator == (const TYPENAME stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::operator == (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
 {
   return m_node == r.m_node;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator != (const TYPENAME stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::operator != (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
 {
   return m_node != r.m_node;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator < (const TYPENAME stlplus::digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
+bool digraph_iterator<NT,AT,NRef,NPtr>::operator < (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
 {
   return m_node < r.m_node;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::reference stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator*(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::reference digraph_iterator<NT,AT,NRef,NPtr>::operator*(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return m_node->data;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::pointer stlplus::digraph_iterator<NT,AT,NRef,NPtr>::operator->(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_iterator<NT,AT,NRef,NPtr>::pointer digraph_iterator<NT,AT,NRef,NPtr>::operator->(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return &(m_node->data);
@@ -262,13 +260,13 @@ typename stlplus::digraph_iterator<NT,AT,NRef,NPtr>::pointer stlplus::digraph_it
 // back-door access function used by other utilities
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-const stlplus::digraph<NT,AT>* stlplus::digraph_iterator<NT,AT,NRef,NPtr>::get_owner(void) const
+const digraph<NT,AT>* digraph_iterator<NT,AT,NRef,NPtr>::get_owner(void) const
 {
   return m_owner;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-stlplus::digraph_node<NT,AT>* stlplus::digraph_iterator<NT,AT,NRef,NPtr>::get_node(void) const
+digraph_node<NT,AT>* digraph_iterator<NT,AT,NRef,NPtr>::get_node(void) const
 {
   return m_node;
 }
@@ -277,102 +275,102 @@ stlplus::digraph_node<NT,AT>* stlplus::digraph_iterator<NT,AT,NRef,NPtr>::get_no
 // Arc Iterator
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::check_owner(const stlplus::digraph<NT,AT>* owner) const
-  throw(stlplus::wrong_object)
+void digraph_arc_iterator<NT,AT,NRef,NPtr>::check_owner(const digraph<NT,AT>* owner) const
+  throw(wrong_object)
 {
   if (owner != m_owner)
-    throw stlplus::wrong_object("digraph arc iterator");
+    throw wrong_object("digraph arc iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::check_non_null(void) const
-  throw(stlplus::null_dereference)
+void digraph_arc_iterator<NT,AT,NRef,NPtr>::check_non_null(void) const
+  throw(null_dereference)
 {
   if (null())
-    throw stlplus::null_dereference("digraph arc iterator");
+    throw null_dereference("digraph arc iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::check_non_end(void) const
-  throw(stlplus::end_dereference)
+void digraph_arc_iterator<NT,AT,NRef,NPtr>::check_non_end(void) const
+  throw(end_dereference)
 {
   if (end())
-    throw stlplus::end_dereference("digraph arc iterator");
+    throw end_dereference("digraph arc iterator");
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::check_valid(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+void digraph_arc_iterator<NT,AT,NRef,NPtr>::check_valid(void) const
+  throw(null_dereference,end_dereference)
 {
   check_non_null();
   check_non_end();
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::check(const stlplus::digraph<NT,AT>* owner) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph_arc_iterator<NT,AT,NRef,NPtr>::check(const digraph<NT,AT>* owner) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   check_valid();
   if (owner) check_owner(owner);
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::digraph_arc_iterator(void) :
+digraph_arc_iterator<NT,AT,ARef,APtr>::digraph_arc_iterator(void) :
   m_owner(0),m_arc(0)
 {
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::~digraph_arc_iterator(void)
+digraph_arc_iterator<NT,AT,ARef,APtr>::~digraph_arc_iterator(void)
 {
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::digraph_arc_iterator(const stlplus::digraph<NT,AT>* owner, stlplus::digraph_arc<NT,AT>* arc) :
+digraph_arc_iterator<NT,AT,ARef,APtr>::digraph_arc_iterator(const digraph<NT,AT>* owner, digraph_arc<NT,AT>* arc) :
   m_owner(owner), m_arc(arc)
 {
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::null (void) const
+bool digraph_arc_iterator<NT,AT,NRef,NPtr>::null (void) const
 {
   return m_arc == 0;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::end (void) const
+bool digraph_arc_iterator<NT,AT,NRef,NPtr>::end (void) const
 {
   if (m_arc == 0) return false;
   return m_arc == m_owner->m_arcs;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-bool stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::valid (void) const
+bool digraph_arc_iterator<NT,AT,NRef,NPtr>::valid (void) const
 {
   return !null() && !end();
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-const stlplus::digraph<NT,AT>* stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::owner(void) const
+const digraph<NT,AT>* digraph_arc_iterator<NT,AT,NRef,NPtr>::owner(void) const
 {
   return m_owner;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::constify (void) const
+typename digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::constify (void) const
 {
-  return TYPENAME stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner, m_arc);
+  return TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner, m_arc);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
+typename digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
 {
-  return TYPENAME stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator(m_owner, m_arc);
+  return TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator(m_owner, m_arc);
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (void)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (void)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   m_arc = m_arc->m_next;
@@ -380,18 +378,18 @@ typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& stlplus:
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (int)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (int)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
-  stlplus::digraph_arc_iterator<NT,AT,ARef,APtr> old = *this;
+  digraph_arc_iterator<NT,AT,ARef,APtr> old = *this;
   m_arc = m_arc->m_next;
   return old;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (void)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (void)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   m_arc = m_arc->m_prev;
@@ -399,44 +397,44 @@ typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& stlplus:
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (int)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (int)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
-  stlplus::digraph_arc_iterator<NT,AT,ARef,APtr> old = *this;
+  digraph_arc_iterator<NT,AT,ARef,APtr> old = *this;
   m_arc = m_arc->m_prev;
   return old;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-bool stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator == (const TYPENAME stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
+bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator == (const TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
 {
   return m_arc == r.m_arc;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-bool stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator != (const TYPENAME stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
+bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator != (const TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
 {
   return m_arc != r.m_arc;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-bool stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator < (const TYPENAME stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
+bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator < (const TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
 {
   return m_arc < r.m_arc;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::reference stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator*(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::reference digraph_arc_iterator<NT,AT,ARef,APtr>::operator*(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return m_arc->data;
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::pointer stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::operator->(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename digraph_arc_iterator<NT,AT,ARef,APtr>::pointer digraph_arc_iterator<NT,AT,ARef,APtr>::operator->(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return &(m_arc->data);
@@ -445,13 +443,13 @@ typename stlplus::digraph_arc_iterator<NT,AT,ARef,APtr>::pointer stlplus::digrap
 // back-door access function used by other utilities
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-const stlplus::digraph<NT,AT>* stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::get_owner(void) const
+const digraph<NT,AT>* digraph_arc_iterator<NT,AT,NRef,NPtr>::get_owner(void) const
 {
   return m_owner;
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-stlplus::digraph_arc<NT,AT>* stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::get_arc(void) const
+digraph_arc<NT,AT>* digraph_arc_iterator<NT,AT,NRef,NPtr>::get_arc(void) const
 {
   return m_arc;
 }
@@ -460,10 +458,10 @@ stlplus::digraph_arc<NT,AT>* stlplus::digraph_arc_iterator<NT,AT,NRef,NPtr>::get
 // subtype utilities
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::constify_arcs(const TYPENAME stlplus::digraph<NT,AT>::arc_vector& arcs) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::constify_arcs(const TYPENAME digraph<NT,AT>::arc_vector& arcs) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_arc_vector result;
+  typename digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < arcs.size(); i++)
   {
     arcs[i].check(this);
@@ -473,10 +471,10 @@ typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::cons
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_vector stlplus::digraph<NT,AT>::deconstify_arcs(const TYPENAME stlplus::digraph<NT,AT>::const_arc_vector& arcs) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_vector digraph<NT,AT>::deconstify_arcs(const TYPENAME digraph<NT,AT>::const_arc_vector& arcs) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::arc_vector result;
+  typename digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < arcs.size(); i++)
   {
     arcs[i].check(this);
@@ -486,30 +484,30 @@ typename stlplus::digraph<NT,AT>::arc_vector stlplus::digraph<NT,AT>::deconstify
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_path_vector stlplus::digraph<NT,AT>::constify_paths(const TYPENAME stlplus::digraph<NT,AT>::path_vector& paths) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_path_vector digraph<NT,AT>::constify_paths(const TYPENAME digraph<NT,AT>::path_vector& paths) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_path_vector result;
+  typename digraph<NT,AT>::const_path_vector result;
   for (unsigned i = 0; i < paths.size(); i++)
     result.push_back(constify_arcs(paths[i]));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::path_vector stlplus::digraph<NT,AT>::deconstify_paths(const TYPENAME stlplus::digraph<NT,AT>::const_path_vector& paths) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::path_vector digraph<NT,AT>::deconstify_paths(const TYPENAME digraph<NT,AT>::const_path_vector& paths) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::path_vector result;
+  typename digraph<NT,AT>::path_vector result;
   for (unsigned i = 0; i < paths.size(); i++)
     result.push_back(deconstify_arcs(paths[i]));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::constify_nodes(const TYPENAME stlplus::digraph<NT,AT>::node_vector& nodes) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::constify_nodes(const TYPENAME digraph<NT,AT>::node_vector& nodes) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
+  typename digraph<NT,AT>::const_node_vector result;
   for (unsigned i = 0; i < nodes.size(); i++)
   {
     nodes[i].check(this);
@@ -519,10 +517,10 @@ typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::con
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::deconstify_nodes(const TYPENAME stlplus::digraph<NT,AT>::const_node_vector& nodes) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::node_vector digraph<NT,AT>::deconstify_nodes(const TYPENAME digraph<NT,AT>::const_node_vector& nodes) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::node_vector result;
+  typename digraph<NT,AT>::node_vector result;
   for (unsigned i = 0; i < nodes.size(); i++)
   {
     nodes[i].check(this);
@@ -532,7 +530,7 @@ typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::deconstif
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::npos(void)
+unsigned digraph<NT,AT>::npos(void)
 {
   return(unsigned)-1;
 }
@@ -541,21 +539,21 @@ unsigned stlplus::digraph<NT,AT>::npos(void)
 // Constructors etc.
 
 template<typename NT, typename AT>
-stlplus::digraph<NT,AT>::digraph(void)
+digraph<NT,AT>::digraph(void)
 {
   // the node and arc lists have a dummy node which acts as the end node
   // they are circular double-linked lists so that next and previous pointers are never null
   // initially they point to themselves to represent a empty lists
-  m_nodes = new stlplus::digraph_node<NT,AT>;
+  m_nodes = new digraph_node<NT,AT>;
   m_nodes->m_next = m_nodes;
   m_nodes->m_prev = m_nodes;
-  m_arcs = new stlplus::digraph_arc<NT,AT>;
+  m_arcs = new digraph_arc<NT,AT>;
   m_arcs->m_next = m_arcs;
   m_arcs->m_prev = m_arcs;
 }
 
 template<typename NT, typename AT>
-stlplus::digraph<NT,AT>::~digraph(void)
+digraph<NT,AT>::~digraph(void)
 {
   // delete all but the dummy nodes
   clear();
@@ -567,29 +565,29 @@ stlplus::digraph<NT,AT>::~digraph(void)
 }
    
 template<typename NT, typename AT>
-stlplus::digraph<NT,AT>::digraph(const stlplus::digraph<NT,AT>& r)
+digraph<NT,AT>::digraph(const digraph<NT,AT>& r)
 {
-  m_nodes = new stlplus::digraph_node<NT,AT>;
+  m_nodes = new digraph_node<NT,AT>;
   m_nodes->m_next = m_nodes;
   m_nodes->m_prev = m_nodes;
-  m_arcs = new stlplus::digraph_arc<NT,AT>;
+  m_arcs = new digraph_arc<NT,AT>;
   m_arcs->m_next = m_arcs;
   m_arcs->m_prev = m_arcs;
   *this = r;
 }
 
 template<typename NT, typename AT>
-stlplus::digraph<NT,AT>& stlplus::digraph<NT,AT>::operator=(const stlplus::digraph<NT,AT>& r)
+digraph<NT,AT>& digraph<NT,AT>::operator=(const digraph<NT,AT>& r)
 {
   // make it self-copy safe i.e. a=a; is a valid instruction
   if (this == &r) return *this;
   clear();
   // first phase is to copy the nodes, creating a map of cross references from the old nodes to their new equivalents
-  std::map<TYPENAME stlplus::digraph<NT,AT>::const_iterator, TYPENAME stlplus::digraph<NT,AT>::iterator> xref;
-  for (typename stlplus::digraph<NT,AT>::const_iterator n = r.begin(); n != r.end(); n++)
+  std::map<TYPENAME digraph<NT,AT>::const_iterator, TYPENAME digraph<NT,AT>::iterator> xref;
+  for (typename digraph<NT,AT>::const_iterator n = r.begin(); n != r.end(); n++)
     xref[n] = insert(*n);
   // second phase is to copy the arcs, using the map to convert the old to and from nodes to the new nodes
-  for (typename stlplus::digraph<NT,AT>::const_arc_iterator a = r.arc_begin(); a != r.arc_end(); a++)
+  for (typename digraph<NT,AT>::const_arc_iterator a = r.arc_begin(); a != r.arc_end(); a++)
     arc_insert(xref[r.arc_from(a)],xref[r.arc_to(a)],*a);
   return *this;
 }
@@ -598,35 +596,35 @@ stlplus::digraph<NT,AT>& stlplus::digraph<NT,AT>::operator=(const stlplus::digra
 // Basic Node functions
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::empty(void) const
+bool digraph<NT,AT>::empty(void) const
 {
   return m_nodes->m_next == m_nodes;
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::size(void) const
+unsigned digraph<NT,AT>::size(void) const
 {
   unsigned count = 0;
-  for (typename stlplus::digraph<NT,AT>::const_iterator i = begin(); i != end(); i++)
+  for (typename digraph<NT,AT>::const_iterator i = begin(); i != end(); i++)
     count++;
   return count;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::insert(const NT& node_data)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::insert(const NT& node_data)
 {
   // insert at the end of the list
-  stlplus::digraph_node<NT,AT>* new_node = new stlplus::digraph_node<NT,AT>(node_data);
+  digraph_node<NT,AT>* new_node = new digraph_node<NT,AT>(node_data);
   new_node->m_next = m_nodes;
   new_node->m_prev = m_nodes->m_prev;
   m_nodes->m_prev->m_next = new_node;
   m_nodes->m_prev = new_node;
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,new_node);
+  return TYPENAME digraph<NT,AT>::iterator(this,new_node);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::erase(TYPENAME stlplus::digraph<NT,AT>::iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::erase(TYPENAME digraph<NT,AT>::iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   // don't allow end to be erased because that is the dummy node that holds the list to the graph
@@ -641,160 +639,160 @@ typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::erase(TYPENA
   // now unlink the node from the list and delete it
   iter.m_node->m_next->m_prev = iter.m_node->m_prev;
   iter.m_node->m_prev->m_next = iter.m_node->m_next;
-  stlplus::digraph_node<NT,AT>* m_next = iter.m_node->m_next;
+  digraph_node<NT,AT>* m_next = iter.m_node->m_next;
   delete iter.m_node;
   // return the next node in the list
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,m_next);
+  return TYPENAME digraph<NT,AT>::iterator(this,m_next);
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::clear(void)
+void digraph<NT,AT>::clear(void)
 {
   // clearing the nodes also clears the arcs
-  for (typename stlplus::digraph<NT,AT>::iterator i = begin(); i != end(); )
+  for (typename digraph<NT,AT>::iterator i = begin(); i != end(); )
     i = erase(i);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_iterator stlplus::digraph<NT,AT>::begin(void) const
+typename digraph<NT,AT>::const_iterator digraph<NT,AT>::begin(void) const
 {
-  return TYPENAME stlplus::digraph<NT,AT>::const_iterator(this,m_nodes->m_next);
+  return TYPENAME digraph<NT,AT>::const_iterator(this,m_nodes->m_next);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::begin(void)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::begin(void)
 {
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,m_nodes->m_next);
+  return TYPENAME digraph<NT,AT>::iterator(this,m_nodes->m_next);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_iterator stlplus::digraph<NT,AT>::end(void) const
+typename digraph<NT,AT>::const_iterator digraph<NT,AT>::end(void) const
 {
-  return TYPENAME stlplus::digraph<NT,AT>::const_iterator(this,m_nodes);
+  return TYPENAME digraph<NT,AT>::const_iterator(this,m_nodes);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::end(void)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::end(void)
 {
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,m_nodes);
+  return TYPENAME digraph<NT,AT>::iterator(this,m_nodes);
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::fanin(TYPENAME stlplus::digraph<NT,AT>::const_iterator iter) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
-{
-  iter.check(this);
-  return iter.m_node->m_inputs.size();
-}
-
-template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::fanin(TYPENAME stlplus::digraph<NT,AT>::iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::fanin(TYPENAME digraph<NT,AT>::const_iterator iter) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   return iter.m_node->m_inputs.size();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::input(TYPENAME stlplus::digraph<NT,AT>::const_iterator iter, unsigned i) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference,std::out_of_range)
+unsigned digraph<NT,AT>::fanin(TYPENAME digraph<NT,AT>::iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
-  if (i >= iter.m_node->m_inputs.size()) throw std::out_of_range("digraph::input");
-  return TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator(this,iter.m_node->m_inputs[i]);
+  return iter.m_node->m_inputs.size();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::input(TYPENAME stlplus::digraph<NT,AT>::iterator iter, unsigned i)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference,std::out_of_range)
+typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
+  throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
   if (i >= iter.m_node->m_inputs.size()) throw std::out_of_range("digraph::input");
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,iter.m_node->m_inputs[i]);
+  return TYPENAME digraph<NT,AT>::const_arc_iterator(this,iter.m_node->m_inputs[i]);
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::fanout(TYPENAME stlplus::digraph<NT,AT>::const_iterator iter) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
+  throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
+{
+  iter.check(this);
+  if (i >= iter.m_node->m_inputs.size()) throw std::out_of_range("digraph::input");
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,iter.m_node->m_inputs[i]);
+}
+
+template<typename NT, typename AT>
+unsigned digraph<NT,AT>::fanout(TYPENAME digraph<NT,AT>::const_iterator iter) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   return iter.m_node->m_outputs.size();
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::fanout(TYPENAME stlplus::digraph<NT,AT>::iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::fanout(TYPENAME digraph<NT,AT>::iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   return iter.m_node->m_outputs.size();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::output(TYPENAME stlplus::digraph<NT,AT>::const_iterator iter, unsigned i) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference,std::out_of_range)
+typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
+  throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
   if (i >= iter.m_node->m_outputs.size()) throw std::out_of_range("digraph::output");
-  return TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator(this,iter.m_node->m_outputs[i]);
+  return TYPENAME digraph<NT,AT>::const_arc_iterator(this,iter.m_node->m_outputs[i]);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::output(TYPENAME stlplus::digraph<NT,AT>::iterator iter, unsigned i)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference,std::out_of_range)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
+  throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
   if (i >= iter.m_node->m_outputs.size()) throw std::out_of_range("digraph::output");
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,iter.m_node->m_outputs[i]);
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,iter.m_node->m_outputs[i]);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::inputs(TYPENAME stlplus::digraph<NT,AT>::const_iterator node) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::const_iterator node) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename stlplus::digraph<NT,AT>::const_arc_vector result;
+  typename digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < fanin(node); i++)
     result.push_back(input(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_vector stlplus::digraph<NT,AT>::inputs(TYPENAME stlplus::digraph<NT,AT>::iterator node)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::iterator node)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename stlplus::digraph<NT,AT>::arc_vector result;
+  typename digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < fanin(node); i++)
     result.push_back(input(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::outputs(TYPENAME stlplus::digraph<NT,AT>::const_iterator node) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::const_iterator node) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename stlplus::digraph<NT,AT>::const_arc_vector result;
+  typename digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < fanout(node); i++)
     result.push_back(output(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_vector stlplus::digraph<NT,AT>::outputs(TYPENAME stlplus::digraph<NT,AT>::iterator node)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::iterator node)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename stlplus::digraph<NT,AT>::arc_vector result;
+  typename digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < fanout(node); i++)
     result.push_back(output(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::output_offset(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                                TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator arc) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::output_offset(TYPENAME digraph<NT,AT>::const_iterator from,
+                                                TYPENAME digraph<NT,AT>::const_arc_iterator arc) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   arc.check(this);
@@ -803,13 +801,13 @@ unsigned stlplus::digraph<NT,AT>::output_offset(TYPENAME stlplus::digraph<NT,AT>
     if (output(from,i) == arc)
       return i;
   }
-  return stlplus::digraph<NT,AT>::npos();
+  return digraph<NT,AT>::npos();
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::output_offset(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                                TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::output_offset(TYPENAME digraph<NT,AT>::iterator from,
+                                                TYPENAME digraph<NT,AT>::arc_iterator arc)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   arc.check(this);
@@ -818,13 +816,13 @@ unsigned stlplus::digraph<NT,AT>::output_offset(TYPENAME stlplus::digraph<NT,AT>
     if (output(from,i) == arc)
       return i;
   }
-  return stlplus::digraph<NT,AT>::npos();
+  return digraph<NT,AT>::npos();
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::input_offset(TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                               TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator arc) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::input_offset(TYPENAME digraph<NT,AT>::const_iterator to,
+                                               TYPENAME digraph<NT,AT>::const_arc_iterator arc) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   to.check(this);
   arc.check(this);
@@ -833,13 +831,13 @@ unsigned stlplus::digraph<NT,AT>::input_offset(TYPENAME stlplus::digraph<NT,AT>:
     if (input(to,i) == arc)
       return i;
   }
-  return stlplus::digraph<NT,AT>::npos();
+  return digraph<NT,AT>::npos();
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::input_offset(TYPENAME stlplus::digraph<NT,AT>::iterator to,
-                                               TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+unsigned digraph<NT,AT>::input_offset(TYPENAME digraph<NT,AT>::iterator to,
+                                               TYPENAME digraph<NT,AT>::arc_iterator arc)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   to.check(this);
   arc.check(this);
@@ -848,37 +846,37 @@ unsigned stlplus::digraph<NT,AT>::input_offset(TYPENAME stlplus::digraph<NT,AT>:
     if (input(to,i) == arc)
       return i;
   }
-  return stlplus::digraph<NT,AT>::npos();
+  return digraph<NT,AT>::npos();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Basic Arc functions
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::arc_empty(void) const
+bool digraph<NT,AT>::arc_empty(void) const
 {
   return m_arcs->m_next == m_arcs;
 }
 
 template<typename NT, typename AT>
-unsigned stlplus::digraph<NT,AT>::arc_size(void) const
+unsigned digraph<NT,AT>::arc_size(void) const
 {
   unsigned count = 0;
-  for (typename stlplus::digraph<NT,AT>::const_arc_iterator i = arc_begin(); i != arc_end(); i++)
+  for (typename digraph<NT,AT>::const_arc_iterator i = arc_begin(); i != arc_end(); i++)
     count++;
   return count;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_insert(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                                                                   TYPENAME stlplus::digraph<NT,AT>::iterator to,
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_insert(TYPENAME digraph<NT,AT>::iterator from,
+                                                                                   TYPENAME digraph<NT,AT>::iterator to,
                                                                  const AT& arc_data)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   to.check(this);
   // create the new arc and link it in to the arc list
-  stlplus::digraph_arc<NT,AT>* new_arc = new stlplus::digraph_arc<NT,AT>(from.m_node, to.m_node, arc_data);
+  digraph_arc<NT,AT>* new_arc = new digraph_arc<NT,AT>(from.m_node, to.m_node, arc_data);
   new_arc->m_next = m_arcs;
   new_arc->m_prev = m_arcs->m_prev;
   m_arcs->m_prev->m_next = new_arc;
@@ -886,23 +884,23 @@ typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_inse
   // add this arc to the inputs and outputs of the end nodes
   from.m_node->m_outputs.push_back(new_arc);
   to.m_node->m_inputs.push_back(new_arc);
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,new_arc);
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,new_arc);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_erase(TYPENAME stlplus::digraph<NT,AT>::arc_iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_erase(TYPENAME digraph<NT,AT>::arc_iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   // first remove this arc's pointers from the from/to nodes
-  for (typename std::vector<stlplus::digraph_arc<NT,AT>*>::iterator i = iter.m_arc->m_to->m_inputs.begin(); i != iter.m_arc->m_to->m_inputs.end(); )
+  for (typename std::vector<digraph_arc<NT,AT>*>::iterator i = iter.m_arc->m_to->m_inputs.begin(); i != iter.m_arc->m_to->m_inputs.end(); )
   {
     if (*i == iter.m_arc)
       i = iter.m_arc->m_to->m_inputs.erase(i);
     else
       i++;
   }
-  for (typename std::vector<stlplus::digraph_arc<NT,AT>*>::iterator o = iter.m_arc->m_from->m_outputs.begin(); o != iter.m_arc->m_from->m_outputs.end(); )
+  for (typename std::vector<digraph_arc<NT,AT>*>::iterator o = iter.m_arc->m_from->m_outputs.begin(); o != iter.m_arc->m_from->m_outputs.end(); )
   {
     if (*o == iter.m_arc)
       o = iter.m_arc->m_from->m_outputs.erase(o);
@@ -912,92 +910,92 @@ typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_eras
   // now unlink the arc from the list and delete it
   iter.m_arc->m_next->m_prev = iter.m_arc->m_prev;
   iter.m_arc->m_prev->m_next = iter.m_arc->m_next;
-  stlplus::digraph_arc<NT,AT>* m_next = iter.m_arc->m_next;
+  digraph_arc<NT,AT>* m_next = iter.m_arc->m_next;
   delete iter.m_arc;
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,m_next);
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,m_next);
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::arc_clear(void)
+void digraph<NT,AT>::arc_clear(void)
 {
-  for (typename stlplus::digraph<NT,AT>::arc_iterator a = arc_begin(); a != arc_end(); )
+  for (typename digraph<NT,AT>::arc_iterator a = arc_begin(); a != arc_end(); )
     a = arc_erase(a);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::arc_begin(void) const
+typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_begin(void) const
 {
-  return TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator(this,m_arcs->m_next);
+  return TYPENAME digraph<NT,AT>::const_arc_iterator(this,m_arcs->m_next);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_begin(void)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_begin(void)
 {
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,m_arcs->m_next);
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,m_arcs->m_next);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::arc_end(void) const
+typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_end(void) const
 {
-  return TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator(this,m_arcs);
+  return TYPENAME digraph<NT,AT>::const_arc_iterator(this,m_arcs);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::arc_end(void)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_end(void)
 {
-  return TYPENAME stlplus::digraph<NT,AT>::arc_iterator(this,m_arcs);
+  return TYPENAME digraph<NT,AT>::arc_iterator(this,m_arcs);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_iterator stlplus::digraph<NT,AT>::arc_from(TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator iter) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
-{
-  iter.check(this);
-  return TYPENAME stlplus::digraph<NT,AT>::const_iterator(this,iter.m_arc->m_from);
-}
-
-template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::arc_from(TYPENAME stlplus::digraph<NT,AT>::arc_iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,iter.m_arc->m_from);
+  return TYPENAME digraph<NT,AT>::const_iterator(this,iter.m_arc->m_from);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_iterator stlplus::digraph<NT,AT>::arc_to(TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator iter) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::arc_iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
-  return TYPENAME stlplus::digraph<NT,AT>::const_iterator(this,iter.m_arc->m_to);
+  return TYPENAME digraph<NT,AT>::iterator(this,iter.m_arc->m_from);
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::iterator stlplus::digraph<NT,AT>::arc_to(TYPENAME stlplus::digraph<NT,AT>::arc_iterator iter)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
-  return TYPENAME stlplus::digraph<NT,AT>::iterator(this,iter.m_arc->m_to);
+  return TYPENAME digraph<NT,AT>::const_iterator(this,iter.m_arc->m_to);
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::arc_move(TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc,
-                                       TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                       TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::arc_iterator iter)
+  throw(wrong_object,null_dereference,end_dereference)
+{
+  iter.check(this);
+  return TYPENAME digraph<NT,AT>::iterator(this,iter.m_arc->m_to);
+}
+
+template<typename NT, typename AT>
+void digraph<NT,AT>::arc_move(TYPENAME digraph<NT,AT>::arc_iterator arc,
+                                       TYPENAME digraph<NT,AT>::iterator from,
+                                       TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   arc_move_to(arc,to);
   arc_move_from(arc,from);
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::arc_move_from(TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc,
-                                            TYPENAME stlplus::digraph<NT,AT>::iterator from)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::arc_move_from(TYPENAME digraph<NT,AT>::arc_iterator arc,
+                                            TYPENAME digraph<NT,AT>::iterator from)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   arc.check(this);
   from.check(this);
-  for (typename std::vector<stlplus::digraph_arc<NT,AT>*>::iterator o = arc.m_arc->m_from->m_outputs.begin(); o != arc.m_arc->m_from->m_outputs.end(); )
+  for (typename std::vector<digraph_arc<NT,AT>*>::iterator o = arc.m_arc->m_from->m_outputs.begin(); o != arc.m_arc->m_from->m_outputs.end(); )
   {
     if (*o == arc.m_arc)
       o = arc.m_arc->m_from->m_outputs.erase(o);
@@ -1009,13 +1007,13 @@ void stlplus::digraph<NT,AT>::arc_move_from(TYPENAME stlplus::digraph<NT,AT>::ar
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::arc_move_to(TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc,
-                                          TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::arc_move_to(TYPENAME digraph<NT,AT>::arc_iterator arc,
+                                          TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   arc.check(this);
   to.check(this);
-  for (typename std::vector<stlplus::digraph_arc<NT,AT>*>::iterator i = arc.m_arc->m_to->m_inputs.begin(); i != arc.m_arc->m_to->m_inputs.end(); )
+  for (typename std::vector<digraph_arc<NT,AT>*>::iterator i = arc.m_arc->m_to->m_inputs.begin(); i != arc.m_arc->m_to->m_inputs.end(); )
   {
     if (*i == arc.m_arc)
       i = arc.m_arc->m_to->m_inputs.erase(i);
@@ -1027,8 +1025,8 @@ void stlplus::digraph<NT,AT>::arc_move_to(TYPENAME stlplus::digraph<NT,AT>::arc_
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::arc_flip(TYPENAME stlplus::digraph<NT,AT>::arc_iterator arc)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::arc_flip(TYPENAME digraph<NT,AT>::arc_iterator arc)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   arc_move(arc,arc_to(arc),arc_from(arc));
 }
@@ -1037,25 +1035,25 @@ void stlplus::digraph<NT,AT>::arc_flip(TYPENAME stlplus::digraph<NT,AT>::arc_ite
 // Adjacency Algorithms
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::adjacent(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                       TYPENAME stlplus::digraph<NT,AT>::const_iterator to) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+bool digraph<NT,AT>::adjacent(TYPENAME digraph<NT,AT>::const_iterator from,
+                                       TYPENAME digraph<NT,AT>::const_iterator to) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return adjacent_arc(from,to) != arc_end();
 }
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::adjacent(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                       TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+bool digraph<NT,AT>::adjacent(TYPENAME digraph<NT,AT>::iterator from,
+                                       TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return adjacent_arc(from,to) != arc_end();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::adjacent_arc(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                                                                           TYPENAME stlplus::digraph<NT,AT>::const_iterator to) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::const_iterator from,
+                                                                                           TYPENAME digraph<NT,AT>::const_iterator to) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   to.check(this);
@@ -1068,21 +1066,21 @@ typename stlplus::digraph<NT,AT>::const_arc_iterator stlplus::digraph<NT,AT>::ad
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_iterator stlplus::digraph<NT,AT>::adjacent_arc(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                                                                     TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::iterator from,
+                                                                                     TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return adjacent_arc(from.constify(), to.constify()).deconstify();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::adjacent_arcs(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                                                                          TYPENAME stlplus::digraph<NT,AT>::const_iterator to) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::const_iterator from,
+                                                                                          TYPENAME digraph<NT,AT>::const_iterator to) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   to.check(this);
-  typename stlplus::digraph<NT,AT>::const_arc_vector result;
+  typename digraph<NT,AT>::const_arc_vector result;
   for (unsigned arc = 0; arc < fanout(from); arc++)
   {
     if (arc_to(output(from, arc)) == to)
@@ -1092,21 +1090,21 @@ typename stlplus::digraph<NT,AT>::const_arc_vector stlplus::digraph<NT,AT>::adja
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_vector stlplus::digraph<NT,AT>::adjacent_arcs(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                                                                    TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::iterator from,
+                                                                                    TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_arcs(adjacent_arcs(from.constify(), to.constify()));
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::input_adjacencies(TYPENAME stlplus::digraph<NT,AT>::const_iterator to) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::const_iterator to) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
+  typename digraph<NT,AT>::const_node_vector result;
   for (unsigned arc = 0; arc < fanin(to); arc++)
   {
-    typename stlplus::digraph<NT,AT>::const_iterator from = arc_from(input(to, arc));
+    typename digraph<NT,AT>::const_iterator from = arc_from(input(to, arc));
     if (std::find(result.begin(), result.end(), from) == result.end())
       result.push_back(from);
   }
@@ -1114,20 +1112,20 @@ typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::inp
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::input_adjacencies(TYPENAME stlplus::digraph<NT,AT>::iterator to)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::iterator to)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(input_adjacencies(to.constify()));
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::output_adjacencies(TYPENAME stlplus::digraph<NT,AT>::const_iterator from) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::const_iterator from) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
+  typename digraph<NT,AT>::const_node_vector result;
   for (unsigned arc = 0; arc < fanout(from); arc++)
   {
-    typename stlplus::digraph<NT,AT>::const_iterator to = arc_to(output(from, arc));
+    typename digraph<NT,AT>::const_iterator to = arc_to(output(from, arc));
     if (find(result.begin(), result.end(), to) == result.end())
       result.push_back(to);
   }
@@ -1135,8 +1133,8 @@ typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::out
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::output_adjacencies(TYPENAME stlplus::digraph<NT,AT>::iterator from)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::iterator from)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(output_adjacencies(from.constify()));
 }
@@ -1145,21 +1143,21 @@ typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::output_ad
 // Topographical Sort Algorithms
 
 template<typename NT, typename AT>
-std::pair<TYPENAME stlplus::digraph<NT,AT>::const_node_vector, TYPENAME stlplus::digraph<NT,AT>::const_arc_vector>
-stlplus::digraph<NT,AT>::sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
+std::pair<TYPENAME digraph<NT,AT>::const_node_vector, TYPENAME digraph<NT,AT>::const_arc_vector>
+digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
 {
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
-  typename stlplus::digraph<NT,AT>::const_arc_vector errors;
+  typename digraph<NT,AT>::const_node_vector result;
+  typename digraph<NT,AT>::const_arc_vector errors;
   // build a map containing the number of fanins to each node that must be visited before this one
-  typename std::map<TYPENAME stlplus::digraph<NT,AT>::const_iterator,unsigned> fanin_map;
-  for (typename stlplus::digraph<NT,AT>::const_iterator n = begin(); n != end(); n++)
+  typename std::map<TYPENAME digraph<NT,AT>::const_iterator,unsigned> fanin_map;
+  for (typename digraph<NT,AT>::const_iterator n = begin(); n != end(); n++)
   {
     unsigned predecessors = 0;
     // only count predecessors connected by selected arcs
     for (unsigned f = 0; f < fanin(n); f++)
     {
-      typename stlplus::digraph<NT,AT>::const_arc_iterator input_arc = input(n,f);
-      typename stlplus::digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
+      typename digraph<NT,AT>::const_arc_iterator input_arc = input(n,f);
+      typename digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
       if (!select || select(*this,input_arc))
         predecessors++;
     }
@@ -1184,12 +1182,12 @@ stlplus::digraph<NT,AT>::sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn se
     for (; i < result.size(); i++)
     {
       // Note: dereferencing i gives us a node iterator
-      typename stlplus::digraph<NT,AT>::const_iterator current = result[i];
+      typename digraph<NT,AT>::const_iterator current = result[i];
       for (unsigned f = 0; f < fanout(current); f++)
       {
         // only consider successors connected by selected arcs
-        typename stlplus::digraph<NT,AT>::const_arc_iterator output_arc = output(current, f);
-        typename stlplus::digraph<NT,AT>::const_iterator successor = arc_to(output_arc);
+        typename digraph<NT,AT>::const_arc_iterator output_arc = output(current, f);
+        typename digraph<NT,AT>::const_iterator successor = arc_to(output_arc);
         if (!select || select(*this,output_arc))
         {
           // don't consider arcs that have been eliminated to break a loop
@@ -1212,15 +1210,15 @@ stlplus::digraph<NT,AT>::sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn se
 
       // select an arc that is still relevant to the sort and break it
       // first select a node that has non-zero fanin and its predecessor that has non-zero fanin
-      typename stlplus::digraph<NT,AT>::const_iterator stuck_node = fanin_map.begin()->first;
+      typename digraph<NT,AT>::const_iterator stuck_node = fanin_map.begin()->first;
       for (unsigned f = 0; f < fanin(stuck_node); f++)
       {
         // now successively remove input arcs that are still part of the sort until the fanin reduces to zero
         // first find a relevant arc - this must be a selected arc that has not yet been traversed by the first half of the algorithm
-        typename stlplus::digraph<NT,AT>::const_arc_iterator input_arc = input(stuck_node, f);
+        typename digraph<NT,AT>::const_arc_iterator input_arc = input(stuck_node, f);
         if (!select || select(*this,input_arc))
         {
-          typename stlplus::digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
+          typename digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
           if (fanin_map.find(predecessor) != fanin_map.end())
           {
             // found the right combination - remove this arc and then drop out of the fanin loop to restart the outer sort loop
@@ -1237,44 +1235,44 @@ stlplus::digraph<NT,AT>::sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn se
       }
     }
   }
-  return make_pair(result,errors);
+  return std::make_pair(result,errors);
 }
 
 template<typename NT, typename AT>
-std::pair<TYPENAME stlplus::digraph<NT,AT>::node_vector, TYPENAME stlplus::digraph<NT,AT>::arc_vector>
-stlplus::digraph<NT,AT>::sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
+std::pair<TYPENAME digraph<NT,AT>::node_vector, TYPENAME digraph<NT,AT>::arc_vector>
+digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select)
 {
-  std::pair<TYPENAME stlplus::digraph<NT,AT>::const_node_vector, TYPENAME stlplus::digraph<NT,AT>::const_arc_vector> const_result =
+  std::pair<TYPENAME digraph<NT,AT>::const_node_vector, TYPENAME digraph<NT,AT>::const_arc_vector> const_result =
     const_cast<const digraph<NT,AT>*>(this)->sort(select);
-  std::pair<TYPENAME stlplus::digraph<NT,AT>::node_vector,TYPENAME stlplus::digraph<NT,AT>::arc_vector> result =
-    make_pair(deconstify_nodes(const_result.first),deconstify_arcs(const_result.second));
+  std::pair<TYPENAME digraph<NT,AT>::node_vector,TYPENAME digraph<NT,AT>::arc_vector> result =
+    std::make_pair(deconstify_nodes(const_result.first),deconstify_arcs(const_result.second));
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector stlplus::digraph<NT,AT>::dag_sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
+typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
 {
-  std::pair<TYPENAME stlplus::digraph<NT,AT>::const_node_vector, TYPENAME stlplus::digraph<NT,AT>::const_arc_vector> result = sort(select);
+  std::pair<TYPENAME digraph<NT,AT>::const_node_vector, TYPENAME digraph<NT,AT>::const_arc_vector> result = sort(select);
   if (result.second.empty()) return result.first;
-  return TYPENAME stlplus::digraph<NT,AT>::const_node_vector();
+  return TYPENAME digraph<NT,AT>::const_node_vector();
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector stlplus::digraph<NT,AT>::dag_sort(TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
+typename digraph<NT,AT>::node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select)
 {
-  return deconstify_nodes(const_cast<const stlplus::digraph<NT,AT>*>(this)->dag_sort(select));
+  return deconstify_nodes(const_cast<const digraph<NT,AT>*>(this)->dag_sort(select));
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Path Algorithms
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::path_exists_r(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                            TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                            TYPENAME stlplus::digraph<NT,AT>::const_iterator_set& visited,
-                                            TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+bool digraph<NT,AT>::path_exists_r(TYPENAME digraph<NT,AT>::const_iterator from,
+                                            TYPENAME digraph<NT,AT>::const_iterator to,
+                                            TYPENAME digraph<NT,AT>::const_iterator_set& visited,
+                                            TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  // Recursive part of the stlplus::digraph::path_exists function. This is based on a
+  // Recursive part of the digraph::path_exists function. This is based on a
   // depth first search algorithm and stops the moment it finds a path
   // regardless of its length. Simply traverse every output and recurse on that
   // node until we find the to node or run out of things to recurse on. However,
@@ -1284,10 +1282,10 @@ bool stlplus::digraph<NT,AT>::path_exists_r(TYPENAME stlplus::digraph<NT,AT>::co
   // function calls is minimised.
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename stlplus::digraph<NT,AT>::const_arc_iterator arc = output(from,i);
+    typename digraph<NT,AT>::const_arc_iterator arc = output(from,i);
     if (!select || select(*this, arc))
     {
-      typename stlplus::digraph<NT,AT>::const_iterator node = arc_to(arc);
+      typename digraph<NT,AT>::const_iterator node = arc_to(arc);
       // if the node is the target, return immediately
       if (node == to) return true;
       // update the visited set and give up if the insert fails, which indicates that the node has already been visited
@@ -1300,33 +1298,33 @@ bool stlplus::digraph<NT,AT>::path_exists_r(TYPENAME stlplus::digraph<NT,AT>::co
 }
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::path_exists(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                          TYPENAME stlplus::digraph<NT,AT>::const_iterator to, 
-                                          TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+bool digraph<NT,AT>::path_exists(TYPENAME digraph<NT,AT>::const_iterator from,
+                                          TYPENAME digraph<NT,AT>::const_iterator to, 
+                                          TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // set up the recursion with its initial visited set and then recurse
-  typename stlplus::digraph<NT,AT>::const_iterator_set visited;
+  typename digraph<NT,AT>::const_iterator_set visited;
   visited.insert(from);
   return path_exists_r(from, to, visited, select);
 }
 
 template<typename NT, typename AT>
-bool stlplus::digraph<NT,AT>::path_exists(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                          TYPENAME stlplus::digraph<NT,AT>::iterator to,
-                                          TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+bool digraph<NT,AT>::path_exists(TYPENAME digraph<NT,AT>::iterator from,
+                                          TYPENAME digraph<NT,AT>::iterator to,
+                                          TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return path_exists(from.constify(), to.constify(), select);
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::all_paths_r(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                          TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                          TYPENAME stlplus::digraph<NT,AT>::const_arc_vector& so_far,
-                                          TYPENAME stlplus::digraph<NT,AT>::const_path_vector& result,
-                                          TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::all_paths_r(TYPENAME digraph<NT,AT>::const_iterator from,
+                                          TYPENAME digraph<NT,AT>::const_iterator to,
+                                          TYPENAME digraph<NT,AT>::const_arc_vector& so_far,
+                                          TYPENAME digraph<NT,AT>::const_path_vector& result,
+                                          TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // This is the recursive part of the all_paths function. The field so_far
   // contains the path so far so that when 'to' is reached, the path is
@@ -1337,7 +1335,7 @@ void stlplus::digraph<NT,AT>::all_paths_r(TYPENAME stlplus::digraph<NT,AT>::cons
   // path set.
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename stlplus::digraph<NT,AT>::const_arc_iterator candidate = output(from,i);
+    typename digraph<NT,AT>::const_arc_iterator candidate = output(from,i);
     // check that the arc is selected and then check that the candidate has not
     // been visited on this path and only allow further recursion if it hasn't
     if ((!select || select(*this, candidate)) && std::find(so_far.begin(), so_far.end(), candidate) == so_far.end())
@@ -1355,44 +1353,44 @@ void stlplus::digraph<NT,AT>::all_paths_r(TYPENAME stlplus::digraph<NT,AT>::cons
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_path_vector 
-stlplus::digraph<NT,AT>::all_paths(TYPENAME stlplus::digraph<NT,AT>::const_iterator from, 
-                                   TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                   TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_path_vector 
+digraph<NT,AT>::all_paths(TYPENAME digraph<NT,AT>::const_iterator from, 
+                                   TYPENAME digraph<NT,AT>::const_iterator to,
+                                   TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // set up the recursion with empty data fields and then recurse
-  typename stlplus::digraph<NT,AT>::const_path_vector result;
-  typename stlplus::digraph<NT,AT>::const_arc_vector so_far;
+  typename digraph<NT,AT>::const_path_vector result;
+  typename digraph<NT,AT>::const_arc_vector so_far;
   all_paths_r(from, to, so_far, result, select);
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::path_vector
-stlplus::digraph<NT,AT>::all_paths(TYPENAME stlplus::digraph<NT,AT>::iterator from, 
-                          TYPENAME stlplus::digraph<NT,AT>::iterator to,
-                          TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::path_vector
+digraph<NT,AT>::all_paths(TYPENAME digraph<NT,AT>::iterator from, 
+                          TYPENAME digraph<NT,AT>::iterator to,
+                          TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_paths(all_paths(from.constify(), to.constify(), select));
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::reachable_nodes_r(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                                TYPENAME stlplus::digraph<NT,AT>::const_iterator_set& visited,
-                                                TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::reachable_nodes_r(TYPENAME digraph<NT,AT>::const_iterator from,
+                                                TYPENAME digraph<NT,AT>::const_iterator_set& visited,
+                                                TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // The recursive part of the reachable_nodes function.
   // This is a depth-first traversal again but this time it carries on to find all the reachable nodes
   // Just keep recursing on all the adjacent nodes of each node, skipping already visited nodes to avoid cycles
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename stlplus::digraph<NT,AT>::const_arc_iterator arc = output(from,i);
+    typename digraph<NT,AT>::const_arc_iterator arc = output(from,i);
     if (!select || select(*this,arc))
     {
-      typename stlplus::digraph<NT,AT>::const_iterator candidate = arc_to(arc);
+      typename digraph<NT,AT>::const_iterator candidate = arc_to(arc);
       if (visited.insert(candidate).second)
         reachable_nodes_r(candidate,visited,select);
     }
@@ -1400,47 +1398,47 @@ void stlplus::digraph<NT,AT>::reachable_nodes_r(TYPENAME stlplus::digraph<NT,AT>
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector
-stlplus::digraph<NT,AT>::reachable_nodes(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_node_vector
+digraph<NT,AT>::reachable_nodes(TYPENAME digraph<NT,AT>::const_iterator from,
+                                TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // seed the recursion, marking the starting node as already visited
-  typename stlplus::digraph<NT,AT>::const_iterator_set visited;
+  typename digraph<NT,AT>::const_iterator_set visited;
   visited.insert(from);
   reachable_nodes_r(from, visited, select);
   // convert the visited set into the required output form
   // exclude the starting node
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
-  for (typename stlplus::digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
+  typename digraph<NT,AT>::const_node_vector result;
+  for (typename digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
     if (*i != from)
       result.push_back(*i);
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector
-stlplus::digraph<NT,AT>::reachable_nodes(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::node_vector
+digraph<NT,AT>::reachable_nodes(TYPENAME digraph<NT,AT>::iterator from,
+                                TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(reachable_nodes(from.constify(), select));
 }
 
 template<typename NT, typename AT>
-void stlplus::digraph<NT,AT>::reaching_nodes_r(TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                               TYPENAME stlplus::digraph<NT,AT>::const_iterator_set& visited,
-                                               TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void digraph<NT,AT>::reaching_nodes_r(TYPENAME digraph<NT,AT>::const_iterator to,
+                                               TYPENAME digraph<NT,AT>::const_iterator_set& visited,
+                                               TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // The recursive part of the reaching_nodes function.
   // Just like the reachable_nodes_r function but it goes backwards
   for (unsigned i = 0; i < fanin(to); i++)
   {
-    typename stlplus::digraph<NT,AT>::const_arc_iterator arc = input(to,i);
+    typename digraph<NT,AT>::const_arc_iterator arc = input(to,i);
     if (!select || select(*this,arc))
     {
-      typename stlplus::digraph<NT,AT>::const_iterator candidate = arc_from(input(to,i));
+      typename digraph<NT,AT>::const_iterator candidate = arc_from(input(to,i));
       if (visited.insert(candidate).second)
         reaching_nodes_r(candidate,visited,select);
     }
@@ -1448,29 +1446,29 @@ void stlplus::digraph<NT,AT>::reaching_nodes_r(TYPENAME stlplus::digraph<NT,AT>:
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_node_vector
-stlplus::digraph<NT,AT>::reaching_nodes(TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                        TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_node_vector
+digraph<NT,AT>::reaching_nodes(TYPENAME digraph<NT,AT>::const_iterator to,
+                                        TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   // seed the recursion, marking the starting node as already visited
-  typename stlplus::digraph<NT,AT>::const_iterator_set visited;
+  typename digraph<NT,AT>::const_iterator_set visited;
   visited.insert(to);
   reaching_nodes_r(to,visited,select);
   // convert the visited set into the required output form
   // exclude the end node
-  typename stlplus::digraph<NT,AT>::const_node_vector result;
-  for (typename stlplus::digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
+  typename digraph<NT,AT>::const_node_vector result;
+  for (typename digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
     if (*i != to)
       result.push_back(*i);
   return result;
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::node_vector
-stlplus::digraph<NT,AT>::reaching_nodes(TYPENAME stlplus::digraph<NT,AT>::iterator to,
-                                        TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::node_vector
+digraph<NT,AT>::reaching_nodes(TYPENAME digraph<NT,AT>::iterator to,
+                                        TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(reaching_nodes(to.constify(),select));
 }
@@ -1479,15 +1477,15 @@ stlplus::digraph<NT,AT>::reaching_nodes(TYPENAME stlplus::digraph<NT,AT>::iterat
 // Shortest Path Algorithms
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_arc_vector
-stlplus::digraph<NT,AT>::shortest_path(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                       TYPENAME stlplus::digraph<NT,AT>::const_iterator to,
-                                       TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_arc_vector
+digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::const_iterator from,
+                                       TYPENAME digraph<NT,AT>::const_iterator to,
+                                       TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
-  typename stlplus::digraph<NT,AT>::const_path_vector paths = all_paths(from,to,select);
-  typename stlplus::digraph<NT,AT>::const_arc_vector shortest;
-  typedef TYPENAME stlplus::digraph<NT,AT>::const_path_vector::iterator const_path_vector_iterator;
+  typename digraph<NT,AT>::const_path_vector paths = all_paths(from,to,select);
+  typename digraph<NT,AT>::const_arc_vector shortest;
+  typedef TYPENAME digraph<NT,AT>::const_path_vector::iterator const_path_vector_iterator;
   for (const_path_vector_iterator i = paths.begin(); i != paths.end(); i++)
     if (shortest.empty() || i->size() < shortest.size())
       shortest = *i;
@@ -1495,20 +1493,20 @@ stlplus::digraph<NT,AT>::shortest_path(TYPENAME stlplus::digraph<NT,AT>::const_i
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::arc_vector
-stlplus::digraph<NT,AT>::shortest_path(TYPENAME stlplus::digraph<NT,AT>::iterator from, 
-                                       TYPENAME stlplus::digraph<NT,AT>::iterator to,
-                                       TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::arc_vector
+digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::iterator from, 
+                                       TYPENAME digraph<NT,AT>::iterator to,
+                                       TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_arcs(shortest_path(from.constify(),to.constify(),select));
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::const_path_vector
-stlplus::digraph<NT,AT>::shortest_paths(TYPENAME stlplus::digraph<NT,AT>::const_iterator from,
-                                        TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::const_path_vector
+digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
+                                        TYPENAME digraph<NT,AT>::arc_select_fn select) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   // This is an unweighted shortest path algorithm based on the algorithm from
@@ -1523,39 +1521,39 @@ stlplus::digraph<NT,AT>::shortest_paths(TYPENAME stlplus::digraph<NT,AT>::const_
   // nominated this node as a shortest path. The full path can then be recreated
   // from the map by just walking back through the predecessors. The depth (or
   // colour) can be determined by the path length.
-  typename stlplus::digraph<NT,AT>::const_path_vector result;
+  typename digraph<NT,AT>::const_path_vector result;
   // initialise the iteration by creating a queue and adding the start node
-  typename std::deque<TYPENAME stlplus::digraph<NT,AT>::const_iterator> nodes;
+  typename std::deque<TYPENAME digraph<NT,AT>::const_iterator> nodes;
   nodes.push_back(from);
   // Create a map to store the set of known nodes mapped to their predecessor
   // arcs. Initialise it with the current node, which has no predecessor. Note
   // that the algorithm uses the feature of digraph iterators that they can be
   // null iterators and that all null iterators are equal.
-  typedef std::map<TYPENAME stlplus::digraph<NT,AT>::const_iterator, TYPENAME stlplus::digraph<NT,AT>::const_arc_iterator> known_map;
+  typedef std::map<TYPENAME digraph<NT,AT>::const_iterator, TYPENAME digraph<NT,AT>::const_arc_iterator> known_map;
   known_map known;
-  known.insert(make_pair(from,typename stlplus::digraph<NT,AT>::const_arc_iterator()));
+  known.insert(std::make_pair(from,TYPENAME digraph<NT,AT>::const_arc_iterator()));
   // now the iterative part of the algorithm
   while(!nodes.empty())
   {
     // pop the queue to get the next node to process - unfortunately the STL
     // deque::pop does not return the popped value
-    typename stlplus::digraph<NT,AT>::const_iterator current = nodes.front();
+    typename digraph<NT,AT>::const_iterator current = nodes.front();
     nodes.pop_front();
     // now visit all the successors
     for (unsigned i = 0; i < fanout(current); i++)
     {
-      typename stlplus::digraph<NT,AT>::const_arc_iterator next_arc = output(current,i);
+      typename digraph<NT,AT>::const_arc_iterator next_arc = output(current,i);
       // check whether the successor arc is a selected arc and can be part of a path
       if (!select || select(*this,next_arc))
       {
-        typename stlplus::digraph<NT,AT>::const_iterator next = arc_to(next_arc);
+        typename digraph<NT,AT>::const_iterator next = arc_to(next_arc);
         // Discard any successors that are known because to be known already they
         // must have another shorter path. Otherwise add the successor node to the
         // queue to be visited later. To minimise the overhead of map lookup I use
         // the usual trick of trying to insert the node and determining whether
         // the node was known by the success or failure of the insertion - this is
         // a Good STL Trick (TM).
-        if (known.insert(make_pair(next,next_arc)).second)
+        if (known.insert(std::make_pair(next,next_arc)).second)
           nodes.push_back(next);
       }
     }
@@ -1573,7 +1571,7 @@ stlplus::digraph<NT,AT>::shortest_paths(TYPENAME stlplus::digraph<NT,AT>::const_
     {
       const_arc_vector this_path;
       for (typename known_map::iterator node = i; 
-           node->second != typename stlplus::digraph<NT,AT>::const_arc_iterator(); 
+           node->second != TYPENAME digraph<NT,AT>::const_arc_iterator(); 
            node = known.find(arc_from(node->second)))
         this_path.insert(this_path.begin(),node->second);
       result.push_back(this_path);
@@ -1583,12 +1581,14 @@ stlplus::digraph<NT,AT>::shortest_paths(TYPENAME stlplus::digraph<NT,AT>::const_
 }
 
 template<typename NT, typename AT>
-typename stlplus::digraph<NT,AT>::path_vector
-stlplus::digraph<NT,AT>::shortest_paths(TYPENAME stlplus::digraph<NT,AT>::iterator from,
-                                        TYPENAME stlplus::digraph<NT,AT>::arc_select_fn select)
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+typename digraph<NT,AT>::path_vector
+digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::iterator from,
+                                        TYPENAME digraph<NT,AT>::arc_select_fn select)
+  throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_paths(shortest_paths(from.constify(),select));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

@@ -7,24 +7,27 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
+namespace stlplus
+{
+
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename K, typename P, typename D>
-void stlplus::dump_multiset(stlplus::dump_context& context, const std::multiset<K,P>& data, D dump_fn)
-  throw(stlplus::persistent_dump_failed)
+void dump_multiset(dump_context& context, const std::multiset<K,P>& data, D dump_fn)
+  throw(persistent_dump_failed)
 {
-  stlplus::dump_unsigned(context,data.size());
+  dump_unsigned(context,data.size());
   for (typename std::multiset<K,P>::const_iterator i = data.begin(); i != data.end(); i++)
     dump_fn(context,*i);
 }
 
 template<typename K, typename P, typename R>
-void stlplus::restore_multiset(stlplus::restore_context& context, std::multiset<K,P>& data, R restore_fn)
-  throw(stlplus::persistent_restore_failed)
+void restore_multiset(restore_context& context, std::multiset<K,P>& data, R restore_fn)
+  throw(persistent_restore_failed)
 {
   data.clear();
   unsigned size = 0;
-  stlplus::restore_unsigned(context,size);
+  restore_unsigned(context,size);
   typename std::multiset<K,P>::iterator i = data.begin();
   for (unsigned j = 0; j < size; j++)
   {
@@ -36,3 +39,5 @@ void stlplus::restore_multiset(stlplus::restore_context& context, std::multiset<
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

@@ -9,13 +9,18 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
+namespace stlplus
+{
+
+////////////////////////////////////////////////////////////////////////////////
+
 template<typename T, typename D>
-void stlplus::dump_pointer(dump_context& context, const T* const data, D dump_fn)
+void dump_pointer(dump_context& context, const T* const data, D dump_fn)
   throw(persistent_dump_failed)
 {
   // register the address and get the magic key for it
   std::pair<bool,unsigned> mapping = context.pointer_map(data);
-  stlplus::dump_unsigned(context,mapping.second);
+  dump_unsigned(context,mapping.second);
   // if the address is null, then that is all that we need to do
   // however, if it is non-null and this is the first sight of the address, dump the contents
   // note that the address is mapped before it is dumped so that self-referential structures dump correctly
@@ -23,8 +28,10 @@ void stlplus::dump_pointer(dump_context& context, const T* const data, D dump_fn
     dump_fn(context,*data);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 template<typename T, typename R>
-void stlplus::restore_pointer(restore_context& context, T*& data, R restore_fn)
+void restore_pointer(restore_context& context, T*& data, R restore_fn)
   throw(persistent_restore_failed)
 {
   if (data)
@@ -34,7 +41,7 @@ void stlplus::restore_pointer(restore_context& context, T*& data, R restore_fn)
   }
   // get the magic key
   unsigned magic = 0;
-  stlplus::restore_unsigned(context,magic);
+  restore_unsigned(context,magic);
   // now lookup the magic key to see if this pointer has already been restored
   // null pointers are always flagged as already restored
   std::pair<bool,void*> address = context.pointer_map(magic);
@@ -54,3 +61,7 @@ void stlplus::restore_pointer(restore_context& context, T*& data, R restore_fn)
     restore_fn(context,*data);
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

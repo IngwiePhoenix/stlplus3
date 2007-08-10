@@ -7,13 +7,16 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
+namespace stlplus
+{
+
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename K, typename T, typename P, typename DK, typename DT>
-void stlplus::dump_map(stlplus::dump_context& context, const std::map<K,T,P>& data, DK key_fn, DT val_fn)
-  throw(stlplus::persistent_dump_failed)
+void dump_map(dump_context& context, const std::map<K,T,P>& data, DK key_fn, DT val_fn)
+  throw(persistent_dump_failed)
 {
-  stlplus::dump_unsigned(context,data.size());
+  dump_unsigned(context,data.size());
   for (typename std::map<K,T,P>::const_iterator i = data.begin(); i != data.end(); i++)
   {
     key_fn(context,i->first);
@@ -22,12 +25,12 @@ void stlplus::dump_map(stlplus::dump_context& context, const std::map<K,T,P>& da
 }
 
 template<typename K, typename T, typename P, typename RK, typename RT>
-void stlplus::restore_map(stlplus::restore_context& context, std::map<K,T,P>& data, RK key_fn, RT val_fn)
-  throw(stlplus::persistent_restore_failed)
+void restore_map(restore_context& context, std::map<K,T,P>& data, RK key_fn, RT val_fn)
+  throw(persistent_restore_failed)
 {
   data.clear();
   unsigned size = 0;
-  stlplus::restore_unsigned(context,size);
+  restore_unsigned(context,size);
   for (unsigned j = 0; j < size; j++)
   {
     K key;
@@ -37,3 +40,5 @@ void stlplus::restore_map(stlplus::restore_context& context, std::map<K,T,P>& da
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

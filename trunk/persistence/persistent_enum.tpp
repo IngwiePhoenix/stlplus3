@@ -5,23 +5,29 @@
   License:   BSD License, see ../docs/license.html
 
   ------------------------------------------------------------------------------*/
+
+namespace stlplus
+{
+
 ////////////////////////////////////////////////////////////////////////////////
 // enumeration types
 
 template<typename T>
-void stlplus::dump_enum(stlplus::dump_context& context, const T& data)
-  throw(stlplus::persistent_dump_failed)
+void dump_enum(dump_context& context, const T& data)
+  throw(persistent_dump_failed)
 {
-  stlplus::dump_unsigned(context,(unsigned)data);
+  dump_unsigned(context,(unsigned)data);
 }
 
 template<typename T>
-void stlplus::restore_enum(stlplus::restore_context& context, T& data)
-  throw(stlplus::persistent_restore_failed)
+void restore_enum(restore_context& context, T& data)
+  throw(persistent_restore_failed)
 {
   unsigned value = 0;
-  stlplus::restore_unsigned(context, value);
+  restore_unsigned(context, value);
   data = (T)value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

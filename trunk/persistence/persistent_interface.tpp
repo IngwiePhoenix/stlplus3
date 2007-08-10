@@ -11,15 +11,20 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
+namespace stlplus
+{
+
+////////////////////////////////////////////////////////////////////////////////
+
 template<typename T>
-void stlplus::dump_interface(dump_context& context, const T* const data)
+void dump_interface(dump_context& context, const T* const data)
   throw(persistent_dump_failed)
 {
   try
   {
     // register the address and get the magic key for it
     std::pair<bool,unsigned> mapping = context.pointer_map(data);
-    stlplus::dump_unsigned(context,mapping.second);
+    dump_unsigned(context,mapping.second);
     // if the address is null, then that is all that we need to do
     // however, if it is non-null and this is the first sight of the address, dump the contents
     if (data && !mapping.first)
@@ -29,7 +34,7 @@ void stlplus::dump_interface(dump_context& context, const T* const data)
       // this will throw persistent_illegal_type if the type is not registered
       unsigned key = context.lookup_interface(typeid(*data));
       // dump the magic key for the type
-      stlplus::dump_unsigned(context, key);
+      dump_unsigned(context, key);
       // now call the dump method defined by the interface
       data->dump(context);
     }
@@ -44,7 +49,7 @@ void stlplus::dump_interface(dump_context& context, const T* const data)
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-void stlplus::restore_interface(restore_context& context, T*& data)
+void restore_interface(restore_context& context, T*& data)
   throw(persistent_restore_failed)
 {
   try
@@ -57,7 +62,7 @@ void stlplus::restore_interface(restore_context& context, T*& data)
     }
     // get the magic key
     unsigned magic = 0;
-    stlplus::restore_unsigned(context,magic);
+    restore_unsigned(context,magic);
     // now lookup the magic key to see if this pointer has already been restored
     // null pointers are always flagged as already restored
     std::pair<bool,void*> address = context.pointer_map(magic);
@@ -70,7 +75,7 @@ void stlplus::restore_interface(restore_context& context, T*& data)
     {
       // now restore the magic key that denotes the particular subclass
       unsigned key = 0;
-      stlplus::restore_unsigned(context, key);
+      restore_unsigned(context, key);
       // interface approach
       // first clone the sample object stored in the map - lookup_interface can throw persistent_illegal_type
       data = (T*)(context.lookup_interface(key)->clone());
@@ -89,3 +94,5 @@ void stlplus::restore_interface(restore_context& context, T*& data)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

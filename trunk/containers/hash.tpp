@@ -6,11 +6,11 @@
 
   ------------------------------------------------------------------------------*/
 
-////////////////////////////////////////////////////////////////////////////////
-// the element stored in the hash
-
 namespace stlplus
 {
+
+////////////////////////////////////////////////////////////////////////////////
+// the element stored in the hash
 
 template<typename K, typename T>
 class hash_element
@@ -24,48 +24,46 @@ public:
   hash_element(const std::pair<const K,T>& value, unsigned hash) : m_value(value), m_next(0), m_hash(hash) {}
 };
 
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // iterator
 
 // checks
 
 template<typename K, typename T, class H, class E, typename V>
-void stlplus::hash_iterator<K,T,H,E,V>::check_owner(const stlplus::hash<K,T,H,E>* owner) const
-  throw(stlplus::wrong_object)
+void hash_iterator<K,T,H,E,V>::check_owner(const hash<K,T,H,E>* owner) const
+  throw(wrong_object)
 {
   if (owner != m_owner)
-    throw stlplus::wrong_object("hash iterator");
+    throw wrong_object("hash iterator");
 }
 
 template<typename K, typename T, class H, class E, typename V>
-void stlplus::hash_iterator<K,T,H,E,V>::check_non_null(void) const
-  throw(stlplus::null_dereference)
+void hash_iterator<K,T,H,E,V>::check_non_null(void) const
+  throw(null_dereference)
 {
   if (null())
-    throw stlplus::null_dereference("hash iterator");
+    throw null_dereference("hash iterator");
 }
 
 template<typename K, typename T, class H, class E, typename V>
-void stlplus::hash_iterator<K,T,H,E,V>::check_non_end(void) const
-  throw(stlplus::end_dereference)
+void hash_iterator<K,T,H,E,V>::check_non_end(void) const
+  throw(end_dereference)
 {
   if (end())
-    throw stlplus::end_dereference("hash iterator");
+    throw end_dereference("hash iterator");
 }
 
 template<typename K, typename T, class H, class E, typename V>
-void stlplus::hash_iterator<K,T,H,E,V>::check_valid(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+void hash_iterator<K,T,H,E,V>::check_valid(void) const
+  throw(null_dereference,end_dereference)
 {
   check_non_null();
   check_non_end();
 }
 
 template<typename K, typename T, class H, class E, typename V>
-void stlplus::hash_iterator<K,T,H,E,V>::check(const stlplus::hash<K,T,H,E>* owner) const
-  throw(stlplus::wrong_object,stlplus::null_dereference,stlplus::end_dereference)
+void hash_iterator<K,T,H,E,V>::check(const hash<K,T,H,E>* owner) const
+  throw(wrong_object,null_dereference,end_dereference)
 {
   check_valid();
   if (owner) check_owner(owner);
@@ -74,7 +72,7 @@ void stlplus::hash_iterator<K,T,H,E,V>::check(const stlplus::hash<K,T,H,E>* owne
 // null constructor
 
 template<typename K, typename T, class H, class E, typename V>
-stlplus::hash_iterator<K,T,H,E,V>::hash_iterator(void) :
+hash_iterator<K,T,H,E,V>::hash_iterator(void) :
   m_owner(0), m_bin(0), m_element(0) 
 {
 }
@@ -85,7 +83,7 @@ stlplus::hash_iterator<K,T,H,E,V>::hash_iterator(void) :
 // if the hash is empty, m_bin gets set to m_bins, so this becomes an end() iterator
 
 template<typename K, typename T, class H, class E, typename V>
-stlplus::hash_iterator<K,T,H,E,V>::hash_iterator(const stlplus::hash<K,T,H,E>* owner, unsigned bin, stlplus::hash_element<K,T>* element) :
+hash_iterator<K,T,H,E,V>::hash_iterator(const hash<K,T,H,E>* owner, unsigned bin, hash_element<K,T>* element) :
   m_owner(owner), m_bin(bin), m_element(element)
 {
   if (!element)
@@ -104,27 +102,27 @@ stlplus::hash_iterator<K,T,H,E,V>::hash_iterator(const stlplus::hash<K,T,H,E>* o
 // destructor
 
 template<typename K, typename T, class H, class E, typename V>
-stlplus::hash_iterator<K,T,H,E,V>::~hash_iterator(void)
+hash_iterator<K,T,H,E,V>::~hash_iterator(void)
 {
 }
 
 // validity tests
 
 template<typename K, typename T, class H, class E, typename V>
-bool stlplus::hash_iterator<K,T,H,E,V>::null(void) const
+bool hash_iterator<K,T,H,E,V>::null(void) const
 {
   return m_owner == 0;
 }
 
 template<typename K, typename T, class H, class E, typename V>
-bool stlplus::hash_iterator<K,T,H,E,V>::end(void) const
+bool hash_iterator<K,T,H,E,V>::end(void) const
 {
   if (null()) return false;
   return (m_bin == m_owner->m_bins) && m_element == 0;
 }
 
 template<typename K, typename T, class H, class E, typename V>
-bool stlplus::hash_iterator<K,T,H,E,V>::valid(void) const
+bool hash_iterator<K,T,H,E,V>::valid(void) const
 {
   return !null() && !end();
 }
@@ -132,7 +130,7 @@ bool stlplus::hash_iterator<K,T,H,E,V>::valid(void) const
 // owner method
 
 template<typename K, typename T, class H, class E, typename V>
-const stlplus::hash<K,T,H,E>* stlplus::hash_iterator<K,T,H,E,V>::owner(void) const
+const hash<K,T,H,E>* hash_iterator<K,T,H,E,V>::owner(void) const
 {
   return m_owner;
 }
@@ -140,23 +138,23 @@ const stlplus::hash<K,T,H,E>* stlplus::hash_iterator<K,T,H,E,V>::owner(void) con
 // mode conversions
 
 template<typename K, typename T, class H, class E, typename V>
-typename stlplus::hash_iterator<K,T,H,E,V>::const_iterator stlplus::hash_iterator<K,T,H,E,V>::constify(void) const
+typename hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
 {
-  return TYPENAME stlplus::hash_iterator<K,T,H,E,V>::const_iterator(m_owner, m_bin, m_element);
+  return TYPENAME hash_iterator<K,T,H,E,V>::const_iterator(m_owner, m_bin, m_element);
 }
 
 template<typename K, typename T, class H, class E, typename V>
-typename stlplus::hash_iterator<K,T,H,E,V>::iterator stlplus::hash_iterator<K,T,H,E,V>::deconstify(void) const
+typename hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
 {
-  return TYPENAME stlplus::hash_iterator<K,T,H,E,V>::iterator(m_owner, m_bin, m_element);
+  return TYPENAME hash_iterator<K,T,H,E,V>::iterator(m_owner, m_bin, m_element);
 }
 
 // increment operator looks for the next element in the table
 // if there isn't one, then this becomes an end() iterator - m_bin = m_bins and m_element = null
 
 template<typename K, typename T, class H, class E, typename V>
-typename stlplus::hash_iterator<K,T,H,E,V>::this_iterator& stlplus::hash_iterator<K,T,H,E,V>::operator ++ (void)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   if (m_element->m_next)
@@ -184,10 +182,10 @@ typename stlplus::hash_iterator<K,T,H,E,V>::this_iterator& stlplus::hash_iterato
 // post-increment is defined in terms of pre-increment
 
 template<typename K, typename T, class H, class E, typename V>
-typename stlplus::hash_iterator<K,T,H,E,V>::this_iterator stlplus::hash_iterator<K,T,H,E,V>::operator ++ (int)
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+typename hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
+  throw(null_dereference,end_dereference)
 {
-  typename stlplus::hash_iterator<K,T,H,E,V>::this_iterator old = *this;
+  typename hash_iterator<K,T,H,E,V>::this_iterator old = *this;
   ++(*this);
   return old;
 }
@@ -196,13 +194,13 @@ typename stlplus::hash_iterator<K,T,H,E,V>::this_iterator stlplus::hash_iterator
 // both iterators must be non-null and belong to the same table
 
 template<typename K, typename T, class H, class E, typename V>
-bool stlplus::hash_iterator<K,T,H,E,V>::operator == (const stlplus::hash_iterator<K,T,H,E,V>& r) const
+bool hash_iterator<K,T,H,E,V>::operator == (const hash_iterator<K,T,H,E,V>& r) const
 {
   return m_element == r.m_element;
 }
 
 template<typename K, typename T, class H, class E, typename V>
-bool stlplus::hash_iterator<K,T,H,E,V>::operator != (const stlplus::hash_iterator<K,T,H,E,V>& r) const
+bool hash_iterator<K,T,H,E,V>::operator != (const hash_iterator<K,T,H,E,V>& r) const
 {
   return m_element != r.m_element;
 }
@@ -210,16 +208,16 @@ bool stlplus::hash_iterator<K,T,H,E,V>::operator != (const stlplus::hash_iterato
 // iterator dereferencing is only legal on a non-null iterator
 
 template<typename K, typename T, class H, class E, typename V>
-V& stlplus::hash_iterator<K,T,H,E,V>::operator*(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+V& hash_iterator<K,T,H,E,V>::operator*(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return m_element->m_value;
 }
 
 template<typename K, typename T, class H, class E, typename V>
-V* stlplus::hash_iterator<K,T,H,E,V>::operator->(void) const
-  throw(stlplus::null_dereference,stlplus::end_dereference)
+V* hash_iterator<K,T,H,E,V>::operator->(void) const
+  throw(null_dereference,end_dereference)
 {
   check_valid();
   return &(m_element->m_value);
@@ -228,13 +226,8 @@ V* stlplus::hash_iterator<K,T,H,E,V>::operator->(void) const
 ////////////////////////////////////////////////////////////////////////////////
 // hash
 
-namespace stlplus
-{
-
 // totally arbitrary initial size used for auto-rehashed tables
 static unsigned hash_default_bins = 127;
-
-}
 
 // constructor
 // tests whether the user wants auto-rehash
@@ -242,16 +235,16 @@ static unsigned hash_default_bins = 127;
 // uses the user's size unless this is zero, in which case implement the default
 
 template<typename K, typename T, class H, class E>
-stlplus::hash<K,T,H,E>::hash(unsigned bins) :
+hash<K,T,H,E>::hash(unsigned bins) :
   m_rehash(bins), m_bins(bins > 0 ? bins : hash_default_bins), m_size(0), m_values(0)
 {
-  m_values = new stlplus::hash_element<K,T>*[m_bins];
+  m_values = new hash_element<K,T>*[m_bins];
   for (unsigned i = 0; i < m_bins; i++)
     m_values[i] = 0;
 }
 
 template<typename K, typename T, class H, class E>
-stlplus::hash<K,T,H,E>::~hash(void)
+hash<K,T,H,E>::~hash(void)
 {
   // delete all the elements
   clear();
@@ -263,10 +256,10 @@ stlplus::hash<K,T,H,E>::~hash(void)
 // as usual, implement the copy constructor i.t.o. the assignment operator
 
 template<typename K, typename T, class H, class E>
-stlplus::hash<K,T,H,E>::hash(const stlplus::hash<K,T,H,E>& right) :
+hash<K,T,H,E>::hash(const hash<K,T,H,E>& right) :
   m_rehash(right.m_rehash), m_bins(right.m_bins), m_size(0), m_values(0)
 {
-  m_values = new stlplus::hash_element<K,T>*[right.m_bins];
+  m_values = new hash_element<K,T>*[right.m_bins];
   // copy the rehash behaviour as well as the size
   for (unsigned i = 0; i < m_bins; i++)
     m_values[i] = 0;
@@ -279,7 +272,7 @@ stlplus::hash<K,T,H,E>::hash(const stlplus::hash<K,T,H,E>& right) :
 // the hash is self-copy safe, i.e. it is legal to say x = x;
 
 template<typename K, typename T, class H, class E>
-stlplus::hash<K,T,H,E>& stlplus::hash<K,T,H,E>::operator = (const stlplus::hash<K,T,H,E>& r)
+hash<K,T,H,E>& hash<K,T,H,E>::operator = (const hash<K,T,H,E>& r)
 {
   // make self-copy safe
   if (&r == this) return *this;
@@ -288,7 +281,7 @@ stlplus::hash<K,T,H,E>& stlplus::hash<K,T,H,E>::operator = (const stlplus::hash<
   // copy the elements across - remember that this is rehashing because the two
   // tables can be different sizes so there is no quick way of doing this by
   // copying the lists
-  for (typename stlplus::hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
+  for (typename hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
     insert(i->first, i->second);
   return *this;
 }
@@ -296,13 +289,13 @@ stlplus::hash<K,T,H,E>& stlplus::hash<K,T,H,E>::operator = (const stlplus::hash<
 // number of values in the hash
 
 template<typename K, typename T, class H, class E>
-bool stlplus::hash<K,T,H,E>::empty(void) const
+bool hash<K,T,H,E>::empty(void) const
 {
   return m_size == 0;
 }
 
 template<typename K, typename T, class H, class E>
-unsigned stlplus::hash<K,T,H,E>::size(void) const
+unsigned hash<K,T,H,E>::size(void) const
 {
   return m_size;
 }
@@ -310,16 +303,16 @@ unsigned stlplus::hash<K,T,H,E>::size(void) const
 // equality
 
 template<typename K, typename T, class H, class E>
-bool stlplus::hash<K,T,H,E>::operator == (const stlplus::hash<K,T,H,E>& right) const
+bool hash<K,T,H,E>::operator == (const hash<K,T,H,E>& right) const
 {
   // this table is the same as the right table if they are the same table!
   if (&right == this) return true;
   // they must be the same size to be equal
   if (m_size != right.m_size) return false;
   // now every key in this must be in right and have the same data
-  for (typename stlplus::hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
+  for (typename hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
   {
-    typename stlplus::hash<K,T,H,E>::const_iterator found = right.find(i->first);
+    typename hash<K,T,H,E>::const_iterator found = right.find(i->first);
     if (found == right.end()) return false;
     if (!(i->second == found->second)) return false;
   }
@@ -330,13 +323,13 @@ bool stlplus::hash<K,T,H,E>::operator == (const stlplus::hash<K,T,H,E>& right) c
 // setting the rehash size to 0 forces manual rehashing
 
 template<typename K, typename T, class H, class E>
-void stlplus::hash<K,T,H,E>::auto_rehash(void)
+void hash<K,T,H,E>::auto_rehash(void)
 {
   m_rehash = m_bins;
 }
 
 template<typename K, typename T, class H, class E>
-void stlplus::hash<K,T,H,E>::manual_rehash(void)
+void hash<K,T,H,E>::manual_rehash(void)
 {
   m_rehash = 0;
 }
@@ -348,7 +341,7 @@ void stlplus::hash<K,T,H,E>::manual_rehash(void)
 // passing any other value forces the number of bins
 
 template<typename K, typename T, class H, class E>
-void stlplus::hash<K,T,H,E>::rehash(unsigned bins)
+void hash<K,T,H,E>::rehash(unsigned bins)
 {
   // user specified size: just take the user's value
   // auto calculate: if the load is high, increase the size; else do nothing
@@ -367,10 +360,10 @@ void stlplus::hash<K,T,H,E>::rehash(unsigned bins)
   // set the new rehashing point if auto-rehashing is on
   if (m_rehash) m_rehash = new_bins;
   // move aside the old structure
-  stlplus::hash_element<K,T>** old_values = m_values;
+  hash_element<K,T>** old_values = m_values;
   unsigned old_bins = m_bins;
   // create a replacement structure
-  m_values = new stlplus::hash_element<K,T>*[new_bins];
+  m_values = new hash_element<K,T>*[new_bins];
   for (unsigned i = 0; i < new_bins; i++)
     m_values[i] = 0;
   m_bins = new_bins;
@@ -380,7 +373,7 @@ void stlplus::hash<K,T,H,E>::rehash(unsigned bins)
     while(old_values[j])
     {
       // unhook from the old structure
-      stlplus::hash_element<K,T>* current = old_values[j];
+      hash_element<K,T>* current = old_values[j];
       old_values[j] = current->m_next;
       // rehash using the stored un-modulused hash value
       unsigned hash_value = current->m_hash % m_bins;
@@ -397,7 +390,7 @@ void stlplus::hash<K,T,H,E>::rehash(unsigned bins)
 // this simplifies to the total elements divided by the number of bins
 
 template<typename K, typename T, class H, class E>
-float stlplus::hash<K,T,H,E>::loading(void) const
+float hash<K,T,H,E>::loading(void) const
 {
   return (float)m_size / (float)m_bins;
 }
@@ -405,15 +398,15 @@ float stlplus::hash<K,T,H,E>::loading(void) const
 // remove all elements from the table
 
 template<typename K, typename T, class H, class E>
-void stlplus::hash<K,T,H,E>::erase(void)
+void hash<K,T,H,E>::erase(void)
 {
   // unhook the list elements and destroy them
   for (unsigned i = 0; i < m_bins; i++)
   {
-    stlplus::hash_element<K,T>* current = m_values[i];
+    hash_element<K,T>* current = m_values[i];
     while(current)
     {
-      stlplus::hash_element<K,T>* next = current->m_next;
+      hash_element<K,T>* next = current->m_next;
       delete current;
       current = next;
     }
@@ -425,13 +418,13 @@ void stlplus::hash<K,T,H,E>::erase(void)
 // test for whether a key is present in the table
 
 template<typename K, typename T, class H, class E>
-bool stlplus::hash<K,T,H,E>::present(const K& key) const
+bool hash<K,T,H,E>::present(const K& key) const
 {
   return find(key) != end();
 }
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::size_type stlplus::hash<K,T,H,E>::count(const K& key) const
+typename hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
 {
   return present() ? 1 : 0;
 }
@@ -439,7 +432,7 @@ typename stlplus::hash<K,T,H,E>::size_type stlplus::hash<K,T,H,E>::count(const K
 // add a key and data element to the table - defined in terms of the general-purpose pair insert function
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::insert(const K& key, const T& data)
+typename hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key, const T& data)
 {
   return insert(std::pair<const K,T>(key,data)).first;
 }
@@ -448,7 +441,7 @@ typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::insert(const K
 // this removes any old value with the same key since there is no multihash functionality
 
 template<typename K, typename T, class H, class E>
-std::pair<TYPENAME stlplus::hash<K,T,H,E>::iterator, bool> stlplus::hash<K,T,H,E>::insert(const std::pair<const K,T>& value)
+std::pair<TYPENAME hash<K,T,H,E>::iterator, bool> hash<K,T,H,E>::insert(const std::pair<const K,T>& value)
 {
   // if auto-rehash is enabled, implement the auto-rehash before inserting the new value
   // the table is rehashed if this insertion makes the loading exceed 1.0
@@ -459,8 +452,8 @@ std::pair<TYPENAME stlplus::hash<K,T,H,E>::iterator, bool> stlplus::hash<K,T,H,E
   bool inserted = true;
   // unhook any previous value with this key
   // this has been inlined from erase(key) so that the hash value is not calculated twice
-  stlplus::hash_element<K,T>* previous = 0;
-  for (stlplus::hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+  hash_element<K,T>* previous = 0;
+  for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
   {
     // first check the full stored hash value
     if (current->m_hash != hash_value_full) continue;
@@ -483,19 +476,19 @@ std::pair<TYPENAME stlplus::hash<K,T,H,E>::iterator, bool> stlplus::hash<K,T,H,E
     break;
   }
   // now hook in a new list element at the start of the list for this hash value
-  stlplus::hash_element<K,T>* new_item = new stlplus::hash_element<K,T>(value, hash_value_full);
+  hash_element<K,T>* new_item = new hash_element<K,T>(value, hash_value_full);
   new_item->m_next = m_values[hash_value];
   m_values[hash_value] = new_item;
   // remember to increment the size count
   m_size++;
   // construct an iterator from the list node, and return whether inserted
-  return std::make_pair(TYPENAME stlplus::hash<K,T,H,E>::iterator(this,hash_value,new_item), inserted);
+  return std::make_pair(TYPENAME hash<K,T,H,E>::iterator(this,hash_value,new_item), inserted);
 }
 
 // insert a key with an empty data field ready to be filled in later
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::insert(const K& key)
+typename hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key)
 {
   return insert(key,T());
 }
@@ -503,14 +496,14 @@ typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::insert(const K
 // remove a key from the table - return true if the key was found and removed, false if it wasn't present
 
 template<typename K, typename T, class H, class E>
-bool stlplus::hash<K,T,H,E>::erase(const K& key)
+bool hash<K,T,H,E>::erase(const K& key)
 {
   unsigned hash_value_full = H()(key);
   unsigned hash_value = hash_value_full % m_bins;
   // scan the list for an element with this key
   // need to keep a previous pointer because the lists are single-linked
-  stlplus::hash_element<K,T>* previous = 0;
-  for (stlplus::hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+  hash_element<K,T>* previous = 0;
+  for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
   {
     // first check the full stored hash value
     if (current->m_hash != hash_value_full) continue;
@@ -533,7 +526,7 @@ bool stlplus::hash<K,T,H,E>::erase(const K& key)
 }
 
 template<typename K, typename T, class H, class E>
-void stlplus::hash<K,T,H,E>::clear(void)
+void hash<K,T,H,E>::clear(void)
 {
   erase();
 }
@@ -542,29 +535,29 @@ void stlplus::hash<K,T,H,E>::clear(void)
 // if the search fails, returns an end() iterator
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::const_iterator stlplus::hash<K,T,H,E>::find(const K& key) const
+typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
 {
   // scan the list for this key's hash value for the element with a matching key
   unsigned hash_value_full = H()(key);
   unsigned hash_value = hash_value_full % m_bins;
-  for (stlplus::hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+  for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
   {
     if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-      return TYPENAME stlplus::hash<K,T,H,E>::const_iterator(this, hash_value, current);
+      return TYPENAME hash<K,T,H,E>::const_iterator(this, hash_value, current);
   }
   return end();
 }
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::find(const K& key)
+typename hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
 {
   // scan the list for this key's hash value for the element with a matching key
   unsigned hash_value_full = H()(key);
   unsigned hash_value = hash_value_full % m_bins;
-  for (stlplus::hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+  for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
   {
     if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-      return TYPENAME stlplus::hash<K,T,H,E>::iterator(this, hash_value, current);
+      return TYPENAME hash<K,T,H,E>::iterator(this, hash_value, current);
   }
   return end();
 }
@@ -576,21 +569,21 @@ typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::find(const K& 
 // the non-const version is compatible with the behaviour of the map
 
 template<typename K, typename T, class H, class E>
-const T& stlplus::hash<K,T,H,E>::operator[] (const K& key) const
+const T& hash<K,T,H,E>::operator[] (const K& key) const
 {
   // this const version cannot change the hash, so has to raise an exception if the key is missing
   // TODO make this a proper exception with a throw declaration
-  typename stlplus::hash<K,T,H,E>::const_iterator found = find(key);
+  typename hash<K,T,H,E>::const_iterator found = find(key);
 //  if (found == end())
 //    throw what;
   return found->second;
 }
 
 template<typename K, typename T, class H, class E>
-T& stlplus::hash<K,T,H,E>::operator[] (const K& key)
+T& hash<K,T,H,E>::operator[] (const K& key)
 {
   // this non-const version can change the hash, so creates a new element if the key is missing
-  typename stlplus::hash<K,T,H,E>::iterator found = find(key);
+  typename hash<K,T,H,E>::iterator found = find(key);
   if (found == end())
     found = insert(key);
   return found->second;
@@ -599,27 +592,30 @@ T& stlplus::hash<K,T,H,E>::operator[] (const K& key)
 // iterators
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::const_iterator stlplus::hash<K,T,H,E>::begin(void) const
+typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::begin(void) const
 {
-  return TYPENAME stlplus::hash<K,T,H,E>::const_iterator(this,0,0);
+  return TYPENAME hash<K,T,H,E>::const_iterator(this,0,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::begin(void)
+typename hash<K,T,H,E>::iterator hash<K,T,H,E>::begin(void)
 {
-  return TYPENAME stlplus::hash<K,T,H,E>::iterator(this,0,0);
+  return TYPENAME hash<K,T,H,E>::iterator(this,0,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::const_iterator stlplus::hash<K,T,H,E>::end(void) const
+typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
 {
-  return TYPENAME stlplus::hash<K,T,H,E>::const_iterator(this,m_bins,0);
+  return TYPENAME hash<K,T,H,E>::const_iterator(this,m_bins,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename stlplus::hash<K,T,H,E>::iterator stlplus::hash<K,T,H,E>::end(void)
+typename hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
 {
-  return TYPENAME stlplus::hash<K,T,H,E>::iterator(this,m_bins,0);
+  return TYPENAME hash<K,T,H,E>::iterator(this,m_bins,0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus
+

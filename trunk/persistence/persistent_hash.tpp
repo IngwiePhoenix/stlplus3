@@ -7,14 +7,17 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
+namespace stlplus
+{
+
 ////////////////////////////////////////////////////////////////////////////////
 
 template<typename K, typename T, typename H, typename E, typename DK, typename DT>
-void stlplus::dump_hash(stlplus::dump_context& context, const stlplus::hash<K,T,H,E>& data, DK key_fn, DT val_fn)
-  throw(stlplus::persistent_dump_failed)
+void dump_hash(dump_context& context, const hash<K,T,H,E>& data, DK key_fn, DT val_fn)
+  throw(persistent_dump_failed)
 {
-  stlplus::dump_unsigned(context,data.size());
-  for (typename stlplus::hash<K,T,H,E>::const_iterator i = data.begin(); i != data.end(); i++)
+  dump_unsigned(context,data.size());
+  for (typename hash<K,T,H,E>::const_iterator i = data.begin(); i != data.end(); i++)
   {
     key_fn(context,i->first);
     val_fn(context,i->second);
@@ -22,12 +25,12 @@ void stlplus::dump_hash(stlplus::dump_context& context, const stlplus::hash<K,T,
 }
 
 template<typename K, typename T, typename H, typename E, typename RK, typename RT>
-void stlplus::restore_hash(stlplus::restore_context& context, stlplus::hash<K,T,H,E>& data, RK key_fn, RT val_fn)
-  throw(stlplus::persistent_restore_failed)
+void restore_hash(restore_context& context, hash<K,T,H,E>& data, RK key_fn, RT val_fn)
+  throw(persistent_restore_failed)
 {
   data.erase();
   unsigned size = 0;
-  stlplus::restore_unsigned(context,size);
+  restore_unsigned(context,size);
   for (unsigned j = 0; j < size; j++)
   {
     K key;
@@ -37,3 +40,5 @@ void stlplus::restore_hash(stlplus::restore_context& context, stlplus::hash<K,T,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus
