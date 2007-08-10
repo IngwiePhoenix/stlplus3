@@ -75,7 +75,9 @@ bool compare (bitset_vector& left, bitset_vector& right)
     std::cerr << "different size - left = " << left.size() << " right = " << right.size() << std::endl;
     result = false;
   }
-  for (unsigned j = 0; j < std::min(left.size(),right.size()); j++)
+  else
+  {
+  for (unsigned j = 0; j < left.size(); j++)
   {
     if (left[j] != right[j])
     {
@@ -86,6 +88,7 @@ bool compare (bitset_vector& left, bitset_vector& right)
       std::cerr << std::endl;
       result = false;
     }
+  }
   }
   return result;
 }

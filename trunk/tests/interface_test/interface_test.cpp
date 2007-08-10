@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "smart_ptr.hpp"
-#include "persistent_polymorph.hpp"
+#include "persistent_interface.hpp"
 #include "persistent_string.hpp"
 #include "persistent_vector.hpp"
 #include "persistent_shortcuts.hpp"
@@ -157,7 +157,9 @@ bool compare(const base_vector& left, const base_vector& right)
     std::cerr << "different size - left = " << left.size() << " right = " << right.size() << std::endl;
     result = false;
   }
-  for (unsigned j = 0; j < std::min(left.size(),right.size()); j++)
+  else
+  {
+  for (unsigned j = 0; j < left.size(); j++)
   {
     if (left[j].null() || right[j].null())
     {
@@ -172,6 +174,7 @@ bool compare(const base_vector& left, const base_vector& right)
       std::cerr << "base[" << j << "] left = \"" << *left[j] << "\" is different from right = \"" << *right[j] << "\"" << std::endl;
       result = false;
     }
+  }
   }
   return result;
 }

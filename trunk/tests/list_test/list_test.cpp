@@ -14,11 +14,11 @@ typedef std::list<std::string> string_list;
 
 void dump_string_list(stlplus::dump_context& context, const string_list& data)
 {
-  dump_list(context,data,stlplus::dump_string);
+  stlplus::dump_list(context,data,stlplus::dump_string);
 }
 void restore_string_list(stlplus::restore_context& context, string_list& data)
 {
-  restore_list(context,data,stlplus::restore_string);
+  stlplus::restore_list(context,data,stlplus::restore_string);
 }
 
 bool compare(const string_list& left, const string_list& right)

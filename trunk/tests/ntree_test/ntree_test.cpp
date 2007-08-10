@@ -197,7 +197,7 @@ int main(unsigned argc, char* argv[])
     // now restore the same file and compare
     std::cerr << "restoring" << std::endl;
     mapped_tree restored;
-    restore_from_file(DATA,restored,restore_mapped_tree,0);
+    stlplus::restore_from_file(DATA,restored,restore_mapped_tree,0);
     std::cerr << "restored = " << std::endl << restored;
     result &= compare(data,restored);
 

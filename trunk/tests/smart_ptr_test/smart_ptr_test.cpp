@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
     print("s2", s2);
     print("s1", s1);
     // create a pair containing two aliases
-    string_ptr_pair p1 = make_pair(s1,s1);
+    string_ptr_pair p1 = std::make_pair(s1,s1);
     print("make_pair(s1,s1)",p1);
     // dump/restore
     stlplus::dump_to_file(p1, DATA, dump_string_ptr_pair, 0);

@@ -73,10 +73,12 @@ int main(unsigned argc, char* argv[])
   catch(std::exception& except)
   {
     std::cerr << "caught standard exception " << except.what() << std::endl;
+    result = false;
   }
   catch(...)
   {
     std::cerr << "caught unknown exception" << std::endl;
+    result = false;
   }
   if (result)
     std::cerr << "test passed" << std::endl;

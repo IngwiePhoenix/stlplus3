@@ -53,12 +53,15 @@ bool compare (bool_vector_vector& left, bool_vector_vector& right)
     std::cerr << "different size - left = " << left.size() << " right = " << right.size() << std::endl;
     result = false;
   }
-  for (unsigned j = 0; j < std::min(left.size(),right.size()); j++)
+  else
   {
-    if (left[j] != right[j])
+    for(unsigned j = 0; j < left.size(); j++)
     {
-      std::cerr << "vector[" << j << "] is different: left = " << left[j] << " right = " << right[j] << std::endl;
-      result = false;
+      if (left[j] != right[j])
+      {
+        std::cerr << "vector[" << j << "] is different: left = " << left[j] << " right = " << right[j] << std::endl;
+        result = false;
+      }
     }
   }
   return result;
