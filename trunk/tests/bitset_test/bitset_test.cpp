@@ -2,6 +2,7 @@
 #include "persistent_vector.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
+#include "strings_stl.hpp"
 #include <string>
 #include <bitset>
 #include <vector>
@@ -11,8 +12,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define SIZE 1000
-#define COUNT 1000
+#define SIZE 50
+#define COUNT 100
 #define DATA "bitset_test.tmp"
 #define MASTER "bitset_test.dump"
 
@@ -20,17 +21,9 @@
 
 typedef std::bitset<SIZE> bitset_N;
 
-std::string bitset_to_string(const bitset_N& data)
+std::ostream& operator<<(std::ostream& str, const bitset_N& data)
 {
-  std::string result;
-  for (unsigned i = data.size(); i--; )
-    result += data[i] ? '1' : '0';
-  return result;
-}
-
-std::ostream& print(std::ostream& str, const bitset_N& data)
-{
-  return str << bitset_to_string(data);
+  return str << stlplus::bitset_to_string(data);
 }
 
 void dump_bitset_N(stlplus::dump_context& str, const bitset_N& data)
@@ -47,14 +40,9 @@ void restore_bitset_N(stlplus::restore_context& str, bitset_N& data)
 
 typedef std::vector<bitset_N> bitset_vector;
 
-std::ostream& print(std::ostream& str, const bitset_vector& values)
+std::ostream& operator<<(std::ostream& str, const bitset_vector& values)
 {
-  for (unsigned i = 0; i < values.size(); i++)
-  {
-    if (i > 0) str << ",";
-    print(str, values[i]);
-  }
-  return str;
+  return str << stlplus::vector_to_string(values, ",", stlplus::bitset_to_string<SIZE>);
 }
 
 void dump_bitset_vector(stlplus::dump_context& str, const bitset_vector& data)
@@ -81,11 +69,7 @@ bool compare (bitset_vector& left, bitset_vector& right)
   {
     if (left[j] != right[j])
     {
-      std::cerr << "bitset[" << j << "] is different: left = ";
-      print(std::cerr, left[j]);
-      std::cerr << " right = ";
-      print(std::cerr, right[j]);
-      std::cerr << std::endl;
+      std::cerr << "bitset[" << j << "] is different: left = " << left[j] << " right = " << right[j] << std::endl;
       result = false;
     }
   }
@@ -101,10 +85,12 @@ int main(unsigned argc, char* argv[])
   try
   {
     // first build a vector of bit-sets and dump it
-    std::cerr << "dumping" << std::endl;
+    std::cerr << "building" << std::endl;
     bitset_vector data;
     for (unsigned long i = 0; i < COUNT; i++)
       data.push_back(i);
+    std::cerr << data << std::endl;
+    std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_bitset_vector,0);
 
     // now restore a copy and compare it
