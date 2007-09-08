@@ -526,7 +526,7 @@ private:
   friend class digraph_arc_iterator<NT,AT,const AT&, const AT*>;
 
   typedef std::set<const_iterator> const_iterator_set;
-  typedef typename const_iterator_set::iterator const_iterator_set_iterator;
+  typedef TYPENAME const_iterator_set::iterator const_iterator_set_iterator;
 
   bool path_exists_r(const_iterator from, const_iterator to, const_iterator_set& visited, arc_select_fn) const
     throw(wrong_object,null_dereference,end_dereference);

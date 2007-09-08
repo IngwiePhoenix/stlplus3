@@ -174,19 +174,19 @@ const digraph<NT,AT>* digraph_iterator<NT,AT,NRef,NPtr>::owner(void) const
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_iterator<NT,AT,NRef,NPtr>::constify (void) const
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_iterator<NT,AT,NRef,NPtr>::constify (void) const
 {
   return TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner,m_node);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::iterator digraph_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::iterator digraph_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
 {
   return TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::iterator(m_owner,m_node);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (void)
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (void)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -195,7 +195,7 @@ typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,A
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (int)
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (int)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -205,7 +205,7 @@ typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator -- (void)
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator -- (void)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -214,7 +214,7 @@ typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,A
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator -- (int)
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator -- (int)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -242,7 +242,7 @@ bool digraph_iterator<NT,AT,NRef,NPtr>::operator < (const TYPENAME digraph_itera
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::reference digraph_iterator<NT,AT,NRef,NPtr>::operator*(void) const
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::reference digraph_iterator<NT,AT,NRef,NPtr>::operator*(void) const
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -250,7 +250,7 @@ typename digraph_iterator<NT,AT,NRef,NPtr>::reference digraph_iterator<NT,AT,NRe
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_iterator<NT,AT,NRef,NPtr>::pointer digraph_iterator<NT,AT,NRef,NPtr>::operator->(void) const
+TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::pointer digraph_iterator<NT,AT,NRef,NPtr>::operator->(void) const
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -357,19 +357,19 @@ const digraph<NT,AT>* digraph_arc_iterator<NT,AT,NRef,NPtr>::owner(void) const
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::constify (void) const
+TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::constify (void) const
 {
   return TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::const_iterator(m_owner, m_arc);
 }
 
 template<typename NT, typename AT, typename NRef, typename NPtr>
-typename digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
+TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator digraph_arc_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
 {
   return TYPENAME digraph_arc_iterator<NT,AT,NRef,NPtr>::iterator(m_owner, m_arc);
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (void)
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (void)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -378,7 +378,7 @@ typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_itera
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (int)
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator ++ (int)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -388,7 +388,7 @@ typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterat
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (void)
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (void)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -397,7 +397,7 @@ typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& digraph_arc_itera
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (int)
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator digraph_arc_iterator<NT,AT,ARef,APtr>::operator -- (int)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -425,7 +425,7 @@ bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator < (const TYPENAME digraph_a
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::reference digraph_arc_iterator<NT,AT,ARef,APtr>::operator*(void) const
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::reference digraph_arc_iterator<NT,AT,ARef,APtr>::operator*(void) const
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -433,7 +433,7 @@ typename digraph_arc_iterator<NT,AT,ARef,APtr>::reference digraph_arc_iterator<N
 }
 
 template<typename NT, typename AT, typename ARef, typename APtr>
-typename digraph_arc_iterator<NT,AT,ARef,APtr>::pointer digraph_arc_iterator<NT,AT,ARef,APtr>::operator->(void) const
+TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::pointer digraph_arc_iterator<NT,AT,ARef,APtr>::operator->(void) const
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -458,10 +458,10 @@ digraph_arc<NT,AT>* digraph_arc_iterator<NT,AT,NRef,NPtr>::get_arc(void) const
 // subtype utilities
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::constify_arcs(const TYPENAME digraph<NT,AT>::arc_vector& arcs) const
+TYPENAME digraph<NT,AT>::const_arc_vector digraph<NT,AT>::constify_arcs(const TYPENAME digraph<NT,AT>::arc_vector& arcs) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_arc_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < arcs.size(); i++)
   {
     arcs[i].check(this);
@@ -471,10 +471,10 @@ typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::constify_arcs(const TY
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_vector digraph<NT,AT>::deconstify_arcs(const TYPENAME digraph<NT,AT>::const_arc_vector& arcs) const
+TYPENAME digraph<NT,AT>::arc_vector digraph<NT,AT>::deconstify_arcs(const TYPENAME digraph<NT,AT>::const_arc_vector& arcs) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::arc_vector result;
+  TYPENAME digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < arcs.size(); i++)
   {
     arcs[i].check(this);
@@ -484,30 +484,30 @@ typename digraph<NT,AT>::arc_vector digraph<NT,AT>::deconstify_arcs(const TYPENA
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_path_vector digraph<NT,AT>::constify_paths(const TYPENAME digraph<NT,AT>::path_vector& paths) const
+TYPENAME digraph<NT,AT>::const_path_vector digraph<NT,AT>::constify_paths(const TYPENAME digraph<NT,AT>::path_vector& paths) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_path_vector result;
+  TYPENAME digraph<NT,AT>::const_path_vector result;
   for (unsigned i = 0; i < paths.size(); i++)
     result.push_back(constify_arcs(paths[i]));
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::path_vector digraph<NT,AT>::deconstify_paths(const TYPENAME digraph<NT,AT>::const_path_vector& paths) const
+TYPENAME digraph<NT,AT>::path_vector digraph<NT,AT>::deconstify_paths(const TYPENAME digraph<NT,AT>::const_path_vector& paths) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::path_vector result;
+  TYPENAME digraph<NT,AT>::path_vector result;
   for (unsigned i = 0; i < paths.size(); i++)
     result.push_back(deconstify_arcs(paths[i]));
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::constify_nodes(const TYPENAME digraph<NT,AT>::node_vector& nodes) const
+TYPENAME digraph<NT,AT>::const_node_vector digraph<NT,AT>::constify_nodes(const TYPENAME digraph<NT,AT>::node_vector& nodes) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_node_vector result;
+  TYPENAME digraph<NT,AT>::const_node_vector result;
   for (unsigned i = 0; i < nodes.size(); i++)
   {
     nodes[i].check(this);
@@ -517,10 +517,10 @@ typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::constify_nodes(const 
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector digraph<NT,AT>::deconstify_nodes(const TYPENAME digraph<NT,AT>::const_node_vector& nodes) const
+TYPENAME digraph<NT,AT>::node_vector digraph<NT,AT>::deconstify_nodes(const TYPENAME digraph<NT,AT>::const_node_vector& nodes) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::node_vector result;
+  TYPENAME digraph<NT,AT>::node_vector result;
   for (unsigned i = 0; i < nodes.size(); i++)
   {
     nodes[i].check(this);
@@ -584,10 +584,10 @@ digraph<NT,AT>& digraph<NT,AT>::operator=(const digraph<NT,AT>& r)
   clear();
   // first phase is to copy the nodes, creating a map of cross references from the old nodes to their new equivalents
   std::map<TYPENAME digraph<NT,AT>::const_iterator, TYPENAME digraph<NT,AT>::iterator> xref;
-  for (typename digraph<NT,AT>::const_iterator n = r.begin(); n != r.end(); n++)
+  for (TYPENAME digraph<NT,AT>::const_iterator n = r.begin(); n != r.end(); n++)
     xref[n] = insert(*n);
   // second phase is to copy the arcs, using the map to convert the old to and from nodes to the new nodes
-  for (typename digraph<NT,AT>::const_arc_iterator a = r.arc_begin(); a != r.arc_end(); a++)
+  for (TYPENAME digraph<NT,AT>::const_arc_iterator a = r.arc_begin(); a != r.arc_end(); a++)
     arc_insert(xref[r.arc_from(a)],xref[r.arc_to(a)],*a);
   return *this;
 }
@@ -605,13 +605,13 @@ template<typename NT, typename AT>
 unsigned digraph<NT,AT>::size(void) const
 {
   unsigned count = 0;
-  for (typename digraph<NT,AT>::const_iterator i = begin(); i != end(); i++)
+  for (TYPENAME digraph<NT,AT>::const_iterator i = begin(); i != end(); i++)
     count++;
   return count;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::insert(const NT& node_data)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::insert(const NT& node_data)
 {
   // insert at the end of the list
   digraph_node<NT,AT>* new_node = new digraph_node<NT,AT>(node_data);
@@ -623,7 +623,7 @@ typename digraph<NT,AT>::iterator digraph<NT,AT>::insert(const NT& node_data)
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::erase(TYPENAME digraph<NT,AT>::iterator iter)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::erase(TYPENAME digraph<NT,AT>::iterator iter)
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
@@ -649,30 +649,30 @@ template<typename NT, typename AT>
 void digraph<NT,AT>::clear(void)
 {
   // clearing the nodes also clears the arcs
-  for (typename digraph<NT,AT>::iterator i = begin(); i != end(); )
+  for (TYPENAME digraph<NT,AT>::iterator i = begin(); i != end(); )
     i = erase(i);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_iterator digraph<NT,AT>::begin(void) const
+TYPENAME digraph<NT,AT>::const_iterator digraph<NT,AT>::begin(void) const
 {
   return TYPENAME digraph<NT,AT>::const_iterator(this,m_nodes->m_next);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::begin(void)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::begin(void)
 {
   return TYPENAME digraph<NT,AT>::iterator(this,m_nodes->m_next);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_iterator digraph<NT,AT>::end(void) const
+TYPENAME digraph<NT,AT>::const_iterator digraph<NT,AT>::end(void) const
 {
   return TYPENAME digraph<NT,AT>::const_iterator(this,m_nodes);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::end(void)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::end(void)
 {
   return TYPENAME digraph<NT,AT>::iterator(this,m_nodes);
 }
@@ -694,7 +694,7 @@ unsigned digraph<NT,AT>::fanin(TYPENAME digraph<NT,AT>::iterator iter)
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
+TYPENAME digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
   throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
@@ -703,7 +703,7 @@ typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::input(TYPENAME digra
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::input(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
   throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
@@ -728,7 +728,7 @@ unsigned digraph<NT,AT>::fanout(TYPENAME digraph<NT,AT>::iterator iter)
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
+TYPENAME digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::const_iterator iter, unsigned i) const
   throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
@@ -737,7 +737,7 @@ typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::output(TYPENAME digr
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT,AT>::iterator iter, unsigned i)
   throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
 {
   iter.check(this);
@@ -746,44 +746,44 @@ typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::output(TYPENAME digraph<NT
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::const_iterator node) const
+TYPENAME digraph<NT,AT>::const_arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::const_iterator node) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename digraph<NT,AT>::const_arc_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < fanin(node); i++)
     result.push_back(input(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::iterator node)
+TYPENAME digraph<NT,AT>::arc_vector digraph<NT,AT>::inputs(TYPENAME digraph<NT,AT>::iterator node)
   throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename digraph<NT,AT>::arc_vector result;
+  TYPENAME digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < fanin(node); i++)
     result.push_back(input(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::const_iterator node) const
+TYPENAME digraph<NT,AT>::const_arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::const_iterator node) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename digraph<NT,AT>::const_arc_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector result;
   for (unsigned i = 0; i < fanout(node); i++)
     result.push_back(output(node,i));
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::iterator node)
+TYPENAME digraph<NT,AT>::arc_vector digraph<NT,AT>::outputs(TYPENAME digraph<NT,AT>::iterator node)
   throw(wrong_object,null_dereference,end_dereference)
 {
   node.check(this);
-  typename digraph<NT,AT>::arc_vector result;
+  TYPENAME digraph<NT,AT>::arc_vector result;
   for (unsigned i = 0; i < fanout(node); i++)
     result.push_back(output(node,i));
   return result;
@@ -862,13 +862,13 @@ template<typename NT, typename AT>
 unsigned digraph<NT,AT>::arc_size(void) const
 {
   unsigned count = 0;
-  for (typename digraph<NT,AT>::const_arc_iterator i = arc_begin(); i != arc_end(); i++)
+  for (TYPENAME digraph<NT,AT>::const_arc_iterator i = arc_begin(); i != arc_end(); i++)
     count++;
   return count;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_insert(TYPENAME digraph<NT,AT>::iterator from,
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_insert(TYPENAME digraph<NT,AT>::iterator from,
                                                                                    TYPENAME digraph<NT,AT>::iterator to,
                                                                  const AT& arc_data)
   throw(wrong_object,null_dereference,end_dereference)
@@ -888,19 +888,19 @@ typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_insert(TYPENAME digrap
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_erase(TYPENAME digraph<NT,AT>::arc_iterator iter)
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_erase(TYPENAME digraph<NT,AT>::arc_iterator iter)
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
   // first remove this arc's pointers from the from/to nodes
-  for (typename std::vector<digraph_arc<NT,AT>*>::iterator i = iter.m_arc->m_to->m_inputs.begin(); i != iter.m_arc->m_to->m_inputs.end(); )
+  for (TYPENAME std::vector<digraph_arc<NT,AT>*>::iterator i = iter.m_arc->m_to->m_inputs.begin(); i != iter.m_arc->m_to->m_inputs.end(); )
   {
     if (*i == iter.m_arc)
       i = iter.m_arc->m_to->m_inputs.erase(i);
     else
       i++;
   }
-  for (typename std::vector<digraph_arc<NT,AT>*>::iterator o = iter.m_arc->m_from->m_outputs.begin(); o != iter.m_arc->m_from->m_outputs.end(); )
+  for (TYPENAME std::vector<digraph_arc<NT,AT>*>::iterator o = iter.m_arc->m_from->m_outputs.begin(); o != iter.m_arc->m_from->m_outputs.end(); )
   {
     if (*o == iter.m_arc)
       o = iter.m_arc->m_from->m_outputs.erase(o);
@@ -918,36 +918,36 @@ typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_erase(TYPENAME digraph
 template<typename NT, typename AT>
 void digraph<NT,AT>::arc_clear(void)
 {
-  for (typename digraph<NT,AT>::arc_iterator a = arc_begin(); a != arc_end(); )
+  for (TYPENAME digraph<NT,AT>::arc_iterator a = arc_begin(); a != arc_end(); )
     a = arc_erase(a);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_begin(void) const
+TYPENAME digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_begin(void) const
 {
   return TYPENAME digraph<NT,AT>::const_arc_iterator(this,m_arcs->m_next);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_begin(void)
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_begin(void)
 {
   return TYPENAME digraph<NT,AT>::arc_iterator(this,m_arcs->m_next);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_end(void) const
+TYPENAME digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::arc_end(void) const
 {
   return TYPENAME digraph<NT,AT>::const_arc_iterator(this,m_arcs);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_end(void)
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::arc_end(void)
 {
   return TYPENAME digraph<NT,AT>::arc_iterator(this,m_arcs);
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
+TYPENAME digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
@@ -955,7 +955,7 @@ typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_from(TYPENAME digrap
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::arc_iterator iter)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,AT>::arc_iterator iter)
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
@@ -963,7 +963,7 @@ typename digraph<NT,AT>::iterator digraph<NT,AT>::arc_from(TYPENAME digraph<NT,A
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
+TYPENAME digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
@@ -971,7 +971,7 @@ typename digraph<NT,AT>::const_iterator digraph<NT,AT>::arc_to(TYPENAME digraph<
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::arc_iterator iter)
+TYPENAME digraph<NT,AT>::iterator digraph<NT,AT>::arc_to(TYPENAME digraph<NT,AT>::arc_iterator iter)
   throw(wrong_object,null_dereference,end_dereference)
 {
   iter.check(this);
@@ -995,7 +995,7 @@ void digraph<NT,AT>::arc_move_from(TYPENAME digraph<NT,AT>::arc_iterator arc,
 {
   arc.check(this);
   from.check(this);
-  for (typename std::vector<digraph_arc<NT,AT>*>::iterator o = arc.m_arc->m_from->m_outputs.begin(); o != arc.m_arc->m_from->m_outputs.end(); )
+  for (TYPENAME std::vector<digraph_arc<NT,AT>*>::iterator o = arc.m_arc->m_from->m_outputs.begin(); o != arc.m_arc->m_from->m_outputs.end(); )
   {
     if (*o == arc.m_arc)
       o = arc.m_arc->m_from->m_outputs.erase(o);
@@ -1013,7 +1013,7 @@ void digraph<NT,AT>::arc_move_to(TYPENAME digraph<NT,AT>::arc_iterator arc,
 {
   arc.check(this);
   to.check(this);
-  for (typename std::vector<digraph_arc<NT,AT>*>::iterator i = arc.m_arc->m_to->m_inputs.begin(); i != arc.m_arc->m_to->m_inputs.end(); )
+  for (TYPENAME std::vector<digraph_arc<NT,AT>*>::iterator i = arc.m_arc->m_to->m_inputs.begin(); i != arc.m_arc->m_to->m_inputs.end(); )
   {
     if (*i == arc.m_arc)
       i = arc.m_arc->m_to->m_inputs.erase(i);
@@ -1051,7 +1051,7 @@ bool digraph<NT,AT>::adjacent(TYPENAME digraph<NT,AT>::iterator from,
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::const_iterator from,
+TYPENAME digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::const_iterator from,
                                                                                            TYPENAME digraph<NT,AT>::const_iterator to) const
   throw(wrong_object,null_dereference,end_dereference)
 {
@@ -1066,7 +1066,7 @@ typename digraph<NT,AT>::const_arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAM
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::iterator from,
+TYPENAME digraph<NT,AT>::arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digraph<NT,AT>::iterator from,
                                                                                      TYPENAME digraph<NT,AT>::iterator to)
   throw(wrong_object,null_dereference,end_dereference)
 {
@@ -1074,13 +1074,13 @@ typename digraph<NT,AT>::arc_iterator digraph<NT,AT>::adjacent_arc(TYPENAME digr
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::const_iterator from,
+TYPENAME digraph<NT,AT>::const_arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::const_iterator from,
                                                                                           TYPENAME digraph<NT,AT>::const_iterator to) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   from.check(this);
   to.check(this);
-  typename digraph<NT,AT>::const_arc_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector result;
   for (unsigned arc = 0; arc < fanout(from); arc++)
   {
     if (arc_to(output(from, arc)) == to)
@@ -1090,7 +1090,7 @@ typename digraph<NT,AT>::const_arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::iterator from,
+TYPENAME digraph<NT,AT>::arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digraph<NT,AT>::iterator from,
                                                                                     TYPENAME digraph<NT,AT>::iterator to)
   throw(wrong_object,null_dereference,end_dereference)
 {
@@ -1098,13 +1098,13 @@ typename digraph<NT,AT>::arc_vector digraph<NT,AT>::adjacent_arcs(TYPENAME digra
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::const_iterator to) const
+TYPENAME digraph<NT,AT>::const_node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::const_iterator to) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_node_vector result;
+  TYPENAME digraph<NT,AT>::const_node_vector result;
   for (unsigned arc = 0; arc < fanin(to); arc++)
   {
-    typename digraph<NT,AT>::const_iterator from = arc_from(input(to, arc));
+    TYPENAME digraph<NT,AT>::const_iterator from = arc_from(input(to, arc));
     if (std::find(result.begin(), result.end(), from) == result.end())
       result.push_back(from);
   }
@@ -1112,20 +1112,20 @@ typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::input_adjacencies(TYP
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::iterator to)
+TYPENAME digraph<NT,AT>::node_vector digraph<NT,AT>::input_adjacencies(TYPENAME digraph<NT,AT>::iterator to)
   throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(input_adjacencies(to.constify()));
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::const_iterator from) const
+TYPENAME digraph<NT,AT>::const_node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::const_iterator from) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_node_vector result;
+  TYPENAME digraph<NT,AT>::const_node_vector result;
   for (unsigned arc = 0; arc < fanout(from); arc++)
   {
-    typename digraph<NT,AT>::const_iterator to = arc_to(output(from, arc));
+    TYPENAME digraph<NT,AT>::const_iterator to = arc_to(output(from, arc));
     if (find(result.begin(), result.end(), to) == result.end())
       result.push_back(to);
   }
@@ -1133,7 +1133,7 @@ typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::output_adjacencies(TY
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::iterator from)
+TYPENAME digraph<NT,AT>::node_vector digraph<NT,AT>::output_adjacencies(TYPENAME digraph<NT,AT>::iterator from)
   throw(wrong_object,null_dereference,end_dereference)
 {
   return deconstify_nodes(output_adjacencies(from.constify()));
@@ -1146,18 +1146,18 @@ template<typename NT, typename AT>
 std::pair<TYPENAME digraph<NT,AT>::const_node_vector, TYPENAME digraph<NT,AT>::const_arc_vector>
 digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
 {
-  typename digraph<NT,AT>::const_node_vector result;
-  typename digraph<NT,AT>::const_arc_vector errors;
+  TYPENAME digraph<NT,AT>::const_node_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector errors;
   // build a map containing the number of fanins to each node that must be visited before this one
-  typename std::map<TYPENAME digraph<NT,AT>::const_iterator,unsigned> fanin_map;
-  for (typename digraph<NT,AT>::const_iterator n = begin(); n != end(); n++)
+  TYPENAME std::map<TYPENAME digraph<NT,AT>::const_iterator,unsigned> fanin_map;
+  for (TYPENAME digraph<NT,AT>::const_iterator n = begin(); n != end(); n++)
   {
     unsigned predecessors = 0;
     // only count predecessors connected by selected arcs
     for (unsigned f = 0; f < fanin(n); f++)
     {
-      typename digraph<NT,AT>::const_arc_iterator input_arc = input(n,f);
-      typename digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
+      TYPENAME digraph<NT,AT>::const_arc_iterator input_arc = input(n,f);
+      TYPENAME digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
       if (!select || select(*this,input_arc))
         predecessors++;
     }
@@ -1182,12 +1182,12 @@ digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
     for (; i < result.size(); i++)
     {
       // Note: dereferencing i gives us a node iterator
-      typename digraph<NT,AT>::const_iterator current = result[i];
+      TYPENAME digraph<NT,AT>::const_iterator current = result[i];
       for (unsigned f = 0; f < fanout(current); f++)
       {
         // only consider successors connected by selected arcs
-        typename digraph<NT,AT>::const_arc_iterator output_arc = output(current, f);
-        typename digraph<NT,AT>::const_iterator successor = arc_to(output_arc);
+        TYPENAME digraph<NT,AT>::const_arc_iterator output_arc = output(current, f);
+        TYPENAME digraph<NT,AT>::const_iterator successor = arc_to(output_arc);
         if (!select || select(*this,output_arc))
         {
           // don't consider arcs that have been eliminated to break a loop
@@ -1210,15 +1210,15 @@ digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
 
       // select an arc that is still relevant to the sort and break it
       // first select a node that has non-zero fanin and its predecessor that has non-zero fanin
-      typename digraph<NT,AT>::const_iterator stuck_node = fanin_map.begin()->first;
+      TYPENAME digraph<NT,AT>::const_iterator stuck_node = fanin_map.begin()->first;
       for (unsigned f = 0; f < fanin(stuck_node); f++)
       {
         // now successively remove input arcs that are still part of the sort until the fanin reduces to zero
         // first find a relevant arc - this must be a selected arc that has not yet been traversed by the first half of the algorithm
-        typename digraph<NT,AT>::const_arc_iterator input_arc = input(stuck_node, f);
+        TYPENAME digraph<NT,AT>::const_arc_iterator input_arc = input(stuck_node, f);
         if (!select || select(*this,input_arc))
         {
-          typename digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
+          TYPENAME digraph<NT,AT>::const_iterator predecessor = arc_from(input_arc);
           if (fanin_map.find(predecessor) != fanin_map.end())
           {
             // found the right combination - remove this arc and then drop out of the fanin loop to restart the outer sort loop
@@ -1250,7 +1250,7 @@ digraph<NT,AT>::sort(TYPENAME digraph<NT,AT>::arc_select_fn select)
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
+TYPENAME digraph<NT,AT>::const_node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select) const
 {
   std::pair<TYPENAME digraph<NT,AT>::const_node_vector, TYPENAME digraph<NT,AT>::const_arc_vector> result = sort(select);
   if (result.second.empty()) return result.first;
@@ -1258,7 +1258,7 @@ typename digraph<NT,AT>::const_node_vector digraph<NT,AT>::dag_sort(TYPENAME dig
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select)
+TYPENAME digraph<NT,AT>::node_vector digraph<NT,AT>::dag_sort(TYPENAME digraph<NT,AT>::arc_select_fn select)
 {
   return deconstify_nodes(const_cast<const digraph<NT,AT>*>(this)->dag_sort(select));
 }
@@ -1282,10 +1282,10 @@ bool digraph<NT,AT>::path_exists_r(TYPENAME digraph<NT,AT>::const_iterator from,
   // function calls is minimised.
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename digraph<NT,AT>::const_arc_iterator arc = output(from,i);
+    TYPENAME digraph<NT,AT>::const_arc_iterator arc = output(from,i);
     if (!select || select(*this, arc))
     {
-      typename digraph<NT,AT>::const_iterator node = arc_to(arc);
+      TYPENAME digraph<NT,AT>::const_iterator node = arc_to(arc);
       // if the node is the target, return immediately
       if (node == to) return true;
       // update the visited set and give up if the insert fails, which indicates that the node has already been visited
@@ -1304,7 +1304,7 @@ bool digraph<NT,AT>::path_exists(TYPENAME digraph<NT,AT>::const_iterator from,
   throw(wrong_object,null_dereference,end_dereference)
 {
   // set up the recursion with its initial visited set and then recurse
-  typename digraph<NT,AT>::const_iterator_set visited;
+  TYPENAME digraph<NT,AT>::const_iterator_set visited;
   visited.insert(from);
   return path_exists_r(from, to, visited, select);
 }
@@ -1335,7 +1335,7 @@ void digraph<NT,AT>::all_paths_r(TYPENAME digraph<NT,AT>::const_iterator from,
   // path set.
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename digraph<NT,AT>::const_arc_iterator candidate = output(from,i);
+    TYPENAME digraph<NT,AT>::const_arc_iterator candidate = output(from,i);
     // check that the arc is selected and then check that the candidate has not
     // been visited on this path and only allow further recursion if it hasn't
     if ((!select || select(*this, candidate)) && std::find(so_far.begin(), so_far.end(), candidate) == so_far.end())
@@ -1353,21 +1353,21 @@ void digraph<NT,AT>::all_paths_r(TYPENAME digraph<NT,AT>::const_iterator from,
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_path_vector 
+TYPENAME digraph<NT,AT>::const_path_vector 
 digraph<NT,AT>::all_paths(TYPENAME digraph<NT,AT>::const_iterator from, 
                                    TYPENAME digraph<NT,AT>::const_iterator to,
                                    TYPENAME digraph<NT,AT>::arc_select_fn select) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   // set up the recursion with empty data fields and then recurse
-  typename digraph<NT,AT>::const_path_vector result;
-  typename digraph<NT,AT>::const_arc_vector so_far;
+  TYPENAME digraph<NT,AT>::const_path_vector result;
+  TYPENAME digraph<NT,AT>::const_arc_vector so_far;
   all_paths_r(from, to, so_far, result, select);
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::path_vector
+TYPENAME digraph<NT,AT>::path_vector
 digraph<NT,AT>::all_paths(TYPENAME digraph<NT,AT>::iterator from, 
                           TYPENAME digraph<NT,AT>::iterator to,
                           TYPENAME digraph<NT,AT>::arc_select_fn select)
@@ -1387,10 +1387,10 @@ void digraph<NT,AT>::reachable_nodes_r(TYPENAME digraph<NT,AT>::const_iterator f
   // Just keep recursing on all the adjacent nodes of each node, skipping already visited nodes to avoid cycles
   for (unsigned i = 0; i < fanout(from); i++)
   {
-    typename digraph<NT,AT>::const_arc_iterator arc = output(from,i);
+    TYPENAME digraph<NT,AT>::const_arc_iterator arc = output(from,i);
     if (!select || select(*this,arc))
     {
-      typename digraph<NT,AT>::const_iterator candidate = arc_to(arc);
+      TYPENAME digraph<NT,AT>::const_iterator candidate = arc_to(arc);
       if (visited.insert(candidate).second)
         reachable_nodes_r(candidate,visited,select);
     }
@@ -1398,26 +1398,26 @@ void digraph<NT,AT>::reachable_nodes_r(TYPENAME digraph<NT,AT>::const_iterator f
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector
+TYPENAME digraph<NT,AT>::const_node_vector
 digraph<NT,AT>::reachable_nodes(TYPENAME digraph<NT,AT>::const_iterator from,
                                 TYPENAME digraph<NT,AT>::arc_select_fn select) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   // seed the recursion, marking the starting node as already visited
-  typename digraph<NT,AT>::const_iterator_set visited;
+  TYPENAME digraph<NT,AT>::const_iterator_set visited;
   visited.insert(from);
   reachable_nodes_r(from, visited, select);
   // convert the visited set into the required output form
   // exclude the starting node
-  typename digraph<NT,AT>::const_node_vector result;
-  for (typename digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
+  TYPENAME digraph<NT,AT>::const_node_vector result;
+  for (TYPENAME digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
     if (*i != from)
       result.push_back(*i);
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector
+TYPENAME digraph<NT,AT>::node_vector
 digraph<NT,AT>::reachable_nodes(TYPENAME digraph<NT,AT>::iterator from,
                                 TYPENAME digraph<NT,AT>::arc_select_fn select)
   throw(wrong_object,null_dereference,end_dereference)
@@ -1435,10 +1435,10 @@ void digraph<NT,AT>::reaching_nodes_r(TYPENAME digraph<NT,AT>::const_iterator to
   // Just like the reachable_nodes_r function but it goes backwards
   for (unsigned i = 0; i < fanin(to); i++)
   {
-    typename digraph<NT,AT>::const_arc_iterator arc = input(to,i);
+    TYPENAME digraph<NT,AT>::const_arc_iterator arc = input(to,i);
     if (!select || select(*this,arc))
     {
-      typename digraph<NT,AT>::const_iterator candidate = arc_from(input(to,i));
+      TYPENAME digraph<NT,AT>::const_iterator candidate = arc_from(input(to,i));
       if (visited.insert(candidate).second)
         reaching_nodes_r(candidate,visited,select);
     }
@@ -1446,26 +1446,26 @@ void digraph<NT,AT>::reaching_nodes_r(TYPENAME digraph<NT,AT>::const_iterator to
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_node_vector
+TYPENAME digraph<NT,AT>::const_node_vector
 digraph<NT,AT>::reaching_nodes(TYPENAME digraph<NT,AT>::const_iterator to,
                                         TYPENAME digraph<NT,AT>::arc_select_fn select) const
   throw(wrong_object,null_dereference,end_dereference)
 {
   // seed the recursion, marking the starting node as already visited
-  typename digraph<NT,AT>::const_iterator_set visited;
+  TYPENAME digraph<NT,AT>::const_iterator_set visited;
   visited.insert(to);
   reaching_nodes_r(to,visited,select);
   // convert the visited set into the required output form
   // exclude the end node
-  typename digraph<NT,AT>::const_node_vector result;
-  for (typename digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
+  TYPENAME digraph<NT,AT>::const_node_vector result;
+  for (TYPENAME digraph<NT,AT>::const_iterator_set_iterator i = visited.begin(); i != visited.end(); i++)
     if (*i != to)
       result.push_back(*i);
   return result;
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::node_vector
+TYPENAME digraph<NT,AT>::node_vector
 digraph<NT,AT>::reaching_nodes(TYPENAME digraph<NT,AT>::iterator to,
                                         TYPENAME digraph<NT,AT>::arc_select_fn select)
   throw(wrong_object,null_dereference,end_dereference)
@@ -1477,14 +1477,14 @@ digraph<NT,AT>::reaching_nodes(TYPENAME digraph<NT,AT>::iterator to,
 // Shortest Path Algorithms
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_arc_vector
+TYPENAME digraph<NT,AT>::const_arc_vector
 digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::const_iterator from,
                                        TYPENAME digraph<NT,AT>::const_iterator to,
                                        TYPENAME digraph<NT,AT>::arc_select_fn select) const
   throw(wrong_object,null_dereference,end_dereference)
 {
-  typename digraph<NT,AT>::const_path_vector paths = all_paths(from,to,select);
-  typename digraph<NT,AT>::const_arc_vector shortest;
+  TYPENAME digraph<NT,AT>::const_path_vector paths = all_paths(from,to,select);
+  TYPENAME digraph<NT,AT>::const_arc_vector shortest;
   typedef TYPENAME digraph<NT,AT>::const_path_vector::iterator const_path_vector_iterator;
   for (const_path_vector_iterator i = paths.begin(); i != paths.end(); i++)
     if (shortest.empty() || i->size() < shortest.size())
@@ -1493,7 +1493,7 @@ digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::const_iterator from,
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::arc_vector
+TYPENAME digraph<NT,AT>::arc_vector
 digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::iterator from, 
                                        TYPENAME digraph<NT,AT>::iterator to,
                                        TYPENAME digraph<NT,AT>::arc_select_fn select)
@@ -1503,7 +1503,7 @@ digraph<NT,AT>::shortest_path(TYPENAME digraph<NT,AT>::iterator from,
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::const_path_vector
+TYPENAME digraph<NT,AT>::const_path_vector
 digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
                                         TYPENAME digraph<NT,AT>::arc_select_fn select) const
   throw(wrong_object,null_dereference,end_dereference)
@@ -1521,9 +1521,9 @@ digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
   // nominated this node as a shortest path. The full path can then be recreated
   // from the map by just walking back through the predecessors. The depth (or
   // colour) can be determined by the path length.
-  typename digraph<NT,AT>::const_path_vector result;
+  TYPENAME digraph<NT,AT>::const_path_vector result;
   // initialise the iteration by creating a queue and adding the start node
-  typename std::deque<TYPENAME digraph<NT,AT>::const_iterator> nodes;
+  TYPENAME std::deque<TYPENAME digraph<NT,AT>::const_iterator> nodes;
   nodes.push_back(from);
   // Create a map to store the set of known nodes mapped to their predecessor
   // arcs. Initialise it with the current node, which has no predecessor. Note
@@ -1537,16 +1537,16 @@ digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
   {
     // pop the queue to get the next node to process - unfortunately the STL
     // deque::pop does not return the popped value
-    typename digraph<NT,AT>::const_iterator current = nodes.front();
+    TYPENAME digraph<NT,AT>::const_iterator current = nodes.front();
     nodes.pop_front();
     // now visit all the successors
     for (unsigned i = 0; i < fanout(current); i++)
     {
-      typename digraph<NT,AT>::const_arc_iterator next_arc = output(current,i);
+      TYPENAME digraph<NT,AT>::const_arc_iterator next_arc = output(current,i);
       // check whether the successor arc is a selected arc and can be part of a path
       if (!select || select(*this,next_arc))
       {
-        typename digraph<NT,AT>::const_iterator next = arc_to(next_arc);
+        TYPENAME digraph<NT,AT>::const_iterator next = arc_to(next_arc);
         // Discard any successors that are known because to be known already they
         // must have another shorter path. Otherwise add the successor node to the
         // queue to be visited later. To minimise the overhead of map lookup I use
@@ -1565,12 +1565,12 @@ digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
   // map to find its predecessor and so on until the start node is reached (it
   // has a null predecessor). Note that the known set includes the from node
   // which does not generate a path.
-  for (typename known_map::iterator i = known.begin(); i != known.end(); i++)
+  for (TYPENAME known_map::iterator i = known.begin(); i != known.end(); i++)
   {
     if (i->first != from)
     {
       const_arc_vector this_path;
-      for (typename known_map::iterator node = i; 
+      for (TYPENAME known_map::iterator node = i; 
            node->second != TYPENAME digraph<NT,AT>::const_arc_iterator(); 
            node = known.find(arc_from(node->second)))
         this_path.insert(this_path.begin(),node->second);
@@ -1581,7 +1581,7 @@ digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::const_iterator from,
 }
 
 template<typename NT, typename AT>
-typename digraph<NT,AT>::path_vector
+TYPENAME digraph<NT,AT>::path_vector
 digraph<NT,AT>::shortest_paths(TYPENAME digraph<NT,AT>::iterator from,
                                         TYPENAME digraph<NT,AT>::arc_select_fn select)
   throw(wrong_object,null_dereference,end_dereference)
