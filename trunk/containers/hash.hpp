@@ -144,7 +144,8 @@ public:
   hash(const hash&);
   hash& operator = (const hash&);
 
-  // test for an empty table and for the size of a table - efficient because the size is stored separately from the table contents
+  // test for an empty table and for the size of a table
+  // efficient because the size is stored separately from the table contents
   bool empty(void) const;
   unsigned size(void) const;
 
@@ -188,10 +189,11 @@ public:
   // end() is returned if the find fails
   const_iterator find(const K& key) const;
   iterator find(const K& key);
+
   // returns the data corresponding to the key
-  // the const version is used by the compiler on const hashes and cannot change the hash, so find failure causes an exception
-  // the non-const version is used by the compiler on non-const hashes and is like map - it creates a new key/data pair if find fails
-  const T& operator[] (const K& key) const;
+  // const version is used for const hashes and cannot change the hash, so failure causes an exception
+  // non-const version is for non-const hashes and is like map - it creates a new key/data pair if find fails
+  const T& operator[] (const K& key) const throw(std::out_of_range);
   T& operator[] (const K& key);
 
   // iterators allow the hash table to be traversed
