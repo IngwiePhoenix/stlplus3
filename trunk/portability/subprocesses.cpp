@@ -33,6 +33,8 @@ static std::string to_string(int number)
   return result;
 }
 
+#ifdef MSWINDOWS
+// Windows environment variables are case-insensitive and I do comparisons by converting to lowercase
 static std::string lowercase(const std::string& val)
 {
   std::string text = val;
@@ -40,6 +42,8 @@ static std::string lowercase(const std::string& val)
     text[i] = tolower(text[i]);
   return text;
 }
+
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // argument-vector related stuff
