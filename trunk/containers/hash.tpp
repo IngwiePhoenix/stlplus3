@@ -138,13 +138,13 @@ const hash<K,T,H,E>* hash_iterator<K,T,H,E,V>::owner(void) const
 // mode conversions
 
 template<typename K, typename T, class H, class E, typename V>
-typename hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
+TYPENAME hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
 {
   return TYPENAME hash_iterator<K,T,H,E,V>::const_iterator(m_owner, m_bin, m_element);
 }
 
 template<typename K, typename T, class H, class E, typename V>
-typename hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
+TYPENAME hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
 {
   return TYPENAME hash_iterator<K,T,H,E,V>::iterator(m_owner, m_bin, m_element);
 }
@@ -153,7 +153,7 @@ typename hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify
 // if there isn't one, then this becomes an end() iterator - m_bin = m_bins and m_element = null
 
 template<typename K, typename T, class H, class E, typename V>
-typename hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
+TYPENAME hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
   throw(null_dereference,end_dereference)
 {
   check_valid();
@@ -182,10 +182,10 @@ typename hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::oper
 // post-increment is defined in terms of pre-increment
 
 template<typename K, typename T, class H, class E, typename V>
-typename hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
+TYPENAME hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
   throw(null_dereference,end_dereference)
 {
-  typename hash_iterator<K,T,H,E,V>::this_iterator old = *this;
+  TYPENAME hash_iterator<K,T,H,E,V>::this_iterator old = *this;
   ++(*this);
   return old;
 }
@@ -281,7 +281,7 @@ hash<K,T,H,E>& hash<K,T,H,E>::operator = (const hash<K,T,H,E>& r)
   // copy the elements across - remember that this is rehashing because the two
   // tables can be different sizes so there is no quick way of doing this by
   // copying the lists
-  for (typename hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
+  for (TYPENAME hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
     insert(i->first, i->second);
   return *this;
 }
@@ -310,9 +310,9 @@ bool hash<K,T,H,E>::operator == (const hash<K,T,H,E>& right) const
   // they must be the same size to be equal
   if (m_size != right.m_size) return false;
   // now every key in this must be in right and have the same data
-  for (typename hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
+  for (TYPENAME hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
   {
-    typename hash<K,T,H,E>::const_iterator found = right.find(i->first);
+    TYPENAME hash<K,T,H,E>::const_iterator found = right.find(i->first);
     if (found == right.end()) return false;
     if (!(i->second == found->second)) return false;
   }
@@ -424,7 +424,7 @@ bool hash<K,T,H,E>::present(const K& key) const
 }
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
+TYPENAME hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
 {
   return present() ? 1 : 0;
 }
@@ -432,7 +432,7 @@ typename hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
 // add a key and data element to the table - defined in terms of the general-purpose pair insert function
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key, const T& data)
+TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key, const T& data)
 {
   return insert(std::pair<const K,T>(key,data)).first;
 }
@@ -488,7 +488,7 @@ std::pair<TYPENAME hash<K,T,H,E>::iterator, bool> hash<K,T,H,E>::insert(const st
 // insert a key with an empty data field ready to be filled in later
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key)
+TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key)
 {
   return insert(key,T());
 }
@@ -535,7 +535,7 @@ void hash<K,T,H,E>::clear(void)
 // if the search fails, returns an end() iterator
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
+TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
 {
   // scan the list for this key's hash value for the element with a matching key
   unsigned hash_value_full = H()(key);
@@ -549,7 +549,7 @@ typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
 }
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
+TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
 {
   // scan the list for this key's hash value for the element with a matching key
   unsigned hash_value_full = H()(key);
@@ -569,13 +569,12 @@ typename hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
 // the non-const version is compatible with the behaviour of the map
 
 template<typename K, typename T, class H, class E>
-const T& hash<K,T,H,E>::operator[] (const K& key) const
+const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
 {
   // this const version cannot change the hash, so has to raise an exception if the key is missing
-  // TODO make this a proper exception with a throw declaration
-  typename hash<K,T,H,E>::const_iterator found = find(key);
-//  if (found == end())
-//    throw what;
+  TYPENAME hash<K,T,H,E>::const_iterator found = find(key);
+  if (found == end())
+    throw std::out_of_range("key not found in stlplus::hash::operator[]");
   return found->second;
 }
 
@@ -583,7 +582,7 @@ template<typename K, typename T, class H, class E>
 T& hash<K,T,H,E>::operator[] (const K& key)
 {
   // this non-const version can change the hash, so creates a new element if the key is missing
-  typename hash<K,T,H,E>::iterator found = find(key);
+  TYPENAME hash<K,T,H,E>::iterator found = find(key);
   if (found == end())
     found = insert(key);
   return found->second;
@@ -592,25 +591,25 @@ T& hash<K,T,H,E>::operator[] (const K& key)
 // iterators
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::begin(void) const
+TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::begin(void) const
 {
   return TYPENAME hash<K,T,H,E>::const_iterator(this,0,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::iterator hash<K,T,H,E>::begin(void)
+TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::begin(void)
 {
   return TYPENAME hash<K,T,H,E>::iterator(this,0,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
+TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
 {
   return TYPENAME hash<K,T,H,E>::const_iterator(this,m_bins,0);
 }
 
 template<typename K, typename T, class H, class E>
-typename hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
+TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
 {
   return TYPENAME hash<K,T,H,E>::iterator(this,m_bins,0);
 }
