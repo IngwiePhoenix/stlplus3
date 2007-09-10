@@ -3,8 +3,8 @@
 #include <iostream>
 #include "persistence.hpp"
 #include "file_system.hpp"
-#include "strings_stl.hpp"
-#include "strings_basic.hpp"
+#include "string_stl.hpp"
+#include "string_basic.hpp"
 
 #define SIZE 50
 #define NUMBER 50
@@ -17,7 +17,7 @@ typedef std::list<std::string> string_list;
 
 std::ostream& operator<< (std::ostream& str, const string_list& data)
 {
-  return str << stlplus::list_to_string(data, ",", stlplus::string_to_string);
+  return str << stlplus::list_to_string(data, stlplus::string_to_string, ",");
 }
 
 void dump_string_list(stlplus::dump_context& context, const string_list& data)

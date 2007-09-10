@@ -21,6 +21,7 @@ namespace stlplus
 {
 
   ////////////////////////////////////////////////////////////////////////////////
+  // simple pointer
 
   template <typename T, typename S>
   std::string pointer_to_string(const T* value,
@@ -30,18 +31,34 @@ namespace stlplus
                                 const std::string& suffix = ")");
 
   ////////////////////////////////////////////////////////////////////////////////
+  // any forward iterator sequence
+
+  template <typename I, typename S>
+  std::string sequence_to_string(I begin,
+                                 I end, 
+                                 S to_string,
+                                 const std::string& separator);
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // any forward iterator sequence of pairs
+
+  template <typename I, typename S1, typename S2>
+  std::string pair_sequence_to_string(I begin,
+                                      I end,
+                                      S1 to_string_fn1,
+                                      S2 to_string_fn2,
+                                      const std::string& pair_separator,
+                                      const std::string& separator);
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // bitset
 
   template<size_t N>
   std::string bitset_to_string(const std::bitset<N>& data);
 
   ////////////////////////////////////////////////////////////////////////////////
-
-  template<typename T, typename S>
-  std::string list_to_string(const std::list<T>& values,
-                             S to_string_fn,
-                             const std::string& separator = ",");
-
-  ////////////////////////////////////////////////////////////////////////////////
+  // pair
 
   template<typename V1, typename V2, typename S1, typename S2>
   std::string pair_to_string(const std::pair<V1,V2>& values,
@@ -50,6 +67,15 @@ namespace stlplus
                              const std::string& separator = ":");
 
   ////////////////////////////////////////////////////////////////////////////////
+  // list
+
+  template<typename T, typename S>
+  std::string list_to_string(const std::list<T>& values,
+                             S to_string_fn,
+                             const std::string& separator = ",");
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // map/multimap
 
   template<typename K, typename T, typename C, typename SK, typename ST>
   std::string map_to_string(const std::map<K,T,C>& values,
@@ -66,6 +92,7 @@ namespace stlplus
                                  const std::string& separator = ",");
 
   ////////////////////////////////////////////////////////////////////////////////
+  // set/multiset
 
   template<typename K, typename C, typename S>
   std::string set_to_string(const std::set<K,C>& values,
@@ -78,6 +105,7 @@ namespace stlplus
                                  const std::string& separator = ",");
 
   ////////////////////////////////////////////////////////////////////////////////
+  // vector
 
   template<typename T, typename S>
   std::string vector_to_string(const std::vector<T>& values,
@@ -91,5 +119,5 @@ namespace stlplus
 
 } // end namespace stlplus
 
-#include "strings_stl.tpp"
+#include "string_stl.tpp"
 #endif

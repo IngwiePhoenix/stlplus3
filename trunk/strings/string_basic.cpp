@@ -5,7 +5,7 @@ Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
-#include "strings_basic.hpp"
+#include "string_basic.hpp"
 #include "dprintf.hpp"
 #include <ctype.h>
 #include <stdlib.h>

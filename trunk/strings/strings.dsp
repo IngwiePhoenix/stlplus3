@@ -95,15 +95,15 @@ SOURCE=.\strings.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\strings_basic.hpp
+SOURCE=.\string_basic.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\strings_stl.hpp
+SOURCE=.\string_stl.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\strings_utilities.hpp
+SOURCE=.\string_utilities.hpp
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -111,10 +111,10 @@ SOURCE=.\strings_utilities.hpp
 # PROP Default_Filter "c;cpp;cxx"
 # Begin Source File
 
-SOURCE=.\strings_basic.cpp
+SOURCE=.\string_basic.cpp
 DEP_CPP_STRIN=\
 	".\format_types.hpp"\
-	".\strings_basic.hpp"\
+	".\string_basic.hpp"\
 	
 NODEP_CPP_STRIN=\
 	".\dprintf.hpp"\
@@ -122,11 +122,11 @@ NODEP_CPP_STRIN=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\strings_stl.cpp
+SOURCE=.\string_stl.cpp
 DEP_CPP_STRING=\
 	".\format_types.hpp"\
-	".\strings_stl.hpp"\
-	".\strings_stl.tpp"\
+	".\string_stl.hpp"\
+	".\string_stl.tpp"\
 	
 NODEP_CPP_STRING=\
 	".\template_fixes.hpp"\
@@ -134,11 +134,11 @@ NODEP_CPP_STRING=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\strings_utilities.cpp
+SOURCE=.\string_utilities.cpp
 DEP_CPP_STRINGS=\
 	".\format_types.hpp"\
-	".\strings_basic.hpp"\
-	".\strings_utilities.hpp"\
+	".\string_basic.hpp"\
+	".\string_utilities.hpp"\
 	
 NODEP_CPP_STRINGS=\
 	".\dprintf.hpp"\
@@ -150,7 +150,7 @@ NODEP_CPP_STRINGS=\
 # PROP Default_Filter ".tpp"
 # Begin Source File
 
-SOURCE=.\strings_stl.tpp
+SOURCE=.\string_stl.tpp
 # End Source File
 # End Group
 # End Target

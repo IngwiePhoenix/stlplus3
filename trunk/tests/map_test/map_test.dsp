@@ -108,10 +108,10 @@ DEP_CPP_MAP_T=\
 	"..\..\portability\os_fixes.hpp"\
 	"..\..\strings\format_types.hpp"\
 	"..\..\strings\strings.hpp"\
-	"..\..\strings\strings_basic.hpp"\
-	"..\..\strings\strings_stl.hpp"\
-	"..\..\strings\strings_stl.tpp"\
-	"..\..\strings\strings_utilities.hpp"\
+	"..\..\strings\string_basic.hpp"\
+	"..\..\strings\string_stl.hpp"\
+	"..\..\strings\string_stl.tpp"\
+	"..\..\strings\string_utilities.hpp"\
 	
 # End Source File
 # End Group

@@ -5,7 +5,7 @@ Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
-#include "strings_stl.hpp"
+#include "string_stl.hpp"
 
 namespace stlplus
 {

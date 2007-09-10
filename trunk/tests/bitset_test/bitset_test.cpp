@@ -34,7 +34,7 @@ typedef std::vector<bitset_N> bitset_vector;
 
 std::ostream& operator<<(std::ostream& str, const bitset_vector& values)
 {
-  return str << stlplus::vector_to_string(values, ",", stlplus::bitset_to_string<SIZE>);
+  return str << stlplus::vector_to_string(values, stlplus::bitset_to_string<SIZE>, ",");
 }
 
 void dump_bitset_vector(stlplus::dump_context& str, const bitset_vector& data)

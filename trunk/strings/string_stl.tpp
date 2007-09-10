@@ -13,6 +13,44 @@ namespace stlplus
 {
 
   ////////////////////////////////////////////////////////////////////////////////
+  // any forward iterator sequence
+
+  template <typename I, typename S>
+  std::string sequence_to_string(I begin,
+                                 I end, 
+                                 S to_string,
+                                 const std::string& separator)
+  {
+    std::string result;
+    for (I i = begin; i != end; i++)
+    {
+      if (i != begin) result += separator;
+      result += to_string(*i);
+    }
+    return result;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // any sequence where the value is a pair
+
+  template <typename I, typename S1, typename S2>
+  std::string pair_sequence_to_string(I begin,
+                                      I end,
+                                      S1 to_string_fn1,
+                                      S2 to_string_fn2,
+                                      const std::string& pair_separator,
+                                      const std::string& separator)
+  {
+    std::string result;
+    for (I i = begin; i != end; i++)
+    {
+      if (i != begin) result += separator;
+      result += pair_to_string(*i, to_string_fn1, to_string_fn2, pair_separator);
+    }
+    return result;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
   // pointers
 
   template <typename T, typename S>
@@ -38,23 +76,6 @@ namespace stlplus
   }
 
   ////////////////////////////////////////////////////////////////////////////////
-  // list
-
-  template<typename T, typename S>
-  std::string list_to_string(const std::list<T>& values,
-                             S to_string_fn,
-                             const std::string& separator)
-  {
-    std::string result;
-    for (TYPENAME std::list<T>::const_iterator i = values.begin(); i != values.end(); i++)
-    {
-      if (i != values.begin()) result += separator;
-      result += to_string_fn(*i);
-    }
-    return result;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
   // pair
 
   template<typename V1, typename V2, typename S1, typename S2>
@@ -67,6 +88,17 @@ namespace stlplus
   }
 
   ////////////////////////////////////////////////////////////////////////////////
+  // list
+
+  template<typename T, typename S>
+  std::string list_to_string(const std::list<T>& values,
+                             S to_string_fn,
+                             const std::string& separator)
+  {
+    return sequence_to_string(values.begin(), values.end(), to_string_fn, separator);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
   // map
 
   template<typename K, typename T, typename C, typename SK, typename ST>
@@ -76,13 +108,9 @@ namespace stlplus
                             const std::string& pair_separator,
                             const std::string& separator)
   {
-    std::string result;
-    for (TYPENAME std::map<K,T,C>::const_iterator i = values.begin(); i != values.end(); i++)
-    {
-      if (i != values.begin()) result += separator;
-      result += pair_to_string(*i,key_to_string_fn,value_to_string_fn,pair_separator);
-    }
-    return result;
+    return pair_sequence_to_string(values.begin(), values.end(),
+                                   key_to_string_fn, value_to_string_fn,
+                                   pair_separator, separator);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -95,13 +123,9 @@ namespace stlplus
                                  const std::string& pair_separator,
                                  const std::string& separator)
   {
-    std::string result;
-    for (TYPENAME std::multimap<K,T,C>::const_iterator i = values.begin(); i != values.end(); i++)
-    {
-      if (i != values.begin()) result += separator;
-      result += pair_to_string(*i, pair_separator,key_to_string_fn,value_to_string_fn);
-    }
-    return result;
+    return pair_sequence_to_string(values.begin(), values.end(),
+                                   key_to_string_fn, value_to_string_fn,
+                                   pair_separator, separator);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -112,13 +136,7 @@ namespace stlplus
                             S to_string_fn,
                             const std::string& separator)
   {
-    std::string result;
-    for (TYPENAME std::set<K,C>::const_iterator i = values.begin(); i != values.end(); i++)
-    {
-      if (i != values.begin()) result += separator;
-      result += to_string_fn(*i);
-    }
-    return result;
+    return sequence_to_string(values.begin(), values.end(), to_string_fn, separator);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -129,13 +147,7 @@ namespace stlplus
                                  S to_string_fn,
                                  const std::string& separator)
   {
-    std::string result;
-    for (TYPENAME std::multiset<K,C>::const_iterator i = values.begin(); i != values.end(); i++)
-    {
-      if (i != values.begin()) result += separator;
-      result += to_string_fn(*i);
-    }
-    return result;
+    return sequence_to_string(values.begin(), values.end(), to_string_fn, separator);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -146,13 +158,7 @@ namespace stlplus
                                S to_string_fn,
                                const std::string& separator)
   {
-    std::string result;
-    for (unsigned i = 0; i < values.size(); i++)
-    {
-      if (i > 0) result += separator;
-      result += to_string_fn(values[i]);
-    }
-    return result;
+    return sequence_to_string(values.begin(), values.end(), to_string_fn, separator);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

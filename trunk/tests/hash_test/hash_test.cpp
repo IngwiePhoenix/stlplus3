@@ -3,8 +3,8 @@
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
-#include "strings_stlplus.hpp"
-#include "strings_basic.hpp"
+#include "string_stlplus.hpp"
+#include "string_basic.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
 

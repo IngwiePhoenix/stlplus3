@@ -13,9 +13,9 @@ Header for including the whole strings library in one go
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "format_types.hpp"
-#include "strings_basic.hpp"
-#include "strings_stl.hpp"
-#include "strings_utilities.hpp"
+#include "string_basic.hpp"
+#include "string_stl.hpp"
+#include "string_utilities.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
