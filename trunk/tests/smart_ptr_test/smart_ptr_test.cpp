@@ -14,7 +14,7 @@ typedef stlplus::smart_ptr<std::string> string_ptr;
 void print(const std::string& label, const string_ptr& value)
 {
   std::cout << label;
-  std::cout << " = " << stlplus::smart_ptr_to_string(value,stlplus::string_to_string);
+  std::cout << " = " << stlplus::smart_ptr_to_string(value,stlplus::string_to_string,"<null>","(",")");
   std::cout << " handle = " << value.handle();
   std::cout << " aliases = " << value.alias_count();
   std::cout << std::endl;
