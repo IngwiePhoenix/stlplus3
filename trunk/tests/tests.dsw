@@ -54,6 +54,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -91,6 +94,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name portability
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
@@ -132,6 +138,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -157,6 +166,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name portability
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
@@ -186,6 +198,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -211,6 +226,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name portability
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
@@ -300,6 +318,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -325,6 +346,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name portability
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
@@ -366,6 +390,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -405,6 +432,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -432,6 +462,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -457,6 +490,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name portability
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
