@@ -1,20 +1,20 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  This is a portable interface to the file system.
+This is a portable interface to the file system.
 
-  The idea is that you write all file system access code using these functions,
-  which are ported to all platforms that we are interested in. Therefore your
-  code is inherently portable.
+The idea is that you write all file system access code using these functions,
+which are ported to all platforms that we are interested in. Therefore your
+code is inherently portable.
 
-  Native Windows version: switched on by macro _WIN32 which is defined by VC++/Borland/Mingw compilers
-  Unix/Gnu version:   default variant, no compiler directives are required but _WIN32 must be absent
-  Cygwin/Gnu version: as Unix version but with additional support for Windows drive letters
+Native Windows version: switched on by macro _WIN32 which is defined by VC++/Borland/Mingw compilers
+Unix/Gnu version:   default variant, no compiler directives are required but _WIN32 must be absent
+Cygwin/Gnu version: as Unix version but with additional support for Windows drive letters
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "file_system.hpp"
 #include <stdio.h>
 #include <stdlib.h>
@@ -90,49 +90,49 @@ bool stlplus::path_compare(const std::string& l, const std::string& r)
 namespace stlplus
 {
 
-class file_specification
-{
-private:
-  bool m_relative;                 // true = relative, false = absolute
-  std::string m_drive;             // drive - drive letter (e.g. "c:") or the path for an UNC (e.g. "\\somewhere")
-                                   //         empty if not known or on Unix
-  std::vector<std::string> m_path; // the subdirectory path to follow from the drive
-  std::string m_filename;          // the filename
-public:
-  file_specification(void) : m_relative(false) {}
-  ~file_specification(void) {}
+  class file_specification
+  {
+  private:
+    bool m_relative;                 // true = relative, false = absolute
+    std::string m_drive;             // drive - drive letter (e.g. "c:") or the path for an UNC (e.g. "\\somewhere")
+    //         empty if not known or on Unix
+    std::vector<std::string> m_path; // the subdirectory path to follow from the drive
+    std::string m_filename;          // the filename
+  public:
+    file_specification(void) : m_relative(false) {}
+    ~file_specification(void) {}
 
-  bool initialise_folder(const std::string& spec);
-  bool initialise_file(const std::string& spec);
-  bool simplify(void);
-  bool make_absolute(const std::string& root = folder_current_full());
-  bool make_absolute(const file_specification& root);
-  bool make_relative(const std::string& root = folder_current_full());
-  bool make_relative(const file_specification& root);
-  bool relative(void) const {return m_relative;}
-  bool absolute(void) const {return !relative();}
-  void set_relative(void) {m_relative = true;}
-  void set_absolute(void) {m_relative = false;}
+    bool initialise_folder(const std::string& spec);
+    bool initialise_file(const std::string& spec);
+    bool simplify(void);
+    bool make_absolute(const std::string& root = folder_current_full());
+    bool make_absolute(const file_specification& root);
+    bool make_relative(const std::string& root = folder_current_full());
+    bool make_relative(const file_specification& root);
+    bool relative(void) const {return m_relative;}
+    bool absolute(void) const {return !relative();}
+    void set_relative(void) {m_relative = true;}
+    void set_absolute(void) {m_relative = false;}
 
-  const std::string& drive(void) const {return m_drive;}
-  std::string& drive(void) {return m_drive;}
-  void set_drive(const std::string& drive) {m_drive = drive;}
+    const std::string& drive(void) const {return m_drive;}
+    std::string& drive(void) {return m_drive;}
+    void set_drive(const std::string& drive) {m_drive = drive;}
 
-  const std::vector<std::string>& path(void) const {return m_path;}
-  std::vector<std::string>& path(void) {return m_path;}
-  void set_path(const std::vector<std::string>& path) {m_path = path;}
+    const std::vector<std::string>& path(void) const {return m_path;}
+    std::vector<std::string>& path(void) {return m_path;}
+    void set_path(const std::vector<std::string>& path) {m_path = path;}
 
-  void add_subpath(const std::string& subpath) {m_path.push_back(subpath);}
-  unsigned subpath_size(void) const {return m_path.size();}
-  const std::string& subpath_element(unsigned i) const {return m_path[i];}
-  void subpath_erase(unsigned i) {m_path.erase(m_path.begin()+i);}
+    void add_subpath(const std::string& subpath) {m_path.push_back(subpath);}
+    unsigned subpath_size(void) const {return m_path.size();}
+    const std::string& subpath_element(unsigned i) const {return m_path[i];}
+    void subpath_erase(unsigned i) {m_path.erase(m_path.begin()+i);}
 
-  const std::string& file(void) const {return m_filename;}
-  std::string& file(void) {return m_filename;}
-  void set_file(const std::string& file) {m_filename = file;}
+    const std::string& file(void) const {return m_filename;}
+    std::string& file(void) {return m_filename;}
+    void set_file(const std::string& file) {m_filename = file;}
 
-  std::string image(void) const;
-};
+    std::string image(void) const;
+  };
 
 } // end namespace stlplus
 
@@ -625,11 +625,11 @@ bool stlplus::folder_delete (const std::string& directory, bool recurse)
     std::vector<std::string> subdirectories = stlplus::folder_subdirectories(dir);
     for (std::vector<std::string>::size_type d = 0; d < subdirectories.size(); ++d)
       if (!stlplus::folder_delete(folder_down(dir,subdirectories[d]),true)) 
-	result = false;
+        result = false;
     std::vector<std::string> files = stlplus::folder_files(dir);
     for (std::vector<std::string>::size_type f = 0; f < files.size(); ++f)
       if (!stlplus::file_delete(create_filespec(dir, files[f]))) 
-	result = false;
+        result = false;
   }
   if (rmdir(dir.c_str())!=0) result = false;
   return result;
@@ -773,21 +773,21 @@ static bool match_set (const std::string& set, char match)
     {
       if (i == set.begin())
       {
-	simple_set += *i;
+        simple_set += *i;
       }
       else if (i+1 == set.end())
       {
-	return false;
+        return false;
       }
       else
       {
-	// found a set. The first character is already in the result, so first remove it (the set might be empty)
-	simple_set.erase(simple_set.end()-1);
-	char last = *++i;
-	for (char ch = *(i-2); ch <= last; ch++)
-	{
-	  simple_set += ch;
-	}
+        // found a set. The first character is already in the result, so first remove it (the set might be empty)
+        simple_set.erase(simple_set.end()-1);
+        char last = *++i;
+        for (char ch = *(i-2); ch <= last; ch++)
+        {
+          simple_set += ch;
+        }
       }
       break;
     }
@@ -822,16 +822,16 @@ static bool match_remainder (const std::string& wild, std::string::const_iterato
       ++matchi;
       for (std::string::const_iterator i = matchi; i != match.end(); ++i)
       {
-	// deal with * at the end of the wildcard - there is no remainder then
-	if (wildi == wild.end())
-	{
-	  if (i == match.end()-1)
-	    return true;
-	}
-	else if (match_remainder(wild, wildi, match, i))
-	{
-	  return true;
-	}
+        // deal with * at the end of the wildcard - there is no remainder then
+        if (wildi == wild.end())
+        {
+          if (i == match.end()-1)
+            return true;
+        }
+        else if (match_remainder(wild, wildi, match, i))
+        {
+          return true;
+        }
       }
       return false;
     }
@@ -842,27 +842,27 @@ static bool match_remainder (const std::string& wild, std::string::const_iterato
       std::string::const_iterator end = wildi + 1;
       for (; !found && end != wild.end(); ++end)
       {
-	switch(*end)
-	{
-	case ']':
-	{
-	  // found the set, now match with its contents excluding the brackets
-	  if (!match_set(wild.substr(wildi - wild.begin() + 1, end - wildi - 1), *matchi))
-	    return false;
-	  found = true;
-	  break;
-	}
-	case '\\':
-	  if (end == wild.end()-1)
-	    return false;
-	  ++end;
-	  break;
-	default:
-	  break;
-	}
+        switch(*end)
+        {
+        case ']':
+        {
+          // found the set, now match with its contents excluding the brackets
+          if (!match_set(wild.substr(wildi - wild.begin() + 1, end - wildi - 1), *matchi))
+            return false;
+          found = true;
+          break;
+        }
+        case '\\':
+          if (end == wild.end()-1)
+            return false;
+          ++end;
+          break;
+        default:
+          break;
+        }
       }
       if (!found)
-	return false;
+        return false;
       ++matchi;
       wildi = end;
       break;
@@ -873,16 +873,16 @@ static bool match_remainder (const std::string& wild, std::string::const_iterato
       break;
     case '\\':
       if (wildi == wild.end()-1)
-	return false;
+        return false;
       ++wildi;
       if (*wildi != *matchi)
-	return false;
+        return false;
       ++wildi;
       ++matchi;
       break;
     default:
       if (*wildi != *matchi)
-	return false;
+        return false;
       ++wildi;
       ++matchi;
       break;

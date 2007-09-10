@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include "subprocesses.hpp"
 #include "file_system.hpp"
@@ -857,7 +857,7 @@ bool stlplus::subprocess::remove_variable(const std::string& name)
 #ifdef MSWINDOWS
 
 bool stlplus::subprocess::spawn(const std::string& path, const stlplus::arg_vector& argv,
-                       bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   bool result = true;
   // first create the pipes to be used to connect to the child stdin/out/err
@@ -949,7 +949,7 @@ bool stlplus::subprocess::spawn(const std::string& path, const stlplus::arg_vect
 #else
 
 bool stlplus::subprocess::spawn(const std::string& path, const stlplus::arg_vector& argv,
-                       bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   bool result = true;
   // first create the pipes to be used to connect to the child stdin/out/err
@@ -1074,7 +1074,7 @@ bool stlplus::subprocess::spawn(const std::string& path, const stlplus::arg_vect
 #endif
 
 bool stlplus::subprocess::spawn(const std::string& command_line,
-                       bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   stlplus::arg_vector arguments = command_line;
   if (arguments.size() == 0) return false;
@@ -1557,7 +1557,7 @@ bool stlplus::async_subprocess::remove_variable(const std::string& name)
 #ifdef MSWINDOWS
 
 bool stlplus::async_subprocess::spawn(const std::string& path, const stlplus::arg_vector& argv,
-                             bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                      bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   bool result = true;
   // first create the pipes to be used to connect to the child stdin/out/err
@@ -1621,7 +1621,7 @@ bool stlplus::async_subprocess::spawn(const std::string& path, const stlplus::ar
 #else
 
 bool stlplus::async_subprocess::spawn(const std::string& path, const stlplus::arg_vector& argv,
-                             bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                      bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   bool result = true;
   // first create the pipes to be used to connect to the child stdin/out/err
@@ -1730,7 +1730,7 @@ bool stlplus::async_subprocess::spawn(const std::string& path, const stlplus::ar
 #endif
 
 bool stlplus::async_subprocess::spawn(const std::string& command_line,
-                             bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                                      bool connect_stdin, bool connect_stdout, bool connect_stderr)
 {
   stlplus::arg_vector arguments = command_line;
   if (arguments.size() == 0) return false;

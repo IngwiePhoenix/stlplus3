@@ -2,13 +2,10 @@
 #include "persistent_vector.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
-#include "strings_stl.hpp"
+#include "strings.hpp"
 #include <string>
 #include <bitset>
 #include <vector>
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -20,11 +17,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef std::bitset<SIZE> bitset_N;
-
-std::ostream& operator<<(std::ostream& str, const bitset_N& data)
-{
-  return str << stlplus::bitset_to_string(data);
-}
 
 void dump_bitset_N(stlplus::dump_context& str, const bitset_N& data)
 {
@@ -69,7 +61,9 @@ bool compare (bitset_vector& left, bitset_vector& right)
   {
     if (left[j] != right[j])
     {
-      std::cerr << "bitset[" << j << "] is different: left = " << left[j] << " right = " << right[j] << std::endl;
+      std::cerr << "bitset[" << j << "] is different: left = " 
+        << stlplus::bitset_to_string(left[j]) << " right = " 
+        << stlplus::bitset_to_string(right[j]) << std::endl;
       result = false;
     }
   }

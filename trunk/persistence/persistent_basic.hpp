@@ -2,13 +2,13 @@
 #define PERSISTENT_BASIC_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of basic types
+Persistence of basic types
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "persistent_bool.hpp"

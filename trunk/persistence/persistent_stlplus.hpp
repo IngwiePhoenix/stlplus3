@@ -2,13 +2,13 @@
 #define PERSISTENT_STLPLUS_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Set of persistence routines for the STLplus classes
+Set of persistence routines for the STLplus classes
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
 #include "persistent_smart_ptr.hpp"
 #include "persistent_triple.hpp"

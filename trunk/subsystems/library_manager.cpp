@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include "library_manager.hpp"
 #include "file_system.hpp"
@@ -350,7 +350,7 @@ stlplus::lm_unit_dependency::lm_unit_dependency(const std::string& library, cons
 stlplus::lm_unit_dependency::~lm_unit_dependency(void)
 {
 }
-  
+
 const std::string& stlplus::lm_unit_dependency::library(void) const
 {
   return m_library;
@@ -1384,8 +1384,8 @@ std::pair<bool,unsigned> stlplus::lm_library::tidy(void)
 // do-everything print routine!
 
 bool stlplus::lm_library::pretty_print(std::ostream& str,
-                              bool print_units,
-                              const std::string& type) const
+                                       bool print_units,
+                                       const std::string& type) const
 {
   // print the library information
   if (this == m_manager->work())
@@ -1539,9 +1539,9 @@ void stlplus::library_manager::set_unit_case(bool unit_case)
 // type handling
 
 bool stlplus::library_manager::add_type(const std::string& type,
-                               const std::string& description,
-                               lm_create_callback fn,
-                               void* type_data)
+                                        const std::string& description,
+                                        lm_create_callback fn,
+                                        void* type_data)
 {
   bool result = true;
   m_callbacks[type] = lm_callback_entry(fn, description, type_data);
@@ -2247,9 +2247,9 @@ std::pair<bool,unsigned> stlplus::library_manager::tidy(void)
 // do-everything print routine!
 
 bool stlplus::library_manager::pretty_print(std::ostream& str,
-                                   bool print_units,
-                                   const std::string& lib,
-                                   const std::string& type) const
+                                            bool print_units,
+                                            const std::string& lib,
+                                            const std::string& type) const
 {
   bool library_found = false;
   for (std::list<lm_library>::const_iterator l = m_libraries.begin(); l != m_libraries.end(); l++)

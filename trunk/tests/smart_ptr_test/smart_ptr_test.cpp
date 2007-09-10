@@ -3,6 +3,8 @@
 #include "persistent_string.hpp"
 #include "persistent_pair.hpp"
 #include "persistent_shortcuts.hpp"
+#include "strings_stlplus.hpp"
+#include "strings_basic.hpp"
 #include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,10 +14,7 @@ typedef stlplus::smart_ptr<std::string> string_ptr;
 void print(const std::string& label, const string_ptr& value)
 {
   std::cout << label;
-  if (!value)
-    std::cout << " = <null>";
-  else
-    std::cout << " = " << *value;
+  std::cout << " = " << stlplus::smart_ptr_to_string(value,stlplus::string_to_string);
   std::cout << " handle = " << value.handle();
   std::cout << " aliases = " << value.alias_count();
   std::cout << std::endl;

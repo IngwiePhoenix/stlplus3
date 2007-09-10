@@ -2,13 +2,13 @@
 #define PERSISTENT_VECTOR_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of STL vector
+Persistence of STL vector
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include <vector>
 
@@ -37,6 +37,6 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #include "persistent_vector.tpp"
 #endif

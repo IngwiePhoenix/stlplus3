@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "dprintf.hpp"
 #include <stdio.h>
 #include <limits.h>
@@ -13,12 +13,12 @@
 
 /*--------------------------------------------------------------------------------
 
-  Notes:
+Notes:
 
-  Feb 2007: Rewritten in terms of platform-specific fixes to the
-  buffer-overflow problem. Using native functions for this has the added
-  benefit of giving access to other features of the C-runtime such as Unicode
-  support.
+Feb 2007: Rewritten in terms of platform-specific fixes to the
+buffer-overflow problem. Using native functions for this has the added
+benefit of giving access to other features of the C-runtime such as Unicode
+support.
 
 --------------------------------------------------------------------------------*/
 

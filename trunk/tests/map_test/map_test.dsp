@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MD /GR /GX /O2 /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /MD /GR /GX /O2 /I "..\..\strings" /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
 # SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x809 /d "NDEBUG"
 # ADD RSC /l 0x809 /d "NDEBUG"
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /GR /GX /Od /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MDd /GR /GX /Od /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /MDd /GR /GX /Od /I "..\..\strings" /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
 # SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x809 /d "_DEBUG"
 # ADD RSC /l 0x809 /d "_DEBUG"
@@ -92,6 +92,7 @@ LINK32=link.exe
 
 SOURCE=.\map_test.cpp
 DEP_CPP_MAP_T=\
+	"..\..\containers\template_fixes.hpp"\
 	"..\..\persistence\persistent.hpp"\
 	"..\..\persistence\persistent_contexts.hpp"\
 	"..\..\persistence\persistent_exceptions.hpp"\
@@ -105,6 +106,12 @@ DEP_CPP_MAP_T=\
 	"..\..\portability\dprintf.hpp"\
 	"..\..\portability\file_system.hpp"\
 	"..\..\portability\os_fixes.hpp"\
+	"..\..\strings\format_types.hpp"\
+	"..\..\strings\strings.hpp"\
+	"..\..\strings\strings_basic.hpp"\
+	"..\..\strings\strings_stl.hpp"\
+	"..\..\strings\strings_stl.tpp"\
+	"..\..\strings\strings_utilities.hpp"\
 	
 # End Source File
 # End Group

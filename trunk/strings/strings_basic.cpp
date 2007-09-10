@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2004
+Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
@@ -780,7 +780,7 @@ namespace stlplus
     {
       // the C style formats are bit patterns not integer values - these need to be sign-extended to get the right value
       std::string binary;
-//      DEBUG_ASSERT(radix == 2 || radix == 8 || radix == 16);
+      //      DEBUG_ASSERT(radix == 2 || radix == 8 || radix == 16);
       if (radix == 2)
       {
         for (unsigned j = i; j < str.size(); j++)
@@ -903,7 +903,7 @@ namespace stlplus
       {
         val *= 2;
         int ch = from_char[(unsigned char)binary[j]] ;
-//        DEBUG_ASSERT(ch != -1);
+        //        DEBUG_ASSERT(ch != -1);
         val += T(ch);
       }
     }

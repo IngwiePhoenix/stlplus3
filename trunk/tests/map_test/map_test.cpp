@@ -4,12 +4,13 @@
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
+#include "strings.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define NUMBER 1000
+#define NUMBER 100
 #define DATA "map_test.tmp"
 #define MASTER "map_test.dump"
 
@@ -47,6 +48,11 @@ bool compare(const int_string_map& left, const int_string_map& right)
   return result;
 }
 
+std::ostream& operator<< (std::ostream& str, const int_string_map& data)
+{
+  return str << stlplus::map_to_string(data, ":", ",", stlplus::int_to_string, stlplus::string_to_string);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(unsigned argc, char* argv[])
@@ -57,9 +63,11 @@ int main(unsigned argc, char* argv[])
   try
   {
     // build the sample data structure
+    std::cerr << "creating" << std::endl;
     int_string_map data;
     for (unsigned i = 0; i < NUMBER; i++)
       data[i] = stlplus::dformat("%d",i);
+    std::cerr << data << std::endl;
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_int_string_map,0);

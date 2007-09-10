@@ -1,5 +1,5 @@
 IMAGE     := ntree_test
-LIBRARIES := ../../persistence ../../containers ../../portability
+LIBRARIES := ../../strings ../../persistence ../../containers ../../portability
 include ../../../makefiles/gcc.mak
 
 

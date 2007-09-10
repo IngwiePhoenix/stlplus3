@@ -2,13 +2,13 @@
 #define PERSISTENT_TRIPLE_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of STL triple
+Persistence of STL triple
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include "triple.hpp"
 
@@ -29,6 +29,6 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #include "persistent_triple.tpp"
 #endif

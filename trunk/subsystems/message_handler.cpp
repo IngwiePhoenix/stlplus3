@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
 #include "message_handler.hpp"
@@ -146,52 +146,52 @@ std::string to_string(const stlplus::message_position& where)
 namespace stlplus
 {
 
-class message_context_body
-{
-private:
-  unsigned m_depth;
-  message_handler_base* m_base;
-  unsigned m_count;
+  class message_context_body
+  {
+  private:
+    unsigned m_depth;
+    message_handler_base* m_base;
+    unsigned m_count;
 
-public:
-  message_context_body::message_context_body(message_handler_base& handler) :
-    m_depth(0), m_base(0), m_count(1)
-    {
-      set(handler);
-    }
+  public:
+    message_context_body::message_context_body(message_handler_base& handler) :
+      m_depth(0), m_base(0), m_count(1)
+      {
+        set(handler);
+      }
 
-  message_context_body::~message_context_body(void)
-    {
-      pop();
-    }
+    message_context_body::~message_context_body(void)
+      {
+        pop();
+      }
 
-  void increment(void)
-    {
-      ++m_count;
-    }
+    void increment(void)
+      {
+        ++m_count;
+      }
 
-  bool decrement(void)
-    {
-      --m_count;
-      return m_count == 0;
-    }
+    bool decrement(void)
+      {
+        --m_count;
+        return m_count == 0;
+      }
 
-  void message_context_body::set(message_handler_base& handler)
-    {
-      m_base = &handler;
-      m_depth = m_base->context_depth();
-    }
+    void message_context_body::set(message_handler_base& handler)
+      {
+        m_base = &handler;
+        m_depth = m_base->context_depth();
+      }
 
-  void message_context_body::pop(void)
-    {
-      if (m_base)
-        m_base->pop_context(m_depth);
-    }
-};
+    void message_context_body::pop(void)
+      {
+        if (m_base)
+          m_base->pop_context(m_depth);
+      }
+  };
 
 } // end namespace stlplus
 
-// exported context class
+  // exported context class
 
 stlplus::message_context::message_context(stlplus::message_handler_base& handler) : m_body(new message_context_body(handler))
 {
@@ -334,348 +334,348 @@ const std::string& stlplus::message_handler_fatal_error::id(void) const
 namespace stlplus
 {
 
-class message
-{
-private:
-  unsigned m_index;    // index into message files
-  unsigned m_line;     // line
-  unsigned m_column;   // column
-  std::string m_text;  // text
+  class message
+  {
+  private:
+    unsigned m_index;    // index into message files
+    unsigned m_line;     // line
+    unsigned m_column;   // column
+    std::string m_text;  // text
 
-public:
-  message(unsigned index = (unsigned)-1,unsigned line = 0,unsigned column = 0,
-          const std::string& text = "") :
-    m_index(index),m_line(line),m_column(column),m_text(text) {}
-  message(const std::string& text) :
-    m_index((unsigned)-1),m_line(0),m_column(0),m_text(text) {}
-  ~message(void) {}
+  public:
+    message(unsigned index = (unsigned)-1,unsigned line = 0,unsigned column = 0,
+            const std::string& text = "") :
+      m_index(index),m_line(line),m_column(column),m_text(text) {}
+    message(const std::string& text) :
+      m_index((unsigned)-1),m_line(0),m_column(0),m_text(text) {}
+    ~message(void) {}
 
-  unsigned index(void) const {return m_index;}
-  unsigned line(void) const {return m_line;}
-  unsigned column(void) const {return m_column;}
-  const std::string& text(void) const {return m_text;}
-};
+    unsigned index(void) const {return m_index;}
+    unsigned line(void) const {return m_line;}
+    unsigned column(void) const {return m_column;}
+    const std::string& text(void) const {return m_text;}
+  };
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
-class pending_message
-{
-private:
-  message_position m_position;
-  std::string m_id;
-  std::vector<std::string> m_args;
-public:
-  pending_message(const message_position& position, const std::string& id, const std::vector<std::string>& args) :
-    m_position(position), m_id(id), m_args(args) {}
-  pending_message(const std::string& id, const std::vector<std::string>& args) :
-    m_position(message_position()), m_id(id), m_args(args) {}
-  ~pending_message(void) {}
+  class pending_message
+  {
+  private:
+    message_position m_position;
+    std::string m_id;
+    std::vector<std::string> m_args;
+  public:
+    pending_message(const message_position& position, const std::string& id, const std::vector<std::string>& args) :
+      m_position(position), m_id(id), m_args(args) {}
+    pending_message(const std::string& id, const std::vector<std::string>& args) :
+      m_position(message_position()), m_id(id), m_args(args) {}
+    ~pending_message(void) {}
 
-  const message_position& position(void) const {return m_position;}
-  const std::string& id(void) const {return m_id;}
-  const std::vector<std::string>& args(void) const {return m_args;}
-};
+    const message_position& position(void) const {return m_position;}
+    const std::string& id(void) const {return m_id;}
+    const std::vector<std::string>& args(void) const {return m_args;}
+  };
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
-class message_handler_base_body
-{
-public:
-  std::vector<std::string> m_files;          // message files in the order they were added
-  std::map<std::string,message> m_messages;  // messages stored as id:message pairs
-  bool m_show;                               // show source
-  std::list<pending_message> m_context;      // context message stack
-  std::list<pending_message> m_supplement;   // supplementary message stack
-  unsigned m_count;
+  class message_handler_base_body
+  {
+  public:
+    std::vector<std::string> m_files;          // message files in the order they were added
+    std::map<std::string,message> m_messages;  // messages stored as id:message pairs
+    bool m_show;                               // show source
+    std::list<pending_message> m_context;      // context message stack
+    std::list<pending_message> m_supplement;   // supplementary message stack
+    unsigned m_count;
 
-public:
-  message_handler_base_body(void)
-    {
-      // preload with default formats
-      add_message(information_id,default_information_format);
-      add_message(warning_id,default_warning_format);
-      add_message(error_id,default_error_format);
-      add_message(fatal_id,default_fatal_format);
-      add_message(position_id,default_position_format);
-      add_message(context_id,default_context_format);
-      add_message(supplement_id,default_supplement_format);
-    }
-
-  ~message_handler_base_body(void)
-    {
-    }
-
-  void increment(void)
-    {
-      ++m_count;
-    }
-
-  bool decrement(void)
-    {
-      --m_count;
-      return m_count == 0;
-    }
-
-  void set_show(bool show)
-    {
-      m_show = show;
-    }
-
-  void add_message_file(const std::string& file)
-    throw(message_handler_read_error)
-    {
-      m_files.push_back(file);
-      std::ifstream input(file.c_str());
-      if (!input.good()) 
-        throw message_handler_read_error(message_position(file,0,0), std::string("file not found: ") + file);
-      std::string line;
-      unsigned l = 0;
-      while(input.good())
+  public:
+    message_handler_base_body(void)
       {
-        std::getline(input,line);
-        l++;
-        if (line.size() > 0 && isalpha(line[0]))
-        {
-          // Get the id field which starts with an alphabetic and contains alphanumerics and underscore
-          std::string id;
-          unsigned i = 0;
-          for (; i < line.size(); i++)
-          {
-            if (isalnum(line[i]) || line[i] == '_')
-              id += line[i];
-            else
-              break;
-          }
-          // check this ID is unique within the files - however it is legal to override a hard-coded message
-          std::map<std::string,message>::iterator found = m_messages.find(id);
-          if (found != m_messages.end() && found->second.index() != (unsigned)-1)
-            throw message_handler_read_error(message_position(file,l,i), std::string("repeated ID ") + id);
-          // skip whitespace
-          for (; i < line.size(); i++)
-          {
-            if (!isspace(line[i]))
-              break;
-          }
-          // now get the text part and add the message to the message map
-          std::string text = line.substr(i, line.size()-i);
-          m_messages[id] = message(m_files.size()-1, l, i, text);
-        }
+        // preload with default formats
+        add_message(information_id,default_information_format);
+        add_message(warning_id,default_warning_format);
+        add_message(error_id,default_error_format);
+        add_message(fatal_id,default_fatal_format);
+        add_message(position_id,default_position_format);
+        add_message(context_id,default_context_format);
+        add_message(supplement_id,default_supplement_format);
       }
-    }
 
-  void add_message(const std::string& id, const std::string& text)
-    throw()
-    {
-      m_messages[id] = message((unsigned)-1, 0, 0, text);
-    }
-
-  void push_supplement(const message_position& position,
-                       const std::string& message_id,
-                       const std::vector<std::string>& args)
-    {
-      m_supplement.push_back(pending_message(position,message_id,args));
-    }
-
-  void push_context(const message_position& position,
-                       const std::string& message_id,
-                       const std::vector<std::string>& args)
-    {
-      m_context.push_back(pending_message(position,message_id,args));
-    }
-
-  void pop_context(unsigned depth)
-    {
-      while (depth < m_context.size())
-        m_context.pop_back();
-    }
-
-  unsigned context_depth(void) const
-    {
-      return m_context.size();
-    }
-
-  std::vector<std::string> format_report(const message_position& position,
-                                         const std::string& message_id,
-                                         const std::string& status_id,
-                                         const std::vector<std::string>& args)
-    throw(message_handler_id_error,message_handler_format_error)
-    {
-      // gathers everything together into a full multi-line report
-      std::vector<std::string> result;
-      // the first part of the report is the status message (info/warning/error/fatal)
-      result.push_back(format_id(position, message_id, status_id, args));
-      // now append any supplemental messages that have been stacked
-      // these are printed in FIFO order i.e. the order that they were added to the handler
-      for (std::list<pending_message>::iterator j = m_supplement.begin(); j != m_supplement.end(); j++)
-        result.push_back(format_id(j->position(),j->id(),supplement_id,j->args()));
-      // now discard any supplementary messages because they only persist until they are printed once
-      m_supplement.clear();
-      // now append any context messages that have been stacked
-      // these are printed in LIFO order i.e. closest context first
-      for (std::list<pending_message>::reverse_iterator i = m_context.rbegin(); i != m_context.rend(); i++)
-        result.push_back(format_id(i->position(),i->id(),context_id,i->args()));
-      return result;
-    }
-
-  std::string format_id(const message_position& position,
-                        const std::string& message_id,
-                        const std::string& status_id,
-                        const std::vector<std::string>& args)
-    throw(message_handler_id_error,message_handler_format_error)
-    {
-      // This function creates a fully-formatted single-line message from a
-      // combination of the position format and the status format plus the message
-      // ID and its arguments. There are up to three levels of substitution
-      // required to do this.
-
-      // get the status format from the status_id
-      std::map<std::string,message>::iterator status_found = m_messages.find(status_id);
-      if (status_found == m_messages.end()) throw message_handler_id_error(status_id);
-
-      // similarly get the message format
-      std::map<std::string,message>::iterator message_found = m_messages.find(message_id);
-      if (message_found == m_messages.end()) throw message_handler_id_error(message_id);
-
-      // format the message contents
-      std::string message_text = format_message(message_found->second, args);
-
-      // now format the message in the status string (informational, warning etc).
-      std::vector<std::string> status_args;
-      status_args.push_back(message_text);
-      std::string result = format_message(status_found->second, status_args);
-
-      // finally, if the message is positional, format the status message in the positional string
-      if (position.valid())
+    ~message_handler_base_body(void)
       {
-        // get the position format from the message set
-        std::map<std::string,message>::iterator position_found = m_messages.find(position_id);
-        if (position_found == m_messages.end()) throw message_handler_id_error(position_id);
+      }
 
-        // now format the message
-        std::vector<std::string> position_args;
-        position_args.push_back(result);
-        position_args.push_back(position.filename());
-        position_args.push_back(::to_string(position.line()));
-        position_args.push_back(::to_string(position.column()));
-        result = format_message(position_found->second, position_args);
-        // add the source file text and position if that option is on
+    void increment(void)
+      {
+        ++m_count;
+      }
 
-        if (m_show)
+    bool decrement(void)
+      {
+        --m_count;
+        return m_count == 0;
+      }
+
+    void set_show(bool show)
+      {
+        m_show = show;
+      }
+
+    void add_message_file(const std::string& file)
+      throw(message_handler_read_error)
+      {
+        m_files.push_back(file);
+        std::ifstream input(file.c_str());
+        if (!input.good()) 
+          throw message_handler_read_error(message_position(file,0,0), std::string("file not found: ") + file);
+        std::string line;
+        unsigned l = 0;
+        while(input.good())
         {
-          std::vector<std::string> show = position.show();
-          for (unsigned i = 0; i < show.size(); i++)
+          std::getline(input,line);
+          l++;
+          if (line.size() > 0 && isalpha(line[0]))
           {
-            result += std::string("\n");
-            result += show[i];
+            // Get the id field which starts with an alphabetic and contains alphanumerics and underscore
+            std::string id;
+            unsigned i = 0;
+            for (; i < line.size(); i++)
+            {
+              if (isalnum(line[i]) || line[i] == '_')
+                id += line[i];
+              else
+                break;
+            }
+            // check this ID is unique within the files - however it is legal to override a hard-coded message
+            std::map<std::string,message>::iterator found = m_messages.find(id);
+            if (found != m_messages.end() && found->second.index() != (unsigned)-1)
+              throw message_handler_read_error(message_position(file,l,i), std::string("repeated ID ") + id);
+            // skip whitespace
+            for (; i < line.size(); i++)
+            {
+              if (!isspace(line[i]))
+                break;
+            }
+            // now get the text part and add the message to the message map
+            std::string text = line.substr(i, line.size()-i);
+            m_messages[id] = message(m_files.size()-1, l, i, text);
           }
         }
       }
-      return result;
-    }
 
-  std::string format_message(const message& mess,
-                             const std::vector<std::string>& args) 
-    throw(message_handler_format_error)
-    {
-      // this function creates a formatted string from the stored message text and
-      // the arguments. Most of the work is done in format_string. However, if a
-      // formatting error is found, this function uses extra information stored in
-      // the message data structure to improve the reporting of the error
-      try
+    void add_message(const std::string& id, const std::string& text)
+      throw()
       {
-        // This is the basic string formatter which performs parameter substitution
-        // into a message. Parameter placeholders are in the form @0, @1 etc, where
-        // the number is the index of the argument in the args vector. At present,
-        // no field codes are supported as in printf formats Algorithm: scan the
-        // input string and transfer it into the result. When an @nnn appears,
-        // substitute the relevant argument from the args vector. Throw an exception
-        // if its out of range. Also convert C-style escaped characters of the form
-        // \n.
-        std::string format = mess.text();
-        std::string result;
-        for (unsigned i = 0; i < format.size(); )
+        m_messages[id] = message((unsigned)-1, 0, 0, text);
+      }
+
+    void push_supplement(const message_position& position,
+                         const std::string& message_id,
+                         const std::vector<std::string>& args)
+      {
+        m_supplement.push_back(pending_message(position,message_id,args));
+      }
+
+    void push_context(const message_position& position,
+                      const std::string& message_id,
+                      const std::vector<std::string>& args)
+      {
+        m_context.push_back(pending_message(position,message_id,args));
+      }
+
+    void pop_context(unsigned depth)
+      {
+        while (depth < m_context.size())
+          m_context.pop_back();
+      }
+
+    unsigned context_depth(void) const
+      {
+        return m_context.size();
+      }
+
+    std::vector<std::string> format_report(const message_position& position,
+                                           const std::string& message_id,
+                                           const std::string& status_id,
+                                           const std::vector<std::string>& args)
+      throw(message_handler_id_error,message_handler_format_error)
+      {
+        // gathers everything together into a full multi-line report
+        std::vector<std::string> result;
+        // the first part of the report is the status message (info/warning/error/fatal)
+        result.push_back(format_id(position, message_id, status_id, args));
+        // now append any supplemental messages that have been stacked
+        // these are printed in FIFO order i.e. the order that they were added to the handler
+        for (std::list<pending_message>::iterator j = m_supplement.begin(); j != m_supplement.end(); j++)
+          result.push_back(format_id(j->position(),j->id(),supplement_id,j->args()));
+        // now discard any supplementary messages because they only persist until they are printed once
+        m_supplement.clear();
+        // now append any context messages that have been stacked
+        // these are printed in LIFO order i.e. closest context first
+        for (std::list<pending_message>::reverse_iterator i = m_context.rbegin(); i != m_context.rend(); i++)
+          result.push_back(format_id(i->position(),i->id(),context_id,i->args()));
+        return result;
+      }
+
+    std::string format_id(const message_position& position,
+                          const std::string& message_id,
+                          const std::string& status_id,
+                          const std::vector<std::string>& args)
+      throw(message_handler_id_error,message_handler_format_error)
+      {
+        // This function creates a fully-formatted single-line message from a
+        // combination of the position format and the status format plus the message
+        // ID and its arguments. There are up to three levels of substitution
+        // required to do this.
+
+        // get the status format from the status_id
+        std::map<std::string,message>::iterator status_found = m_messages.find(status_id);
+        if (status_found == m_messages.end()) throw message_handler_id_error(status_id);
+
+        // similarly get the message format
+        std::map<std::string,message>::iterator message_found = m_messages.find(message_id);
+        if (message_found == m_messages.end()) throw message_handler_id_error(message_id);
+
+        // format the message contents
+        std::string message_text = format_message(message_found->second, args);
+
+        // now format the message in the status string (informational, warning etc).
+        std::vector<std::string> status_args;
+        status_args.push_back(message_text);
+        std::string result = format_message(status_found->second, status_args);
+
+        // finally, if the message is positional, format the status message in the positional string
+        if (position.valid())
         {
-          if (format[i] == '@')
+          // get the position format from the message set
+          std::map<std::string,message>::iterator position_found = m_messages.find(position_id);
+          if (position_found == m_messages.end()) throw message_handler_id_error(position_id);
+
+          // now format the message
+          std::vector<std::string> position_args;
+          position_args.push_back(result);
+          position_args.push_back(position.filename());
+          position_args.push_back(::to_string(position.line()));
+          position_args.push_back(::to_string(position.column()));
+          result = format_message(position_found->second, position_args);
+          // add the source file text and position if that option is on
+
+          if (m_show)
           {
-            // an argument substitution has been found - now find the argument number
-            if (i+1 == format.size()) throw message_handler_format_error(format, i);
-            i++;
-            // check for @@ which is an escaped form of '@'
-            if (format[i] == '@')
+            std::vector<std::string> show = position.show();
+            for (unsigned i = 0; i < show.size(); i++)
             {
-              result += '@';
-              i++;
+              result += std::string("\n");
+              result += show[i];
             }
-            else
-            {
-              // there must be at least one digit in the substitution number
-              if (!isdigit(format[i])) throw message_handler_format_error(format,i);
-              unsigned a = 0;
-              for (; i < format.size() && isdigit(format[i]); i++)
-              {
-                a *= 10;
-                a += (format[i] - '0');
-              }
-              // check for an argument request out of the range of the set of arguments
-              if (a >= args.size()) throw message_handler_format_error(format,i-1);
-              result += args[a];
-            }
-          }
-          else if (format[i] == '\\')
-          {
-            // an escaped character has been found
-            if (i+1 == format.size()) throw message_handler_format_error(format, i);
-            i++;
-            // do the special ones first, then all the others just strip off the \ and leave the following characters
-            switch(format[i])
-            {
-            case '\\':
-              result += '\\';
-              break;
-            case 't':
-              result += '\t';
-              break;
-            case 'n':
-              result += '\n';
-              break;
-            case 'r':
-              result += '\r';
-              break;
-            case 'a':
-              result += '\a';
-              break;
-            default:
-              result += format[i];
-              break;
-            }
-            i++;
-          }
-          else
-          {
-            // plain text found - just append to the result
-            result += format[i++];
           }
         }
         return result;
       }
-      catch(message_handler_format_error& exception)
+
+    std::string format_message(const message& mess,
+                               const std::vector<std::string>& args) 
+      throw(message_handler_format_error)
       {
-        // if the message came from a message file, improve the error reporting by adding file positional information
-        // Also adjust the position from the start of the text (stored in the message field) to the column of the error
-        if (mess.index() != (unsigned)-1)
-          throw message_handler_format_error(
-            message_position(m_files[mess.index()], mess.line(), mess.column()+exception.offset()),
-            exception.format(),
-            exception.offset());
-        else
-          throw exception;
+        // this function creates a formatted string from the stored message text and
+        // the arguments. Most of the work is done in format_string. However, if a
+        // formatting error is found, this function uses extra information stored in
+        // the message data structure to improve the reporting of the error
+        try
+        {
+          // This is the basic string formatter which performs parameter substitution
+          // into a message. Parameter placeholders are in the form @0, @1 etc, where
+          // the number is the index of the argument in the args vector. At present,
+          // no field codes are supported as in printf formats Algorithm: scan the
+          // input string and transfer it into the result. When an @nnn appears,
+          // substitute the relevant argument from the args vector. Throw an exception
+          // if its out of range. Also convert C-style escaped characters of the form
+          // \n.
+          std::string format = mess.text();
+          std::string result;
+          for (unsigned i = 0; i < format.size(); )
+          {
+            if (format[i] == '@')
+            {
+              // an argument substitution has been found - now find the argument number
+              if (i+1 == format.size()) throw message_handler_format_error(format, i);
+              i++;
+              // check for @@ which is an escaped form of '@'
+              if (format[i] == '@')
+              {
+                result += '@';
+                i++;
+              }
+              else
+              {
+                // there must be at least one digit in the substitution number
+                if (!isdigit(format[i])) throw message_handler_format_error(format,i);
+                unsigned a = 0;
+                for (; i < format.size() && isdigit(format[i]); i++)
+                {
+                  a *= 10;
+                  a += (format[i] - '0');
+                }
+                // check for an argument request out of the range of the set of arguments
+                if (a >= args.size()) throw message_handler_format_error(format,i-1);
+                result += args[a];
+              }
+            }
+            else if (format[i] == '\\')
+            {
+              // an escaped character has been found
+              if (i+1 == format.size()) throw message_handler_format_error(format, i);
+              i++;
+              // do the special ones first, then all the others just strip off the \ and leave the following characters
+              switch(format[i])
+              {
+              case '\\':
+                result += '\\';
+                break;
+              case 't':
+                result += '\t';
+                break;
+              case 'n':
+                result += '\n';
+                break;
+              case 'r':
+                result += '\r';
+                break;
+              case 'a':
+                result += '\a';
+                break;
+              default:
+                result += format[i];
+                break;
+              }
+              i++;
+            }
+            else
+            {
+              // plain text found - just append to the result
+              result += format[i++];
+            }
+          }
+          return result;
+        }
+        catch(message_handler_format_error& exception)
+        {
+          // if the message came from a message file, improve the error reporting by adding file positional information
+          // Also adjust the position from the start of the text (stored in the message field) to the column of the error
+          if (mess.index() != (unsigned)-1)
+            throw message_handler_format_error(
+              message_position(m_files[mess.index()], mess.line(), mess.column()+exception.offset()),
+              exception.format(),
+              exception.offset());
+          else
+            throw exception;
+        }
       }
-    }
-};
+  };
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
 stlplus::message_handler_base::message_handler_base(bool show)
   throw() :
@@ -801,7 +801,7 @@ void stlplus::message_handler_base::hide_position(void)
 // information messages
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const std::string& id,
-                                                                 const std::vector<std::string>& args)
+                                                                            const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return information_message(stlplus::message_position(), id, args);
@@ -815,7 +815,7 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const std::string& id,
-                                                                 const std::string& arg1)
+                                                                            const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -824,7 +824,7 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const std::string& id,
-                                                                 const std::string& arg1, const std::string& arg2)
+                                                                            const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -834,7 +834,7 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const std::string& id,
-                                                                 const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                            const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -845,15 +845,15 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const stlplus::message_position& position,
-                                                                 const std::string& id,
-                                                                 const std::vector<std::string>& args)
+                                                                            const std::string& id,
+                                                                            const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return m_body->format_report(position, id, information_id, args);
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const stlplus::message_position& position,
-                                                                 const std::string& id)
+                                                                            const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -861,8 +861,8 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const stlplus::message_position& position,
-                                                                 const std::string& id,
-                                                                 const std::string& arg1)
+                                                                            const std::string& id,
+                                                                            const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -871,8 +871,8 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const stlplus::message_position& position,
-                                                                 const std::string& id,
-                                                                 const std::string& arg1, const std::string& arg2)
+                                                                            const std::string& id,
+                                                                            const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -882,8 +882,8 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 }
 
 std::vector<std::string> stlplus::message_handler_base::information_message(const stlplus::message_position& position,
-                                                                 const std::string& id,
-                                                                 const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                            const std::string& id,
+                                                                            const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -897,7 +897,7 @@ std::vector<std::string> stlplus::message_handler_base::information_message(cons
 // warning messages
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const std::string& id,
-                                                             const std::vector<std::string>& args)
+                                                                        const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return warning_message(stlplus::message_position(), id, args);
@@ -911,7 +911,7 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const std::string& id,
-                                                             const std::string& arg1)
+                                                                        const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -920,7 +920,7 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const std::string& id,
-                                                             const std::string& arg1, const std::string& arg2)
+                                                                        const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -930,7 +930,7 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const std::string& id,
-                                                             const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                        const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -941,15 +941,15 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const stlplus::message_position& position,
-                                                             const std::string& id,
-                                                             const std::vector<std::string>& args)
+                                                                        const std::string& id,
+                                                                        const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return m_body->format_report(position, id, warning_id, args);
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const stlplus::message_position& position,
-                                                             const std::string& id)
+                                                                        const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -957,8 +957,8 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const stlplus::message_position& position,
-                                                             const std::string& id,
-                                                             const std::string& arg1)
+                                                                        const std::string& id,
+                                                                        const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -967,8 +967,8 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const stlplus::message_position& position,
-                                                             const std::string& id,
-                                                             const std::string& arg1, const std::string& arg2)
+                                                                        const std::string& id,
+                                                                        const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -978,8 +978,8 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 }
 
 std::vector<std::string> stlplus::message_handler_base::warning_message(const stlplus::message_position& position,
-                                                             const std::string& id,
-                                                             const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                        const std::string& id,
+                                                                        const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -993,7 +993,7 @@ std::vector<std::string> stlplus::message_handler_base::warning_message(const st
 // error messages
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const std::string& id,
-                                                           const std::vector<std::string>& args)
+                                                                      const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return error_message(stlplus::message_position(), id, args);
@@ -1007,7 +1007,7 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const std::string& id,
-                                                           const std::string& arg1)
+                                                                      const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1016,7 +1016,7 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2)
+                                                                      const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1026,7 +1026,7 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                      const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1037,15 +1037,15 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::vector<std::string>& args)
+                                                                      const std::string& id,
+                                                                      const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return m_body->format_report(position, id, error_id, args);
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const stlplus::message_position& position,
-                                                           const std::string& id)
+                                                                      const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1053,8 +1053,8 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1063,8 +1063,8 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1074,8 +1074,8 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::error_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1089,7 +1089,7 @@ std::vector<std::string> stlplus::message_handler_base::error_message(const stlp
 // fatal messages
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const std::string& id,
-                                                           const std::vector<std::string>& args)
+                                                                      const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return fatal_message(stlplus::message_position(), id, args);
@@ -1103,7 +1103,7 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const std::string& id,
-                                                           const std::string& arg1)
+                                                                      const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1112,7 +1112,7 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2)
+                                                                      const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1122,7 +1122,7 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                      const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1133,15 +1133,15 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const std:
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::vector<std::string>& args)
+                                                                      const std::string& id,
+                                                                      const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   return m_body->format_report(position, id, fatal_id, args);
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlplus::message_position& position,
-                                                           const std::string& id)
+                                                                      const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1149,8 +1149,8 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1159,8 +1159,8 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1170,8 +1170,8 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlp
 }
 
 std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlplus::message_position& position,
-                                                           const std::string& id,
-                                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                                      const std::string& id,
+                                                                      const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1185,7 +1185,7 @@ std::vector<std::string> stlplus::message_handler_base::fatal_message(const stlp
 // supplemental messages
 
 void stlplus::message_handler_base::push_supplement(const std::string& id,
-                                         const std::vector<std::string>& args)
+                                                    const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   push_supplement(stlplus::message_position(), id, args);
@@ -1199,7 +1199,7 @@ void stlplus::message_handler_base::push_supplement(const std::string& id)
 }
 
 void stlplus::message_handler_base::push_supplement(const std::string& id,
-                                         const std::string& arg1)
+                                                    const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1208,7 +1208,7 @@ void stlplus::message_handler_base::push_supplement(const std::string& id,
 }
 
 void stlplus::message_handler_base::push_supplement(const std::string& id,
-                                         const std::string& arg1, const std::string& arg2)
+                                                    const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1218,7 +1218,7 @@ void stlplus::message_handler_base::push_supplement(const std::string& id,
 }
 
 void stlplus::message_handler_base::push_supplement(const std::string& id,
-                                         const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                    const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1229,15 +1229,15 @@ void stlplus::message_handler_base::push_supplement(const std::string& id,
 }
 
 void stlplus::message_handler_base::push_supplement(const stlplus::message_position& position,
-                                         const std::string& id,
-                                         const std::vector<std::string>& args)
+                                                    const std::string& id,
+                                                    const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   m_body->push_supplement(position, id, args);
 }
 
 void stlplus::message_handler_base::push_supplement(const stlplus::message_position& position,
-                                         const std::string& id)
+                                                    const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1245,8 +1245,8 @@ void stlplus::message_handler_base::push_supplement(const stlplus::message_posit
 }
 
 void stlplus::message_handler_base::push_supplement(const stlplus::message_position& position,
-                                         const std::string& id,
-                                         const std::string& arg1)
+                                                    const std::string& id,
+                                                    const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1255,8 +1255,8 @@ void stlplus::message_handler_base::push_supplement(const stlplus::message_posit
 }
 
 void stlplus::message_handler_base::push_supplement(const stlplus::message_position& position,
-                                         const std::string& id,
-                                         const std::string& arg1, const std::string& arg2)
+                                                    const std::string& id,
+                                                    const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1266,8 +1266,8 @@ void stlplus::message_handler_base::push_supplement(const stlplus::message_posit
 }
 
 void stlplus::message_handler_base::push_supplement(const stlplus::message_position& position,
-                                         const std::string& id,
-                                         const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                    const std::string& id,
+                                                    const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1281,7 +1281,7 @@ void stlplus::message_handler_base::push_supplement(const stlplus::message_posit
 // context
 
 void stlplus::message_handler_base::push_context (const std::string& id,
-                                       const std::vector<std::string>& args)
+                                                  const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   push_context(stlplus::message_position(), id, args);
@@ -1295,7 +1295,7 @@ void stlplus::message_handler_base::push_context (const std::string& id)
 }
 
 void stlplus::message_handler_base::push_context (const std::string& id,
-                                       const std::string& arg1)
+                                                  const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1304,7 +1304,7 @@ void stlplus::message_handler_base::push_context (const std::string& id,
 }
 
 void stlplus::message_handler_base::push_context (const std::string& id,
-                                       const std::string& arg1, const std::string& arg2)
+                                                  const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1314,7 +1314,7 @@ void stlplus::message_handler_base::push_context (const std::string& id,
 }
 
 void stlplus::message_handler_base::push_context (const std::string& id,
-                                       const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                  const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1325,15 +1325,15 @@ void stlplus::message_handler_base::push_context (const std::string& id,
 }
 
 void stlplus::message_handler_base::push_context (const stlplus::message_position& position,
-                                       const std::string& id,
-                                       const std::vector<std::string>& args)
+                                                  const std::string& id,
+                                                  const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   m_body->push_context(position, id, args);
 }
 
 void stlplus::message_handler_base::push_context (const stlplus::message_position& position,
-                                       const std::string& id)
+                                                  const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1341,8 +1341,8 @@ void stlplus::message_handler_base::push_context (const stlplus::message_positio
 }
 
 void stlplus::message_handler_base::push_context (const stlplus::message_position& position,
-                                       const std::string& id,
-                                       const std::string& arg1)
+                                                  const std::string& id,
+                                                  const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1351,8 +1351,8 @@ void stlplus::message_handler_base::push_context (const stlplus::message_positio
 }
 
 void stlplus::message_handler_base::push_context (const stlplus::message_position& position,
-                                       const std::string& id,
-                                       const std::string& arg1, const std::string& arg2)
+                                                  const std::string& id,
+                                                  const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1362,8 +1362,8 @@ void stlplus::message_handler_base::push_context (const stlplus::message_positio
 }
 
 void stlplus::message_handler_base::push_context (const stlplus::message_position& position,
-                                       const std::string& id,
-                                       const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                                  const std::string& id,
+                                                  const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1411,8 +1411,8 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context (const std::string& id,
-                                                     const std::string& arg1,
-                                                     const std::string& arg2) 
+                                                                           const std::string& arg1,
+                                                                           const std::string& arg2) 
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1422,9 +1422,9 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context (const
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const std::string& id,
-                                                    const std::string& arg1,
-                                                    const std::string& arg2,
-                                                    const std::string& arg3) 
+                                                                          const std::string& arg1,
+                                                                          const std::string& arg2,
+                                                                          const std::string& arg3) 
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1435,8 +1435,8 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const stlplus::message_position& position,
-                                                    const std::string& id,
-                                                    const std::vector<std::string>& args)            
+                                                                          const std::string& id,
+                                                                          const std::vector<std::string>& args)            
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   stlplus::message_context result(*this);
@@ -1445,7 +1445,7 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const stlplus::message_position& position,
-                                                    const std::string& id)             
+                                                                          const std::string& id)             
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1453,8 +1453,8 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const stlplus::message_position& position,
-                                                    const std::string& id,
-                                                    const std::string& arg1)                         
+                                                                          const std::string& id,
+                                                                          const std::string& arg1)                         
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1463,9 +1463,9 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const stlplus::message_position& position,
-                                                    const std::string& id,
-                                                    const std::string& arg1,
-                                                    const std::string& arg2) 
+                                                                          const std::string& id,
+                                                                          const std::string& arg1,
+                                                                          const std::string& arg2) 
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1475,10 +1475,10 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 }
 
 stlplus::message_context stlplus::message_handler_base::auto_push_context(const stlplus::message_position& position,
-                                                    const std::string& id,
-                                                    const std::string& arg1,
-                                                    const std::string& arg2,
-                                                    const std::string& arg3) 
+                                                                          const std::string& id,
+                                                                          const std::string& arg1,
+                                                                          const std::string& arg2,
+                                                                          const std::string& arg3) 
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   std::vector<std::string> args;
@@ -1495,75 +1495,75 @@ stlplus::message_context stlplus::message_handler_base::auto_push_context(const 
 namespace stlplus
 {
 
-class message_handler_body
-{
-private:
-  std::ostream* m_device;                             // TextIO output device
-  unsigned m_limit;                              // error limit
-  unsigned m_errors;                             // error count
-  unsigned m_count;                              // alias count
+  class message_handler_body
+  {
+  private:
+    std::ostream* m_device;                             // TextIO output device
+    unsigned m_limit;                              // error limit
+    unsigned m_errors;                             // error count
+    unsigned m_count;                              // alias count
 
-public:
-  message_handler_body(std::ostream& device, unsigned limit) :
-    m_device(&device), m_limit(limit), m_errors(0), m_count(1)
-    {
-    }
+  public:
+    message_handler_body(std::ostream& device, unsigned limit) :
+      m_device(&device), m_limit(limit), m_errors(0), m_count(1)
+      {
+      }
 
-  ~message_handler_body(void)
-    {
-      device().flush();
-    }
+    ~message_handler_body(void)
+      {
+        device().flush();
+      }
 
-  void increment(void)
-    {
-      ++m_count;
-    }
+    void increment(void)
+      {
+        ++m_count;
+      }
 
-  bool decrement(void)
-    {
-      --m_count;
-      return m_count == 0;
-    }
+    bool decrement(void)
+      {
+        --m_count;
+        return m_count == 0;
+      }
 
-  std::ostream& device(void)
-    {
-      return *m_device;
-    }
+    std::ostream& device(void)
+      {
+        return *m_device;
+      }
 
-  unsigned limit(void) const
-    {
-      return m_limit;
-    }
+    unsigned limit(void) const
+      {
+        return m_limit;
+      }
 
-  void set_limit(unsigned limit)
-    {
-      m_limit = limit;
-    }
+    void set_limit(unsigned limit)
+      {
+        m_limit = limit;
+      }
 
-  unsigned count(void) const
-    {
-      return m_errors;
-    }
+    unsigned count(void) const
+      {
+        return m_errors;
+      }
 
-  void set_count(unsigned count)
-    {
-      m_errors = count;
-    }
+    void set_count(unsigned count)
+      {
+        m_errors = count;
+      }
 
-  void error_increment(void)
-    {
-      ++m_errors;
-    }
+    void error_increment(void)
+      {
+        ++m_errors;
+      }
 
-  bool limit_reached(void) const
-    {
-      return m_limit > 0 && m_errors >= m_limit;
-    }
-};
+    bool limit_reached(void) const
+      {
+        return m_limit > 0 && m_errors >= m_limit;
+      }
+  };
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
 stlplus::message_handler::message_handler(std::ostream& device, unsigned limit, bool show)
   throw() :
@@ -1644,7 +1644,7 @@ std::ostream& stlplus::message_handler::device(void)
 // information messages
 
 bool stlplus::message_handler::information(const std::string& id,
-                                const std::vector<std::string>& args)
+                                           const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(id, args);
@@ -1659,7 +1659,7 @@ bool stlplus::message_handler::information(const std::string& id)
 }
 
 bool stlplus::message_handler::information(const std::string& id,
-                                const std::string& arg1)
+                                           const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(id, arg1);
@@ -1667,7 +1667,7 @@ bool stlplus::message_handler::information(const std::string& id,
 }
 
 bool stlplus::message_handler::information(const std::string& id,
-                                const std::string& arg1, const std::string& arg2)
+                                           const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(id, arg1, arg2);
@@ -1675,7 +1675,7 @@ bool stlplus::message_handler::information(const std::string& id,
 }
 
 bool stlplus::message_handler::information(const std::string& id,
-                                const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(id, arg1, arg2, arg3);
@@ -1683,8 +1683,8 @@ bool stlplus::message_handler::information(const std::string& id,
 }
 
 bool stlplus::message_handler::information(const stlplus::message_position& position,
-                                const std::string& id,
-                                const std::vector<std::string>& args)
+                                           const std::string& id,
+                                           const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(position, id, args);
@@ -1692,7 +1692,7 @@ bool stlplus::message_handler::information(const stlplus::message_position& posi
 }
 
 bool stlplus::message_handler::information(const stlplus::message_position& position,
-                                const std::string& id)
+                                           const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(position, id);
@@ -1700,8 +1700,8 @@ bool stlplus::message_handler::information(const stlplus::message_position& posi
 }
 
 bool stlplus::message_handler::information(const stlplus::message_position& position,
-                                const std::string& id,
-                                const std::string& arg1)
+                                           const std::string& id,
+                                           const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(position, id, arg1);
@@ -1709,8 +1709,8 @@ bool stlplus::message_handler::information(const stlplus::message_position& posi
 }
 
 bool stlplus::message_handler::information(const stlplus::message_position& position,
-                                const std::string& id,
-                                const std::string& arg1, const std::string& arg2)
+                                           const std::string& id,
+                                           const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(position, id, arg1, arg2);
@@ -1718,8 +1718,8 @@ bool stlplus::message_handler::information(const stlplus::message_position& posi
 }
 
 bool stlplus::message_handler::information(const stlplus::message_position& position,
-                                const std::string& id,
-                                const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                           const std::string& id,
+                                           const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << information_message(position, id, arg1, arg2, arg3);
@@ -1730,7 +1730,7 @@ bool stlplus::message_handler::information(const stlplus::message_position& posi
 // warning messages
 
 bool stlplus::message_handler::warning(const std::string& id,
-                            const std::vector<std::string>& args)
+                                       const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(id, args);
@@ -1745,7 +1745,7 @@ bool stlplus::message_handler::warning(const std::string& id)
 }
 
 bool stlplus::message_handler::warning(const std::string& id,
-                            const std::string& arg1)
+                                       const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(id, arg1);
@@ -1753,7 +1753,7 @@ bool stlplus::message_handler::warning(const std::string& id,
 }
 
 bool stlplus::message_handler::warning(const std::string& id,
-                            const std::string& arg1, const std::string& arg2)
+                                       const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(id, arg1, arg2);
@@ -1761,7 +1761,7 @@ bool stlplus::message_handler::warning(const std::string& id,
 }
 
 bool stlplus::message_handler::warning(const std::string& id,
-                            const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                       const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(id, arg1, arg2, arg3);
@@ -1769,8 +1769,8 @@ bool stlplus::message_handler::warning(const std::string& id,
 }
 
 bool stlplus::message_handler::warning(const stlplus::message_position& position,
-                            const std::string& id,
-                            const std::vector<std::string>& args)
+                                       const std::string& id,
+                                       const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(position, id, args);
@@ -1778,7 +1778,7 @@ bool stlplus::message_handler::warning(const stlplus::message_position& position
 }
 
 bool stlplus::message_handler::warning(const stlplus::message_position& position,
-                            const std::string& id)
+                                       const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(position, id);
@@ -1786,8 +1786,8 @@ bool stlplus::message_handler::warning(const stlplus::message_position& position
 }
 
 bool stlplus::message_handler::warning(const stlplus::message_position& position,
-                            const std::string& id,
-                            const std::string& arg1)
+                                       const std::string& id,
+                                       const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(position, id, arg1);
@@ -1795,8 +1795,8 @@ bool stlplus::message_handler::warning(const stlplus::message_position& position
 }
 
 bool stlplus::message_handler::warning(const stlplus::message_position& position,
-                            const std::string& id,
-                            const std::string& arg1, const std::string& arg2)
+                                       const std::string& id,
+                                       const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(position, id, arg1, arg2);
@@ -1804,8 +1804,8 @@ bool stlplus::message_handler::warning(const stlplus::message_position& position
 }
 
 bool stlplus::message_handler::warning(const stlplus::message_position& position,
-                            const std::string& id,
-                            const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                       const std::string& id,
+                                       const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error)
 {
   device() << warning_message(position, id, arg1, arg2, arg3);
@@ -1816,7 +1816,7 @@ bool stlplus::message_handler::warning(const stlplus::message_position& position
 // error messages
 
 bool stlplus::message_handler::error(const std::string& id,
-                          const std::vector<std::string>& args)
+                                     const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(id, args);
@@ -1835,7 +1835,7 @@ bool stlplus::message_handler::error(const std::string& id)
 }
 
 bool stlplus::message_handler::error(const std::string& id,
-                          const std::string& arg1)
+                                     const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(id, arg1);
@@ -1845,7 +1845,7 @@ bool stlplus::message_handler::error(const std::string& id,
 }
 
 bool stlplus::message_handler::error(const std::string& id,
-                          const std::string& arg1, const std::string& arg2)
+                                     const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(id, arg1, arg2);
@@ -1855,7 +1855,7 @@ bool stlplus::message_handler::error(const std::string& id,
 }
 
 bool stlplus::message_handler::error(const std::string& id,
-                          const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                     const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(id, arg1, arg2, arg3);
@@ -1865,8 +1865,8 @@ bool stlplus::message_handler::error(const std::string& id,
 }
 
 bool stlplus::message_handler::error(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::vector<std::string>& args)
+                                     const std::string& id,
+                                     const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(position, id, args);
@@ -1876,7 +1876,7 @@ bool stlplus::message_handler::error(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::error(const stlplus::message_position& position,
-                          const std::string& id)
+                                     const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(position, id);
@@ -1886,8 +1886,8 @@ bool stlplus::message_handler::error(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::error(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1)
+                                     const std::string& id,
+                                     const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(position, id, arg1);
@@ -1897,8 +1897,8 @@ bool stlplus::message_handler::error(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::error(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1, const std::string& arg2)
+                                     const std::string& id,
+                                     const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(position, id, arg1, arg2);
@@ -1908,8 +1908,8 @@ bool stlplus::message_handler::error(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::error(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                     const std::string& id,
+                                     const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_limit_error)
 {
   device() << error_message(position, id, arg1, arg2, arg3);
@@ -1922,7 +1922,7 @@ bool stlplus::message_handler::error(const stlplus::message_position& position,
 // fatal messages
 
 bool stlplus::message_handler::fatal(const std::string& id,
-                          const std::vector<std::string>& args)
+                                     const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(id, args);
@@ -1937,7 +1937,7 @@ bool stlplus::message_handler::fatal(const std::string& id)
 }
 
 bool stlplus::message_handler::fatal(const std::string& id,
-                          const std::string& arg1)
+                                     const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(id, arg1);
@@ -1945,7 +1945,7 @@ bool stlplus::message_handler::fatal(const std::string& id,
 }
 
 bool stlplus::message_handler::fatal(const std::string& id,
-                          const std::string& arg1, const std::string& arg2)
+                                     const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(id, arg1, arg2);
@@ -1953,7 +1953,7 @@ bool stlplus::message_handler::fatal(const std::string& id,
 }
 
 bool stlplus::message_handler::fatal(const std::string& id,
-                          const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                     const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(id, arg1, arg2, arg3);
@@ -1961,8 +1961,8 @@ bool stlplus::message_handler::fatal(const std::string& id,
 }
 
 bool stlplus::message_handler::fatal(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::vector<std::string>& args)
+                                     const std::string& id,
+                                     const std::vector<std::string>& args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(position, id, args);
@@ -1970,7 +1970,7 @@ bool stlplus::message_handler::fatal(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::fatal(const stlplus::message_position& position,
-                          const std::string& id)
+                                     const std::string& id)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(position, id);
@@ -1978,8 +1978,8 @@ bool stlplus::message_handler::fatal(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::fatal(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1)
+                                     const std::string& id,
+                                     const std::string& arg1)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(position, id, arg1);
@@ -1987,8 +1987,8 @@ bool stlplus::message_handler::fatal(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::fatal(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1, const std::string& arg2)
+                                     const std::string& id,
+                                     const std::string& arg1, const std::string& arg2)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(position, id, arg1, arg2);
@@ -1996,8 +1996,8 @@ bool stlplus::message_handler::fatal(const stlplus::message_position& position,
 }
 
 bool stlplus::message_handler::fatal(const stlplus::message_position& position,
-                          const std::string& id,
-                          const std::string& arg1, const std::string& arg2, const std::string& arg3)
+                                     const std::string& id,
+                                     const std::string& arg1, const std::string& arg2, const std::string& arg3)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error,stlplus::message_handler_fatal_error)
 {
   device() << fatal_message(position, id, arg1, arg2, arg3);

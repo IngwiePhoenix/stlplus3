@@ -2,13 +2,13 @@
 #define PERSISTENT_MATRIX_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of STLplus matrix
+Persistence of STLplus matrix
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include "matrix.hpp"
 
@@ -27,6 +27,6 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #include "persistent_matrix.tpp"
 #endif

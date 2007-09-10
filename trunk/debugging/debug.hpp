@@ -3,7 +3,7 @@
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2004
+Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 Set of simple debug utilities, all of which are switched off by the
@@ -42,8 +42,8 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
-// The macros used in debugging
+  ////////////////////////////////////////////////////////////////////////////////
+  // The macros used in debugging
 
 #ifndef NDEBUG
 
@@ -121,5 +121,5 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #endif

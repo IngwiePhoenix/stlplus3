@@ -2,13 +2,13 @@
 #define PERSISTENT_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Interface class inherited by classes using the interface approach to polymorphism
+Interface class inherited by classes using the interface approach to polymorphism
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_exceptions.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,5 +30,5 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #endif

@@ -2,13 +2,13 @@
 #define PERSISTENT_MULTISET_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of STL multiset
+Persistence of STL multiset
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include <set>
 
@@ -27,6 +27,6 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #include "persistent_multiset.tpp"
 #endif

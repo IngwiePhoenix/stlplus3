@@ -2,20 +2,20 @@
 #define PERSISTENT_FLOAT_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Persistence of floating-point types
+Persistence of floating-point types
 
-  Note: despite years and years of IEEE standardisation, not all
-  architectures use IEEE-standard representations of floating-point numbers.
-  Therefore a binary dump is not necessarily portable between platforms.
-  Solving this is (currently) beyond the scope of the STLplus project.
+Note: despite years and years of IEEE standardisation, not all
+architectures use IEEE-standard representations of floating-point numbers.
+Therefore a binary dump is not necessarily portable between platforms.
+Solving this is (currently) beyond the scope of the STLplus project.
 
-  If you want to be strictly portable to all platforms, do not dump/restore float
-  
-  ------------------------------------------------------------------------------*/
+If you want to be strictly portable to all platforms, do not dump/restore float
+
+------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,5 +31,5 @@ namespace stlplus
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 #endif

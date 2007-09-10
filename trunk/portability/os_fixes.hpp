@@ -3,12 +3,12 @@
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2004
+Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 Contains work arounds for OS or Compiler specific problems to try to make
 them look more alike
-  
+
 It is strongly recommended that this header be included as the first
 #include in every source file
 

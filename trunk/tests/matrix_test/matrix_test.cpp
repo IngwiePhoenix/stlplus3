@@ -3,6 +3,8 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "dprintf.hpp"
+#include "strings_stlplus.hpp"
+#include "strings_basic.hpp"
 #include "file_system.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,6 +17,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef stlplus::matrix<std::string> string_matrix;
+
+std::ostream& operator<< (std::ostream& str, const string_matrix& data)
+{
+  return str << stlplus::matrix_to_string(data, stlplus::string_to_string, ",", "\n");
+}
 
 void dump_string_matrix(stlplus::dump_context& context, const string_matrix& data)
 {
@@ -67,10 +74,12 @@ int main(unsigned argc, char* argv[])
   try
   {
     // build the sample data structure
+    std::cerr << "building" << std::endl;
     string_matrix data(R,C);
     for (unsigned r = 0; r < R; r++)
       for (unsigned c = 0; c < C; c++)
         data(r,c) = stlplus::dformat("%d:%d",r,c);
+    std::cerr << data << std::endl;
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_string_matrix,0);

@@ -1,29 +1,29 @@
 #ifndef SMART_PTR_HPP
 #define SMART_PTR_HPP
 /*------------------------------------------------------------------------------
-  
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
 
-  A smart pointer is a memory-managing pointer to an object. If you like, it
-  is a zero-dimensional container. 
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Assignment of smart pointers result in multiple aliases of the same object.
-  The term alias is used to differentiate from conventional pointers because
-  the semantics are different.
+A smart pointer is a memory-managing pointer to an object. If you like, it
+is a zero-dimensional container. 
 
-  Aliases can be turned into copies if the pointed-to class supports copying.
+Assignment of smart pointers result in multiple aliases of the same object.
+The term alias is used to differentiate from conventional pointers because
+the semantics are different.
 
-  The base class is smart_ptr_base which defines the common interface. Then
-  there are three subclasses which have the same interface but different copy
-  semantics:
+Aliases can be turned into copies if the pointed-to class supports copying.
 
-  - smart_ptr        for simple types and classes which have copy constructors
-  - smart_ptr_clone  for polymorphic class hierarchies which have a clone method
-  - smart_ptr_nocopy for any class that cannot or should not be copied
+The base class is smart_ptr_base which defines the common interface. Then
+there are three subclasses which have the same interface but different copy
+semantics:
 
-  ------------------------------------------------------------------------------*/
+- smart_ptr        for simple types and classes which have copy constructors
+- smart_ptr_clone  for polymorphic class hierarchies which have a clone method
+- smart_ptr_nocopy for any class that cannot or should not be copied
+
+------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"
 #include "exceptions.hpp"
 #include <map>
@@ -32,14 +32,14 @@
 namespace stlplus
 {
 
-////////////////////////////////////////////////////////////////////////////////
-// internals
+  ////////////////////////////////////////////////////////////////////////////////
+  // internals
 
   template<typename T> class smart_ptr_holder;
 
-////////////////////////////////////////////////////////////////////////////////
-// Base class
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  // Base class
+  ////////////////////////////////////////////////////////////////////////////////
 
   template<typename T, typename C>
   class smart_ptr_base
@@ -162,48 +162,48 @@ namespace stlplus
     void make_alias(void* handle);
   };
 
-////////////////////////////////////////////////////////////////////////////////
-// copy functors implementing the three possible copy semantics
+  ////////////////////////////////////////////////////////////////////////////////
+  // copy functors implementing the three possible copy semantics
 
-// constructor copy uses the copy constructor of the object - used for simple types
+  // constructor copy uses the copy constructor of the object - used for simple types
 
-template <typename T>
-class constructor_copy
-{
-public:
-  T* operator() (const T& from) throw()
-    {
-      return new T(from);
-    }
-};
+  template <typename T>
+  class constructor_copy
+  {
+  public:
+    T* operator() (const T& from) throw()
+      {
+        return new T(from);
+      }
+  };
 
-// clone copy uses the clone function of the object - used for polymorphic types
+  // clone copy uses the clone function of the object - used for polymorphic types
 
-template <typename T>
-class clone_copy
-{
-public:
-  T* operator() (const T& from) throw()
-    {
-      return from.clone();
-    }
-};
+  template <typename T>
+  class clone_copy
+  {
+  public:
+    T* operator() (const T& from) throw()
+      {
+        return from.clone();
+      }
+  };
 
-// no copy throws an exception
+  // no copy throws an exception
 
-template <typename T>
-class no_copy
-{
-public:
-  T* operator() (const T& from) throw(illegal_copy)
-    {
-      throw illegal_copy("no_copy functor called");
-      return 0;
-    }
-};
+  template <typename T>
+  class no_copy
+  {
+  public:
+    T* operator() (const T& from) throw(illegal_copy)
+      {
+        throw illegal_copy("no_copy functor called");
+        return 0;
+      }
+  };
 
-////////////////////////////////////////////////////////////////////////////////
-// smart_ptr        for simple types and classes which have copy constructors
+  ////////////////////////////////////////////////////////////////////////////////
+  // smart_ptr        for simple types and classes which have copy constructors
 
   template <typename T>
   class smart_ptr : public smart_ptr_base<T, constructor_copy<T> >
@@ -217,8 +217,8 @@ public:
     ~smart_ptr(void) {}
   };
 
-////////////////////////////////////////////////////////////////////////////////
-// smart_ptr_clone  for polymorphic class hierarchies which have a clone method
+  ////////////////////////////////////////////////////////////////////////////////
+  // smart_ptr_clone  for polymorphic class hierarchies which have a clone method
 
   template <typename T>
   class smart_ptr_clone : public smart_ptr_base<T, clone_copy<T> >
@@ -232,8 +232,8 @@ public:
     ~smart_ptr_clone(void) {}
   };
 
-////////////////////////////////////////////////////////////////////////////////
-// smart_ptr_nocopy for any class that cannot or should not be copied
+  ////////////////////////////////////////////////////////////////////////////////
+  // smart_ptr_nocopy for any class that cannot or should not be copied
 
   template <typename T>
   class smart_ptr_nocopy : public smart_ptr_base<T, no_copy<T> >
@@ -247,7 +247,7 @@ public:
     ~smart_ptr_nocopy(void) {}
   };
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus
 

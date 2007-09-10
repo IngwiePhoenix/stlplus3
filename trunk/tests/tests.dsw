@@ -26,6 +26,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -57,6 +60,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "containers"=..\containers\containers.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "cstring_test"=.\cstring_test\cstring_test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -80,6 +95,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "debugging"=..\debugging\debugging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -213,6 +240,9 @@ Package=<4>
     Project_Dep_Name portability
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name strings
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
 }}}
@@ -241,6 +271,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name subsystems
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name strings
     End Project Dependency
 }}}
 
@@ -300,6 +333,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "persistence"=..\persistence\persistence.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "polymorph_test"=.\polymorph_test\polymorph_test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -323,6 +368,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name subsystems
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "portability"=..\portability\portability.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -408,43 +465,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "containers"=..\containers\containers.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "debugging"=..\debugging\debugging.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "persistence"=..\persistence\persistence.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "portability"=..\portability\portability.dsp - Package Owner=<4>
+Project: "strings"=..\strings\strings.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

@@ -3,7 +3,7 @@
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2004
+Copyright: (c) Andy Rushton, 2007
 License:   BSD License, see ../docs/license.html
 
 Header for including the whole strings library in one go

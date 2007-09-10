@@ -3,6 +3,8 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
+#include "strings_stlplus.hpp"
+#include "strings_basic.hpp"
 #include <string>
 #include <map>
 
@@ -70,33 +72,9 @@ bool compare(const string_tree& left, const string_tree& right)
   return compare_r(left, left.root(), right, right.root());
 }
 
-void print_r(std::ostream& device, const string_tree& tree, const string_tree::const_iterator& i)
-{
-  device << *i << "=" << ((void*)&*i);
-  if (tree.children(i) > 0)
-  {
-    device << "(";
-    for (unsigned c = 0; c < tree.children(i); c++)
-    {
-      if (c != 0) device << ",";
-      print_r(device,tree,tree.child(i,c));
-    }
-    device << ")";
-  }
-}
-
-void print(std::ostream& device, const string_tree& tree)
-{
-  if (tree.empty())
-    device << "<empty>" << std::endl;
-  else
-    print_r(device, tree, tree.root());
-}
-
 std::ostream& operator << (std::ostream& device, const string_tree& tree)
 {
-  print(device, tree);
-  return device;
+  return device << stlplus::ntree_to_string(tree, stlplus::string_to_string, "\n", "  ");
 }
 
 ////////////////////////////////////////////////////////////////////////////////

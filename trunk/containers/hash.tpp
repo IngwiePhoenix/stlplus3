@@ -1,172 +1,94 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
 namespace stlplus
 {
 
-////////////////////////////////////////////////////////////////////////////////
-// the element stored in the hash
+  ////////////////////////////////////////////////////////////////////////////////
+  // the element stored in the hash
 
-template<typename K, typename T>
-class hash_element
-{
-public:
-  std::pair<const K, T> m_value;
-  hash_element<K,T>* m_next;
-  unsigned m_hash;
-
-  hash_element(const K& key, const T& data, unsigned hash) : m_value(key,data), m_next(0), m_hash(hash) {}
-  hash_element(const std::pair<const K,T>& value, unsigned hash) : m_value(value), m_next(0), m_hash(hash) {}
-};
-
-////////////////////////////////////////////////////////////////////////////////
-// iterator
-
-// checks
-
-template<typename K, typename T, class H, class E, typename V>
-void hash_iterator<K,T,H,E,V>::check_owner(const hash<K,T,H,E>* owner) const
-  throw(wrong_object)
-{
-  if (owner != m_owner)
-    throw wrong_object("hash iterator");
-}
-
-template<typename K, typename T, class H, class E, typename V>
-void hash_iterator<K,T,H,E,V>::check_non_null(void) const
-  throw(null_dereference)
-{
-  if (null())
-    throw null_dereference("hash iterator");
-}
-
-template<typename K, typename T, class H, class E, typename V>
-void hash_iterator<K,T,H,E,V>::check_non_end(void) const
-  throw(end_dereference)
-{
-  if (end())
-    throw end_dereference("hash iterator");
-}
-
-template<typename K, typename T, class H, class E, typename V>
-void hash_iterator<K,T,H,E,V>::check_valid(void) const
-  throw(null_dereference,end_dereference)
-{
-  check_non_null();
-  check_non_end();
-}
-
-template<typename K, typename T, class H, class E, typename V>
-void hash_iterator<K,T,H,E,V>::check(const hash<K,T,H,E>* owner) const
-  throw(wrong_object,null_dereference,end_dereference)
-{
-  check_valid();
-  if (owner) check_owner(owner);
-}
-
-// null constructor
-
-template<typename K, typename T, class H, class E, typename V>
-hash_iterator<K,T,H,E,V>::hash_iterator(void) :
-  m_owner(0), m_bin(0), m_element(0) 
-{
-}
-
-// this iterator points to a specific element and so allows an iterator to be constructed from a list node
-// if the bin is set to bins and the element to null, then this is an end() iterator
-// if the element parameter is null it scans for the first element so implements the begin() behaviour
-// if the hash is empty, m_bin gets set to m_bins, so this becomes an end() iterator
-
-template<typename K, typename T, class H, class E, typename V>
-hash_iterator<K,T,H,E,V>::hash_iterator(const hash<K,T,H,E>* owner, unsigned bin, hash_element<K,T>* element) :
-  m_owner(owner), m_bin(bin), m_element(element)
-{
-  if (!element)
+  template<typename K, typename T>
+  class hash_element
   {
-    for (; m_bin < m_owner->m_bins; m_bin++)
-    {
-      if (m_owner->m_values[m_bin])
-      {
-        m_element = m_owner->m_values[m_bin];
-        break;
-      }
-    }
+  public:
+    std::pair<const K, T> m_value;
+    hash_element<K,T>* m_next;
+    unsigned m_hash;
+
+    hash_element(const K& key, const T& data, unsigned hash) : m_value(key,data), m_next(0), m_hash(hash) {}
+    hash_element(const std::pair<const K,T>& value, unsigned hash) : m_value(value), m_next(0), m_hash(hash) {}
+  };
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // iterator
+
+  // checks
+
+  template<typename K, typename T, class H, class E, typename V>
+  void hash_iterator<K,T,H,E,V>::check_owner(const hash<K,T,H,E>* owner) const
+    throw(wrong_object)
+  {
+    if (owner != m_owner)
+      throw wrong_object("hash iterator");
   }
-}
 
-// destructor
-
-template<typename K, typename T, class H, class E, typename V>
-hash_iterator<K,T,H,E,V>::~hash_iterator(void)
-{
-}
-
-// validity tests
-
-template<typename K, typename T, class H, class E, typename V>
-bool hash_iterator<K,T,H,E,V>::null(void) const
-{
-  return m_owner == 0;
-}
-
-template<typename K, typename T, class H, class E, typename V>
-bool hash_iterator<K,T,H,E,V>::end(void) const
-{
-  if (null()) return false;
-  return (m_bin == m_owner->m_bins) && m_element == 0;
-}
-
-template<typename K, typename T, class H, class E, typename V>
-bool hash_iterator<K,T,H,E,V>::valid(void) const
-{
-  return !null() && !end();
-}
-
-// owner method
-
-template<typename K, typename T, class H, class E, typename V>
-const hash<K,T,H,E>* hash_iterator<K,T,H,E,V>::owner(void) const
-{
-  return m_owner;
-}
-
-// mode conversions
-
-template<typename K, typename T, class H, class E, typename V>
-TYPENAME hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
-{
-  return TYPENAME hash_iterator<K,T,H,E,V>::const_iterator(m_owner, m_bin, m_element);
-}
-
-template<typename K, typename T, class H, class E, typename V>
-TYPENAME hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
-{
-  return TYPENAME hash_iterator<K,T,H,E,V>::iterator(m_owner, m_bin, m_element);
-}
-
-// increment operator looks for the next element in the table
-// if there isn't one, then this becomes an end() iterator - m_bin = m_bins and m_element = null
-
-template<typename K, typename T, class H, class E, typename V>
-TYPENAME hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
-  throw(null_dereference,end_dereference)
-{
-  check_valid();
-  if (m_element->m_next)
-    m_element = m_element->m_next;
-  else
+  template<typename K, typename T, class H, class E, typename V>
+  void hash_iterator<K,T,H,E,V>::check_non_null(void) const
+    throw(null_dereference)
   {
-    // failing that, subsequent hash values are tried until either an element is found or there are no more bins
-    // in which case it becomes an end() iterator (bin == bins and element = null)
-    m_element = 0;
-    if (m_bin < m_owner->m_bins)
+    if (null())
+      throw null_dereference("hash iterator");
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  void hash_iterator<K,T,H,E,V>::check_non_end(void) const
+    throw(end_dereference)
+  {
+    if (end())
+      throw end_dereference("hash iterator");
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  void hash_iterator<K,T,H,E,V>::check_valid(void) const
+    throw(null_dereference,end_dereference)
+  {
+    check_non_null();
+    check_non_end();
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  void hash_iterator<K,T,H,E,V>::check(const hash<K,T,H,E>* owner) const
+    throw(wrong_object,null_dereference,end_dereference)
+  {
+    check_valid();
+    if (owner) check_owner(owner);
+  }
+
+  // null constructor
+
+  template<typename K, typename T, class H, class E, typename V>
+  hash_iterator<K,T,H,E,V>::hash_iterator(void) :
+    m_owner(0), m_bin(0), m_element(0) 
+  {
+  }
+
+  // this iterator points to a specific element and so allows an iterator to be constructed from a list node
+  // if the bin is set to bins and the element to null, then this is an end() iterator
+  // if the element parameter is null it scans for the first element so implements the begin() behaviour
+  // if the hash is empty, m_bin gets set to m_bins, so this becomes an end() iterator
+
+  template<typename K, typename T, class H, class E, typename V>
+  hash_iterator<K,T,H,E,V>::hash_iterator(const hash<K,T,H,E>* owner, unsigned bin, hash_element<K,T>* element) :
+    m_owner(owner), m_bin(bin), m_element(element)
+  {
+    if (!element)
     {
-      for(m_bin++; m_bin < m_owner->m_bins; m_bin++)
+      for (; m_bin < m_owner->m_bins; m_bin++)
       {
         if (m_owner->m_values[m_bin])
         {
@@ -176,445 +98,523 @@ TYPENAME hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::oper
       }
     }
   }
-  return *this;
-}
 
-// post-increment is defined in terms of pre-increment
+  // destructor
 
-template<typename K, typename T, class H, class E, typename V>
-TYPENAME hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
-  throw(null_dereference,end_dereference)
-{
-  TYPENAME hash_iterator<K,T,H,E,V>::this_iterator old = *this;
-  ++(*this);
-  return old;
-}
-
-// two iterators are equal if they point to the same element
-// both iterators must be non-null and belong to the same table
-
-template<typename K, typename T, class H, class E, typename V>
-bool hash_iterator<K,T,H,E,V>::operator == (const hash_iterator<K,T,H,E,V>& r) const
-{
-  return m_element == r.m_element;
-}
-
-template<typename K, typename T, class H, class E, typename V>
-bool hash_iterator<K,T,H,E,V>::operator != (const hash_iterator<K,T,H,E,V>& r) const
-{
-  return m_element != r.m_element;
-}
-
-// iterator dereferencing is only legal on a non-null iterator
-
-template<typename K, typename T, class H, class E, typename V>
-V& hash_iterator<K,T,H,E,V>::operator*(void) const
-  throw(null_dereference,end_dereference)
-{
-  check_valid();
-  return m_element->m_value;
-}
-
-template<typename K, typename T, class H, class E, typename V>
-V* hash_iterator<K,T,H,E,V>::operator->(void) const
-  throw(null_dereference,end_dereference)
-{
-  check_valid();
-  return &(m_element->m_value);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// hash
-
-// totally arbitrary initial size used for auto-rehashed tables
-static unsigned hash_default_bins = 127;
-
-// constructor
-// tests whether the user wants auto-rehash
-// sets the rehash point to be a loading of 1.0 by setting it to the number of bins
-// uses the user's size unless this is zero, in which case implement the default
-
-template<typename K, typename T, class H, class E>
-hash<K,T,H,E>::hash(unsigned bins) :
-  m_rehash(bins), m_bins(bins > 0 ? bins : hash_default_bins), m_size(0), m_values(0)
-{
-  m_values = new hash_element<K,T>*[m_bins];
-  for (unsigned i = 0; i < m_bins; i++)
-    m_values[i] = 0;
-}
-
-template<typename K, typename T, class H, class E>
-hash<K,T,H,E>::~hash(void)
-{
-  // delete all the elements
-  clear();
-  // and delete the data structure
-  delete[] m_values;
-  m_values = 0;
-}
-
-// as usual, implement the copy constructor i.t.o. the assignment operator
-
-template<typename K, typename T, class H, class E>
-hash<K,T,H,E>::hash(const hash<K,T,H,E>& right) :
-  m_rehash(right.m_rehash), m_bins(right.m_bins), m_size(0), m_values(0)
-{
-  m_values = new hash_element<K,T>*[right.m_bins];
-  // copy the rehash behaviour as well as the size
-  for (unsigned i = 0; i < m_bins; i++)
-    m_values[i] = 0;
-  *this = right;
-}
-
-// assignment operator
-// this is done by copying the elements
-// the source and target hashes can be different sizes
-// the hash is self-copy safe, i.e. it is legal to say x = x;
-
-template<typename K, typename T, class H, class E>
-hash<K,T,H,E>& hash<K,T,H,E>::operator = (const hash<K,T,H,E>& r)
-{
-  // make self-copy safe
-  if (&r == this) return *this;
-  // remove all the existing elements
-  clear();
-  // copy the elements across - remember that this is rehashing because the two
-  // tables can be different sizes so there is no quick way of doing this by
-  // copying the lists
-  for (TYPENAME hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
-    insert(i->first, i->second);
-  return *this;
-}
-
-// number of values in the hash
-
-template<typename K, typename T, class H, class E>
-bool hash<K,T,H,E>::empty(void) const
-{
-  return m_size == 0;
-}
-
-template<typename K, typename T, class H, class E>
-unsigned hash<K,T,H,E>::size(void) const
-{
-  return m_size;
-}
-
-// equality
-
-template<typename K, typename T, class H, class E>
-bool hash<K,T,H,E>::operator == (const hash<K,T,H,E>& right) const
-{
-  // this table is the same as the right table if they are the same table!
-  if (&right == this) return true;
-  // they must be the same size to be equal
-  if (m_size != right.m_size) return false;
-  // now every key in this must be in right and have the same data
-  for (TYPENAME hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
+  template<typename K, typename T, class H, class E, typename V>
+  hash_iterator<K,T,H,E,V>::~hash_iterator(void)
   {
-    TYPENAME hash<K,T,H,E>::const_iterator found = right.find(i->first);
-    if (found == right.end()) return false;
-    if (!(i->second == found->second)) return false;
   }
-  return true;
-}
 
-// set up the hash to auto-rehash at a specific size
-// setting the rehash size to 0 forces manual rehashing
+  // validity tests
 
-template<typename K, typename T, class H, class E>
-void hash<K,T,H,E>::auto_rehash(void)
-{
-  m_rehash = m_bins;
-}
-
-template<typename K, typename T, class H, class E>
-void hash<K,T,H,E>::manual_rehash(void)
-{
-  m_rehash = 0;
-}
-
-// the rehash function
-// builds a new hash table and moves the elements (without copying) from the old to the new
-// I store the un-modulused hash value in the element for more efficient rehashing
-// passing 0 to the bins parameter does auto-rehashing
-// passing any other value forces the number of bins
-
-template<typename K, typename T, class H, class E>
-void hash<K,T,H,E>::rehash(unsigned bins)
-{
-  // user specified size: just take the user's value
-  // auto calculate: if the load is high, increase the size; else do nothing
-  unsigned new_bins = bins ? bins : m_bins;
-  if (bins == 0 && m_size > 0)
+  template<typename K, typename T, class H, class E, typename V>
+  bool hash_iterator<K,T,H,E,V>::null(void) const
   {
-    // these numbers are pretty arbitrary
-    // TODO - make them user-customisable?
-    float load = loading();
-    if (load > 2.0)
-      new_bins = (unsigned)(m_bins * load);
-    else if (load > 1.0)
-      new_bins = m_bins * 2;
+    return m_owner == 0;
   }
-  if (new_bins == m_bins) return;
-  // set the new rehashing point if auto-rehashing is on
-  if (m_rehash) m_rehash = new_bins;
-  // move aside the old structure
-  hash_element<K,T>** old_values = m_values;
-  unsigned old_bins = m_bins;
-  // create a replacement structure
-  m_values = new hash_element<K,T>*[new_bins];
-  for (unsigned i = 0; i < new_bins; i++)
-    m_values[i] = 0;
-  m_bins = new_bins;
-  // move all the old elements across, rehashing each one
-  for (unsigned j = 0; j < old_bins; j++)
+
+  template<typename K, typename T, class H, class E, typename V>
+  bool hash_iterator<K,T,H,E,V>::end(void) const
   {
-    while(old_values[j])
-    {
-      // unhook from the old structure
-      hash_element<K,T>* current = old_values[j];
-      old_values[j] = current->m_next;
-      // rehash using the stored un-modulused hash value
-      unsigned hash_value = current->m_hash % m_bins;
-      // hook it into the new structure
-      current->m_next = m_values[hash_value];
-      m_values[hash_value] = current;
-    }
+    if (null()) return false;
+    return (m_bin == m_owner->m_bins) && m_element == 0;
   }
-  // now delete the old structure
-  delete[] old_values;
-}
 
-// the loading is the average number of elements per bin
-// this simplifies to the total elements divided by the number of bins
-
-template<typename K, typename T, class H, class E>
-float hash<K,T,H,E>::loading(void) const
-{
-  return (float)m_size / (float)m_bins;
-}
-
-// remove all elements from the table
-
-template<typename K, typename T, class H, class E>
-void hash<K,T,H,E>::erase(void)
-{
-  // unhook the list elements and destroy them
-  for (unsigned i = 0; i < m_bins; i++)
+  template<typename K, typename T, class H, class E, typename V>
+  bool hash_iterator<K,T,H,E,V>::valid(void) const
   {
-    hash_element<K,T>* current = m_values[i];
-    while(current)
-    {
-      hash_element<K,T>* next = current->m_next;
-      delete current;
-      current = next;
-    }
-    m_values[i] = 0;
+    return !null() && !end();
   }
-  m_size = 0;
-}
 
-// test for whether a key is present in the table
+  // owner method
 
-template<typename K, typename T, class H, class E>
-bool hash<K,T,H,E>::present(const K& key) const
-{
-  return find(key) != end();
-}
-
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
-{
-  return present() ? 1 : 0;
-}
-
-// add a key and data element to the table - defined in terms of the general-purpose pair insert function
-
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key, const T& data)
-{
-  return insert(std::pair<const K,T>(key,data)).first;
-}
-
-// insert a key/data pair into the table
-// this removes any old value with the same key since there is no multihash functionality
-
-template<typename K, typename T, class H, class E>
-std::pair<TYPENAME hash<K,T,H,E>::iterator, bool> hash<K,T,H,E>::insert(const std::pair<const K,T>& value)
-{
-  // if auto-rehash is enabled, implement the auto-rehash before inserting the new value
-  // the table is rehashed if this insertion makes the loading exceed 1.0
-  if (m_rehash && (m_size >= m_rehash)) rehash();
-  // calculate the new hash value
-  unsigned hash_value_full = H()(value.first);
-  unsigned hash_value = hash_value_full % m_bins;
-  bool inserted = true;
-  // unhook any previous value with this key
-  // this has been inlined from erase(key) so that the hash value is not calculated twice
-  hash_element<K,T>* previous = 0;
-  for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+  template<typename K, typename T, class H, class E, typename V>
+  const hash<K,T,H,E>* hash_iterator<K,T,H,E,V>::owner(void) const
   {
-    // first check the full stored hash value
-    if (current->m_hash != hash_value_full) continue;
+    return m_owner;
+  }
 
-    // next try the equality operator
-    if (!E()(current->m_value.first, value.first)) continue;
+  // mode conversions
 
-    // unhook this value and destroy it
-    if (previous)
-      previous->m_next = current->m_next;
+  template<typename K, typename T, class H, class E, typename V>
+  TYPENAME hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
+  {
+    return TYPENAME hash_iterator<K,T,H,E,V>::const_iterator(m_owner, m_bin, m_element);
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  TYPENAME hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
+  {
+    return TYPENAME hash_iterator<K,T,H,E,V>::iterator(m_owner, m_bin, m_element);
+  }
+
+  // increment operator looks for the next element in the table
+  // if there isn't one, then this becomes an end() iterator - m_bin = m_bins and m_element = null
+
+  template<typename K, typename T, class H, class E, typename V>
+  TYPENAME hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
+    throw(null_dereference,end_dereference)
+  {
+    check_valid();
+    if (m_element->m_next)
+      m_element = m_element->m_next;
     else
-      m_values[hash_value] = current->m_next;
-    delete current;
-    m_size--;
-
-    // we've overwritten a previous value
-    inserted = false;
-    
-    // assume there can only be one match so we can give up now
-    break;
+    {
+      // failing that, subsequent hash values are tried until either an element is found or there are no more bins
+      // in which case it becomes an end() iterator (bin == bins and element = null)
+      m_element = 0;
+      if (m_bin < m_owner->m_bins)
+      {
+        for(m_bin++; m_bin < m_owner->m_bins; m_bin++)
+        {
+          if (m_owner->m_values[m_bin])
+          {
+            m_element = m_owner->m_values[m_bin];
+            break;
+          }
+        }
+      }
+    }
+    return *this;
   }
-  // now hook in a new list element at the start of the list for this hash value
-  hash_element<K,T>* new_item = new hash_element<K,T>(value, hash_value_full);
-  new_item->m_next = m_values[hash_value];
-  m_values[hash_value] = new_item;
-  // remember to increment the size count
-  m_size++;
-  // construct an iterator from the list node, and return whether inserted
-  return std::make_pair(TYPENAME hash<K,T,H,E>::iterator(this,hash_value,new_item), inserted);
-}
 
-// insert a key with an empty data field ready to be filled in later
+  // post-increment is defined in terms of pre-increment
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key)
-{
-  return insert(key,T());
-}
-
-// remove a key from the table - return true if the key was found and removed, false if it wasn't present
-
-template<typename K, typename T, class H, class E>
-bool hash<K,T,H,E>::erase(const K& key)
-{
-  unsigned hash_value_full = H()(key);
-  unsigned hash_value = hash_value_full % m_bins;
-  // scan the list for an element with this key
-  // need to keep a previous pointer because the lists are single-linked
-  hash_element<K,T>* previous = 0;
-  for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+  template<typename K, typename T, class H, class E, typename V>
+  TYPENAME hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
+    throw(null_dereference,end_dereference)
   {
-    // first check the full stored hash value
-    if (current->m_hash != hash_value_full) continue;
-    
-    // next try the equality operator
-    if (!E()(current->m_value.first, key)) continue;
+    TYPENAME hash_iterator<K,T,H,E,V>::this_iterator old = *this;
+    ++(*this);
+    return old;
+  }
 
-    // found this key, so unhook the element from the list
-    if (previous)
-      previous->m_next = current->m_next;
-    else
-      m_values[hash_value] = current->m_next;
-    // destroy it
-    delete current;
-    // remember to maintain the size count
-    m_size--;
+  // two iterators are equal if they point to the same element
+  // both iterators must be non-null and belong to the same table
+
+  template<typename K, typename T, class H, class E, typename V>
+  bool hash_iterator<K,T,H,E,V>::operator == (const hash_iterator<K,T,H,E,V>& r) const
+  {
+    return m_element == r.m_element;
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  bool hash_iterator<K,T,H,E,V>::operator != (const hash_iterator<K,T,H,E,V>& r) const
+  {
+    return m_element != r.m_element;
+  }
+
+  // iterator dereferencing is only legal on a non-null iterator
+
+  template<typename K, typename T, class H, class E, typename V>
+  V& hash_iterator<K,T,H,E,V>::operator*(void) const
+    throw(null_dereference,end_dereference)
+  {
+    check_valid();
+    return m_element->m_value;
+  }
+
+  template<typename K, typename T, class H, class E, typename V>
+  V* hash_iterator<K,T,H,E,V>::operator->(void) const
+    throw(null_dereference,end_dereference)
+  {
+    check_valid();
+    return &(m_element->m_value);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // hash
+
+  // totally arbitrary initial size used for auto-rehashed tables
+  static unsigned hash_default_bins = 127;
+
+  // constructor
+  // tests whether the user wants auto-rehash
+  // sets the rehash point to be a loading of 1.0 by setting it to the number of bins
+  // uses the user's size unless this is zero, in which case implement the default
+
+  template<typename K, typename T, class H, class E>
+  hash<K,T,H,E>::hash(unsigned bins) :
+    m_rehash(bins), m_bins(bins > 0 ? bins : hash_default_bins), m_size(0), m_values(0)
+  {
+    m_values = new hash_element<K,T>*[m_bins];
+    for (unsigned i = 0; i < m_bins; i++)
+      m_values[i] = 0;
+  }
+
+  template<typename K, typename T, class H, class E>
+  hash<K,T,H,E>::~hash(void)
+  {
+    // delete all the elements
+    clear();
+    // and delete the data structure
+    delete[] m_values;
+    m_values = 0;
+  }
+
+  // as usual, implement the copy constructor i.t.o. the assignment operator
+
+  template<typename K, typename T, class H, class E>
+  hash<K,T,H,E>::hash(const hash<K,T,H,E>& right) :
+    m_rehash(right.m_rehash), m_bins(right.m_bins), m_size(0), m_values(0)
+  {
+    m_values = new hash_element<K,T>*[right.m_bins];
+    // copy the rehash behaviour as well as the size
+    for (unsigned i = 0; i < m_bins; i++)
+      m_values[i] = 0;
+    *this = right;
+  }
+
+  // assignment operator
+  // this is done by copying the elements
+  // the source and target hashes can be different sizes
+  // the hash is self-copy safe, i.e. it is legal to say x = x;
+
+  template<typename K, typename T, class H, class E>
+  hash<K,T,H,E>& hash<K,T,H,E>::operator = (const hash<K,T,H,E>& r)
+  {
+    // make self-copy safe
+    if (&r == this) return *this;
+    // remove all the existing elements
+    clear();
+    // copy the elements across - remember that this is rehashing because the two
+    // tables can be different sizes so there is no quick way of doing this by
+    // copying the lists
+    for (TYPENAME hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
+      insert(i->first, i->second);
+    return *this;
+  }
+
+  // number of values in the hash
+
+  template<typename K, typename T, class H, class E>
+  bool hash<K,T,H,E>::empty(void) const
+  {
+    return m_size == 0;
+  }
+
+  template<typename K, typename T, class H, class E>
+  unsigned hash<K,T,H,E>::size(void) const
+  {
+    return m_size;
+  }
+
+  // equality
+
+  template<typename K, typename T, class H, class E>
+  bool hash<K,T,H,E>::operator == (const hash<K,T,H,E>& right) const
+  {
+    // this table is the same as the right table if they are the same table!
+    if (&right == this) return true;
+    // they must be the same size to be equal
+    if (m_size != right.m_size) return false;
+    // now every key in this must be in right and have the same data
+    for (TYPENAME hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
+    {
+      TYPENAME hash<K,T,H,E>::const_iterator found = right.find(i->first);
+      if (found == right.end()) return false;
+      if (!(i->second == found->second)) return false;
+    }
     return true;
   }
-  return false;
-}
 
-template<typename K, typename T, class H, class E>
-void hash<K,T,H,E>::clear(void)
-{
-  erase();
-}
+  // set up the hash to auto-rehash at a specific size
+  // setting the rehash size to 0 forces manual rehashing
 
-// search for a key in the table and return an iterator to it
-// if the search fails, returns an end() iterator
-
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
-{
-  // scan the list for this key's hash value for the element with a matching key
-  unsigned hash_value_full = H()(key);
-  unsigned hash_value = hash_value_full % m_bins;
-  for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::auto_rehash(void)
   {
-    if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-      return TYPENAME hash<K,T,H,E>::const_iterator(this, hash_value, current);
+    m_rehash = m_bins;
   }
-  return end();
-}
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
-{
-  // scan the list for this key's hash value for the element with a matching key
-  unsigned hash_value_full = H()(key);
-  unsigned hash_value = hash_value_full % m_bins;
-  for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::manual_rehash(void)
   {
-    if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-      return TYPENAME hash<K,T,H,E>::iterator(this, hash_value, current);
+    m_rehash = 0;
   }
-  return end();
-}
 
-// table lookup by key using the index operator[], returning a reference to the data field, not an iterator
-// this is rather like the std::map's [] operator
-// the difference is that I have a const and non-const version
-// the const version will not create the element if not present already, but the non-const version will
-// the non-const version is compatible with the behaviour of the map
+  // the rehash function
+  // builds a new hash table and moves the elements (without copying) from the old to the new
+  // I store the un-modulused hash value in the element for more efficient rehashing
+  // passing 0 to the bins parameter does auto-rehashing
+  // passing any other value forces the number of bins
 
-template<typename K, typename T, class H, class E>
-const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
-{
-  // this const version cannot change the hash, so has to raise an exception if the key is missing
-  TYPENAME hash<K,T,H,E>::const_iterator found = find(key);
-  if (found == end())
-    throw std::out_of_range("key not found in stlplus::hash::operator[]");
-  return found->second;
-}
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::rehash(unsigned bins)
+  {
+    // user specified size: just take the user's value
+    // auto calculate: if the load is high, increase the size; else do nothing
+    unsigned new_bins = bins ? bins : m_bins;
+    if (bins == 0 && m_size > 0)
+    {
+      // these numbers are pretty arbitrary
+      // TODO - make them user-customisable?
+      float load = loading();
+      if (load > 2.0)
+        new_bins = (unsigned)(m_bins * load);
+      else if (load > 1.0)
+        new_bins = m_bins * 2;
+    }
+    if (new_bins == m_bins) return;
+    // set the new rehashing point if auto-rehashing is on
+    if (m_rehash) m_rehash = new_bins;
+    // move aside the old structure
+    hash_element<K,T>** old_values = m_values;
+    unsigned old_bins = m_bins;
+    // create a replacement structure
+    m_values = new hash_element<K,T>*[new_bins];
+    for (unsigned i = 0; i < new_bins; i++)
+      m_values[i] = 0;
+    m_bins = new_bins;
+    // move all the old elements across, rehashing each one
+    for (unsigned j = 0; j < old_bins; j++)
+    {
+      while(old_values[j])
+      {
+        // unhook from the old structure
+        hash_element<K,T>* current = old_values[j];
+        old_values[j] = current->m_next;
+        // rehash using the stored un-modulused hash value
+        unsigned hash_value = current->m_hash % m_bins;
+        // hook it into the new structure
+        current->m_next = m_values[hash_value];
+        m_values[hash_value] = current;
+      }
+    }
+    // now delete the old structure
+    delete[] old_values;
+  }
 
-template<typename K, typename T, class H, class E>
-T& hash<K,T,H,E>::operator[] (const K& key)
-{
-  // this non-const version can change the hash, so creates a new element if the key is missing
-  TYPENAME hash<K,T,H,E>::iterator found = find(key);
-  if (found == end())
-    found = insert(key);
-  return found->second;
-}
+  // the loading is the average number of elements per bin
+  // this simplifies to the total elements divided by the number of bins
 
-// iterators
+  template<typename K, typename T, class H, class E>
+  float hash<K,T,H,E>::loading(void) const
+  {
+    return (float)m_size / (float)m_bins;
+  }
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::begin(void) const
-{
-  return TYPENAME hash<K,T,H,E>::const_iterator(this,0,0);
-}
+  // remove all elements from the table
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::begin(void)
-{
-  return TYPENAME hash<K,T,H,E>::iterator(this,0,0);
-}
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::erase(void)
+  {
+    // unhook the list elements and destroy them
+    for (unsigned i = 0; i < m_bins; i++)
+    {
+      hash_element<K,T>* current = m_values[i];
+      while(current)
+      {
+        hash_element<K,T>* next = current->m_next;
+        delete current;
+        current = next;
+      }
+      m_values[i] = 0;
+    }
+    m_size = 0;
+  }
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
-{
-  return TYPENAME hash<K,T,H,E>::const_iterator(this,m_bins,0);
-}
+  // test for whether a key is present in the table
 
-template<typename K, typename T, class H, class E>
-TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
-{
-  return TYPENAME hash<K,T,H,E>::iterator(this,m_bins,0);
-}
+  template<typename K, typename T, class H, class E>
+  bool hash<K,T,H,E>::present(const K& key) const
+  {
+    return find(key) != end();
+  }
 
-////////////////////////////////////////////////////////////////////////////////
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::size_type hash<K,T,H,E>::count(const K& key) const
+  {
+    return present() ? 1 : 0;
+  }
+
+  // add a key and data element to the table - defined in terms of the general-purpose pair insert function
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key, const T& data)
+  {
+    return insert(std::pair<const K,T>(key,data)).first;
+  }
+
+  // insert a key/data pair into the table
+  // this removes any old value with the same key since there is no multihash functionality
+
+  template<typename K, typename T, class H, class E>
+  std::pair<TYPENAME hash<K,T,H,E>::iterator, bool> hash<K,T,H,E>::insert(const std::pair<const K,T>& value)
+  {
+    // if auto-rehash is enabled, implement the auto-rehash before inserting the new value
+    // the table is rehashed if this insertion makes the loading exceed 1.0
+    if (m_rehash && (m_size >= m_rehash)) rehash();
+    // calculate the new hash value
+    unsigned hash_value_full = H()(value.first);
+    unsigned hash_value = hash_value_full % m_bins;
+    bool inserted = true;
+    // unhook any previous value with this key
+    // this has been inlined from erase(key) so that the hash value is not calculated twice
+    hash_element<K,T>* previous = 0;
+    for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+    {
+      // first check the full stored hash value
+      if (current->m_hash != hash_value_full) continue;
+
+      // next try the equality operator
+      if (!E()(current->m_value.first, value.first)) continue;
+
+      // unhook this value and destroy it
+      if (previous)
+        previous->m_next = current->m_next;
+      else
+        m_values[hash_value] = current->m_next;
+      delete current;
+      m_size--;
+
+      // we've overwritten a previous value
+      inserted = false;
+
+      // assume there can only be one match so we can give up now
+      break;
+    }
+    // now hook in a new list element at the start of the list for this hash value
+    hash_element<K,T>* new_item = new hash_element<K,T>(value, hash_value_full);
+    new_item->m_next = m_values[hash_value];
+    m_values[hash_value] = new_item;
+    // remember to increment the size count
+    m_size++;
+    // construct an iterator from the list node, and return whether inserted
+    return std::make_pair(TYPENAME hash<K,T,H,E>::iterator(this,hash_value,new_item), inserted);
+  }
+
+  // insert a key with an empty data field ready to be filled in later
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::insert(const K& key)
+  {
+    return insert(key,T());
+  }
+
+  // remove a key from the table - return true if the key was found and removed, false if it wasn't present
+
+  template<typename K, typename T, class H, class E>
+  bool hash<K,T,H,E>::erase(const K& key)
+  {
+    unsigned hash_value_full = H()(key);
+    unsigned hash_value = hash_value_full % m_bins;
+    // scan the list for an element with this key
+    // need to keep a previous pointer because the lists are single-linked
+    hash_element<K,T>* previous = 0;
+    for (hash_element<K,T>* current = m_values[hash_value]; current; previous = current, current = current->m_next)
+    {
+      // first check the full stored hash value
+      if (current->m_hash != hash_value_full) continue;
+
+      // next try the equality operator
+      if (!E()(current->m_value.first, key)) continue;
+
+      // found this key, so unhook the element from the list
+      if (previous)
+        previous->m_next = current->m_next;
+      else
+        m_values[hash_value] = current->m_next;
+      // destroy it
+      delete current;
+      // remember to maintain the size count
+      m_size--;
+      return true;
+    }
+    return false;
+  }
+
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::clear(void)
+  {
+    erase();
+  }
+
+  // search for a key in the table and return an iterator to it
+  // if the search fails, returns an end() iterator
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
+  {
+    // scan the list for this key's hash value for the element with a matching key
+    unsigned hash_value_full = H()(key);
+    unsigned hash_value = hash_value_full % m_bins;
+    for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+    {
+      if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
+        return TYPENAME hash<K,T,H,E>::const_iterator(this, hash_value, current);
+    }
+    return end();
+  }
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
+  {
+    // scan the list for this key's hash value for the element with a matching key
+    unsigned hash_value_full = H()(key);
+    unsigned hash_value = hash_value_full % m_bins;
+    for (hash_element<K,T>* current = m_values[hash_value]; current; current = current->m_next)
+    {
+      if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
+        return TYPENAME hash<K,T,H,E>::iterator(this, hash_value, current);
+    }
+    return end();
+  }
+
+  // table lookup by key using the index operator[], returning a reference to the data field, not an iterator
+  // this is rather like the std::map's [] operator
+  // the difference is that I have a const and non-const version
+  // the const version will not create the element if not present already, but the non-const version will
+  // the non-const version is compatible with the behaviour of the map
+
+  template<typename K, typename T, class H, class E>
+  const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
+  {
+    // this const version cannot change the hash, so has to raise an exception if the key is missing
+    TYPENAME hash<K,T,H,E>::const_iterator found = find(key);
+    if (found == end())
+      throw std::out_of_range("key not found in stlplus::hash::operator[]");
+    return found->second;
+  }
+
+  template<typename K, typename T, class H, class E>
+  T& hash<K,T,H,E>::operator[] (const K& key)
+  {
+    // this non-const version can change the hash, so creates a new element if the key is missing
+    TYPENAME hash<K,T,H,E>::iterator found = find(key);
+    if (found == end())
+      found = insert(key);
+    return found->second;
+  }
+
+  // iterators
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::begin(void) const
+  {
+    return TYPENAME hash<K,T,H,E>::const_iterator(this,0,0);
+  }
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::begin(void)
+  {
+    return TYPENAME hash<K,T,H,E>::iterator(this,0,0);
+  }
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
+  {
+    return TYPENAME hash<K,T,H,E>::const_iterator(this,m_bins,0);
+  }
+
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
+  {
+    return TYPENAME hash<K,T,H,E>::iterator(this,m_bins,0);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus
 

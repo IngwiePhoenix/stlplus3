@@ -1,44 +1,44 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
 namespace stlplus
 {
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
-template<typename K, typename T, typename P, typename DK, typename DT>
-void dump_map(dump_context& context, const std::map<K,T,P>& data, DK key_fn, DT val_fn)
-  throw(persistent_dump_failed)
-{
-  dump_unsigned(context,data.size());
-  for (typename std::map<K,T,P>::const_iterator i = data.begin(); i != data.end(); i++)
+  template<typename K, typename T, typename P, typename DK, typename DT>
+  void dump_map(dump_context& context, const std::map<K,T,P>& data, DK key_fn, DT val_fn)
+    throw(persistent_dump_failed)
   {
-    key_fn(context,i->first);
-    val_fn(context,i->second);
+    dump_unsigned(context,data.size());
+    for (typename std::map<K,T,P>::const_iterator i = data.begin(); i != data.end(); i++)
+    {
+      key_fn(context,i->first);
+      val_fn(context,i->second);
+    }
   }
-}
 
-template<typename K, typename T, typename P, typename RK, typename RT>
-void restore_map(restore_context& context, std::map<K,T,P>& data, RK key_fn, RT val_fn)
-  throw(persistent_restore_failed)
-{
-  data.clear();
-  unsigned size = 0;
-  restore_unsigned(context,size);
-  for (unsigned j = 0; j < size; j++)
+  template<typename K, typename T, typename P, typename RK, typename RT>
+  void restore_map(restore_context& context, std::map<K,T,P>& data, RK key_fn, RT val_fn)
+    throw(persistent_restore_failed)
   {
-    K key;
-    key_fn(context,key);
-    val_fn(context,data[key]);
+    data.clear();
+    unsigned size = 0;
+    restore_unsigned(context,size);
+    for (unsigned j = 0; j < size; j++)
+    {
+      K key;
+      key_fn(context,key);
+      val_fn(context,data[key]);
+    }
   }
-}
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus

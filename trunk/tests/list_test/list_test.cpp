@@ -1,16 +1,24 @@
-#include "persistence.hpp"
-#include "file_system.hpp"
 #include <string>
 #include <list>
+#include <iostream>
+#include "persistence.hpp"
+#include "file_system.hpp"
+#include "strings_stl.hpp"
+#include "strings_basic.hpp"
 
-#define SIZE 1000
-#define NUMBER 1000
+#define SIZE 50
+#define NUMBER 50
 #define DATA "list_test.tmp"
 #define MASTER "list_test.dump"
 
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef std::list<std::string> string_list;
+
+std::ostream& operator<< (std::ostream& str, const string_list& data)
+{
+  return str << stlplus::list_to_string(data, ",", stlplus::string_to_string);
+}
 
 void dump_string_list(stlplus::dump_context& context, const string_list& data)
 {
@@ -51,14 +59,16 @@ int main(unsigned argc, char* argv[])
   try
   {
     // build the sample data structure
+    std::cerr << "building" << std::endl;
     string_list data;
     for (unsigned k = 0; k < NUMBER; k++)
     {
       std::string value;
-      for  (unsigned j = 0; j < SIZE; j++)
-        value += (char)(k * j);
+      for (unsigned j = 0; j < SIZE; j++)
+        value += (char)(k + j + 32);
       data.push_back(value);
     }
+    std::cerr << data << std::endl;
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_string_list,0);
 

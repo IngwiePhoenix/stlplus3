@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "persistent_float.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,39 +28,39 @@
 namespace stlplus
 {
 
-static void dump_float(stlplus::dump_context& context, unsigned bytes, unsigned char* data)
-  throw(stlplus::persistent_dump_failed)
-{
-  unsigned i = bytes;
-  // put the size
-  context.put((unsigned char)i);
-  // and put the bytes
-  while(i--)
-    context.put(data[INDEX(i)]);
-}
-
-static void restore_float(stlplus::restore_context& context, unsigned bytes, unsigned char* data)
-  throw(stlplus::persistent_restore_failed)
-{
-  // get the dumped size from the file
-  unsigned dumped_bytes = (unsigned)context.get();
-  // get the bytes from the file
-  unsigned i = dumped_bytes;
-  while(i--)
+  static void dump_float(stlplus::dump_context& context, unsigned bytes, unsigned char* data)
+    throw(stlplus::persistent_dump_failed)
   {
-    int ch = context.get();
-    if (i < bytes)
-      data[INDEX(i)] = (unsigned char)ch;
+    unsigned i = bytes;
+    // put the size
+    context.put((unsigned char)i);
+    // and put the bytes
+    while(i--)
+      context.put(data[INDEX(i)]);
   }
-  // however, if the dumped size was different I don't know how to map the formats, so give an error
-  if (dumped_bytes != bytes)
-    throw stlplus::persistent_restore_failed(std::string("size mismatch"));
-}
+
+  static void restore_float(stlplus::restore_context& context, unsigned bytes, unsigned char* data)
+    throw(stlplus::persistent_restore_failed)
+  {
+    // get the dumped size from the file
+    unsigned dumped_bytes = (unsigned)context.get();
+    // get the bytes from the file
+    unsigned i = dumped_bytes;
+    while(i--)
+    {
+      int ch = context.get();
+      if (i < bytes)
+        data[INDEX(i)] = (unsigned char)ch;
+    }
+    // however, if the dumped size was different I don't know how to map the formats, so give an error
+    if (dumped_bytes != bytes)
+      throw stlplus::persistent_restore_failed(std::string("size mismatch"));
+  }
 
 } // end namespace stlplus
 
-////////////////////////////////////////////////////////////////////////////////
-// exported functions which simply call the low-level byte-dump and byte-restore routines above
+  ////////////////////////////////////////////////////////////////////////////////
+  // exported functions which simply call the low-level byte-dump and byte-restore routines above
 
 void stlplus::dump_float(stlplus::dump_context& context, const float& data) throw(stlplus::persistent_dump_failed)
 {

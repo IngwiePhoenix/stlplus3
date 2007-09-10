@@ -2,13 +2,13 @@
 #define CONTAINERS_HPP
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  Allows all the STLplus containers to be included in one go
+Allows all the STLplus containers to be included in one go
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
 #include "template_fixes.hpp"
 #include "exceptions.hpp"

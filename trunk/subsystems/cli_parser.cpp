@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2004
-  License:   BSD License, see ../docs/license.html
+Author:    Andy Rushton
+Copyright: (c) Andy Rushton, 2007
+License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 #include "cli_parser.hpp"
 #include "file_system.hpp"
 
@@ -54,55 +54,55 @@ const std::string& stlplus::cli_definition::default_value(void) const
 namespace stlplus 
 {
 
-class cli_value
-{
-public:
-  unsigned m_definition;
-  std::string m_value;
-  unsigned m_level;
-  std::string m_source;
+  class cli_value
+  {
+  public:
+    unsigned m_definition;
+    std::string m_value;
+    unsigned m_level;
+    std::string m_source;
 
-  cli_value(unsigned definition, const std::string& value, unsigned level, const std::string& source) :
-    m_definition(definition), m_value(value), m_level(level), m_source(source) {}
-};
+    cli_value(unsigned definition, const std::string& value, unsigned level, const std::string& source) :
+      m_definition(definition), m_value(value), m_level(level), m_source(source) {}
+  };
 
-class cli_parser_data
-{
-public:
-  message_handler& m_errors;
-  std::string m_executable;
-  cli_parser::definitions m_definitions;
-  std::vector<cli_value> m_values;
-  unsigned m_level;
-  bool m_valid;
-  std::vector<std::string> m_ini_files;
+  class cli_parser_data
+  {
+  public:
+    message_handler& m_errors;
+    std::string m_executable;
+    cli_parser::definitions m_definitions;
+    std::vector<cli_value> m_values;
+    unsigned m_level;
+    bool m_valid;
+    std::vector<std::string> m_ini_files;
 
-  cli_parser_data(message_handler& errors);
-  unsigned add_definition(const std::string& name, cli_parser::kind_t kind, cli_parser::mode_t mode, const std::string& message);
-  unsigned find_definition(const std::string& name);
-  void clear_definitions(void);
+    cli_parser_data(message_handler& errors);
+    unsigned add_definition(const std::string& name, cli_parser::kind_t kind, cli_parser::mode_t mode, const std::string& message);
+    unsigned find_definition(const std::string& name);
+    void clear_definitions(void);
 
-  void reset_level(void);
-  void increase_level(void);
-  void clear_level(unsigned definition, unsigned level);
+    void reset_level(void);
+    void increase_level(void);
+    void clear_level(unsigned definition, unsigned level);
 
-  void set_valid(void);
-  void set_invalid(void);
-  bool valid(void) const;
+    void set_valid(void);
+    void set_invalid(void);
+    bool valid(void) const;
 
-  unsigned add_value(unsigned definition, const std::string& value, const std::string& source);
-  unsigned add_switch(unsigned definition, bool value, const std::string& source);
-  void erase_value(unsigned definition);
+    unsigned add_value(unsigned definition, const std::string& value, const std::string& source);
+    unsigned add_switch(unsigned definition, bool value, const std::string& source);
+    void erase_value(unsigned definition);
 
-  void add_ini_file(const std::string& file);
-  unsigned ini_file_size(void) const;
-  const std::string& ini_file(unsigned) const;
+    void add_ini_file(const std::string& file);
+    unsigned ini_file_size(void) const;
+    const std::string& ini_file(unsigned) const;
 
-private:
-  // make this class uncopyable
-  cli_parser_data(const cli_parser_data&);
-  cli_parser_data& operator = (const cli_parser_data&);
-};
+  private:
+    // make this class uncopyable
+    cli_parser_data(const cli_parser_data&);
+    cli_parser_data& operator = (const cli_parser_data&);
+  };
 
 } // end namespace stlplus
 

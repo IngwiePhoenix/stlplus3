@@ -3,6 +3,8 @@
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
+#include "strings_stlplus.hpp"
+#include "strings_basic.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
 
@@ -24,6 +26,11 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef stlplus::hash<int,std::string,hash_int> int_string_hash;
+
+std::ostream& operator<< (std::ostream& str, const int_string_hash& data)
+{
+  return str << stlplus::hash_to_string(data, stlplus::int_to_string, stlplus::string_to_string);
+}
 
 void dump_int_string_hash(stlplus::dump_context& context, const int_string_hash& data)
 {
@@ -69,9 +76,11 @@ int main(unsigned argc, char* argv[])
   try
   {
     // build the sample data structure
+    std::cerr << "building" << std::endl;
     int_string_hash data;
     for (unsigned i = 0; i < NUMBER; i++)
       data[i] = stlplus::dformat("%d",i);
+    std::cerr << data << std::endl;
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_int_string_hash,0);
