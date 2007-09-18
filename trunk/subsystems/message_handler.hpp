@@ -1,5 +1,5 @@
-#ifndef MESSAGE_HANDLER_HPP
-#define MESSAGE_HANDLER_HPP
+#ifndef STLPLUS_MESSAGE_HANDLER_HPP
+#define STLPLUS_MESSAGE_HANDLER_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

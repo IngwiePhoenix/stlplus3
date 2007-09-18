@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_HASH_HPP
-#define PERSISTENT_HASH_HPP
+#ifndef STLPLUS_PERSISTENT_HASH_HPP
+#define STLPLUS_PERSISTENT_HASH_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

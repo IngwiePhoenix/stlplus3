@@ -1,5 +1,5 @@
-#ifndef STRINGS_STL_HPP
-#define STRINGS_STL_HPP
+#ifndef STLPLUS_STRING_STL_HPP
+#define STLPLUS_STRING_STL_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

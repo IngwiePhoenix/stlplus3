@@ -1,5 +1,5 @@
-#ifndef TRIPLE_HPP
-#define TRIPLE_HPP
+#ifndef STLPLUS_TRIPLE_HPP
+#define STLPLUS_TRIPLE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton, from an original by Dan Milton

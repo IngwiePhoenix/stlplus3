@@ -1,5 +1,5 @@
-#ifndef INI_MANAGER_HPP
-#define INI_MANAGER_HPP
+#ifndef STLPLUS_INI_MANAGER_HPP
+#define STLPLUS_INI_MANAGER_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

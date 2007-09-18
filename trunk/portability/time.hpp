@@ -1,5 +1,5 @@
-#ifndef TIME_HPP
-#define TIME_HPP
+#ifndef STLPLUS_TIME_HPP
+#define STLPLUS_TIME_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
@@ -21,8 +21,8 @@ human-comprehendable forms.
 
 ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
-#include <time.h>
 #include <string>
+#include <time.h>
 
 namespace stlplus
 {

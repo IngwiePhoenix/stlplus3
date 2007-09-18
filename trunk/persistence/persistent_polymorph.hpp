@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_POLYMORPH_HPP
-#define PERSISTENT_POLYMORPH_HPP
+#ifndef STLPLUS_PERSISTENT_POLYMORPH_HPP
+#define STLPLUS_PERSISTENT_POLYMORPH_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_TRIPLE_HPP
-#define PERSISTENT_TRIPLE_HPP
+#ifndef STLPLUS_PERSISTENT_TRIPLE_HPP
+#define STLPLUS_PERSISTENT_TRIPLE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

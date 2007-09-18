@@ -1,5 +1,5 @@
-#ifndef LIBRARY_MANAGER_HPP
-#define LIBRARY_MANAGER_HPP
+#ifndef STLPLUS_LIBRARY_MANAGER_HPP
+#define STLPLUS_LIBRARY_MANAGER_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

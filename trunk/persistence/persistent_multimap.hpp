@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_MULTIMAP_HPP
-#define PERSISTENT_MULTIMAP_HPP
+#ifndef STLPLUS_PERSISTENT_MULTIMAP_HPP
+#define STLPLUS_PERSISTENT_MULTIMAP_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

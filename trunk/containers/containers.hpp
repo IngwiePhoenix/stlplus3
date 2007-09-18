@@ -1,5 +1,5 @@
-#ifndef CONTAINERS_HPP
-#define CONTAINERS_HPP
+#ifndef STLPLUS_CONTAINERS_HPP
+#define STLPLUS_CONTAINERS_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

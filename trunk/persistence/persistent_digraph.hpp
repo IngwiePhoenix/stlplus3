@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_DIGRAPH_HPP
-#define PERSISTENT_DIGRAPH_HPP
+#ifndef STLPLUS_PERSISTENT_DIGRAPH_HPP
+#define STLPLUS_PERSISTENT_DIGRAPH_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

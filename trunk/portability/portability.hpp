@@ -1,5 +1,5 @@
-#ifndef PORTABILITY_HPP
-#define PORTABILITY_HPP
+#ifndef STLPLUS_PORTABILITY_HPP
+#define STLPLUS_PORTABILITY_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

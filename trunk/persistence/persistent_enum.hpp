@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_ENUM_HPP
-#define PERSISTENT_ENUM_HPP
+#ifndef STLPLUS_PERSISTENT_ENUM_HPP
+#define STLPLUS_PERSISTENT_ENUM_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

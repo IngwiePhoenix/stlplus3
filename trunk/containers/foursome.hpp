@@ -1,5 +1,5 @@
-#ifndef FOURSOME_HPP
-#define FOURSOME_HPP
+#ifndef STLPLUS_FOURSOME_HPP
+#define STLPLUS_FOURSOME_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton, from an original by Dan Milton

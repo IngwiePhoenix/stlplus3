@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_XREF_HPP
-#define PERSISTENT_XREF_HPP
+#ifndef STLPLUS_PERSISTENT_XREF_HPP
+#define STLPLUS_PERSISTENT_XREF_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

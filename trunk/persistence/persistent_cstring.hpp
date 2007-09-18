@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_CSTRING_HPP
-#define PERSISTENT_CSTRING_HPP
+#ifndef STLPLUS_PERSISTENT_CSTRING_HPP
+#define STLPLUS_PERSISTENT_CSTRING_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

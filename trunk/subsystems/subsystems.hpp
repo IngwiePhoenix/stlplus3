@@ -1,5 +1,5 @@
-#ifndef SUBSYSTEMS_HPP
-#define SUBSYSTEMS_HPP
+#ifndef STLPLUS_SUBSYSTEMS_HPP
+#define STLPLUS_SUBSYSTEMS_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

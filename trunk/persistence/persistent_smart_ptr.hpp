@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_SMART_PTR_HPP
-#define PERSISTENT_SMART_PTR_HPP
+#ifndef STLPLUS_PERSISTENT_SMART_PTR_HPP
+#define STLPLUS_PERSISTENT_SMART_PTR_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

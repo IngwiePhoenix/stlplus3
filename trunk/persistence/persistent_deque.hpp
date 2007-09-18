@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_DEQUE_HPP
-#define PERSISTENT_DEQUE_HPP
+#ifndef STLPLUS_PERSISTENT_DEQUE_HPP
+#define STLPLUS_PERSISTENT_DEQUE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
+#ifndef STLPLUS_MATRIX_HPP
+#define STLPLUS_MATRIX_HPP
 /*----------------------------------------------------------------------------
 
 Author:    Andy Rushton

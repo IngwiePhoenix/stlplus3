@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_INTERFACE_HPP
-#define PERSISTENT_INTERFACE_HPP
+#ifndef STLPLUS_PERSISTENT_INTERFACE_HPP
+#define STLPLUS_PERSISTENT_INTERFACE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

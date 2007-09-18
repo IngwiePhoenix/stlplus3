@@ -1,5 +1,5 @@
-#ifndef FORMAT_TYPES_HPP
-#define FORMAT_TYPES_HPP
+#ifndef STLPLUS_FORMAT_TYPES_HPP
+#define STLPLUS_FORMAT_TYPES_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_FLOAT_HPP
-#define PERSISTENT_FLOAT_HPP
+#ifndef STLPLUS_PERSISTENT_FLOAT_HPP
+#define STLPLUS_PERSISTENT_FLOAT_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef FILE_SYSTEM_HPP
-#define FILE_SYSTEM_HPP
+#ifndef STLPLUS_FILE_SYSTEM_HPP
+#define STLPLUS_FILE_SYSTEM_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

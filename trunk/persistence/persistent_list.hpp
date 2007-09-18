@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_LIST_HPP
-#define PERSISTENT_LIST_HPP
+#ifndef STLPLUS_PERSISTENT_LIST_HPP
+#define STLPLUS_PERSISTENT_LIST_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

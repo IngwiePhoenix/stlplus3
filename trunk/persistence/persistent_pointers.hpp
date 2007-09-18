@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_POINTERS_HPP
-#define PERSISTENT_POINTERS_HPP
+#ifndef STLPLUS_PERSISTENT_POINTERS_HPP
+#define STLPLUS_PERSISTENT_POINTERS_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

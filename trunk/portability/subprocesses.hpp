@@ -1,5 +1,5 @@
-#ifndef SUBPROCESSES_HPP
-#define SUBPROCESSES_HPP
+#ifndef STLPLUS_SUBPROCESSES_HPP
+#define STLPLUS_SUBPROCESSES_HPP
 /*----------------------------------------------------------------------------
 
 Author:    Andy Rushton

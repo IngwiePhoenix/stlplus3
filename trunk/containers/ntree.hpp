@@ -1,5 +1,5 @@
-#ifndef NTREE_HPP
-#define NTREE_HPP
+#ifndef STLPLUS_NTREE_HPP
+#define STLPLUS_NTREE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

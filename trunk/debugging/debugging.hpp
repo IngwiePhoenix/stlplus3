@@ -1,5 +1,5 @@
-#ifndef DEBUGGING_HPP
-#define DEBUGGING_HPP
+#ifndef STLPLUS_DEBUGGING_HPP
+#define STLPLUS_DEBUGGING_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

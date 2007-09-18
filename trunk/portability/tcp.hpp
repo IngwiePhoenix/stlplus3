@@ -1,5 +1,5 @@
-#ifndef TCP_HPP
-#define TCP_HPP
+#ifndef STLPLUS_TCP_HPP
+#define STLPLUS_TCP_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

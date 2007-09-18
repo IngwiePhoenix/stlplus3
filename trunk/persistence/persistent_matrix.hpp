@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_MATRIX_HPP
-#define PERSISTENT_MATRIX_HPP
+#ifndef STLPLUS_PERSISTENT_MATRIX_HPP
+#define STLPLUS_PERSISTENT_MATRIX_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

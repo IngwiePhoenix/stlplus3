@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_SHORTCUTS_HPP
-#define PERSISTENT_SHORTCUTS_HPP
+#ifndef STLPLUS_PERSISTENT_SHORTCUTS_HPP
+#define STLPLUS_PERSISTENT_SHORTCUTS_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

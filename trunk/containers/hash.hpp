@@ -1,5 +1,5 @@
-#ifndef HASH_HPP
-#define HASH_HPP
+#ifndef STLPLUS_HASH_HPP
+#define STLPLUS_HASH_HPP
 /*----------------------------------------------------------------------------
 
 Author:    Andy Rushton

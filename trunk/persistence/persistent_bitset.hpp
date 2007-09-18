@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_BITSET_HPP
-#define PERSISTENT_BITSET_HPP
+#ifndef STLPLUS_PERSISTENT_BITSET_HPP
+#define STLPLUS_PERSISTENT_BITSET_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

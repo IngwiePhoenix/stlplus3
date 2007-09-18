@@ -1,5 +1,5 @@
-#ifndef DPRINTF_HPP
-#define DPRINTF_HPP
+#ifndef STLPLUS_DPRINTF_HPP
+#define STLPLUS_DPRINTF_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

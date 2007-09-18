@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_NTREE_HPP
-#define PERSISTENT_NTREE_HPP
+#ifndef STLPLUS_PERSISTENT_NTREE_HPP
+#define STLPLUS_PERSISTENT_NTREE_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

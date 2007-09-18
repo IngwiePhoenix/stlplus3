@@ -1,5 +1,5 @@
-#ifndef DIGRAPH_HPP
-#define DIGRAPH_HPP
+#ifndef STLPLUS_DIGRAPH_HPP
+#define STLPLUS_DIGRAPH_HPP
 /*----------------------------------------------------------------------------
 
 Author:    Andy Rushton

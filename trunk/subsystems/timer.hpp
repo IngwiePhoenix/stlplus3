@@ -1,5 +1,5 @@
-#ifndef TIMER_HPP
-#define TIMER_HPP
+#ifndef STLPLUS_TIMER_HPP
+#define STLPLUS_TIMER_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

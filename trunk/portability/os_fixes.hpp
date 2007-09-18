@@ -1,5 +1,5 @@
-#ifndef OS_FIXES_HPP
-#define OS_FIXES_HPP
+#ifndef STLPLUS_OS_FIXES_HPP
+#define STLPLUS_OS_FIXES_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef CLI_PARSER_HPP
-#define CLI_PARSER_HPP
+#ifndef STLPLUS_CLI_PARSER_HPP
+#define STLPLUS_CLI_PARSER_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_VECTOR_HPP
-#define PERSISTENT_VECTOR_HPP
+#ifndef STLPLUS_PERSISTENT_VECTOR_HPP
+#define STLPLUS_PERSISTENT_VECTOR_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

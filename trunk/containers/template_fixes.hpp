@@ -1,5 +1,5 @@
-#ifndef TEMPLATE_FIXES_HPP
-#define TEMPLATE_FIXES_HPP
+#ifndef STLPLUS_TEMPLATE_FIXES_HPP
+#define STLPLUS_TEMPLATE_FIXES_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

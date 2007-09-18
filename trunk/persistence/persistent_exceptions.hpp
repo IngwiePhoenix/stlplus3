@@ -1,5 +1,5 @@
-#ifndef PERSISTENT_EXCEPTIONS_HPP
-#define PERSISTENT_EXCEPTIONS_HPP
+#ifndef STLPLUS_PERSISTENT_EXCEPTIONS_HPP
+#define STLPLUS_PERSISTENT_EXCEPTIONS_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton

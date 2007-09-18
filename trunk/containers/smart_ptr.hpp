@@ -1,5 +1,5 @@
-#ifndef SMART_PTR_HPP
-#define SMART_PTR_HPP
+#ifndef STLPLUS_SMART_PTR_HPP
+#define STLPLUS_SMART_PTR_HPP
 /*------------------------------------------------------------------------------
 
 Author:    Andy Rushton
