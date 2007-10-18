@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
 #include "timer.hpp"
@@ -11,41 +11,48 @@ License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////
 
-stlplus::timer::timer(void)
+namespace stlplus
 {
-  reset();
-}
-
-stlplus::timer::~timer(void)
-{
-}
-
-void stlplus::timer::reset(void)
-{
-  m_clock = clock();
-  m_time = time(0);
-}
-
-float stlplus::timer::cpu(void) const
-{
-  return ((float)(clock() - m_clock)) / ((float)CLOCKS_PER_SEC);
-}
-
-float stlplus::timer::elapsed(void) const
-{
-  return ((float)(time(0) - m_time));
-}
-
-std::string stlplus::timer::text(void) const
-{
-  return dformat("%4.2fs CPU, %s elapsed", cpu(), delaytime_string(time(0)-m_time).c_str());
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::ostream& stlplus::operator << (std::ostream& str, const timer& t)
-{
-  return str << t.text();
-}
+  timer::timer(void)
+  {
+    reset();
+  }
+
+  timer::~timer(void)
+  {
+  }
+
+  void timer::reset(void)
+  {
+    m_clock = clock();
+    m_time = time(0);
+  }
+
+  float timer::cpu(void) const
+  {
+    return ((float)(clock() - m_clock)) / ((float)CLOCKS_PER_SEC);
+  }
+
+  float timer::elapsed(void) const
+  {
+    return ((float)(time(0) - m_time));
+  }
+
+  std::string timer::text(void) const
+  {
+    return dformat("%4.2fs CPU, %s elapsed", cpu(), delaytime_string(time(0)-m_time).c_str());
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+  std::ostream& operator << (std::ostream& str, const timer& t)
+  {
+    return str << t.text();
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus
