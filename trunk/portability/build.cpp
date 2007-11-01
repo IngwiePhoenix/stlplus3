@@ -1,17 +1,17 @@
+/*------------------------------------------------------------------------------
+
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
+
+------------------------------------------------------------------------------*/
 #include "build.hpp"
-
+#include "version.hpp"
+#include "dprintf.hpp"
 ////////////////////////////////////////////////////////////////////////////////
-// local function to generate a string representation of an integer
-// use sprintf in a very controlled way that cannot overrun
 
-static std::string to_string(int number)
+namespace stlplus
 {
-  char* buffer = new char[50];
-  sprintf(buffer, "%i", number);
-  std::string result = buffer;
-  delete buffer;
-  return result;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // work out the platform
@@ -21,6 +21,7 @@ static std::string to_string(int number)
 #ifdef MSWINDOWS
 #define PLATFORM std::string("Windows")
 #endif
+
 #ifndef PLATFORM
 #define PLATFORM std::string("Generic Unix")
 #endif
@@ -30,13 +31,13 @@ static std::string to_string(int number)
 
 #undef COMPILER
 #ifdef __GNUC__
-#define COMPILER (std::string("gcc v")+to_string(__GNUC__)+std::string(".")+to_string(__GNUC_MINOR__))
+#define COMPILER (std::string("gcc v")+std::string(__VERSION__))
 #endif
 #ifdef _MSC_VER
-#define COMPILER (std::string("MSVC v")+to_string(((float)_MSC_VER)/100.0))
+#define COMPILER (std::string("MSVC v")+dformat("%0.2f",((float)_MSC_VER)/100.0))
 #endif
 #ifdef __BORLANDC__
-#define COMPILER (std::string("Borland v")+to_string(__BORLANDC__/256)+std::string(".")+to_string(__BORLANDC__/16%16))
+#define COMPILER (std::string("Borland v")+dformat("%d",__BORLANDC__/256)+std::string(".")+dformat("%d",__BORLANDC__/16%16))
 #endif
 
 #ifndef COMPILER
@@ -57,9 +58,10 @@ static std::string to_string(int number)
 ////////////////////////////////////////////////////////////////////////////////
 // report the platform-specific details of this build
 
-std::string stlplus::build(void)
+std::string build(void)
 {
-  return PLATFORM + ", " + COMPILER + ", " + VARIANT;
+  return std::string("STLplus version ") + version() + ", " + PLATFORM + ", " + COMPILER + ", " + VARIANT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+} // end namespace stlplus

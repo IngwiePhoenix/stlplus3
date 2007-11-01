@@ -1,3 +1,3 @@
 IMAGE     := bool_vector_test
-LIBRARIES := ../../persistence ../../containers ../../portability
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak

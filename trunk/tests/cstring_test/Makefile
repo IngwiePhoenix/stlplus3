@@ -1,5 +1,5 @@
 IMAGE     := cstring_test
-LIBRARIES := ../../persistence ../../portability
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak
 
 

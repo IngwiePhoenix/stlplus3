@@ -1,22 +1,23 @@
-#ifndef STLPLUS_FILE_SYSTEM_HPP
-#define STLPLUS_FILE_SYSTEM_HPP
+#ifndef STLPLUS_FILE_SYSTEM
+#define STLPLUS_FILE_SYSTEM
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Simplified access to the File system
+  Simplified access to the File system
 
-All file system access and filename manipulation should be done
-with this package. Then it is only necessary to port this package
-to port all file handling.
+  All file system access and filename manipulation should be done
+  with this package. Then it is only necessary to port this package
+  to port all file handling.
 
 ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include <string>
 #include <vector>
 #include <time.h>
+////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
 {
@@ -87,6 +88,7 @@ namespace stlplus
   time_t file_modified(const std::string& filespec);
   time_t file_accessed(const std::string& filespec);
 
+  // platform-specific string handling to combine a directory and filename into a path
   std::string create_filespec(const std::string& folder, const std::string& filename);
   std::string create_filespec(const std::string& folder, const std::string& basename, const std::string& extension);
   std::string create_filename(const std::string& basename, const std::string& extension);

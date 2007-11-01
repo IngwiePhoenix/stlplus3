@@ -1,0 +1,29 @@
+#ifndef STLPLUS_STRING_MATRIX
+#define STLPLUS_STRING_MATRIX
+/*------------------------------------------------------------------------------
+
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
+
+  Generate a string representation of a matrix
+
+  ------------------------------------------------------------------------------*/
+#include "matrix.hpp"
+#include <string>
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace stlplus
+{
+
+  template<typename T, typename S>
+  std::string matrix_to_string(const matrix<T>& values,
+                               S to_string_fn,
+                               const std::string& column_separator = "|",
+                               const std::string& row_separator = ",");
+
+} // end namespace stlplus
+
+#include "string_matrix.tpp"
+#endif

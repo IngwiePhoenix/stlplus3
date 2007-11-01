@@ -1,14 +1,14 @@
-#ifndef STLPLUS_ARITHMETIC_HPP
-#define STLPLUS_ARITHMETIC_HPP
+#ifndef STLPLUS_ARITHMETIC
+#define STLPLUS_ARITHMETIC
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Header for including the whole arithmetic library in one go
+  Header for including the whole arithmetic library in one go
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 
 ////////////////////////////////////////////////////////////////////////////////
 

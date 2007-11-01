@@ -1,5 +1,5 @@
 IMAGE     := smart_ptr_test
-LIBRARIES := ../../strings ../../persistence ../../portability ../../containers
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak
 
 

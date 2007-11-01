@@ -1,27 +1,27 @@
-#ifndef STLPLUS_SMART_PTR_HPP
-#define STLPLUS_SMART_PTR_HPP
+#ifndef STLPLUS_SMART_PTR
+#define STLPLUS_SMART_PTR
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A smart pointer is a memory-managing pointer to an object. If you like, it
-is a zero-dimensional container. 
+  A smart pointer is a memory-managing pointer to an object. If you like, it
+  is a zero-dimensional container. 
 
-Assignment of smart pointers result in multiple aliases of the same object.
-The term alias is used to differentiate from conventional pointers because
-the semantics are different.
+  Assignment of smart pointers result in multiple aliases of the same object.
+  The term alias is used to differentiate from conventional pointers because
+  the semantics are different.
 
-Aliases can be turned into copies if the pointed-to class supports copying.
+  Aliases can be turned into copies if the pointed-to class supports copying.
 
-The base class is smart_ptr_base which defines the common interface. Then
-there are three subclasses which have the same interface but different copy
-semantics:
+  The base class is smart_ptr_base which defines the common interface. Then
+  there are three subclasses which have the same interface but different copy
+  semantics:
 
-- smart_ptr        for simple types and classes which have copy constructors
-- smart_ptr_clone  for polymorphic class hierarchies which have a clone method
-- smart_ptr_nocopy for any class that cannot or should not be copied
+  - smart_ptr        for simple types and classes which have copy constructors
+  - smart_ptr_clone  for polymorphic class hierarchies which are copied using a clone method
+  - smart_ptr_nocopy for any class that cannot or should not be copied
 
 ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"
@@ -165,7 +165,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
   // copy functors implementing the three possible copy semantics
 
-  // constructor copy uses the copy constructor of the object - used for simple types
+  // constructor_copy uses the copy constructor of the object - used for simple types
 
   template <typename T>
   class constructor_copy
@@ -177,7 +177,7 @@ namespace stlplus
       }
   };
 
-  // clone copy uses the clone function of the object - used for polymorphic types
+  // clone_copy uses the clone method of the object - used for polymorphic types
 
   template <typename T>
   class clone_copy
@@ -189,7 +189,7 @@ namespace stlplus
       }
   };
 
-  // no copy throws an exception
+  // no_copy throws an exception - used for types that cannot be copied
 
   template <typename T>
   class no_copy

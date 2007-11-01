@@ -1,14 +1,14 @@
-#ifndef STLPLUS_PERSISTENT_BOOL_HPP
-#define STLPLUS_PERSISTENT_BOOL_HPP
+#ifndef STLPLUS_PERSISTENT_BOOL
+#define STLPLUS_PERSISTENT_BOOL
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence of bool
+  Persistence of bool
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 namespace stlplus

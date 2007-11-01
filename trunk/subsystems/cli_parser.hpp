@@ -1,15 +1,15 @@
-#ifndef STLPLUS_CLI_PARSER_HPP
-#define STLPLUS_CLI_PARSER_HPP
+#ifndef STLPLUS_CLI_PARSER
+#define STLPLUS_CLI_PARSER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A subsystem for managing command-line parsing, including using INI files to
-control the default options.
+  A subsystem for managing command-line parsing, including using INI files to
+  control the default options.
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "message_handler.hpp"
 #include "ini_manager.hpp"
 #include "smart_ptr.hpp"

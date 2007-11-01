@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
-#include "os_fixes.hpp"
 #include "tcp.hpp"
+#include "dprintf.hpp"
 #ifdef MSWINDOWS
 // Windoze-specific includes
 #include <winsock2.h>
@@ -43,45 +43,39 @@ License:   BSD License, see ../docs/license.html
 #include <sys/filio.h>
 #endif
 #endif
+////////////////////////////////////////////////////////////////////////////////
+
+namespace stlplus
+{
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 
-static std::string to_string(int number)
-{
-  // use sprintf in a very controlled way that cannot overrun
-  char* buffer = new char[50];
-  sprintf(buffer, "%i", number);
-  std::string result = buffer;
-  delete buffer;
-  return result;
-}
-
-static std::string error_string(int error)
-{
-  std::string result = "error " + to_string(error);
+  static std::string error_string(int error)
+  {
+    std::string result = "error " + dformat("%d",error);
 #ifdef MSWINDOWS
-  char* message = 0;
-  FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
-                0,
-                error,
-                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // "User default language"
-                (LPTSTR)&message,
-                0,0);
-  if (message) 
-  {
-    result = message;
-    LocalFree(message);
-  }
-  else
-  {
-    result = "unknown error " + to_string(error);
-  }
+    char* message = 0;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
+                  0,
+                  error,
+                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // "User default language"
+                  (LPTSTR)&message,
+                  0,0);
+    if (message) 
+    {
+      result = message;
+      LocalFree(message);
+    }
+    else
+    {
+      result = "unknown error " + dformat("%d",error);
+    }
 #else
-  result = strerror(error);
+    result = strerror(error);
 #endif
-  return result;
-}
+    return result;
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Initialisation
@@ -89,40 +83,37 @@ static std::string error_string(int error)
 // These routines initialise once on first use and close on the destruction of the last object using it
 // on non-windows platforms, I still increment/decrement the sockets count variable for diagnostic purposes
 
-static int sockets_count = 0;
+  static int sockets_count = 0;
 
-static int sockets_init(void)
-{
-  int error = 0;
-  if (sockets_count++ == 0)
+  static int sockets_init(void)
   {
+    int error = 0;
+    if (sockets_count++ == 0)
+    {
 #ifdef MSWINDOWS
-    WSAData winsock_info;
-    // request Winsock 2.0 or higher
-    error = WSAStartup(MAKEWORD(2,0),&winsock_info);
+      WSAData winsock_info;
+      // request Winsock 2.0 or higher
+      error = WSAStartup(MAKEWORD(2,0),&winsock_info);
 #endif
+    }
+    return error;
   }
-  return error;
-}
 
-static int sockets_close(void)
-{
-  int error = 0;
-  if (--sockets_count == 0)
+  static int sockets_close(void)
   {
+    int error = 0;
+    if (--sockets_count == 0)
+    {
 #ifdef MSWINDOWS
-    if (WSACleanup() == SOCKET_ERROR)
-      error = ERRNO;
+      if (WSACleanup() == SOCKET_ERROR)
+        error = ERRNO;
 #endif
+    }
+    return error;
   }
-  return error;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Socket - common code to manipulate a TCP socket
-
-namespace stlplus
-{
 
   class TCP_socket
   {
@@ -328,13 +319,8 @@ namespace stlplus
       }
   };
 
-} // end namespace stlplus
-
   ////////////////////////////////////////////////////////////////////////////////
   // Connection
-
-namespace stlplus
-{
 
   class TCP_connection_data
   {
@@ -436,92 +422,87 @@ namespace stlplus
       }
   };
 
-} // end namespace stlplus
-
   ////////////////////////////////////////
   // exported functions
 
-stlplus::TCP_connection::TCP_connection(void) : m_data(new stlplus::TCP_connection_data)
-{
-}
+  TCP_connection::TCP_connection(void) : m_data(new TCP_connection_data)
+  {
+  }
 
-stlplus::TCP_connection::~TCP_connection(void)
-{
-  if (m_data->decrement())
-    delete m_data;
-}
+  TCP_connection::~TCP_connection(void)
+  {
+    if (m_data->decrement())
+      delete m_data;
+  }
 
-stlplus::TCP_connection::TCP_connection(const stlplus::TCP_connection& connection) : m_data(0)
-{
-  m_data = connection.m_data;
-  m_data->increment();
-}
+  TCP_connection::TCP_connection(const TCP_connection& connection) : m_data(0)
+  {
+    m_data = connection.m_data;
+    m_data->increment();
+  }
 
-stlplus::TCP_connection& stlplus::TCP_connection::operator=(const stlplus::TCP_connection& connection)
-{
-  if (m_data == connection.m_data) return *this;
-  if (m_data->decrement())
-    delete m_data;
-  m_data = connection.m_data;
-  m_data->increment();
-  return *this;
-}
+  TCP_connection& TCP_connection::operator=(const TCP_connection& connection)
+  {
+    if (m_data == connection.m_data) return *this;
+    if (m_data->decrement())
+      delete m_data;
+    m_data = connection.m_data;
+    m_data->increment();
+    return *this;
+  }
 
-int stlplus::TCP_connection::error(void) const
-{
-  return m_data->error();
-}
+  int TCP_connection::error(void) const
+  {
+    return m_data->error();
+  }
 
-std::string stlplus::TCP_connection::message(void) const
-{
-  return m_data->message();
-}
+  std::string TCP_connection::message(void) const
+  {
+    return m_data->message();
+  }
 
-bool stlplus::TCP_connection::initialised(void) const
-{
-  return m_data->initialised();
-}
+  bool TCP_connection::initialised(void) const
+  {
+    return m_data->initialised();
+  }
 
-unsigned long stlplus::TCP_connection::address(void) const
-{
-  return m_data->address();
-}
+  unsigned long TCP_connection::address(void) const
+  {
+    return m_data->address();
+  }
 
-unsigned short stlplus::TCP_connection::port(void) const
-{
-  return m_data->port();
-}
+  unsigned short TCP_connection::port(void) const
+  {
+    return m_data->port();
+  }
 
-bool stlplus::TCP_connection::send_ready(unsigned wait)
-{
-  return m_data->send_ready(wait);
-}
+  bool TCP_connection::send_ready(unsigned wait)
+  {
+    return m_data->send_ready(wait);
+  }
 
-bool stlplus::TCP_connection::send (std::string& data)
-{
-  return m_data->send(data);
-}
+  bool TCP_connection::send (std::string& data)
+  {
+    return m_data->send(data);
+  }
 
-bool stlplus::TCP_connection::receive_ready(unsigned wait)
-{
-  return m_data->receive_ready(wait);
-}
+  bool TCP_connection::receive_ready(unsigned wait)
+  {
+    return m_data->receive_ready(wait);
+  }
 
-bool stlplus::TCP_connection::receive (std::string& data)
-{
-  return m_data->receive(data);
-}
+  bool TCP_connection::receive (std::string& data)
+  {
+    return m_data->receive(data);
+  }
 
-bool stlplus::TCP_connection::close(void)
-{
-  return m_data->close();
-}
+  bool TCP_connection::close(void)
+  {
+    return m_data->close();
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Server
-
-namespace stlplus
-{
 
   class TCP_server_data
   {
@@ -611,9 +592,9 @@ namespace stlplus
         return m_socket.receive_ready(wait);
       }
 
-    stlplus::TCP_connection connection(void)
+    TCP_connection connection(void)
       {
-        stlplus::TCP_connection connection;
+        TCP_connection connection;
         // accept a connection: the return value is the socket and the address is filled in with the connection details in network order
         sockaddr address;
         SOCKLEN_T address_length = sizeof(address);
@@ -633,82 +614,77 @@ namespace stlplus
       }
   };
 
-} // end namespace stlplus
-
   ////////////////////////////////////////
   // exported functions
 
-stlplus::TCP_server::TCP_server(void) : m_data(new stlplus::TCP_server_data)
-{
-}
+  TCP_server::TCP_server(void) : m_data(new TCP_server_data)
+  {
+  }
 
-stlplus::TCP_server::TCP_server(unsigned short port, unsigned short queue) : m_data(new stlplus::TCP_server_data)
-{
-  initialise(port,queue);
-}
+  TCP_server::TCP_server(unsigned short port, unsigned short queue) : m_data(new TCP_server_data)
+  {
+    initialise(port,queue);
+  }
 
-stlplus::TCP_server::~TCP_server(void)
-{
-  if (m_data->decrement())
-    delete m_data;
-}
+  TCP_server::~TCP_server(void)
+  {
+    if (m_data->decrement())
+      delete m_data;
+  }
 
-stlplus::TCP_server::TCP_server(const stlplus::TCP_server& server)
-{
-  m_data = server.m_data;
-  m_data->increment();
-}
+  TCP_server::TCP_server(const TCP_server& server)
+  {
+    m_data = server.m_data;
+    m_data->increment();
+  }
 
-stlplus::TCP_server& stlplus::TCP_server::operator=(const stlplus::TCP_server& server)
-{
-  if (m_data == server.m_data) return *this;
-  if (m_data->decrement())
-    delete m_data;
-  m_data = server.m_data;
-  m_data->increment();
-  return *this;
-}
+  TCP_server& TCP_server::operator=(const TCP_server& server)
+  {
+    if (m_data == server.m_data) return *this;
+    if (m_data->decrement())
+      delete m_data;
+    m_data = server.m_data;
+    m_data->increment();
+    return *this;
+  }
 
-bool stlplus::TCP_server::initialise(unsigned short port, unsigned short queue)
-{
-  return m_data->initialise(port,queue);
-}
+  bool TCP_server::initialise(unsigned short port, unsigned short queue)
+  {
+    return m_data->initialise(port,queue);
+  }
 
-bool stlplus::TCP_server::initialised(void) const
-{
-  return m_data->initialised();
-}
+  bool TCP_server::initialised(void) const
+  {
+    return m_data->initialised();
+  }
 
-int stlplus::TCP_server::error(void) const
-{
-  return m_data->error();
-}
+  int TCP_server::error(void) const
+  {
+    return m_data->error();
+  }
 
-std::string stlplus::TCP_server::message(void) const
-{
-  return m_data->message();
-}
+  std::string TCP_server::message(void) const
+  {
+    return m_data->message();
+  }
 
-bool stlplus::TCP_server::close(void)
-{
-  return m_data->close();
-}
+  bool TCP_server::close(void)
+  {
+    return m_data->close();
+  }
 
-bool stlplus::TCP_server::connection_ready(unsigned wait)
-{
-  return m_data->connection_ready(wait);
-}
+  bool TCP_server::connection_ready(unsigned wait)
+  {
+    return m_data->connection_ready(wait);
+  }
 
-stlplus::TCP_connection stlplus::TCP_server::connection(void)
-{
-  return m_data->connection();
-}
+  TCP_connection TCP_server::connection(void)
+  {
+    return m_data->connection();
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Client
-
-namespace stlplus
-{
 
   class TCP_client_data
   {
@@ -870,101 +846,101 @@ namespace stlplus
 
   };
 
-} // end namespace stlplus
-
   ////////////////////////////////////////
   // exported functions
 
-stlplus::TCP_client::TCP_client(void) : m_data(new stlplus::TCP_client_data)
-{
-}
+  TCP_client::TCP_client(void) : m_data(new TCP_client_data)
+  {
+  }
 
-stlplus::TCP_client::TCP_client(const std::string& address, unsigned short port, unsigned int timeout) : 
-  m_data(new stlplus::TCP_client_data)
-{
-  initialise(address,port,timeout);
-}
+  TCP_client::TCP_client(const std::string& address, unsigned short port, unsigned int timeout) : 
+    m_data(new TCP_client_data)
+  {
+    initialise(address,port,timeout);
+  }
 
-stlplus::TCP_client::~TCP_client(void)
-{
-  if (m_data->decrement())
-    delete m_data;
-}
+  TCP_client::~TCP_client(void)
+  {
+    if (m_data->decrement())
+      delete m_data;
+  }
 
-stlplus::TCP_client::TCP_client(const stlplus::TCP_client& client)
-{
-  m_data = client.m_data;
-  m_data->increment();
-}
+  TCP_client::TCP_client(const TCP_client& client)
+  {
+    m_data = client.m_data;
+    m_data->increment();
+  }
 
-stlplus::TCP_client& stlplus::TCP_client::operator=(const stlplus::TCP_client& client)
-{
-  if (m_data == client.m_data) return *this;
-  if (m_data->decrement())
-    delete m_data;
-  m_data = client.m_data;
-  m_data->increment();
-  return *this;
-}
+  TCP_client& TCP_client::operator=(const TCP_client& client)
+  {
+    if (m_data == client.m_data) return *this;
+    if (m_data->decrement())
+      delete m_data;
+    m_data = client.m_data;
+    m_data->increment();
+    return *this;
+  }
 
-int stlplus::TCP_client::error(void) const
-{
-  return m_data->error();
-}
+  int TCP_client::error(void) const
+  {
+    return m_data->error();
+  }
 
-std::string stlplus::TCP_client::message(void) const
-{
-  return m_data->message();
-}
+  std::string TCP_client::message(void) const
+  {
+    return m_data->message();
+  }
 
-bool stlplus::TCP_client::initialise(const std::string& address, unsigned short port, unsigned int timeout)
-{
-  return m_data->initialise(address, port, timeout);
-}
+  bool TCP_client::initialise(const std::string& address, unsigned short port, unsigned int timeout)
+  {
+    return m_data->initialise(address, port, timeout);
+  }
 
-bool stlplus::TCP_client::initialised(void) const
-{
-  return m_data->initialised();
-}
+  bool TCP_client::initialised(void) const
+  {
+    return m_data->initialised();
+  }
 
-bool stlplus::TCP_client::connected(void)
-{
-  return m_data->connected();
-}
+  bool TCP_client::connected(void)
+  {
+    return m_data->connected();
+  }
 
-unsigned long stlplus::TCP_client::address(void) const
-{
-  return m_data->address();
-}
+  unsigned long TCP_client::address(void) const
+  {
+    return m_data->address();
+  }
 
-unsigned short stlplus::TCP_client::port(void) const
-{
-  return m_data->port();
-}
+  unsigned short TCP_client::port(void) const
+  {
+    return m_data->port();
+  }
 
-bool stlplus::TCP_client::send_ready(unsigned wait)
-{
-  return m_data->send_ready(wait);
-}
+  bool TCP_client::send_ready(unsigned wait)
+  {
+    return m_data->send_ready(wait);
+  }
 
-bool stlplus::TCP_client::send (std::string& data)
-{
-  return m_data->send(data);
-}
+  bool TCP_client::send (std::string& data)
+  {
+    return m_data->send(data);
+  }
 
-bool stlplus::TCP_client::receive_ready(unsigned wait)
-{
-  return m_data->receive_ready(wait);
-}
+  bool TCP_client::receive_ready(unsigned wait)
+  {
+    return m_data->receive_ready(wait);
+  }
 
-bool stlplus::TCP_client::receive (std::string& data)
-{
-  return m_data->receive(data);
-}
+  bool TCP_client::receive (std::string& data)
+  {
+    return m_data->receive(data);
+  }
 
-bool stlplus::TCP_client::close(void)
-{
-  return m_data->close();
-}
+  bool TCP_client::close(void)
+  {
+    return m_data->close();
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus

@@ -1,14 +1,14 @@
-#ifndef STLPLUS_MESSAGE_HANDLER_HPP
-#define STLPLUS_MESSAGE_HANDLER_HPP
+#ifndef STLPLUS_MESSAGE_HANDLER
+#define STLPLUS_MESSAGE_HANDLER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A general-purpose message handler using a message file as the source of all text
+  A general-purpose message handler using a message file as the source of all text
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include <iostream>
 #include <string>

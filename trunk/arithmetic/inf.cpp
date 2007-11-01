@@ -27,7 +27,6 @@
 
 ------------------------------------------------------------------------------*/
 #include "inf.hpp"
-#include "string_basic.hpp"
 #include <ctype.h>
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -160,51 +159,17 @@ namespace stlplus
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
   };
 
-  static void convert_to_string(const stlplus::inf& data, std::string& result,
-                                unsigned radix, radix_display_t display, unsigned width) throw(std::invalid_argument)
+  static void convert_to_string(const stlplus::inf& data, std::string& result, unsigned radix = 10)
+    throw(std::invalid_argument)
   {
-    if (radix < 2 || radix > 36)
+    // only support the C-style radixes plus 0b for binary
+    if (radix != 2 && radix != 8 && radix != 10 && radix != 16)
       throw std::invalid_argument("invalid radix value");
     inf local_i = data;
     // untangle all the options
-    bool hashed = false;
-    bool binary = false;
-    bool octal = false;
-    bool hex = false;
-    switch(display)
-    {
-    case radix_none:
-      break;
-    case radix_hash_style:
-      hashed = radix != 10;
-      break;
-    case radix_hash_style_all:
-      hashed = true;
-      break;
-    case radix_c_style:
-      if (radix == 16)
-        hex = true;
-      else if (radix == 8)
-        octal = true;
-      else if (radix == 2)
-        binary = true;
-      break;
-    case radix_c_style_or_hash:
-      if (radix == 16)
-        hex = true;
-      else if (radix == 8)
-        octal = true;
-      else if (radix == 2)
-        binary = true;
-      else if (radix != 10)
-        hashed = true;
-      break;
-    default:
-      throw std::invalid_argument("invalid radix display value");
-    }
-    // create constants of the same type as the template parameter to avoid type mismatches
-    const inf t_zero(0);
-    const inf t_radix(radix);
+    bool binary = radix == 2;
+    bool octal = radix == 8;
+    bool hex = radix == 16;
     // the C representations for binary, octal and hex use 2's-complement representation
     // all other represenations use sign-magnitude
     if (hex || octal || binary)
@@ -218,12 +183,8 @@ namespace stlplus
       // now interpret this as either binary, octal or hex and add the prefix
       if (binary)
       {
-        // the result is already binary - but the width may be wrong
-        // if this is still smaller than the width field, sign extend
-        // otherwise trim down to either the width or the smallest string that preserves the value
-        while (result.size() < width)
-          result.insert((std::string::size_type)0, 1, result[0]);
-        while (result.size() > width)
+        // trim down to the smallest string that preserves the value
+        while (true)
         {
           // do not trim to less than 1 bit (sign only)
           if (result.size() <= 1) break;
@@ -236,14 +197,9 @@ namespace stlplus
       }
       else if (octal)
       {
-        // the result is currently binary - but before converting get the width right
-        // the width is expressed in octal digits so make the binary 3 times this
-        // if this is still smaller than the width field, sign extend
-        // otherwise trim down to either the width or the smallest string that preserves the value
-        // also ensure that the binary is a multiple of 3 bits to make the conversion to octal easier
-        while (result.size() < 3*width)
-          result.insert((std::string::size_type)0, 1, result[0]);
-        while (result.size() > 3*width)
+        // the result is currently binary
+        // trim down to the smallest string that preserves the value
+        while (true)
         {
           // do not trim to less than 2 bits (sign plus 1-bit magnitude)
           if (result.size() <= 2) break;
@@ -251,15 +207,48 @@ namespace stlplus
           if (result[0] != result[1]) break;
           result.erase(0,1);
         }
+        // also ensure that the binary is a multiple of 3 bits to make the conversion to octal easier
         while (result.size() % 3 != 0)
           result.insert((std::string::size_type)0, 1, result[0]);
         // now convert to octal
         std::string octal_result;
         for (unsigned i = 0; i < result.size()/3; i++)
         {
-          std::string slice = result.substr(i*3, 3);
-          unsigned value = string_to_unsigned(slice, 2);
-          octal_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*3] == '0')
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '0';
+              else
+                octal_result += '1';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '2';
+              else
+                octal_result += '3';
+            }
+          }
+          else
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '4';
+              else
+                octal_result += '5';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '6';
+              else
+                octal_result += '7';
+            }
+          }
         }
         result = octal_result;
         // add the prefix
@@ -268,9 +257,7 @@ namespace stlplus
       else
       {
         // similar to octal
-        while (result.size() < 4*width)
-          result.insert((std::string::size_type)0, 1, result[0]);
-        while (result.size() > 4*width)
+        while (true)
         {
           // do not trim to less than 2 bits (sign plus 1-bit magnitude)
           if (result.size() <= 2) break;
@@ -278,15 +265,88 @@ namespace stlplus
           if (result[0] != result[1]) break;
           result.erase(0,1);
         }
+        // pad to a multiple of 4 characters
         while (result.size() % 4 != 0)
           result.insert((std::string::size_type)0, 1, result[0]);
         // now convert to hex
         std::string hex_result;
         for (unsigned i = 0; i < result.size()/4; i++)
         {
-          std::string slice = result.substr(i*4, 4);
-          unsigned value = string_to_unsigned(slice, 2);
-          hex_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*4] == '0')
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '0';
+                else
+                  hex_result += '1';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '2';
+                else
+                  hex_result += '3';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '4';
+                else
+                  hex_result += '5';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '6';
+                else
+                  hex_result += '7';
+              }
+            }
+          }
+          else
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '8';
+                else
+                  hex_result += '9';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'a';
+                else
+                  hex_result += 'b';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'c';
+                else
+                  hex_result += 'd';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'e';
+                else
+                  hex_result += 'f';
+              }
+            }
+          }
         }
         result = hex_result;
         // add the prefix
@@ -297,26 +357,23 @@ namespace stlplus
     {
       // convert to sign-magnitude
       // the representation is:
-      // [radix#][sign]magnitude
+      // [sign]magnitude
       bool negative = local_i.negative();
       local_i.abs();
       // create a representation of the magnitude by successive division
       do
       {
-        std::pair<inf,inf> divided = local_i.divide(t_radix);
+        std::pair<inf,inf> divided = local_i.divide(inf(radix));
         unsigned remainder = divided.second.to_unsigned();
         char digit = to_char[remainder];
         result.insert((std::string::size_type)0, 1, digit);
         local_i = divided.first;
       }
-      while(!local_i.zero() || result.size() < width);
+      while(!local_i.zero());
       // add the prefixes
       // add a sign only for negative values
       if (negative)
         result.insert((std::string::size_type)0, 1, '-');
-      // then prefix everything with the radix if the hashed representation was requested
-      if (hashed)
-        result.insert((std::string::size_type)0, unsigned_to_string(radix) + "#");
     }
   }
 
@@ -325,11 +382,13 @@ namespace stlplus
 
   void convert_from_string(const std::string& str, inf& result, unsigned radix = 10) throw(std::invalid_argument)
   {
-    if (radix != 0 && (radix < 2 || radix > 36))
-      throw std::invalid_argument("invalid radix value " + unsigned_to_string(radix));
+    // only support the C-style radixes plus 0b for binary
+    // a radix of 0 means deduce the radix from the input - assume 10
+    if (radix != 0 && radix != 2 && radix != 8 && radix != 10 && radix != 16)
+      throw std::invalid_argument("invalid radix value");
     unsigned i = 0;
     // the radix passed as a parameter is just the default - it can be
-    // overridden by either the C prefix or the hash prefix
+    // overridden by the C prefix
     // Note: a leading zero is the C-style prefix for octal - I only make this
     // override the default when the default radix is not specified
     // first check for a C-style prefix
@@ -356,37 +415,12 @@ namespace stlplus
         i += 1;
       }
     }
-    // now check for a hash-style prefix if a C-style prefix was not found
-    if (i == 0)
-    {
-      // scan for the sequence {digits}#
-      bool hash_found = false;
-      unsigned j = i;
-      for (; j < str.size(); j++)
-      {
-        if (!isdigit(str[j]))
-        {
-          if (str[j] == '#')
-            hash_found = true;
-          break;
-        }
-      }
-      if (hash_found)
-      {
-        // use the hash prefix to define the radix
-        // i points to the start of the radix and j points to the # character
-        std::string slice = str.substr(i, j-i);
-        radix = string_to_unsigned(slice);
-        i = j+1;
-      }
-    }
     if (radix == 0)
       radix = 10;
-    if (radix < 2 || radix > 36)
-      throw std::invalid_argument("invalid radix value");
     if (c_style)
     {
-      // the C style formats are bit patterns not integer values - these need to be sign-extended to get the right value
+      // the C style formats are bit patterns not integer values - these need
+      // to be sign-extended to get the right value
       std::string binary;
       if (radix == 2)
       {
@@ -401,7 +435,7 @@ namespace stlplus
             binary += '1';
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid binary character in string " + str);
           }
         }
       }
@@ -436,7 +470,7 @@ namespace stlplus
             binary += "111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid octal character in string " + str);
           }
         }
       }
@@ -495,7 +529,7 @@ namespace stlplus
             binary += "1111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid hex character in string " + str);
           }
         }
       }
@@ -506,6 +540,7 @@ namespace stlplus
     }
     else
     {
+      // sign-magnitude representation
       // now scan for a sign and find whether this is a negative number
       bool negative = false;
       if (i < str.size())
@@ -526,7 +561,7 @@ namespace stlplus
         result *= inf(radix);
         int ch = from_char[(unsigned char)str[i]] ;
         if (ch == -1)
-          throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+          throw std::invalid_argument("invalid decimal character in string " + str);
         result += inf(ch);
       }
       if (negative)
@@ -1354,11 +1389,11 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
   // string representation and I/O routines
 
-  std::string inf::to_string(unsigned radix, radix_display_t display, unsigned width) const
+  std::string inf::to_string(unsigned radix) const
     throw(std::invalid_argument)
   {
     std::string result;
-    convert_to_string(*this, result, radix, display, width);
+    convert_to_string(*this, result, radix);
     return result;
   }
 

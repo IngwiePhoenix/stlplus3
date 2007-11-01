@@ -1,29 +1,29 @@
-#ifndef STLPLUS_PERSISTENT_XREF_HPP
-#define STLPLUS_PERSISTENT_XREF_HPP
+#ifndef STLPLUS_PERSISTENT_XREF
+#define STLPLUS_PERSISTENT_XREF
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence for cross-references to persistent objects
+  Persistence for cross-references to persistent objects
 
-A cross-reference is a pointer to an object that has definitely been dumped
-already by one of dump_pointer, dump_interface or dump_polymorph, i.e. by
-one of the dump routines for pointers to objects.
+  A cross-reference is a pointer to an object that has definitely been dumped
+  already by one of dump_pointer, dump_interface or dump_polymorph, i.e. by
+  one of the dump routines for pointers to objects.
 
-These are typically used in data structures as back-pointers or pointers
-between nodes.
+  These are typically used in data structures as back-pointers or pointers
+  between nodes.
 
-For example, you may have a tree with cross links. Dump the tree as the
-primary data structure first, then dump the cross links as cross-references
-afterwards. The whole tree must be dumped before any cross-references to
-ensure that all cross-references are known to the persistence system.
+  For example, you may have a tree with cross links. Dump the tree as the
+  primary data structure first, then dump the cross links as cross-references
+  afterwards. The whole tree must be dumped before any cross-references to
+  ensure that all cross-references are known to the persistence system.
 
-These functions will throw an exception if the cross-reference points to
-something not dumped before.
+  These functions will throw an exception if the cross-reference points to
+  something not dumped before.
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

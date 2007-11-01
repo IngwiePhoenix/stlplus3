@@ -1,15 +1,15 @@
-#ifndef STLPLUS_SUBPROCESSES_HPP
-#define STLPLUS_SUBPROCESSES_HPP
+#ifndef STLPLUS_SUBPROCESSES
+#define STLPLUS_SUBPROCESSES
 /*----------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
-
-Platform-independent wrapper around the very platform-specific handling of
-subprocesses. Uses the C++ convention that all resources must be contained in
-an object so that when a subprocess object goes out of scope the subprocess
-itself gets closed down.
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
+  
+  Platform-independent wrapper around the very platform-specific handling of
+  subprocesses. Uses the C++ convention that all resources must be contained in
+  an object so that when a subprocess object goes out of scope the subprocess
+  itself gets closed down.
 
 ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"

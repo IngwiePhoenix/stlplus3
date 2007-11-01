@@ -1,14 +1,14 @@
-#ifndef STLPLUS_PERSISTENT_SET_HPP
-#define STLPLUS_PERSISTENT_SET_HPP
+#ifndef STLPLUS_PERSISTENT_SET
+#define STLPLUS_PERSISTENT_SET
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Set of persistence routines for the STL classes
+  Set of persistence routines for the STL classes
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include <set>
 

@@ -1,13 +1,13 @@
-#ifndef STLPLUS_DIGRAPH_HPP
-#define STLPLUS_DIGRAPH_HPP
+#ifndef STLPLUS_DIGRAPH
+#define STLPLUS_DIGRAPH
 /*----------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-STL-style Directed graph template component
-Digraph stands for directed-graph, i.e. all arcs have a direction
+  STL-style Directed graph template component
+  Digraph stands for directed-graph, i.e. all arcs have a direction
 
 ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"

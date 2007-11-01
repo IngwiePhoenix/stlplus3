@@ -1,14 +1,14 @@
-#ifndef STLPLUS_PERSISTENT_SMART_PTR_HPP
-#define STLPLUS_PERSISTENT_SMART_PTR_HPP
+#ifndef STLPLUS_PERSISTENT_SMART_PTR
+#define STLPLUS_PERSISTENT_SMART_PTR
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence of STLplus smart_ptr
+  Persistence of STLplus smart_ptr
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include "smart_ptr.hpp"
 

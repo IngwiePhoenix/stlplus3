@@ -1,14 +1,14 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Polymorphous classes using the interface approach
+  Polymorphous classes using the interface approach
 
-format: magic [ key data ]
+  format: magic [ key data ]
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 
 namespace stlplus

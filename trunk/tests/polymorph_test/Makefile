@@ -1,5 +1,5 @@
 IMAGE     := polymorph_test
-LIBRARIES := ../../persistence ../../portability ../../containers
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak
 
 

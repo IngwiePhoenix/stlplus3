@@ -1,13 +1,13 @@
-#ifndef STLPLUS_TEMPLATE_FIXES_HPP
-#define STLPLUS_TEMPLATE_FIXES_HPP
+#ifndef STLPLUS_TEMPLATE_FIXES
+#define STLPLUS_TEMPLATE_FIXES
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Contains work arounds for OS or Compiler specific problems with container
-templates
+  Contains work arounds for OS or Compiler specific problems with container
+  templates
 
 ------------------------------------------------------------------------------*/
 
@@ -44,27 +44,19 @@ templates
 //      e.g. template<typename T> fn () {
 //             typedef typename someclass<T>::member_type local_type;
 //                     ^^^^^^^^
-//      Note that the typename keyword is only required when the type is of this form - a member of a template class
-//
 //   2) in a function parameter declaration, with similar rules to the above
 //      e.g. template<typename T> fn (typename someclass<T>::member_type)
 //                                    ^^^^^^^^
-//      Note that the typename keyword is only required when the type is of this form - a member of a template class
-//
 //   3) in instantiating a template, the parameter to the template, with similar rules to the above
 //      e.g. template_class<typename someclass<T>::member_type>
 //                          ^^^^^^^^
-//      Note that the typename keyword is only required when the type is of this form - a member of a template class
-//
 //   4) Return expressions
 //      e.g. return typename ntree<T>::const_iterator(this,m_root);
 //                  ^^^^^^^^
-//      Note that this typename is only required when the return type is a member of a template class
-//
 //   5) Creating temporary objects when passing arguments to a function or constructor
 //      e.g. return typename ntree<T>::const_prefix_iterator(typename ntree<T>::const_iterator(this,m_root));
 //                                                           ^^^^^^^^
-//      Note that the typename keyword is only required when the temporary's type is a member of a template class
+// Note that the typename keyword is only required when the type being referred to is a member of a template class
 //
 // So far it *seems* as if all compilers either require all of them or none of
 // them, so this set of situations can be handled by a single macro

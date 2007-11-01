@@ -1,2 +1,2 @@
-LIBRARIES := ../strings
+LIBRARIES :=
 include ../../makefiles/gcc.mak

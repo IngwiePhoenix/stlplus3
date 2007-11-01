@@ -1,16 +1,16 @@
-#ifndef STLPLUS_PERSISTENT_INF_HPP
-#define STLPLUS_PERSISTENT_INF_HPP
+#ifndef STLPLUS_PERSISTENT_INF
+#define STLPLUS_PERSISTENT_INF
 /*------------------------------------------------------------------------------
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+    Author:    Andy Rushton
+    Copyright: (c) Andy Rushton, 2007
+    License:   BSD License, see ../docs/license.html
   
-  Persistence of stlplus infinite integer type - inf
+    Persistence of stlplus infinite integer type - inf
 
-------------------------------------------------------------------------------*/
-#include "persistent_contexts.hpp"
+    ------------------------------------------------------------------------------*/
 #include "inf.hpp"
+#include "persistent_contexts.hpp"
 
 namespace stlplus
 {

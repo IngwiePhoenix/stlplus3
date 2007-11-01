@@ -1,16 +1,16 @@
-#ifndef STLPLUS_NTREE_HPP
-#define STLPLUS_NTREE_HPP
+#ifndef STLPLUS_NTREE
+#define STLPLUS_NTREE
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A templated n-ary tree data structure. STL-like but the definition of
-iterators is really only applicable to one-dimensional structures. I use
-iterators to access tree nodes, but there is no increment or decrement
-operators for them. I also define prefix and postfix traversal iterators which
-do have increment.
+  A templated n-ary tree data structure. STL-like but the definition of
+  iterators is really only applicable to one-dimensional structures. I use
+  iterators to access tree nodes, but there is no increment or decrement
+  operators for them. I also define prefix and postfix traversal iterators
+  which do have increment.
 
 ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"

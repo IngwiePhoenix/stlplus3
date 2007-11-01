@@ -113,6 +113,10 @@ SOURCE=.\tcp.hpp
 
 SOURCE=.\time.hpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\wildcard.hpp
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -164,6 +168,10 @@ DEP_CPP_TIME_=\
 	".\os_fixes.hpp"\
 	".\time.hpp"\
 	
+# End Source File
+# Begin Source File
+
+SOURCE=.\wildcard.cpp
 # End Source File
 # End Group
 # End Target

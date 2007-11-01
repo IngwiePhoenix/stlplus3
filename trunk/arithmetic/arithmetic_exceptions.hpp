@@ -1,5 +1,5 @@
-#ifndef STLPLUS_ARITHMETIC_EXCEPTIONS_HPP
-#define STLPLUS_ARITHMETIC_EXCEPTIONS_HPP
+#ifndef STLPLUS_ARITHMETIC_EXCEPTIONS
+#define STLPLUS_ARITHMETIC_EXCEPTIONS
 /*------------------------------------------------------------------------------
 
   Author:    Andy Rushton

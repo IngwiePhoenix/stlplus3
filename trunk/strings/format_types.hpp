@@ -1,12 +1,14 @@
-#ifndef STLPLUS_FORMAT_TYPES_HPP
-#define STLPLUS_FORMAT_TYPES_HPP
+#ifndef STLPLUS_FORMAT_TYPES
+#define STLPLUS_FORMAT_TYPES
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
+  A Set of enumerations controlling the string formatting of numbers.
+
+  ------------------------------------------------------------------------------*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // Integer radix display representations:

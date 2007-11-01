@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "cli_parser.hpp"
 #include "file_system.hpp"
 

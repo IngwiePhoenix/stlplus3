@@ -1,12 +1,12 @@
-#ifndef STLPLUS_HASH_HPP
-#define STLPLUS_HASH_HPP
+#ifndef STLPLUS_HASH
+#define STLPLUS_HASH
 /*----------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A chained hash table using STL semantics
+  A chained hash table using STL semantics
 
 ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"

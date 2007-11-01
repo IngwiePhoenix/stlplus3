@@ -1,5 +1,5 @@
-#ifndef STLPLUS_OS_FIXES_HPP
-#define STLPLUS_OS_FIXES_HPP
+#ifndef STLPLUS_BUILD
+#define STLPLUS_BUILD
 /*------------------------------------------------------------------------------
 
   Author:    Andy Rushton
@@ -8,14 +8,19 @@
 
   Provides a printable representation of the build characteristics in the form:
 
-    platform, compiler, variant
+    version, platform, compiler, variant
 
   Where
-    platform is the target operating system e.g. Windows or Generic Unix
-    compiler is the compilation system and version that the function was compiled with e.g. gcc v4.1 or MSVC v12
+    version is the version of STLplus
+    platform is the target operating system
+    compiler is the compilation system and version that the function was compiled with
     variant is the kind of build - debug or release
 
+  Example:
+    STLplus version 3.0, Generic Unix, gcc v3.4, debug
+
 ------------------------------------------------------------------------------*/
+#include "os_fixes.hpp"
 #include <string>
 
 namespace stlplus

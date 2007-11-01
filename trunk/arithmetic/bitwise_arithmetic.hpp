@@ -1,5 +1,5 @@
-#ifndef STLPLUS_BITWISE_ARITHMETIC_HPP
-#define STLPLUS_BITWISE_ARITHMETIC_HPP
+#ifndef STLPLUS_BITWISE_ARITHMETIC
+#define STLPLUS_BITWISE_ARITHMETIC
 /*------------------------------------------------------------------------------
 
   Author:    Andy Rushton
@@ -96,7 +96,7 @@ namespace stlplus
   unsigned long bitwise_unsigned_to_unsigned_long(const std::string& argument);
   inf bitwise_unsigned_to_inf(const std::string& argument);
   std::string unsigned_long_to_bitwise_unsigned(unsigned long argument, unsigned size = 0);
-  std::string inf_to_bitwise_unsigned(inf argument, unsigned size = 0);
+  std::string inf_to_bitwise_unsigned(const inf& argument, unsigned size = 0);
 
   ////////////////////////////////////////////////////////////////////////////////
   // Signed arithmetic
@@ -155,7 +155,7 @@ namespace stlplus
   long bitwise_signed_to_long(const std::string& argument);
   inf bitwise_signed_to_inf(const std::string& argument);
   std::string long_to_bitwise_signed(long argument, unsigned size = 0);
-  std::string inf_to_bitwise_signed(inf argument, unsigned size = 0);
+  std::string inf_to_bitwise_signed(const inf& argument, unsigned size = 0);
 
   ////////////////////////////////////////////////////////////////////////////////
 

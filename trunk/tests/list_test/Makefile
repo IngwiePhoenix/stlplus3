@@ -1,5 +1,5 @@
 IMAGE     := list_test
-LIBRARIES := ../../strings ../../containers ../../persistence ../../portability
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak
 
 

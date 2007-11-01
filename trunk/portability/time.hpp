@@ -1,25 +1,25 @@
-#ifndef STLPLUS_TIME_HPP
-#define STLPLUS_TIME_HPP
+#ifndef STLPLUS_TIME
+#define STLPLUS_TIME
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Simplified access to representations of time and conversions between them.
-The motivation for this package is that the low-level system calls for
-accessing time are ugly and therefore potentially error-prone. I hope that
-this interface is much simpler and therefore easier to use and more likely
-to yield first-time right programs.
+  Simplified access to representations of time and conversions between them.
+  The motivation for this package is that the low-level system calls for
+  accessing time are ugly and therefore potentially error-prone. I hope that
+  this interface is much simpler and therefore easier to use and more likely
+  to yield first-time right programs.
 
-time is represented as the built-in integer type time_t - this is the
-standard representation of system time in computerland and represents the
-number of seconds since midnight 1 Jan 1970, believe it or not.
+  time is represented as the built-in integer type time_t - this is the
+  standard representation of system time in computerland and represents the
+  number of seconds since midnight 1 Jan 1970, believe it or not.
 
-Functions are provided here for converting to and from more
-human-comprehendable forms.
+  Functions are provided here for converting to and from more
+  human-comprehendable forms.
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include <string>
 #include <time.h>

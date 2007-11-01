@@ -1,5 +1,5 @@
 IMAGE     := inf_test
-LIBRARIES := ../../subsystems ../../arithmetic ../../strings ../../persistence ../../portability
+LIBRARIES := ../../strings ../../persistence ../../subsystems ../../arithmetic ../../containers ../../portability
 include ../../../makefiles/gcc.mak
 
 

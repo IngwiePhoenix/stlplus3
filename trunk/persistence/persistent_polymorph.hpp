@@ -1,33 +1,33 @@
-#ifndef STLPLUS_PERSISTENT_POLYMORPH_HPP
-#define STLPLUS_PERSISTENT_POLYMORPH_HPP
+#ifndef STLPLUS_PERSISTENT_POLYMORPH
+#define STLPLUS_PERSISTENT_POLYMORPH
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence for pointers to polymorphic classes using the callback approach.
+  Persistence for pointers to polymorphic classes using the callback approach.
 
-In other words, this works on a set of classes. Each subclass has a set of
-callback (non-method) functions that enable create/dump/restore operations.
-Each subclass must be registered with the persistence dump/restore context
-so that the system knows how to handle it.
+  In other words, this works on a set of classes. Each subclass has a set of
+  callback (non-method) functions that enable create/dump/restore operations.
+  Each subclass must be registered with the persistence dump/restore context
+  so that the system knows how to handle it.
 
-This approach is suited to classes that cannot be modified to add
-persistence methods. See persistent_interface for a more C++-like way of
-handling polymorphism.
+  This approach is suited to classes that cannot be modified to add
+  persistence methods. See persistent_interface for a more C++-like way of
+  handling polymorphism.
 
-Objects are always dumped/restored as pointers to the superclass T.
+  Objects are always dumped/restored as pointers to the superclass T.
 
-Multiple pointers to the same object are handled in the same way as for
-simple pointers
+  Multiple pointers to the same object are handled in the same way as for
+  simple pointers
 
-Only classes registered with the context can be dumped and restored as
-polymorphic types - see dump_context::register_callback and
-restore_context::register_callback. Attempting to use any unrecognised class
-will throw an exception.
+  Only classes registered with the context can be dumped and restored as
+  polymorphic types - see dump_context::register_callback and
+  restore_context::register_callback. Attempting to use any unrecognised class
+  will throw an exception.
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

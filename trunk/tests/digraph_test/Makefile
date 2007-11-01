@@ -1,5 +1,5 @@
 IMAGE     := digraph_test
-LIBRARIES := ../../containers ../../persistence
+LIBRARIES := ../../strings ../../persistence ../../containers ../../arithmetic ../../portability
 include ../../../makefiles/gcc.mak
 
 

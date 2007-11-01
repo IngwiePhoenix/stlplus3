@@ -1,24 +1,24 @@
-#ifndef STLPLUS_LIBRARY_MANAGER_HPP
-#define STLPLUS_LIBRARY_MANAGER_HPP
+#ifndef STLPLUS_LIBRARY_MANAGER
+#define STLPLUS_LIBRARY_MANAGER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Generalised library manager.
+  Generalised library manager.
 
-Manages library units in a set of library directories. A unit is both a file
-on-disk and a data-structure in memory. To use the library manager, you need
-to:
+  Manages library units in a set of library directories. A unit is both a file
+  on-disk and a data-structure in memory. To use the library manager, you need
+  to:
 
-- design a type based on lm_unit with serialising functions read/write 
-- decide on a file extension for the type
-- decide on a description of the type
-- write a create callback for this type
-- register the file extension, description and callback with the library manager
+    - design a type based on lm_unit with serialising functions read/write 
+    - decide on a file extension for the type
+    - decide on a description of the type
+    - write a create callback for this type
+    - register the file extension, description and callback with the library manager
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include "ini_manager.hpp"
 #include "smart_ptr.hpp"

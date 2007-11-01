@@ -1,16 +1,16 @@
-#ifndef STLPLUS_OS_FIXES_HPP
-#define STLPLUS_OS_FIXES_HPP
+#ifndef STLPLUS_OS_FIXES
+#define STLPLUS_OS_FIXES
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Contains work arounds for OS or Compiler specific problems to try to make
-them look more alike
+  Contains work arounds for OS or Compiler specific problems to try to make
+  them look more alike
 
-It is strongly recommended that this header be included as the first
-#include in every source file
+  It is strongly recommended that this header be included as the first
+  #include in every source file
 
 ------------------------------------------------------------------------------*/
 
@@ -85,6 +85,7 @@ namespace stlplus
 // Problems with differences between namespaces
 ////////////////////////////////////////////////////////////////////////////////
 
+// Note: not sure of the relevance of this - maybe deprecated?
 // problem in gcc pre-v3 where the sub-namespaces in std aren't present
 // this mean that the statement "using namespace std::rel_ops" created an error because the namespace didn't exist
 

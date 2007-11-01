@@ -1,30 +1,30 @@
-#ifndef STLPLUS_INI_MANAGER_HPP
-#define STLPLUS_INI_MANAGER_HPP
+#ifndef STLPLUS_INI_MANAGER
+#define STLPLUS_INI_MANAGER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A subsystem for managing INI (i.e. .ini) files
-An INI file has the following format
+  A subsystem for managing INI (i.e. .ini) files
+  An INI file has the following format
 
-file           ::= header { section }*
-header         ::= { comment | blank }*
-section        ::= section_header { declaration | comment | blank }*
-section_header ::= '[' title ']' '\n'
-declaration    ::= variable '=' value '\n'
-comment        ::= ';' text '\n'
-blank          ::= '\n'
-title          ::= [~']']*
-variable       ::= [~'=']*
-value          ::= .*
-text           ::= .*
+    file           ::= header { section }*
+    header         ::= { comment | blank }*
+    section        ::= section_header { declaration | comment | blank }*
+    section_header ::= '[' title ']' '\n'
+    declaration    ::= variable '=' value '\n'
+    comment        ::= ';' text '\n'
+    blank          ::= '\n'
+    title          ::= [~']']*
+    variable       ::= [~'=']*
+    value          ::= .*
+    text           ::= .*
 
-Whitespace is trimmed from the leading and trailing ends of title, variable and value
-Note: a header is represented internally as a Clint section (i.e. a section with no name)
+  Whitespace is trimmed from the leading and trailing ends of title, variable and value
+  Note: a header is represented internally as a Clint section (i.e. a section with no name)
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include <vector>
 #include <string>
 #include <iostream>

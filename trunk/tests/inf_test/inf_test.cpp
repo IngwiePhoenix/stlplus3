@@ -4,6 +4,7 @@
 #include "file_system.hpp"
 #include "persistent_inf.hpp"
 #include "persistent_shortcuts.hpp"
+#include "strings.hpp"
 
 #define DATA "inf_test.tmp"
 #define MASTER "inf_test.dump"
@@ -133,7 +134,7 @@ int main (int argc, char* argv[])
       googol *= stlplus::inf(10);
     std::cerr << "a googol is:" << std::endl;
     for (unsigned radix = 2; radix <= 36; radix++)
-      std::cerr << "base " << radix << " = " << googol.to_string(radix) << std::endl;
+      std::cerr << "base " << radix << " = " << stlplus::inf_to_string(googol,radix) << std::endl;
 
     // test the persistence
     std::cerr << "dumping" << std::endl;

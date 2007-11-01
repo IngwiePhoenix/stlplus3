@@ -1,5 +1,5 @@
 IMAGE     := bitset_test
-LIBRARIES := ../../strings ../../persistence ../../containers ../../portability
+LIBRARIES := ../../strings ../../persistence ../../arithmetic ../../containers ../../portability
 include ../../../makefiles/gcc.mak
 
 

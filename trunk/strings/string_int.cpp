@@ -1,11 +1,11 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
-#include "string_basic.hpp"
+  ------------------------------------------------------------------------------*/
+#include "string_int.hpp"
 #include "dprintf.hpp"
 #include <ctype.h>
 #include <stdlib.h>
@@ -144,9 +144,41 @@ namespace stlplus
         std::string octal_result;
         for (unsigned i = 0; i < result.size()/3; i++)
         {
-          std::string slice = result.substr(i*3, 3);
-          unsigned value = string_to_unsigned(slice, 2);
-          octal_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*3] == '0')
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '0';
+              else
+                octal_result += '1';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '2';
+              else
+                octal_result += '3';
+            }
+          }
+          else
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '4';
+              else
+                octal_result += '5';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '6';
+              else
+                octal_result += '7';
+            }
+          }
         }
         result = octal_result;
         // add the prefix
@@ -171,9 +203,81 @@ namespace stlplus
         std::string hex_result;
         for (unsigned i = 0; i < result.size()/4; i++)
         {
-          std::string slice = result.substr(i*4, 4);
-          unsigned value = string_to_unsigned(slice, 2);
-          hex_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*4] == '0')
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '0';
+                else
+                  hex_result += '1';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '2';
+                else
+                  hex_result += '3';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '4';
+                else
+                  hex_result += '5';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '6';
+                else
+                  hex_result += '7';
+              }
+            }
+          }
+          else
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '8';
+                else
+                  hex_result += '9';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'a';
+                else
+                  hex_result += 'b';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'c';
+                else
+                  hex_result += 'd';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'e';
+                else
+                  hex_result += 'f';
+              }
+            }
+          }
         }
         result = hex_result;
         // add the prefix
@@ -308,9 +412,41 @@ namespace stlplus
         std::string octal_result;
         for (unsigned i = 0; i < result.size()/3; i++)
         {
-          std::string slice = result.substr(i*3, 3);
-          unsigned value = string_to_unsigned(slice, 2);
-          octal_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*3] == '0')
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '0';
+              else
+                octal_result += '1';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '2';
+              else
+                octal_result += '3';
+            }
+          }
+          else
+          {
+            if (result[i*3+1] == '0')
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '4';
+              else
+                octal_result += '5';
+            }
+            else
+            {
+              if (result[i*3+2] == '0')
+                octal_result += '6';
+              else
+                octal_result += '7';
+            }
+          }
         }
         result = octal_result;
         // add the prefix if the leading digit is not already 0
@@ -335,9 +471,81 @@ namespace stlplus
         std::string hex_result;
         for (unsigned i = 0; i < result.size()/4; i++)
         {
-          std::string slice = result.substr(i*4, 4);
-          unsigned value = string_to_unsigned(slice, 2);
-          hex_result += to_char[value];
+          // yuck - ugly or what?
+          if (result[i*4] == '0')
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '0';
+                else
+                  hex_result += '1';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '2';
+                else
+                  hex_result += '3';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '4';
+                else
+                  hex_result += '5';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '6';
+                else
+                  hex_result += '7';
+              }
+            }
+          }
+          else
+          {
+            if (result[i*4+1] == '0')
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += '8';
+                else
+                  hex_result += '9';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'a';
+                else
+                  hex_result += 'b';
+              }
+            }
+            else
+            {
+              if (result[i*4+2] == '0')
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'c';
+                else
+                  hex_result += 'd';
+              }
+              else
+              {
+                if (result[i*4+3] == '0')
+                  hex_result += 'e';
+                else
+                  hex_result += 'f';
+              }
+            }
+          }
         }
         result = hex_result;
         // add the prefix
@@ -366,15 +574,6 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
   // exported conversions to string
-
-  // Integer types
-
-  std::string bool_to_string(bool i, unsigned radix, radix_display_t display, unsigned width)
-    throw(std::invalid_argument)
-  {
-    // use the char representation for bool
-    return uimage<unsigned char>(i, radix, display, width);
-  }
 
   std::string short_to_string(short i, unsigned radix, radix_display_t display, unsigned width)
     throw(std::invalid_argument)
@@ -417,64 +616,6 @@ namespace stlplus
   {
     // use the unsigned representation for pointers
     return uimage((unsigned long)i, radix, display, width);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // floating-point types
-
-  std::string float_to_string(float f, real_display_t display, unsigned width, unsigned precision)
-    throw(std::invalid_argument)
-  {
-    char* format = 0;
-    switch(display)
-    {
-    case display_fixed:
-      format = "%*.*f";
-      break;
-    case display_floating:
-      format = "%*.*e";
-      break;
-    case display_mixed:
-      format = "%*.*g";
-      break;
-    default:
-      throw std::invalid_argument("invalid radix display value");
-    }
-    return dformat(format, width, precision, f);
-  }
-
-  std::string double_to_string(double f, real_display_t display, unsigned width, unsigned precision)
-    throw(std::invalid_argument)
-  {
-    char* format = 0;
-    switch(display)
-    {
-    case display_fixed:
-      format = "%*.*f";
-      break;
-    case display_floating:
-      format = "%*.*e";
-      break;
-    case display_mixed:
-      format = "%*.*g";
-      break;
-    default:
-      throw std::invalid_argument("invalid radix display value");
-    }
-    return dformat(format, width, precision, f);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // strings
-
-  std::string string_to_string(const std::string& value)
-  {
-    return value;
-  }
-
-  std::string cstring_to_string(const char* value)
-  {
-    return std::string(value);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -549,9 +690,9 @@ namespace stlplus
     T val(0);
     if (c_style)
     {
-      // the C style formats are bit patterns not integer values - these need to be sign-extended to get the right value
+      // the C style formats are bit patterns not integer values - these need
+      // to be sign-extended to get the right value
       std::string binary;
-      //    DEBUG_ASSERT(radix == 2 || radix == 8 || radix == 16);
       if (radix == 2)
       {
         for (std::string::size_type j = i; j < str.size(); j++)
@@ -565,7 +706,7 @@ namespace stlplus
             binary += '1';
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid binary character in string " + str);
             break;
           }
         }
@@ -601,7 +742,7 @@ namespace stlplus
             binary += "111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid octal character in string " + str);
             break;
           }
         }
@@ -661,7 +802,7 @@ namespace stlplus
             binary += "1111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid hex character in string " + str);
             break;
           }
         }
@@ -674,7 +815,6 @@ namespace stlplus
       {
         val *= 2;
         int ch = from_char[(unsigned char)binary[j]] ;
-        //      DEBUG_ASSERT(ch != -1);
         val += T(ch);
       }
     }
@@ -700,9 +840,7 @@ namespace stlplus
         val *= T(radix);
         int ch = from_char[(unsigned char)str[i]] ;
         if (ch == -1 || (unsigned)ch >= radix)
-        {
-          throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
-        }
+          throw std::invalid_argument("invalid character in string " + str);
         val += T(ch);
       }
       if (negative)
@@ -778,9 +916,9 @@ namespace stlplus
     T val(0);
     if (c_style)
     {
-      // the C style formats are bit patterns not integer values - these need to be sign-extended to get the right value
+      // the C style formats are bit patterns not integer values - these need
+      // to be sign-extended to get the right value
       std::string binary;
-      //      DEBUG_ASSERT(radix == 2 || radix == 8 || radix == 16);
       if (radix == 2)
       {
         for (unsigned j = i; j < str.size(); j++)
@@ -794,7 +932,7 @@ namespace stlplus
             binary += '1';
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid hex character in string " + str);
             break;
           }
         }
@@ -830,7 +968,7 @@ namespace stlplus
             binary += "111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid octal character in string " + str);
             break;
           }
         }
@@ -890,7 +1028,7 @@ namespace stlplus
             binary += "1111";
             break;
           default:
-            throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+            throw std::invalid_argument("invalid hex character in string " + str);
             break;
           }
         }
@@ -903,7 +1041,6 @@ namespace stlplus
       {
         val *= 2;
         int ch = from_char[(unsigned char)binary[j]] ;
-        //        DEBUG_ASSERT(ch != -1);
         val += T(ch);
       }
     }
@@ -929,7 +1066,7 @@ namespace stlplus
         int ch = from_char[(unsigned char)str[i]] ;
         if (ch == -1 || (unsigned)ch >= radix)
         {
-          throw std::invalid_argument("invalid character in string " + str + " for radix " + unsigned_to_string(radix));
+          throw std::invalid_argument("invalid character in string " + str);
         }
         val += T(ch);
       }
@@ -939,12 +1076,6 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
   // exported functions
-
-  bool string_to_bool(const std::string& str, unsigned radix)
-    throw(std::invalid_argument)
-  {
-    return uvalue<unsigned char>(str, radix) != 0;
-  }
 
   short string_to_short(const std::string& str, unsigned radix)
     throw(std::invalid_argument)
@@ -980,27 +1111,6 @@ namespace stlplus
     throw(std::invalid_argument)
   {
     return uvalue<unsigned long>(str, radix);
-  }
-
-  void* string_to_address(const std::string& str, unsigned radix)
-    throw(std::invalid_argument)
-  {
-    return (void*)uvalue<unsigned long>(str, radix);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
-
-  float string_to_float(const std::string& value)
-    throw(std::invalid_argument)
-  {
-    return (float)string_to_double(value);
-  }
-
-  double string_to_double(const std::string& value)
-    throw(std::invalid_argument)
-  {
-    // TODO - error checking
-    return strtod(value.c_str(), 0);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

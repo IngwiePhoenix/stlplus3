@@ -3,6 +3,7 @@
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
 #include "strings.hpp"
+#include "build.hpp"
 #include <string>
 #include <bitset>
 #include <vector>
@@ -74,7 +75,7 @@ bool compare (bitset_vector& left, bitset_vector& right)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << COUNT << " bitset<" << SIZE << ">" << std::endl;
+  std::cerr << stlplus::build() << " testing " << COUNT << " bitset<" << SIZE << ">" << std::endl;
 
   try
   {

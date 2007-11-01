@@ -479,13 +479,14 @@ namespace stlplus
     return bitwise_unsigned_resize(result,size);
   }
 
-  std::string inf_to_bitwise_unsigned(inf argument, unsigned size)
+  std::string inf_to_bitwise_unsigned(const inf& argument, unsigned size)
   {
-    std::string result = argument.non_zero() ? "" : "0";
-    while(argument.non_zero())
+    inf value = argument;
+    std::string result = value.non_zero() ? "" : "0";
+    while(value.non_zero())
     {
-      result.insert((std::string::size_type)0u,1u,((argument % inf(2)).non_zero() ? '1' : '0'));
-      argument /= inf(2);
+      result.insert((std::string::size_type)0u,1u,((value % inf(2)).non_zero() ? '1' : '0'));
+      value /= inf(2);
     }
     return bitwise_unsigned_resize(result,size);
   }
@@ -801,15 +802,16 @@ namespace stlplus
     return bitwise_signed_resize(result,size);
   }
 
-  std::string inf_to_bitwise_signed(inf argument, unsigned size)
+  std::string inf_to_bitwise_signed(const inf& argument, unsigned size)
   {
-    bool negative = argument.negative();
-    if (negative) argument = -(argument+inf(1));
+    inf value = argument;
+    bool negative = value.negative();
+    if (negative) value = -(value+inf(1));
     std::string result = "";
-    while(argument.non_zero())
+    while(value.non_zero())
     {
-      result.insert((std::string::size_type)0u,1u,((argument % inf(2)).non_zero() ? '1' : '0'));
-      argument /= inf(2);
+      result.insert((std::string::size_type)0u,1u,((value % inf(2)).non_zero() ? '1' : '0'));
+      value /= inf(2);
     }
     result.insert((std::string::size_type)0u,1u,'0');
     if (negative) result = bitwise_signed_not(result);

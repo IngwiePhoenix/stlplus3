@@ -1,14 +1,14 @@
-#ifndef STLPLUS_PERSISTENT_FOURSOME_HPP
-#define STLPLUS_PERSISTENT_FOURSOME_HPP
+#ifndef STLPLUS_PERSISTENT_FOURSOME
+#define STLPLUS_PERSISTENT_FOURSOME
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence of STL foursome
+  Persistence of STL foursome
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include "foursome.hpp"
 

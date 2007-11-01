@@ -1,14 +1,14 @@
-#ifndef STLPLUS_PERSISTENT_LIST_HPP
-#define STLPLUS_PERSISTENT_LIST_HPP
+#ifndef STLPLUS_PERSISTENT_LIST
+#define STLPLUS_PERSISTENT_LIST
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence of STL list
+  Persistence of STL list
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 #include <list>
 

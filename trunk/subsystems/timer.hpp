@@ -1,15 +1,15 @@
-#ifndef STLPLUS_TIMER_HPP
-#define STLPLUS_TIMER_HPP
+#ifndef STLPLUS_TIMER
+#define STLPLUS_TIMER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-A CPU timer encapsulated as a class. Measures the CPU time used since its
-construction and allows this cumulative time to be reported at any time.
+  A CPU timer encapsulated as a class. Measures the CPU time used since its
+  construction and allows this cumulative time to be reported at any time.
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include <time.h>
 #include <string>
 #include <iostream>

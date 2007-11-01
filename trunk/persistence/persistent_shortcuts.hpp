@@ -1,23 +1,23 @@
-#ifndef STLPLUS_PERSISTENT_SHORTCUTS_HPP
-#define STLPLUS_PERSISTENT_SHORTCUTS_HPP
+#ifndef STLPLUS_PERSISTENT_SHORTCUTS
+#define STLPLUS_PERSISTENT_SHORTCUTS
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Short-cut functions for dumping and restoring to common targets. These do
-the whole dump operation in a single function call.
+  Short-cut functions for dumping and restoring to common targets. These do
+  the whole dump operation in a single function call.
 
-They take as their second template argument a dump or restore functor which
-is then called to perform the dump/restore operation.
+  They take as their second template argument a dump or restore functor which
+  is then called to perform the dump/restore operation.
 
-They use an installer callback function to install any polymorphic type
-handlers required prior to performing the dump/restore. If there are no
-polymorphic types used in the data structure, then the callback can be set
-to null (i.e. 0).
+  They use an installer callback function to install any polymorphic type
+  handlers required prior to performing the dump/restore. If there are no
+  polymorphic types used in the data structure, then the callback can be set
+  to null (i.e. 0).
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

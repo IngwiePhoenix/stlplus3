@@ -1,5 +1,5 @@
-#ifndef STLPLUS_INF_HPP
-#define STLPLUS_INF_HPP
+#ifndef STLPLUS_INF
+#define STLPLUS_INF
 /*------------------------------------------------------------------------------
 
   Author:    Andy Rushton
@@ -26,7 +26,6 @@
 
 ------------------------------------------------------------------------------*/
 #include "arithmetic_exceptions.hpp"
-#include "format_types.hpp"
 #include <string>
 #include <iostream>
 
@@ -192,14 +191,13 @@ namespace stlplus
     std::string image_debug(void) const;
 
     // conversion to a string representation
-
-    std::string to_string(unsigned radix = 10,
-                          radix_display_t display = radix_c_style_or_hash,
-                          unsigned width = 0) const
+    // radix must be 10, 2, 8 or 16
+    std::string to_string(unsigned radix = 10) const
       throw(std::invalid_argument);
 
     // conversion from a string
-
+    // radix == 0 - radix is deduced from the input - assumed 10 unless number is prefixed by 0b, 0 or 0x
+    // however, you can specify the radix to be 10, 2, 8 or 16 to force that interpretation
     inf& from_string(const std::string&, unsigned radix = 0)
       throw(std::invalid_argument);
 

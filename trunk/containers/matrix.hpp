@@ -1,12 +1,12 @@
-#ifndef STLPLUS_MATRIX_HPP
-#define STLPLUS_MATRIX_HPP
+#ifndef STLPLUS_MATRIX
+#define STLPLUS_MATRIX
 /*----------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-General-purpose 2D matrix data structure 
+  General-purpose 2D matrix data structure 
 
 ------------------------------------------------------------------------------*/
 #include "template_fixes.hpp"

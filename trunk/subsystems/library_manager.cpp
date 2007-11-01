@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "os_fixes.hpp"
 #include "library_manager.hpp"
 #include "file_system.hpp"

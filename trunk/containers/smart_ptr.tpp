@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
 ------------------------------------------------------------------------------*/
 
@@ -20,7 +20,7 @@ namespace stlplus
     unsigned m_count;
     T* m_data;
 
-    // disallow copying because the holder doesn't know how to copy
+    // make these private to disallow copying because the holder doesn't know how to copy
     smart_ptr_holder(const smart_ptr_holder& s) :
       m_count(0), m_data(0)
       {

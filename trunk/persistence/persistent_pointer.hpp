@@ -1,28 +1,28 @@
-#ifndef STLPLUS_PERSISTENT_POINTER_HPP
-#define STLPLUS_PERSISTENT_POINTER_HPP
+#ifndef STLPLUS_PERSISTENT_POINTER
+#define STLPLUS_PERSISTENT_POINTER
 /*------------------------------------------------------------------------------
 
-Author:    Andy Rushton
-Copyright: (c) Andy Rushton, 2007
-License:   BSD License, see ../docs/license.html
+  Author:    Andy Rushton
+  Copyright: (c) Andy Rushton, 2007
+  License:   BSD License, see ../docs/license.html
 
-Persistence for pointers to persistent objects
+  Persistence for pointers to persistent objects
 
-Warning! The pointer must be a dynamically-allocated type, since the
-implementation uses new/delete
+  Warning! The pointer must be a dynamically-allocated type, since the
+  implementation uses new/delete
 
-Multiple pointers to the same object *will* be restored as multiple pointers
-to the same object. The object is dumped only the first time it is
-encountered along with a "magic key". Subsequent pointers to the same object
-cause only the magic key to be dumped. On restore, the object is only
-restored once and the magic keys are matched up so that the other pointers
-now point to the restored object.
+  Multiple pointers to the same object *will* be restored as multiple pointers
+  to the same object. The object is dumped only the first time it is
+  encountered along with a "magic key". Subsequent pointers to the same object
+  cause only the magic key to be dumped. On restore, the object is only
+  restored once and the magic keys are matched up so that the other pointers
+  now point to the restored object.
 
-Supports null pointers too! If the data field to restore is null and the
-file format non-null, allocates a new T(). If the data field is non-null and
-the file format is null, deletes it and sets it null
+  Supports null pointers too! If the data field to restore is null and the
+  file format non-null, allocates a new T(). If the data field is non-null and
+  the file format is null, deletes it and sets it null
 
-------------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------*/
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
