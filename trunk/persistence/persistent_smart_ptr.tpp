@@ -7,7 +7,7 @@
   ------------------------------------------------------------------------------*/
 #include "persistent_int.hpp"
 #include "persistent_pointer.hpp"
-#include "persistent_polymorph.hpp"
+#include "persistent_callback.hpp"
 #include "persistent_interface.hpp"
 
 namespace stlplus
@@ -70,7 +70,7 @@ namespace stlplus
   // smart_ptr_clone using callbacks
 
   template<typename T>
-  void dump_smart_ptr_clone_polymorph(dump_context& context, const smart_ptr_clone<T>& data)
+  void dump_smart_ptr_clone_callback(dump_context& context, const smart_ptr_clone<T>& data)
     throw(persistent_dump_failed)
   {
     // similar to the simple pointer routines, but use the address of the holder to tell which objects are aliases
@@ -85,11 +85,11 @@ namespace stlplus
     // dump the contents but only if this is the first time this object has been seen
     // use the existing routines for ordinary pointers to dump the contents
     if (!mapping.first)
-      dump_polymorph<T>(context,data.pointer());
+      dump_callback<T>(context,data.pointer());
   }
 
   template<typename T>
-  void restore_smart_ptr_clone_polymorph(restore_context& context, smart_ptr_clone<T>& data)
+  void restore_smart_ptr_clone_callback(restore_context& context, smart_ptr_clone<T>& data)
     throw(persistent_restore_failed)
   {
     // get the old substructure magic key
@@ -113,7 +113,7 @@ namespace stlplus
       context.pointer_add(magic,data.handle());
       // now restore the object
       T* value = 0;
-      restore_polymorph<T>(context,value);
+      restore_callback<T>(context,value);
       data.set(value);
     }
   }

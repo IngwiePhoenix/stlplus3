@@ -8,14 +8,14 @@
 
   Persistence for pointers to polymorphic classes using the interface approach.
 
-  In other words, this works on a set of classes derived from a common
-  superclass called persistent which is declared as an interface. Each
-  subclass has a set of methods that enable clone/dump/restore operations.
-  Each subclass must be registered with the persistence dump/restore context
-  so that the system knows how to dump it.
+  This works on a set of classes derived from a common superclass called
+  persistent which is declared as an interface. Each subclass has a set of
+  methods that enable clone/dump/restore operations. Each subclass must be
+  registered with the persistence dump/restore context so that the system
+  knows how to dump it.
 
   This approach is suited to classes that can be modified to add persistence
-  methods. See persistent_polymorph for a non-invasive way of handling
+  methods. See persistent_callback for a non-invasive way of handling
   polymorphism.
 
   Objects are always dumped/restored as pointers to the superclass T.

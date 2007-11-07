@@ -1,5 +1,5 @@
-#ifndef STLPLUS_PERSISTENT_POLYMORPH
-#define STLPLUS_PERSISTENT_POLYMORPH
+#ifndef STLPLUS_PERSISTENT_CALLBACK
+#define STLPLUS_PERSISTENT_CALLBACK
 /*------------------------------------------------------------------------------
 
   Author:    Andy Rushton
@@ -8,10 +8,10 @@
 
   Persistence for pointers to polymorphic classes using the callback approach.
 
-  In other words, this works on a set of classes. Each subclass has a set of
-  callback (non-method) functions that enable create/dump/restore operations.
-  Each subclass must be registered with the persistence dump/restore context
-  so that the system knows how to handle it.
+  This works on a set of classes. Each subclass has a set of callback
+  (non-method) functions that enable create/dump/restore operations. Each
+  subclass must be registered with the persistence dump/restore context so
+  that the system knows how to handle it.
 
   This approach is suited to classes that cannot be modified to add
   persistence methods. See persistent_interface for a more C++-like way of
@@ -36,15 +36,15 @@ namespace stlplus
 {
 
   template<typename T>
-  void dump_polymorph(dump_context&, const T* const data)
+  void dump_callback(dump_context&, const T* const data)
     throw(persistent_dump_failed);
 
   template<typename T>
-  void restore_polymorph(restore_context&, T*& data)
+  void restore_callback(restore_context&, T*& data)
     throw(persistent_restore_failed);
 
 } // end namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
-#include "persistent_polymorph.tpp"
+#include "persistent_callback.tpp"
 #endif

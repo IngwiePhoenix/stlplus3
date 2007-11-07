@@ -13,7 +13,7 @@
 
 #include "persistent_pointer.hpp"
 #include "persistent_xref.hpp"
-#include "persistent_polymorph.hpp"
+#include "persistent_callback.hpp"
 #include "persistent_interface.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

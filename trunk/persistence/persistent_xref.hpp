@@ -9,7 +9,7 @@
   Persistence for cross-references to persistent objects
 
   A cross-reference is a pointer to an object that has definitely been dumped
-  already by one of dump_pointer, dump_interface or dump_polymorph, i.e. by
+  already by one of dump_pointer, dump_interface or dump_callback, i.e. by
   one of the dump routines for pointers to objects.
 
   These are typically used in data structures as back-pointers or pointers
