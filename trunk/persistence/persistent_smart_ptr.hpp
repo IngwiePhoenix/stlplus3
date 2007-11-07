@@ -27,14 +27,14 @@ namespace stlplus
   void restore_smart_ptr(restore_context&, smart_ptr<T>& data, RE restore_element)
     throw(persistent_restore_failed);
 
-  // smart_ptr_clone using the polymorphic callback approach - uses dump/restore_polymorph on the contents
+  // smart_ptr_clone using the polymorphic callback approach - uses dump/restore_callback on the contents
 
   template<typename T>
-  void dump_smart_ptr_clone_polymorph(dump_context&, const smart_ptr_clone<T>& data)
+  void dump_smart_ptr_clone_callback(dump_context&, const smart_ptr_clone<T>& data)
     throw(persistent_dump_failed);
 
   template<typename T>
-  void restore_smart_ptr_clone_polymorph(restore_context&, smart_ptr_clone<T>& data)
+  void restore_smart_ptr_clone_callback(restore_context&, smart_ptr_clone<T>& data)
     throw(persistent_restore_failed);
 
   // smart_ptr_clone using the interface approach - uses dump/restore_interface on the contents
@@ -48,17 +48,6 @@ namespace stlplus
     throw(persistent_restore_failed);
 
   // smart_ptr_nocopy is not made persistent because if it is uncopyable, it must be undumpable
-
-  // smart_ptr_clone - do not use directly - this is called from the
-  // specialisations for each type of smart pointer clone above
-
-  template<typename T, typename DP>
-  void dump_smart_ptr_clone(dump_context&, const smart_ptr_clone<T>& data, DP dump_ptr)
-    throw(persistent_dump_failed);
-
-  template<typename T, typename RP>
-  void restore_smart_ptr_clone(restore_context&, smart_ptr_clone<T>& data, RP restore_ptr)
-    throw(persistent_restore_failed);
 
 } // end namespace stlplus
 
