@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& str, const bitset_vector& values)
 
 void dump_bitset_vector(stlplus::dump_context& str, const bitset_vector& data)
 {
-  stlplus::dump_vector(str, data, dump_bitset_N);
+  stlplus::dump_vector(str, data, stlplus::dump_bitset<SIZE>);
 }
 
 void restore_bitset_vector(stlplus::restore_context& str, bitset_vector& data)
