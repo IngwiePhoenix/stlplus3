@@ -10,9 +10,9 @@ root=`pwd`
 for dir in *; do
   if [ -d "$dir" ]; then
     if [ "$dir" != "CVS" ]; then
-      cd "$dir"
       echo "### testing $dir"
-      time "$dir"
+      cd "$dir"
+      time "./$dir"
       if [ $? -ne 0 ] ; then
         echo "### test of $dir failed"
         failed=`expr $failed + 1`
