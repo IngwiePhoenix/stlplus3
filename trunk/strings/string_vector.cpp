@@ -13,7 +13,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
   // special case of vector<bool>
 
-  std::string vector_bool_to_string(const std::vector<bool>& values)
+  std::string bool_vector_to_string(const std::vector<bool>& values)
   {
     std::string result;
     for (size_t i = 0; i < values.size(); i++)

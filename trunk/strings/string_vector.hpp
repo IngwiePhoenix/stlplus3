@@ -24,7 +24,7 @@ namespace stlplus
                                const std::string& separator = ",");
 
   // specialisation for vector<bool> which has a different implementation
-  std::string vector_bool_to_string(const std::vector<bool>& values);
+  std::string bool_vector_to_string(const std::vector<bool>& values);
 
   ////////////////////////////////////////////////////////////////////////////////
 
