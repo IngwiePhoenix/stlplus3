@@ -611,13 +611,6 @@ namespace stlplus
     return uimage(i, radix, display, width);
   }
 
-  std::string address_to_string(const void* i, unsigned radix, radix_display_t display, unsigned width)
-    throw(std::invalid_argument)
-  {
-    // use the unsigned representation for pointers
-    return uimage((unsigned long)i, radix, display, width);
-  }
-
   ////////////////////////////////////////////////////////////////////////////////
   // Conversions FROM string
   // local template function
