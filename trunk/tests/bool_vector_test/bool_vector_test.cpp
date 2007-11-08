@@ -1,6 +1,7 @@
 #include "persistent_vector.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
+#include "strings.hpp"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -20,15 +21,13 @@ typedef std::vector<bool> bool_vector;
 
 std::string to_string(const bool_vector& values)
 {
-  std::string result;
-  for (size_t i = 0; i < values.size(); i++)
-    result.append(1, values[i] ? '1' : '0');
-  return result;
+  return stlplus::bool_vector_to_string(values);
 }
 
 std::ostream& operator << (std::ostream& device, const bool_vector& data)
 {
-  return device << to_string(data);
+  stlplus::print_bool_vector(device, data);
+  return device;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

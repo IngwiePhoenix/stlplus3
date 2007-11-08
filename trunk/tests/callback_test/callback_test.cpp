@@ -8,6 +8,7 @@
 #include "persistent_shortcuts.hpp"
 #include "persistent_smart_ptr.hpp"
 #include "file_system.hpp"
+#include "strings.hpp"
 
 #define NUMBER 1000
 #define DATA "callback_test.tmp"
@@ -17,12 +18,7 @@
 
 static std::string to_string(int number)
 {
-  // use sprintf in a very controlled way that cannot overrun
-  char* buffer = new char[50];
-  sprintf(buffer, "%i", number);
-  std::string result = buffer;
-  delete buffer;
-  return result;
+  return stlplus::int_to_string(number);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,15 +98,18 @@ void restore_base_ptr(stlplus::restore_context& context, base_ptr& ptr)
   stlplus::restore_smart_ptr_clone_callback(context,ptr);
 }
 
-std::ostream& print (std::ostream& device, const base_ptr& ptr)
+void print_base(std::ostream& device, const base_ptr& ptr)
 {
-  if (!ptr) return device << "<null>";
-  return ptr->print(device);
+  if (!ptr)
+    device << "<null>";
+  else
+    ptr->print(device);
 }
 
 std::ostream& operator<< (std::ostream& device, const base_ptr& ptr)
 {
-  return print(device,ptr);
+  print_base(device,ptr);
+  return device;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -127,20 +126,15 @@ void restore_base_vector(stlplus::restore_context& context, base_vector& vec)
   stlplus::restore_vector(context,vec,restore_base_ptr);
 }
 
-std::ostream& print (std::ostream& device, const base_vector& data)
+void print_base_vector (std::ostream& device, const base_vector& data)
 {
-  for (unsigned i = 0; i < data.size(); i++)
-  {
-    device << "[" << i << "] ";
-    print(device, data[i]);
-    device << std::endl;
-  }
-  return device;
+  stlplus::print_vector(device, data, print_base, "\n");
 }
 
 std::ostream& operator<< (std::ostream& device, const base_vector& data)
 {
-  return print(device,data);
+  print_base_vector(device,data);
+  return device;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

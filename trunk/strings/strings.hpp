@@ -18,10 +18,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "format_types.hpp"
+
 #include "string_utilities.hpp"
+
 #include "string_basic.hpp"
 #include "string_stl.hpp"
 #include "string_stlplus.hpp"
+
+#include "print_basic.hpp"
+#include "print_stl.hpp"
+#include "print_stlplus.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif

@@ -3,8 +3,7 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "dprintf.hpp"
-#include "string_stlplus.hpp"
-#include "string_basic.hpp"
+#include "strings.hpp"
 #include "file_system.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +19,8 @@ typedef stlplus::matrix<std::string> string_matrix;
 
 std::ostream& operator<< (std::ostream& str, const string_matrix& data)
 {
-  return str << stlplus::matrix_to_string(data, stlplus::string_to_string, ",", "\n");
+  stlplus::print_matrix(str, data, stlplus::print_string, ",", "\n");
+  return str;
 }
 
 void dump_string_matrix(stlplus::dump_context& context, const string_matrix& data)

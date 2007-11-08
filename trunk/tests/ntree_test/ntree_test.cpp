@@ -3,8 +3,7 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
-#include "string_stlplus.hpp"
-#include "string_basic.hpp"
+#include "strings.hpp"
 #include <string>
 #include <map>
 
@@ -74,7 +73,8 @@ bool compare(const string_tree& left, const string_tree& right)
 
 std::ostream& operator << (std::ostream& device, const string_tree& tree)
 {
-  return device << stlplus::ntree_to_string(tree, stlplus::string_to_string, "\n", "  ");
+  stlplus::print_ntree(device, tree, stlplus::print_string, std::string("\n"), std::string("  "));
+  return device;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
