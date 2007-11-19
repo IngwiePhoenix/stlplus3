@@ -1,20 +1,21 @@
 #ifndef STLPLUS_NTREE
 #define STLPLUS_NTREE
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  A templated n-ary tree data structure. STL-like but the definition of
-  iterators is really only applicable to one-dimensional structures. I use
-  iterators to access tree nodes, but there is no increment or decrement
-  operators for them. I also define prefix and postfix traversal iterators
-  which do have increment.
+//   A templated n-ary tree data structure. STL-like but the definition of
+//   iterators is really only applicable to one-dimensional structures. I use
+//   iterators to access tree nodes, but there is no increment or decrement
+//   operators for them. I also define prefix and postfix traversal iterators
+//   which do have increment.
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
 #include "exceptions.hpp"
+#include "safe_iterator.hpp"
 
 namespace stlplus
 {
@@ -37,7 +38,7 @@ namespace stlplus
   // the root node then you get a null iterator.
 
   template<typename T, typename TRef, typename TPtr>
-  class ntree_iterator
+  class ntree_iterator : public safe_iterator<ntree<T>,ntree_node<T> >
   {
   public:
     // local type definitions
@@ -52,28 +53,14 @@ namespace stlplus
     ntree_iterator(void);
     ~ntree_iterator(void);
 
-    // tests
-    // a null iterator is one that has not been initialised with a value yet
-    // i.e. you just declared it but didn't assign to it
-    bool null(void) const;
-    // an end iterator is one that points to the end element of the tree of nodes
-    // in STL conventions this is one past the last valid element and must not be dereferenced
-    bool end(void) const;
-    // a valid iterator is one that can be dereferenced
-    // i.e. non-null and non-end
-    bool valid(void) const;
-
     // Type conversion methods allow const_iterator and iterator to be converted
     const_iterator constify(void) const;
     iterator deconstify(void) const;
 
-    // make the iterator into a null or end iterator
-    void make_null(void);
-    void make_end(void);
-
     // tests useful for putting iterators into other STL structures and for testing whether iteration has completed
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
+    bool operator < (const this_iterator& r) const;
 
     // access the node data - a const_iterator gives you a const element, an iterator a non-const element
     // it is illegal to dereference an invalid (i.e. null or end) iterator
@@ -82,34 +69,19 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-  private:
     friend class ntree<T>;
     friend class ntree_prefix_iterator<T,TRef,TPtr>;
     friend class ntree_postfix_iterator<T,TRef,TPtr>;
 
-    const ntree<T>* m_owner;
-    ntree_node<T>* m_node;
-
-    void check_owner(const ntree<T>* owner) const
-      throw(wrong_object);
-    void check_non_null(void) const
-      throw(null_dereference);
-    void check_non_end(void) const
-      throw(end_dereference);
-    void check_valid(void) const
-      throw(null_dereference,end_dereference);
-    void check(const ntree<T>* owner) const
-      throw(wrong_object,null_dereference,end_dereference);
-
   public:
+    // Note: I had to make this public to get round a compiler problem - it should be private
+    // you cannot create a valid iterator except by calling an ntree method that returns one
     // constructor used by ntree to create a non-null iterator
-    // you cannot create a valid iterator except by calling a hash method that returns one
-    // Note: I had to make it public to get round a compiler problem - it should be private
-    explicit ntree_iterator(const ntree<T>* owner, ntree_node<T>* node);
-    // get the ntree object that created this iterator
-    // a null iterator doesn't have an owner so returns a null pointer
-    const ntree<T>* owner(void) const;
-    ntree_node<T>* node(void) const;
+    explicit ntree_iterator(ntree_node<T>* node);
+    // constructor used by ntree to create an end iterator
+    explicit ntree_iterator(const ntree<T>* owner);
+    // used to create an alias of an iterator
+    explicit ntree_iterator(const safe_iterator<ntree<T>, ntree_node<T> >& iterator);
   };
 
   // Traversal iterators are like iterators but they have increment operators (++)
@@ -159,6 +131,7 @@ namespace stlplus
     // tests useful for putting iterators into other STL structures and for testing whether iteration has completed
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
+    bool operator < (const this_iterator& r) const;
 
     // increment/decrement operators used to step through the set of all nodes in a graph
     // it is only legal to increment a valid iterator
@@ -176,15 +149,15 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-  protected:
     friend class ntree<T>;
     friend class ntree_iterator<T,TRef,TPtr>;
 
+  private:
     ntree_iterator<T,TRef,TPtr> m_iterator;
 
     explicit ntree_prefix_iterator(const ntree_iterator<T,TRef,TPtr>& i);
-  public:
-    ntree_iterator<T,TRef,TPtr>& get_iterator(void) const;
+    const ntree_iterator<T,TRef,TPtr>& get_iterator(void) const;
+    ntree_iterator<T,TRef,TPtr>& get_iterator(void);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +199,7 @@ namespace stlplus
     // tests useful for putting iterators into other STL structures and for testing whether iteration has completed
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
+    bool operator < (const this_iterator& r) const;
 
     // increment/decrement operators used to step through the set of all nodes in a graph
     // it is only legal to increment a valid iterator
@@ -243,15 +217,15 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-  protected:
     friend class ntree<T>;
     friend class ntree_iterator<T,TRef,TPtr>;
 
+  private:
     ntree_iterator<T,TRef,TPtr> m_iterator;
 
     explicit ntree_postfix_iterator(const ntree_iterator<T,TRef,TPtr>& i);
-  public:
-    ntree_iterator<T,TRef,TPtr>& get_iterator(void) const;
+    const ntree_iterator<T,TRef,TPtr>& get_iterator(void) const;
+    ntree_iterator<T,TRef,TPtr>& get_iterator(void);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -358,7 +332,7 @@ namespace stlplus
       throw(wrong_object,null_dereference,end_dereference);
 
     void erase(void);
-    void erase(iterator& node)
+    void erase(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
     void erase(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
@@ -370,14 +344,14 @@ namespace stlplus
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
     ntree<T> cut(void);
-    ntree<T> cut(iterator& node)
+    ntree<T> cut(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
     ntree<T> cut(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
     //////////////////////////////////////////////////////////////////////////////
 
-  protected:
+  private:
     ntree_node<T>* m_root;
   };
 

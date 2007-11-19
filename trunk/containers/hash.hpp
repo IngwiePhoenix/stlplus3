@@ -1,16 +1,17 @@
 #ifndef STLPLUS_HASH
 #define STLPLUS_HASH
-/*----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  A chained hash table using STL semantics
+//   A chained hash table using STL semantics
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
 #include "exceptions.hpp"
+#include "safe_iterator.hpp"
 #include <map>
 
 namespace stlplus
@@ -20,13 +21,13 @@ namespace stlplus
   // internals
 
   template<typename K, typename T, class H, class E> class hash;
-  template<typename K, typename T> class hash_element;
+  template<typename K, typename T, class H, class E> class hash_element;
 
   ////////////////////////////////////////////////////////////////////////////////
   // iterator class
 
   template<typename K, typename T, class H, class E, typename V>
-  class hash_iterator
+  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >
   {
   public:
     friend class hash<K,T,H,E>;
@@ -45,21 +46,6 @@ namespace stlplus
     // the only valid thing you can do is assign an iterator to it
     hash_iterator(void);
     ~hash_iterator(void);
-
-    // tests
-    // a null iterator is one that has not been initialised with a value yet
-    // i.e. you just declared it but didn't assign to it
-    bool null(void) const;
-    // an end iterator is one that points to the end element of the list of nodes
-    // in STL conventions this is one past the last valid element and must not be dereferenced
-    bool end(void) const;
-    // a valid iterator is one that can be dereferenced
-    // i.e. non-null and non-end
-    bool valid(void) const;
-
-    // get the hash container that created this iterator
-    // a null iterator doesn't have an owner so returns a null pointer
-    const hash<K,T,H,E>* owner(void) const;
 
     // Type conversion methods allow const_iterator and iterator to be converted
     // convert an iterator/const_iterator to a const_iterator
@@ -80,6 +66,7 @@ namespace stlplus
     // test useful for testing whether iteration has completed
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
+    bool operator < (const this_iterator& r) const;
 
     // access the value - a const_iterator gives you a const value, an iterator a non-const value
     // it is illegal to dereference an invalid (i.e. null or end) iterator
@@ -88,31 +75,16 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-    // Note: hash iterators are not persistent for a good reason: they are
-    // invalidated by rehashing and so it is not a good idea to build data
-    // structures containing hash iterators in the first place
-
   private:
-    friend class hash_element<K,T>;
-
-    const hash<K,T,H,E>* m_owner;
-    unsigned m_bin;
-    hash_element<K,T>* m_element;
-
-    void check_owner(const hash<K,T,H,E>* owner) const
-      throw(wrong_object);
-    void check_non_null(void) const
-      throw(null_dereference);
-    void check_non_end(void) const
-      throw(end_dereference);
-    void check_valid(void) const
-      throw(null_dereference,end_dereference);
-    void check(const hash<K,T,H,E>* owner) const
-      throw(wrong_object,null_dereference,end_dereference);
+    friend class hash_element<K,T,H,E>;
 
     // constructor used by hash to create a non-null iterator
     // you cannot create a valid iterator except by calling a hash method that returns one
-    hash_iterator(const hash<K,T,H,E>* owner, unsigned bin, hash_element<K,T>* element);
+    explicit hash_iterator(hash_element<K,T,H,E>* element);
+    // constructor used to create an end iterator
+    explicit hash_iterator(const hash<K,T,H,E>* owner);
+    // used to create an alias of an iterator
+    explicit hash_iterator(const safe_iterator<hash<K,T,H,E>, hash_element<K,T,H,E> >& iterator);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +92,7 @@ namespace stlplus
   // K = key type
   // T = value type
   // H = hash function object with the profile 'unsigned H(const K&)'
-  // E = equal function object with the profile 'bool E(const K&, const K&)' defaults to equal_to which in turn calls '=='
+  // E = equal function object with profile 'bool E(const K&, const K&)' defaults to equal_to which in turn calls '=='
 
   template<typename K, typename T, class H, class E = std::equal_to<K> >
   class hash
@@ -205,14 +177,14 @@ namespace stlplus
 
     // internals
   private:
-    friend class hash_element<K,T>;
+    friend class hash_element<K,T,H,E>;
     friend class hash_iterator<K,T,H,E,std::pair<const K,T> >;
     friend class hash_iterator<K,T,H,E,const std::pair<const K,T> >;
 
     unsigned m_rehash;
     unsigned m_bins;
     unsigned m_size;
-    hash_element<K,T>** m_values;
+    hash_element<K,T,H,E>** m_values;
   };
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -1,16 +1,17 @@
 #ifndef STLPLUS_DIGRAPH
 #define STLPLUS_DIGRAPH
-/*----------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  STL-style Directed graph template component
-  Digraph stands for directed-graph, i.e. all arcs have a direction
+//   STL-style Directed graph template component
+//   Digraph stands for directed-graph, i.e. all arcs have a direction
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
+#include "safe_iterator.hpp"
 #include "exceptions.hpp"
 #include <vector>
 #include <map>
@@ -37,7 +38,7 @@ namespace stlplus
   // and this is the form in which they should be used
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
-  class digraph_iterator
+  class digraph_iterator : public safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >
   {
   public:
     friend class digraph<NT,AT>;
@@ -53,21 +54,6 @@ namespace stlplus
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     digraph_iterator(void);
     ~digraph_iterator(void);
-
-    // tests
-    // a null iterator is one that has not been initialised with a value yet
-    // i.e. you just declared it but didn't assign to it
-    bool null(void) const;
-    // an end iterator is one that points to the end element of the list of nodes
-    // in STL conventions this is one past the last valid element and must not be dereferenced
-    bool end(void) const;
-    // a valid iterator is one that can be dereferenced
-    // i.e. non-null and non-end
-    bool valid(void) const;
-
-    // get the digraph object that created this iterator
-    // a null iterator doesn't have an owner so returns a null pointer
-    const digraph<NT,AT>* owner(void) const;
 
     // Type conversion methods allow const_iterator and iterator to be converted
     // convert an iterator/const_iterator to a const_iterator
@@ -93,7 +79,7 @@ namespace stlplus
     // test useful for testing whether iteration has completed and for inclusion in other containers
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
-    bool operator < (const this_iterator&) const;
+    bool operator < (const this_iterator& r) const;
 
     // access the node data - a const_iterator gives you a const element, an iterator a non-const element
     // it is illegal to dereference an invalid (i.e. null or end) iterator
@@ -102,37 +88,19 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-  private:
-    const digraph<NT,AT>* m_owner;
-    digraph_node<NT,AT>* m_node;
-
   public:
-    // Note: I had to make these public to get round a compiler problem - it should be private
-
-    // internal error checking routines
-    void check_owner(const digraph<NT,AT>* owner) const
-      throw(wrong_object);
-    void check_non_null(void) const
-      throw(null_dereference);
-    void check_non_end(void) const
-      throw(end_dereference);
-    void check_valid(void) const
-      throw(null_dereference,end_dereference);
-    void check(const digraph<NT,AT>* owner) const
-      throw(wrong_object,null_dereference,end_dereference);
-
-    // constructor used by digraph to create a non-null iterator
-    // you cannot create a valid iterator except by calling a digraph method that returns one
-    explicit digraph_iterator(const digraph<NT,AT>* owner, digraph_node<NT,AT>* node);
-    // back-door access function used by other utilities
-    const digraph<NT,AT>* get_owner(void) const;
-    digraph_node<NT,AT>* get_node(void) const;
+    // constructor used by ntree to create a non-null iterator
+    explicit digraph_iterator(digraph_node<NT,AT>* node);
+    // constructor used by ntree to create an end iterator
+    explicit digraph_iterator(const digraph<NT,AT>* owner);
+    // used to create an alias of an iterator
+    explicit digraph_iterator(const safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >& iterator);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
 
   template<typename NT, typename AT, typename ARef, typename APtr>
-  class digraph_arc_iterator
+  class digraph_arc_iterator : public safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >
   {
   public:
     friend class digraph<NT,AT>;
@@ -148,21 +116,6 @@ namespace stlplus
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     digraph_arc_iterator(void);
     ~digraph_arc_iterator(void);
-
-    // tests
-    // a null iterator is one that has not been initialised with a value yet
-    // i.e. you just declared it but didn't assign to it
-    bool null(void) const;
-    // an end iterator is one that points to the end element of the list of nodes
-    // in STL conventions this is one past the last valid element and must not be dereferenced
-    bool end(void) const;
-    // a valid iterator is one that can be dereferenced
-    // i.e. non-null and non-end
-    bool valid(void) const;
-
-    // get the digraph object that created this iterator
-    // a null iterator doesn't have an owner so returns a null pointer
-    const digraph<NT,AT>* owner(void) const;
 
     // Type conversion methods allow const_iterator and iterator to be converted
     // convert an iterator/const_iterator to a const_iterator
@@ -197,31 +150,13 @@ namespace stlplus
     pointer operator->(void) const
       throw(null_dereference,end_dereference);
 
-  private:
-    const digraph<NT,AT>* m_owner;
-    digraph_arc<NT,AT>* m_arc;
-
   public:
-    // Note: I had to make these public to get round a compiler problem - it should be private
-
-    // internal error checking routines
-    void check_owner(const digraph<NT,AT>* owner) const
-      throw(wrong_object);
-    void check_non_null(void) const
-      throw(null_dereference);
-    void check_non_end(void) const
-      throw(end_dereference);
-    void check_valid(void) const
-      throw(null_dereference,end_dereference);
-    void check(const digraph<NT,AT>* owner) const
-      throw(wrong_object,null_dereference,end_dereference);
-
-    // constructor used by digraph to create a non-null iterator
-    // you cannot create a valid iterator except by calling a digraph method that returns one
-    explicit digraph_arc_iterator(const digraph<NT,AT>* owner, digraph_arc<NT,AT>* arc);
-    // back-door access function used by other utilities
-    const digraph<NT,AT>* get_owner(void) const;
-    digraph_arc<NT,AT>* get_arc(void) const;
+    // constructor used by ntree to create a non-null iterator
+    explicit digraph_arc_iterator(digraph_arc<NT,AT>* arc);
+    // constructor used by ntree to create an end iterator
+    explicit digraph_arc_iterator(const digraph<NT,AT>* owner);
+    // used to create an alias of an iterator
+    explicit digraph_arc_iterator(const safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >& iterator);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -540,8 +475,10 @@ namespace stlplus
     void reaching_nodes_r(const_iterator to, const_iterator_set& visited, arc_select_fn) const
       throw(wrong_object,null_dereference,end_dereference);
 
-    digraph_node<NT,AT>* m_nodes;
-    digraph_arc<NT,AT>* m_arcs;
+    digraph_node<NT,AT>* m_nodes_begin;
+    digraph_node<NT,AT>* m_nodes_end;
+    digraph_arc<NT,AT>* m_arcs_begin;
+    digraph_arc<NT,AT>* m_arcs_end;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
