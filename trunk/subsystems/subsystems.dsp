@@ -28,7 +28,7 @@ CFG=subsystems - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "subsystems - Win32 Release"
+!IF "$(CFG)" == "subsystems - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -40,11 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /I "..\portability" /I "..\containers" /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MD /GR /GX /O2 /I "..\portability" /I "..\containers" /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c /I "..\containers" /I "..\portability"
+# ADD BASE RSC /l 0x409 /d "NDEBUG" 
+# ADD RSC /l 0x409 /d "NDEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -52,7 +51,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "subsystems - Win32 Debug"
+!ELSEIF "$(CFG)" == "subsystems - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -64,11 +63,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /GR /GX /Od /I "..\portability" /I "..\containers" /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MDd /GR /GX /Od /I "..\portability" /I "..\containers" /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c /I "..\containers" /I "..\portability"
+# ADD BASE RSC /l 0x409 /d "_DEBUG" 
+# ADD RSC /l 0x409 /d "_DEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -107,6 +105,10 @@ SOURCE=.\subsystems.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\subsystems_fixes.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\timer.hpp
 # End Source File
 # End Group
@@ -116,58 +118,22 @@ SOURCE=.\timer.hpp
 # Begin Source File
 
 SOURCE=.\cli_parser.cpp
-DEP_CPP_CLI_P=\
-	"..\containers\exceptions.hpp"\
-	"..\containers\smart_ptr.hpp"\
-	"..\containers\smart_ptr.tpp"\
-	"..\containers\template_fixes.hpp"\
-	"..\portability\file_system.hpp"\
-	"..\portability\os_fixes.hpp"\
-	".\cli_parser.hpp"\
-	".\ini_manager.hpp"\
-	".\message_handler.hpp"\
-	
 # End Source File
 # Begin Source File
 
 SOURCE=.\ini_manager.cpp
-DEP_CPP_INI_M=\
-	"..\portability\file_system.hpp"\
-	"..\portability\os_fixes.hpp"\
-	".\ini_manager.hpp"\
-	
 # End Source File
 # Begin Source File
 
 SOURCE=.\library_manager.cpp
-DEP_CPP_LIBRA=\
-	"..\containers\exceptions.hpp"\
-	"..\containers\smart_ptr.hpp"\
-	"..\containers\smart_ptr.tpp"\
-	"..\containers\template_fixes.hpp"\
-	"..\portability\file_system.hpp"\
-	"..\portability\os_fixes.hpp"\
-	".\ini_manager.hpp"\
-	".\library_manager.hpp"\
-	
 # End Source File
 # Begin Source File
 
 SOURCE=.\message_handler.cpp
-DEP_CPP_MESSA=\
-	"..\portability\os_fixes.hpp"\
-	".\message_handler.hpp"\
-	
 # End Source File
 # Begin Source File
 
 SOURCE=.\timer.cpp
-DEP_CPP_TIMER=\
-	"..\portability\dprintf.hpp"\
-	"..\portability\os_fixes.hpp"\
-	"..\portability\time.hpp"\
-	".\timer.hpp"\
-	
 # End Source File
 # End Group
 # End Target

@@ -1,30 +1,31 @@
 #ifndef STLPLUS_INI_MANAGER
 #define STLPLUS_INI_MANAGER
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  A subsystem for managing INI (i.e. .ini) files
-  An INI file has the following format
+//   A subsystem for managing INI (i.e. .ini) files
+//   An INI file has the following format
 
-    file           ::= header { section }*
-    header         ::= { comment | blank }*
-    section        ::= section_header { declaration | comment | blank }*
-    section_header ::= '[' title ']' '\n'
-    declaration    ::= variable '=' value '\n'
-    comment        ::= ';' text '\n'
-    blank          ::= '\n'
-    title          ::= [~']']*
-    variable       ::= [~'=']*
-    value          ::= .*
-    text           ::= .*
+//     file           ::= header { section }*
+//     header         ::= { comment | blank }*
+//     section        ::= section_header { declaration | comment | blank }*
+//     section_header ::= '[' title ']' '\n'
+//     declaration    ::= variable '=' value '\n'
+//     comment        ::= ';' text '\n'
+//     blank          ::= '\n'
+//     title          ::= [~']']*
+//     variable       ::= [~'=']*
+//     value          ::= .*
+//     text           ::= .*
 
-  Whitespace is trimmed from the leading and trailing ends of title, variable and value
-  Note: a header is represented internally as a Clint section (i.e. a section with no name)
+//   Whitespace is trimmed from the leading and trailing ends of title, variable and value
+//   Note: a header is represented internally as a Clint section (i.e. a section with no name)
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "subsystems_fixes.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -137,6 +138,8 @@ namespace stlplus
 
     // get the filename that first defines the variable
     std::string variable_filename(const std::string& section, const std::string variable) const;
+    // ditto for its linenumber within that file
+    unsigned variable_linenumber(const std::string& section, const std::string variable) const;
 
     // get the value of a variable as a single unprocessed string
     // if the variable does not exist the string will be empty, but beware that

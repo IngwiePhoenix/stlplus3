@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "cli_parser.hpp"
 #include "file_system.hpp"
 
@@ -344,19 +344,37 @@ unsigned stlplus::cli_parser::add_definition(const stlplus::cli_parser::definiti
 
 void stlplus::cli_parser::set_defaults(const ini_manager& defaults, const std::string& ini_section) throw()
 {
+  // import default values from the Ini Manager
   m_data->increase_level();
-  // for each definition that exists, test to see if there is a value for it in the ini file
-  for (unsigned i = 0; i < m_data->m_definitions.size(); i++)
+  // get the set of all names from the Ini manager so that illegal names generate meaningful error messages
+  std::vector<std::string> names = defaults.variable_names(ini_section);
+  for (unsigned i = 0; i < names.size(); i++)
   {
-    std::string name = m_data->m_definitions[i].m_name;
-    if (defaults.variable_exists(ini_section, name))
+    std::string name = names[i];
+    unsigned definition = m_data->find_definition(name);
+    if (definition == m_data->m_definitions.size())
     {
-      std::string value = defaults.variable_value(ini_section, name);
+      // not found - give an error report
+      message_position position(defaults.variable_filename(ini_section,name),
+                              defaults.variable_linenumber(ini_section,name),
+                              0);
+      m_data->m_errors.error(position,"CLI_INI_VARIABLE", name);
+    }
+    else
+    {
+      // found - so add the value
+      // multi-valued variables are entered as a comma-separated list and this is then turned into a vector
+      // the vector is empty if the value was empty
+      std::vector<std::string> values = defaults.variable_values(ini_section, name);
       // an empty string is used to negate the value
-      if (value.empty())
-        m_data->erase_value(i);
+      if (values.empty())
+        m_data->erase_value(definition);
       else
-        m_data->add_value(i, value, filespec_to_relative_path(defaults.variable_filename(ini_section, name)));
+      {
+        std::string source = filespec_to_relative_path(defaults.variable_filename(ini_section, name));
+        for (unsigned j = 0; j < values.size(); j++)
+          m_data->add_value(definition, values[j], source);
+      }
     }
   }
   // add the set of ini files to the list for usage reports

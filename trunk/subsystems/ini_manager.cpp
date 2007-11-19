@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "ini_manager.hpp"
 #include "file_system.hpp"
 #include <fstream>
@@ -51,17 +51,19 @@ namespace stlplus
       }
 
   private:
+    unsigned m_line;
     kind_t m_kind;
     std::string m_text;
     std::string m_name;
     std::string m_value;
 
   public:
-    ini_entry(void) : m_kind(BLANK) {}
-    ini_entry(const std::string& comment) : m_kind(COMMENT), m_text("; " + comment) {}
-    ini_entry(const std::string& name, const std::string& value) : m_kind(VARIABLE), m_text(name + " = " + value), m_name(name), m_value(value) {}
+    ini_entry(unsigned line) : m_line(line), m_kind(BLANK) {}
+    ini_entry(unsigned line, const std::string& comment) : m_line(line), m_kind(COMMENT), m_text("; " + comment) {}
+    ini_entry(unsigned line, const std::string& name, const std::string& value) : m_line(line), m_kind(VARIABLE), m_text(name + " = " + value), m_name(name), m_value(value) {}
     ~ini_entry(void) {}
 
+    unsigned line(void) const {return m_line;}
     kind_t kind(void) const {return m_kind;}
     bool blank(void) const {return m_kind == BLANK;}
     bool comment(void) const {return m_kind == COMMENT;}
@@ -73,7 +75,7 @@ namespace stlplus
 
     bool print(std::ostream& str) const
       {
-        str << "    " << to_string(m_kind) << ": " << m_text << std::endl;
+        str << "    " << m_line << ":" << to_string(m_kind) << ": " << m_text << std::endl;
         return !str.fail();
       }
   };
@@ -189,22 +191,32 @@ namespace stlplus
         return std::string();
       }
 
-    bool add_variable(const std::string& variable, const std::string& value)
+    unsigned variable_line(const std::string variable) const
+      {
+        for (std::list<ini_entry>::const_iterator i = m_entries.begin(); i != m_entries.end(); i++)
+        {
+          if (i->variable() && i->variable_name() == variable)
+            return i->line();
+        }
+        return 0;
+      }
+
+    bool add_variable(unsigned line, const std::string& variable, const std::string& value)
       {
         erase_variable(variable);
-        m_entries.push_back(ini_entry(variable, value));
+        m_entries.push_back(ini_entry(line ? line : m_entries.size(), variable, value));
         return true;
       }
 
-    bool add_comment(const std::string& comment)
+    bool add_comment(unsigned line, const std::string& comment)
       {
-        m_entries.push_back(ini_entry(comment));
+        m_entries.push_back(ini_entry(line ? line : m_entries.size(), comment));
         return true;
       }
 
-    bool add_blank(void)
+    bool add_blank(unsigned line)
       {
-        m_entries.push_back(ini_entry());
+        m_entries.push_back(ini_entry(line ? line : m_entries.size()));
         return true;
       }
 
@@ -302,9 +314,11 @@ namespace stlplus
         // create a dummy top section to hold file comments
         std::list<ini_section>::iterator section = m_sections.insert(m_sections.end(), ini_section(""));
         std::ifstream source(m_filename.c_str());
+        unsigned line_number = 0;
         std::string line;
         while(std::getline(source,line))
         {
+          line_number++;
           unsigned i = 0;
           while(i < line.size() && isspace(line[i]))
             i++;
@@ -326,12 +340,12 @@ namespace stlplus
             // skip the ; because that is not part of the comment
             i++;
             // add the rest of the line as a comment to the current section
-            section->add_comment(line.substr(i, line.size()-1));
+            section->add_comment(line_number, line.substr(i, line.size()-1));
           }
           else if (i == line.size())
           {
             // found a blank line
-            section->add_blank();
+            section->add_blank(line_number);
           }
           else
           {
@@ -354,7 +368,7 @@ namespace stlplus
             // trim trailing whitespace off the value
             value = trim(value);
             // and finally add the name/value pair to the data structure
-            section->add_variable(name, value);
+            section->add_variable(line_number, name, value);
           }
         }
         return true;
@@ -469,6 +483,13 @@ namespace stlplus
         return found->variables_size();
       }
 
+    unsigned variable_line(const std::string& section, const std::string variable) const
+      {
+        std::list<ini_section>::const_iterator found = find_section(section);
+        if (found == m_sections.end()) return 0;
+        return found->variable_line(variable);
+      }
+
     std::string variable_name(const std::string& section, unsigned i) const
       {
         std::list<ini_section>::const_iterator found = find_section(section);
@@ -495,7 +516,7 @@ namespace stlplus
         if (!m_writable) return false;
         std::list<ini_section>::iterator found = find_section(section);
         if (found == m_sections.end()) found = m_sections.insert(m_sections.end(),ini_section(section));
-        if (found->add_variable(variable,value))
+        if (found->add_variable(0,variable,value))
           m_changed = true;
         return true;
       }
@@ -505,7 +526,7 @@ namespace stlplus
         if (!m_writable) return false;
         std::list<ini_section>::iterator found = find_section(section);
         if (found == m_sections.end()) found = m_sections.insert(m_sections.end(),ini_section(section));
-        if (found->add_comment(comment))
+        if (found->add_comment(0,comment))
           m_changed = true;
         return true;
       }
@@ -515,7 +536,7 @@ namespace stlplus
         if (!m_writable) return false;
         std::list<ini_section>::iterator found = find_section(section);
         if (found == m_sections.end()) found = m_sections.insert(m_sections.end(),ini_section(section));
-        if (found->add_blank())
+        if (found->add_blank(0))
           m_changed = true;
         return true;
       }
@@ -789,6 +810,16 @@ namespace stlplus
             return filename(i);
         }
         return std::string();
+      }
+
+    unsigned variable_linenumber(const std::string& section, const std::string variable) const
+      {
+        for (unsigned i = 0; i < m_files.size(); i++)
+        {
+          if (variable_exists(section, variable, i))
+            return m_files[i].variable_line(section,variable);
+        }
+        return 0;
       }
 
     // get the value of a variable as a single unprocessed string
@@ -1134,6 +1165,11 @@ unsigned stlplus::ini_manager::variable_depth(const std::string& section, const 
 std::string stlplus::ini_manager::variable_filename(const std::string& section, const std::string variable) const
 {
   return m_body->variable_filename(section, variable);  
+}
+
+unsigned stlplus::ini_manager::variable_linenumber(const std::string& section, const std::string variable) const
+{
+  return m_body->variable_linenumber(section, variable);  
 }
 
 std::string stlplus::ini_manager::variable_value(const std::string& section, const std::string variable) const
