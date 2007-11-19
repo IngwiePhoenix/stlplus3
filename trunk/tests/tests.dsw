@@ -12,22 +12,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
     End Project Dependency
 }}}
 
@@ -42,28 +27,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "containers"=..\containers\containers.dsp - Package Owner=<4>
+Project: "callback_test"=.\callback_test\callback_test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -84,35 +54,8 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "debugging"=..\debugging\debugging.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################
@@ -126,22 +69,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -156,22 +84,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -186,23 +99,20 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "inf_test"=.\inf_test\inf_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -216,22 +126,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -246,22 +141,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -276,22 +156,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
     End Project Dependency
 }}}
 
@@ -306,22 +171,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -336,77 +186,8 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "persistence"=..\persistence\persistence.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "polymorph_test"=.\polymorph_test\polymorph_test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "portability"=..\portability\portability.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################
@@ -420,22 +201,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -450,22 +216,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
     End Project Dependency
 }}}
 
@@ -480,47 +231,8 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name containers
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name debugging
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name persistence
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name portability
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name strings
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name subsystems
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "strings"=..\strings\strings.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "subsystems"=..\subsystems\subsystems.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################
