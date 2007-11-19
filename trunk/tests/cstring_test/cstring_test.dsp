@@ -28,7 +28,7 @@ CFG=cstring_test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "cstring_test - Win32 Release"
+!IF "$(CFG)" == "cstring_test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -39,21 +39,19 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\strings" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MD /GR /GX /O2 /I "..\..\strings" /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x809 /d "NDEBUG"
-# ADD RSC /l 0x809 /d "NDEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c /I "..\..\containers" /I "..\..\portability" /I "..\..\subsystems" /I "..\..\persistence" /I "..\..\strings"
+# ADD BASE RSC /l 0x809 /d "NDEBUG" 
+# ADD RSC /l 0x809 /d "NDEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /pdb:none /machine:I386 /out:"cstring_test.exe"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386
+# ADD LINK32  "..\..\containers\Release\containers.lib" "..\..\portability\Release\portability.lib" "..\..\subsystems\Release\subsystems.lib" "..\..\persistence\Release\persistence.lib" "..\..\strings\Release\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /out:"cstring_test.exe"
 
-!ELSEIF  "$(CFG)" == "cstring_test - Win32 Debug"
+!ELSEIF "$(CFG)" == "cstring_test - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -64,20 +62,17 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /GR /GX /Od /I "..\..\strings" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MDd /GR /GX /Od /I "..\..\strings" /I "..\..\containers" /I "..\..\persistence" /I "..\..\portability" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x809 /d "_DEBUG"
-# ADD RSC /l 0x809 /d "_DEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c /I "..\..\containers" /I "..\..\portability" /I "..\..\subsystems" /I "..\..\persistence" /I "..\..\strings"
+# ADD BASE RSC /l 0x809 /d "_DEBUG" 
+# ADD RSC /l 0x809 /d "_DEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /pdb:none /machine:I386 /out:"cstring_test.exe"
-# SUBTRACT LINK32 /debug
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug
+# ADD LINK32  "..\..\containers\Debug\containers.lib" "..\..\portability\Debug\portability.lib" "..\..\subsystems\Debug\subsystems.lib" "..\..\persistence\Debug\persistence.lib" "..\..\strings\Debug\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug /out:"cstring_test.exe"
 
 !ENDIF 
 
@@ -91,16 +86,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\cstring_test.cpp
-DEP_CPP_CSTRI=\
-	"..\..\persistence\persistent.hpp"\
-	"..\..\persistence\persistent_contexts.hpp"\
-	"..\..\persistence\persistent_cstring.hpp"\
-	"..\..\persistence\persistent_exceptions.hpp"\
-	"..\..\persistence\persistent_shortcuts.hpp"\
-	"..\..\persistence\persistent_shortcuts.tpp"\
-	"..\..\portability\file_system.hpp"\
-	"..\..\portability\os_fixes.hpp"\
-	
 # End Source File
 # End Group
 # End Target

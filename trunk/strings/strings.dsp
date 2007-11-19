@@ -28,7 +28,7 @@ CFG=strings - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "strings - Win32 Release"
+!IF "$(CFG)" == "strings - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -40,11 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /I "..\portability" /I "..\containers" /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MD /GR /GX /O2  /I "..\portability" /I "..\containers" /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c /I "..\containers" /I "..\portability"
+# ADD BASE RSC /l 0x409 /d "NDEBUG" 
+# ADD RSC /l 0x409 /d "NDEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -52,7 +51,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF  "$(CFG)" == "strings - Win32 Debug"
+!ELSEIF "$(CFG)" == "strings - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -64,11 +63,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /GR /GX /Od  /I "..\portability" /I "..\containers" /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /Fr /c
-# ADD CPP /nologo /MDd /GR /GX /Od  /I "..\portability" /I "..\containers" /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD BASE CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c /I "..\containers" /I "..\portability"
+# ADD BASE RSC /l 0x409 /d "_DEBUG" 
+# ADD RSC /l 0x409 /d "_DEBUG" 
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -91,7 +89,115 @@ SOURCE=.\format_types.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\print_address.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_basic.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_bitset.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_bool.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_cstring.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_digraph.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_float.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_foursome.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_hash.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_inf.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_int.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_list.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_map.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_matrix.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_ntree.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_pair.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_pointer.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_sequence.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_set.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_smart_ptr.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_stl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_stlplus.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_string.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_triple.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_vector.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\strings.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\strings_fixes.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_address.hpp
 # End Source File
 # Begin Source File
 
@@ -99,11 +205,99 @@ SOURCE=.\string_basic.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\string_bitset.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_bool.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_cstring.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_digraph.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_float.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_foursome.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_hash.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_inf.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_int.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_list.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_map.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_matrix.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_ntree.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_pair.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_pointer.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_sequence.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_set.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_smart_ptr.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\string_stl.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\string_stlplus.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_string.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_triple.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\string_utilities.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_vector.hpp
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -111,46 +305,195 @@ SOURCE=.\string_utilities.hpp
 # PROP Default_Filter "c;cpp;cxx"
 # Begin Source File
 
-SOURCE=.\string_basic.cpp
-DEP_CPP_STRIN=\
-	".\format_types.hpp"\
-	".\string_basic.hpp"\
-	
-NODEP_CPP_STRIN=\
-	".\dprintf.hpp"\
-	
+SOURCE=.\print_address.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\string_stl.cpp
-DEP_CPP_STRING=\
-	".\format_types.hpp"\
-	".\string_stl.hpp"\
-	".\string_stl.tpp"\
-	
-NODEP_CPP_STRING=\
-	".\template_fixes.hpp"\
-	
+SOURCE=.\print_bool.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_cstring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_float.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_inf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_int.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_string.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_vector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_address.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_bool.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_cstring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_float.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_inf.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_int.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_string.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\string_utilities.cpp
-DEP_CPP_STRINGS=\
-	".\format_types.hpp"\
-	".\string_basic.hpp"\
-	".\string_utilities.hpp"\
-	
-NODEP_CPP_STRINGS=\
-	".\dprintf.hpp"\
-	
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_vector.cpp
 # End Source File
 # End Group
 # Begin Group "Template Implementations"
 
-# PROP Default_Filter ".tpp"
+# PROP Default_Filter "tpp;txx"
 # Begin Source File
 
-SOURCE=.\string_stl.tpp
+SOURCE=.\print_bitset.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_digraph.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_foursome.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_hash.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_list.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_map.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_matrix.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_ntree.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_pair.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_pointer.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_sequence.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_set.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_smart_ptr.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_triple.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\print_vector.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_bitset.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_digraph.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_foursome.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_hash.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_list.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_map.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_matrix.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_ntree.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_pair.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_pointer.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_sequence.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_set.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_smart_ptr.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_triple.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\string_vector.tpp
 # End Source File
 # End Group
 # End Target

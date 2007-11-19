@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="interface_test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="inf_test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=interface_test - Win32 Debug
+CFG=inf_test - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "interface_test.mak".
+!MESSAGE NMAKE /f "inf_test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "interface_test.mak" CFG="interface_test - Win32 Debug"
+!MESSAGE NMAKE /f "inf_test.mak" CFG="inf_test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "interface_test - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "interface_test - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "inf_test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "inf_test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=interface_test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF "$(CFG)" == "interface_test - Win32 Release"
+!IF "$(CFG)" == "inf_test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -49,9 +49,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386
-# ADD LINK32  "..\..\containers\Release\containers.lib" "..\..\portability\Release\portability.lib" "..\..\subsystems\Release\subsystems.lib" "..\..\persistence\Release\persistence.lib" "..\..\strings\Release\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /out:"interface_test.exe"
+# ADD LINK32  "..\..\containers\Release\containers.lib" "..\..\portability\Release\portability.lib" "..\..\subsystems\Release\subsystems.lib" "..\..\persistence\Release\persistence.lib" "..\..\strings\Release\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /out:"inf_test.exe"
 
-!ELSEIF "$(CFG)" == "interface_test - Win32 Debug"
+!ELSEIF "$(CFG)" == "inf_test - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -72,20 +72,20 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug
-# ADD LINK32  "..\..\containers\Debug\containers.lib" "..\..\portability\Debug\portability.lib" "..\..\subsystems\Debug\subsystems.lib" "..\..\persistence\Debug\persistence.lib" "..\..\strings\Debug\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug /out:"interface_test.exe"
+# ADD LINK32  "..\..\containers\Debug\containers.lib" "..\..\portability\Debug\portability.lib" "..\..\subsystems\Debug\subsystems.lib" "..\..\persistence\Debug\persistence.lib" "..\..\strings\Debug\strings.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug /out:"inf_test.exe"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "interface_test - Win32 Release"
-# Name "interface_test - Win32 Debug"
+# Name "inf_test - Win32 Release"
+# Name "inf_test - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "c;cpp;cxx"
 # Begin Source File
 
-SOURCE=.\interface_test.cpp
+SOURCE=.\inf_test.cpp
 # End Source File
 # End Group
 # End Target
