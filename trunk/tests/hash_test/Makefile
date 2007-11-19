@@ -1,5 +1,5 @@
 IMAGE     := hash_test
-LIBRARIES := ../../strings ../../persistence ../../arithmetic ../../containers ../../portability
+LIBRARIES := ../../strings ../../persistence ../../containers ../../portability
 include ../../../makefiles/gcc.mak
 
 
