@@ -1,5 +1,3 @@
-#include <string>
-#include <map>
 #include "persistent_map.hpp"
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
@@ -7,6 +5,8 @@
 #include "strings.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
+#include <string>
+#include <map>
 
 ////////////////////////////////////////////////////////////////////////////////
 

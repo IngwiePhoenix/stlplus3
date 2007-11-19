@@ -3,8 +3,9 @@
 #include "persistent_string.hpp"
 #include "persistent_pair.hpp"
 #include "persistent_shortcuts.hpp"
-#include "string_stlplus.hpp"
-#include "string_basic.hpp"
+#include "string_string.hpp"
+#include "string_pair.hpp"
+#include "string_smart_ptr.hpp"
 #include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////

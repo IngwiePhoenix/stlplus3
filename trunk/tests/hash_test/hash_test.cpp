@@ -1,12 +1,14 @@
-#include <string>
+#include "hash.hpp"
 #include "persistent_hash.hpp"
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
-#include "string_stlplus.hpp"
-#include "string_basic.hpp"
+#include "string_int.hpp"
+#include "string_string.hpp"
+#include "string_hash.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
+#include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
 

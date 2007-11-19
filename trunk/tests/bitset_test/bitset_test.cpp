@@ -41,7 +41,7 @@ typedef std::vector<bitset_N> bitset_vector;
 
 std::ostream& operator<<(std::ostream& str, const bitset_vector& values)
 {
-  stlplus::print_vector(str, values, stlplus::print_bitset<SIZE>);
+  stlplus::print_vector(str, values, stlplus::print_bitset<SIZE>, ",");
   return str;
 }
 
@@ -69,7 +69,14 @@ bool compare (bitset_vector& left, bitset_vector& right)
   {
     if (left[j] != right[j])
     {
-      std::cerr << "bitset[" << j << "] is different: left = " << left[j] << " right = " << right[j] << std::endl;
+      std::cerr 
+		  << "bitset[" 
+		  << j 
+		  << "] is different: left = " 
+		  << left[j] 
+		  << " right = " 
+		  << right[j] 
+		  << std::endl;
       result = false;
     }
   }

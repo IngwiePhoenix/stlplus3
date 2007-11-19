@@ -3,7 +3,9 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
-#include "strings.hpp"
+#include "print_ntree.hpp"
+#include "print_map.hpp"
+#include "print_string.hpp"
 #include <string>
 #include <map>
 
@@ -88,6 +90,34 @@ void restore_string_tree_iterator(stlplus::restore_context& context, string_tree
   stlplus::restore_ntree_iterator(context,data);
 }
 
+void print_string_tree_iterator(std::ostream& device, const string_tree::iterator& data)
+{
+  if (data.null())
+    device << "<null>";
+  else if (data.end())
+    device << "<end>";
+  else
+    device << *data;
+}
+
+std::ostream& operator << (std::ostream& device, const string_tree::iterator& data)
+{
+  print_string_tree_iterator(device, data);
+  return device;
+}
+
+std::ostream& operator << (std::ostream& device, const string_tree::prefix_iterator& data)
+{
+  print_string_tree_iterator(device, data.simplify());
+  return device;
+}
+
+std::ostream& operator << (std::ostream& device, const string_tree::postfix_iterator& data)
+{
+  print_string_tree_iterator(device, data.simplify());
+  return device;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef std::map<std::string,string_tree::iterator> tree_map;
@@ -107,7 +137,7 @@ std::ostream& operator << (std::ostream& device, const tree_map& mappings)
   for (tree_map::const_iterator i = mappings.begin(); i != mappings.end(); i++)
   {
     if (i != mappings.begin()) device << ",";
-    device << "(" << i->first << "=" << ((void*)&*(i->second)) << ")";
+    device << "(" << i->first << "=" << i->second << ")";
   }
   return device;
 }
@@ -122,9 +152,13 @@ public:
 
   void add_mappings(void)
     {
+      std::cerr << "adding mappings" << std::endl;
       m_map.clear();
       for (string_tree::prefix_iterator i = m_tree.prefix_begin(); i != m_tree.prefix_end(); i++)
+      {
+        std::cerr << "mapping " << *i << " => " << i << std::endl;
         m_map[*i] = i.simplify();
+      }
     }
   friend void dump_mapped_tree(stlplus::dump_context& context, const mapped_tree& data)
     {
@@ -159,15 +193,40 @@ int main(unsigned argc, char* argv[])
   {
     // build the sample data structure
     mapped_tree data;
+    std::cerr << "null root = " << data.m_tree.root() << std::endl;
     string_tree::iterator root = data.m_tree.insert("root");
+    std::cerr << "added root " << root << std::endl;
     string_tree::iterator left = data.m_tree.append(root,"left");
+    std::cerr << "added left " << left << std::endl;
     string_tree::iterator left_left = data.m_tree.append(left,"left_left");
+    std::cerr << "added left_left " << left_left << std::endl;
     string_tree::iterator left_right = data.m_tree.append(left,"left_right");
+    std::cerr << "added left_right " << left_right << std::endl;
     string_tree::iterator right = data.m_tree.append(root,"right");
+    std::cerr << "added right " << right << std::endl;
     string_tree::iterator right_left = data.m_tree.append(right,"right_left");
+    std::cerr << "added right_left " << right_left << std::endl;
     string_tree::iterator right_right = data.m_tree.append(right,"right_right");
+    std::cerr << "added right_right " << right_right << std::endl;
     data.add_mappings();
     std::cerr << "tree = " << std::endl << data;
+
+    // test relationships
+    if (data.m_tree.parent(left) == root)
+      std::cerr << "Success: root is parent of left" << std::endl;
+    else
+    {
+      std::cerr << "ERROR: root is not parent of left" << std::endl;
+      result = false;
+    }
+    if (data.m_tree.parent(left) != right)
+      std::cerr << "Success: right is not parent of left" << std::endl;
+    else
+    {
+      std::cerr << "ERROR: right is parent of left" << std::endl;
+      result = false;
+    }
+
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_mapped_tree,0);
@@ -192,6 +251,39 @@ int main(unsigned argc, char* argv[])
       stlplus::restore_from_file(MASTER,master,restore_mapped_tree,0);
       result &= compare(data,master);
     }
+
+    // experiment with iterators
+    data.m_tree.erase(right_right);
+    std::cerr << "erased right_right - tree = " << std::endl << data;
+
+    // dereference an erased iterator
+    try
+    {
+      std::cerr << "Test Illegal dereference of iterator" << std::endl;
+      string_tree::iterator illegal = data.m_tree.parent(right_right);
+      // should not reach here
+      std::cerr << "ERROR: failed to throw exception for iterator" << illegal << std::endl;
+      result = false;
+    }
+    catch(std::exception& except)
+    {
+      std::cerr << "Success: caught exception " << except.what() << std::endl;
+    }
+
+    // use an iterator on the wrong tree
+    try
+    {
+      std::cerr << "Test Illegal use of iterator on wrong tree" << std::endl;
+      string_tree::iterator illegal = restored.m_tree.parent(left);
+      // should not reach here
+      std::cerr << "ERROR: failed to throw exception for iterator" << illegal << std::endl;
+      result = false;
+    }
+    catch(std::exception& except)
+    {
+      std::cerr << "Success: caught exception " << except.what() << std::endl;
+    }
+
   }
   catch(std::exception& except)
   {

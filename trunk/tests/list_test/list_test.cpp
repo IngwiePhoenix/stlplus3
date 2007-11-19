@@ -1,10 +1,10 @@
-#include <string>
-#include <list>
-#include <iostream>
 #include "persistence.hpp"
 #include "file_system.hpp"
 #include "string_stl.hpp"
 #include "string_basic.hpp"
+#include <string>
+#include <list>
+#include <iostream>
 
 #define SIZE 50
 #define NUMBER 50
