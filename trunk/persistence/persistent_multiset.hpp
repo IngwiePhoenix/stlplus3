@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_MULTISET
 #define STLPLUS_PERSISTENT_MULTISET
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Persistence of STL multiset
+//   Persistence of STL multiset
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include "persistent_contexts.hpp"
 #include <set>
 

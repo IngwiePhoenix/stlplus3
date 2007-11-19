@@ -1,12 +1,12 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  template implementations
+//   template implementations
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "print_sequence.hpp"
 
 namespace stlplus

@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_FLOAT
 #define STLPLUS_STRING_FLOAT
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Convert a float/double to/from string
+//   Convert a float/double to/from string
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "format_types.hpp"
 #include <string>
 #include <stdexcept>

@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_SEQUENCE
 #define STLPLUS_STRING_SEQUENCE
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate string representations of sequences represented by forward iterators
+//   Generate string representations of sequences represented by forward iterators
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include <string>
 
 namespace stlplus

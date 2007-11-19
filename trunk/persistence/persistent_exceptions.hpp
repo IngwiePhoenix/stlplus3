@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_EXCEPTIONS
 #define STLPLUS_PERSISTENT_EXCEPTIONS
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Exceptions thrown by persistence routines
+//   Exceptions thrown by persistence routines
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include <stdexcept>
 #include <string>
 

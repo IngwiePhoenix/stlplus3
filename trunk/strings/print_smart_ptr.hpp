@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_SMART_PTR
 #define STLPLUS_PRINT_SMART_PTR
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a smart pointer
+//   Generate a string representation of a smart pointer
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "smart_ptr.hpp"
 #include <string>
 #include <iostream>

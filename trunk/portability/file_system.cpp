@@ -1,20 +1,20 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  This is a portable interface to the file system.
+//   This is a portable interface to the file system.
 
-  The idea is that you write all file system access code using these functions,
-  which are ported to all platforms that we are interested in. Therefore your
-  code is inherently portable.
+//   The idea is that you write all file system access code using these functions,
+//   which are ported to all platforms that we are interested in. Therefore your
+//   code is inherently portable.
 
-  Native Windows version: switched on by macro _WIN32 which is defined by VC++/Borland/Mingw compilers
-  Unix/Gnu version:   default variant, no compiler directives are required but _WIN32 must be absent
-  Cygwin/Gnu version: as Unix version but with additional support for Windows drive letters
+//   Native Windows version: switched on by macro _WIN32 which is defined by VC++/Borland/Mingw compilers
+//   Unix/Gnu version:   default variant, no compiler directives are required but _WIN32 must be absent
+//   Cygwin/Gnu version: as Unix version but with additional support for Windows drive letters
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "file_system.hpp"
 #include "wildcard.hpp"
 #include <stdio.h>

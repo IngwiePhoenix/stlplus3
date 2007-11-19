@@ -1,19 +1,19 @@
 #ifndef STLPLUS_FILE_SYSTEM
 #define STLPLUS_FILE_SYSTEM
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Simplified access to the File system
+//   Simplified access to the File system
 
-  All file system access and filename manipulation should be done
-  with this package. Then it is only necessary to port this package
-  to port all file handling.
+//   All file system access and filename manipulation should be done
+//   with this package. Then it is only necessary to port this package
+//   to port all file handling.
 
-------------------------------------------------------------------------------*/
-#include "os_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "portability_fixes.hpp"
 #include <string>
 #include <vector>
 #include <time.h>

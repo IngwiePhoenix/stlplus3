@@ -1,16 +1,17 @@
 #ifndef STLPLUS_PRINT_INT
 #define STLPLUS_PRINT_INT
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Print integer types
+//   Print integer types
 
-  This extends the formatting available from iostream
+//   This extends the formatting available from iostream
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "format_types.hpp"
 #include <iostream>
 #include <stdexcept>

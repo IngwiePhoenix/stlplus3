@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_DEQUE
 #define STLPLUS_PERSISTENT_DEQUE
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Persistence of the STL deque
+//   Persistence of the STL deque
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include "persistent_contexts.hpp"
 #include <deque>
 

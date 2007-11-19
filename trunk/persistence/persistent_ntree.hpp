@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_NTREE
 #define STLPLUS_PERSISTENT_NTREE
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Persistence of STLplus ntree
+//   Persistence of STLplus ntree
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include "persistent_contexts.hpp"
 #include "ntree.hpp"
 

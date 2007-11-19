@@ -1,11 +1,11 @@
 #ifndef NO_STLPLUS_ARITHMETIC
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "persistent_int.hpp"
 #include "persistent_string.hpp"
 #include "persistent_inf.hpp"

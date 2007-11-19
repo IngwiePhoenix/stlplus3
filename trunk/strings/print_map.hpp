@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_MAP
 #define STLPLUS_PRINT_MAP
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a map/multimap
+//   Generate a string representation of a map/multimap
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include <string>
 #include <iostream>
 #include <map>

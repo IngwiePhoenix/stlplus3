@@ -1,15 +1,15 @@
 #ifndef STLPLUS_DEBUG
 #define STLPLUS_DEBUG
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Set of simple debug utilities, all of which are switched off by the
-  NDEBUG compiler directive
+//   Set of simple debug utilities, all of which are switched off by the
+//   NDEBUG compiler directive
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include <stdexcept>
 #include <string>
 

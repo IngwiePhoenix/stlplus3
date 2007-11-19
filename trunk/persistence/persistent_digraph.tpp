@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "persistent_int.hpp"
 #include "persistent_xref.hpp"
 
@@ -28,7 +28,7 @@ namespace stlplus
     {
       // nodes are keyed by the magic key to the node address
       // this key is then used in dumping the arc from/to pointers
-      std::pair<bool,unsigned> node_mapping = context.pointer_map(node.get_node());
+      std::pair<bool,unsigned> node_mapping = context.pointer_map(node.node());
       if (node_mapping.first) throw persistent_dump_failed("digraph: already dumped this node");
       dump_unsigned(context,node_mapping.second);
       // finally, dump the node contents
@@ -40,12 +40,12 @@ namespace stlplus
     {
       // dump the magic key to the arc address
       // this is used by iterator persistence too
-      std::pair<bool,unsigned> arc_mapping = context.pointer_map(arc.get_arc());
+      std::pair<bool,unsigned> arc_mapping = context.pointer_map(arc.node());
       if (arc_mapping.first) throw persistent_dump_failed("digraph: already dumped this arc");
       dump_unsigned(context,arc_mapping.second);
       // now dump the from/to pointers as cross-references
-      dump_xref(context,data.arc_from(arc).get_node());
-      dump_xref(context,data.arc_to(arc).get_node());
+      dump_xref(context,data.arc_from(arc).node());
+      dump_xref(context,data.arc_to(arc).node());
       // now dump the arc's data
       dump_arc(context,*arc);
     }
@@ -73,7 +73,7 @@ namespace stlplus
       restore_unsigned(context,node_magic);
       // create a new node and map the magic key onto the new address
       typename digraph<NT,AT>::iterator node = data.insert(NT());
-      context.pointer_add(node_magic,node.get_node());
+      context.pointer_add(node_magic,node.node());
       // now restore the user's data
       restore_node(context,*node);
     }
@@ -90,10 +90,10 @@ namespace stlplus
       restore_xref(context,from);
       restore_xref(context,to);
       // create an arc with these from/to pointers
-      typename digraph<NT,AT>::arc_iterator arc = 
-        data.arc_insert(TYPENAME digraph<NT,AT>::iterator(&data,from), 
-                        TYPENAME digraph<NT,AT>::iterator(&data,to));
-      context.pointer_add(arc_magic,arc.get_arc());
+      TYPENAME digraph<NT,AT>::arc_iterator arc = 
+        data.arc_insert(TYPENAME digraph<NT,AT>::iterator(from), 
+                        TYPENAME digraph<NT,AT>::iterator(to));
+      context.pointer_add(arc_magic,arc.node());
       // restore the user data
       restore_arc(context,*arc);
     }
@@ -106,8 +106,8 @@ namespace stlplus
                              const digraph_iterator<NT,AT,NRef,NPtr>& data)
     throw(persistent_dump_failed)
   {
-    dump_xref(context,data.get_owner());
-    dump_xref(context,data.get_node());
+    dump_xref(context,data.owner());
+    dump_xref(context,data.node());
   }
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
@@ -119,7 +119,8 @@ namespace stlplus
     digraph_node<NT,AT>* node = 0;
     restore_xref(context,owner);
     restore_xref(context,node);
-    data = digraph_iterator<NT,AT,NRef,NPtr>(owner,node);
+    data = digraph_iterator<NT,AT,NRef,NPtr>(node);
+    data.assert_owner(owner);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -129,8 +130,8 @@ namespace stlplus
                                  const digraph_arc_iterator<NT,AT,NRef,NPtr>& data)
     throw(persistent_dump_failed)
   {
-    dump_xref(context,data.get_owner());
-    dump_xref(context,data.get_arc());
+    dump_xref(context,data.owner());
+    dump_xref(context,data.node());
   }
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
@@ -142,7 +143,8 @@ namespace stlplus
     digraph_arc<NT,AT>* arc = 0;
     restore_xref(context,owner);
     restore_xref(context,arc);
-    data = digraph_arc_iterator<NT,AT,NRef,NPtr>(owner,arc);
+    data = digraph_arc_iterator<NT,AT,NRef,NPtr>(arc);
+    data.assert_owner(owner);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

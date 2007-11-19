@@ -1,16 +1,16 @@
 #ifndef STLPLUS_STRING_STL
 #define STLPLUS_STRING_STL
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Template string conversions for pointers and STL containers
+//   Template string conversions for pointers and STL containers
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 
-#include "string_pointer.hpp"
+#include "string_string.hpp"
 #include "string_sequence.hpp"
 #include "string_bitset.hpp"
 #include "string_list.hpp"

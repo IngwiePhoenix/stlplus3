@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_INT
 #define STLPLUS_STRING_INT
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Convert integer types to/from string
+//   Convert integer types to/from string
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "format_types.hpp"
 #include <string>
 #include <stdexcept>

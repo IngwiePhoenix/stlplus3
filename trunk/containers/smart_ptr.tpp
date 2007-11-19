@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
 {
@@ -327,11 +327,13 @@ namespace stlplus
   void smart_ptr_base<T,C>::make_alias(void* handle)
   {
     smart_ptr_holder<T>* r_holder = (smart_ptr_holder<T>*)handle;
-    if (m_holder == r_holder) return;
-    if (m_holder->decrement())
-      delete m_holder;
-    m_holder = r_holder;
-    m_holder->increment();
+    if (m_holder != r_holder)
+    {
+      if (m_holder->decrement())
+        delete m_holder;
+      m_holder = r_holder;
+      m_holder->increment();
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////

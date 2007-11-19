@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "persistent_bool.hpp"
 #include "persistent_int.hpp"
 #include "persistent_xref.hpp"
@@ -46,8 +46,9 @@ namespace stlplus
     std::pair<bool,unsigned> mapping = context.pointer_map(&tree);
     if (mapping.first) throw persistent_dump_failed("ntree: already dumped this tree");
     dump_unsigned(context,mapping.second);
-    // now dump the tree contents
+    // now dump the tree contents - start with a flag to indicate whether the tree is empty
     dump_bool(context, tree.empty());
+    // now recursively dump the contents
     if (!tree.empty())
       dump_ntree_r<T,D>(context,tree,tree.root(),dump_fn);
   }
@@ -109,6 +110,7 @@ namespace stlplus
                            const ntree_iterator<T,TRef,TPtr>& data) 
     throw(persistent_dump_failed)
   {
+    data.assert_valid();
     dump_xref(context,data.owner());
     dump_xref(context,data.node());
   }
@@ -122,7 +124,8 @@ namespace stlplus
     ntree_node<T>* node = 0;
     restore_xref(context,owner);
     restore_xref(context,node);
-    data = ntree_iterator<T,TRef,TPtr>(owner,node);
+    data = ntree_iterator<T,TRef,TPtr>(node->m_master);
+    data.assert_valid(owner);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

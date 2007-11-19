@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_VECTOR
 #define STLPLUS_PRINT_VECTOR
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a vector
+//   Generate a string representation of a vector
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -23,7 +24,7 @@ namespace stlplus
   void print_vector(std::ostream& device,
                     const std::vector<T>& values,
                     S print_fn,
-                    const std::string& separator = ",");
+                    const std::string& separator);
 
   // specialisation for vector<bool> which has a different implementation
   void print_bool_vector(std::ostream& device, const std::vector<bool>& values);

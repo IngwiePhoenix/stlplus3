@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_ENUM
 #define STLPLUS_PERSISTENT_ENUM
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Persistence of enumeration types
+//   Persistence of enumeration types
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include "persistent_contexts.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

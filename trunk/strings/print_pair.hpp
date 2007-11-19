@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_PAIR
 #define STLPLUS_PRINT_PAIR
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a pair
+//   Generate a string representation of a pair
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include <map>
 #include <string>
 #include <iostream>

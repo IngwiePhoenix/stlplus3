@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_TRIPLE
 #define STLPLUS_STRING_TRIPLE
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a triple
+//   Generate a string representation of a triple
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "triple.hpp"
 #include <string>
 

@@ -1,12 +1,12 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  use the unsigned long representation for pointers
+//   use the unsigned long representation for pointers
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "print_address.hpp"
 #include "print_int.hpp"
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,30 +1,30 @@
 #ifndef STLPLUS_SMART_PTR
 #define STLPLUS_SMART_PTR
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  A smart pointer is a memory-managing pointer to an object. If you like, it
-  is a zero-dimensional container. 
+//   A smart pointer is a memory-managing pointer to an object. If you like, it
+//   is a zero-dimensional container. 
 
-  Assignment of smart pointers result in multiple aliases of the same object.
-  The term alias is used to differentiate from conventional pointers because
-  the semantics are different.
+//   Assignment of smart pointers result in multiple aliases of the same object.
+//   The term alias is used to differentiate from conventional pointers because
+//   the semantics are different.
 
-  Aliases can be turned into copies if the pointed-to class supports copying.
+//   Aliases can be turned into copies if the pointed-to class supports copying.
 
-  The base class is smart_ptr_base which defines the common interface. Then
-  there are three subclasses which have the same interface but different copy
-  semantics:
+//   The base class is smart_ptr_base which defines the common interface. Then
+//   there are three subclasses which have the same interface but different copy
+//   semantics:
 
-  - smart_ptr        for simple types and classes which have copy constructors
-  - smart_ptr_clone  for polymorphic class hierarchies which are copied using a clone method
-  - smart_ptr_nocopy for any class that cannot or should not be copied
+//   - smart_ptr        for simple types and classes which have copy constructors
+//   - smart_ptr_clone  for polymorphic class hierarchies which are copied using a clone method
+//   - smart_ptr_nocopy for any class that cannot or should not be copied
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
 #include "exceptions.hpp"
 #include <map>
 #include <string>

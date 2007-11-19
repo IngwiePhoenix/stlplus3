@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_FOURSOME
 #define STLPLUS_PRINT_FOURSOME
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a foursome
+//   Generate a string representation of a foursome
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "foursome.hpp"
 #include <string>
 #include <iostream>

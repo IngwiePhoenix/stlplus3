@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PERSISTENT_DIGRAPH
 #define STLPLUS_PERSISTENT_DIGRAPH
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Persistence of STLplus digraph
+//   Persistence of STLplus digraph
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "persistence_fixes.hpp"
 #include "persistent_contexts.hpp"
 #include "digraph.hpp"
 

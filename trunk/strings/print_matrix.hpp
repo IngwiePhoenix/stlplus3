@@ -1,14 +1,15 @@
 #ifndef STLPLUS_PRINT_MATRIX
 #define STLPLUS_PRINT_MATRIX
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Generate a string representation of a matrix
+//   Generate a string representation of a matrix
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "matrix.hpp"
 #include <string>
 #include <iostream>

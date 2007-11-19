@@ -1,16 +1,17 @@
 #ifndef STLPLUS_PERSISTENT_BASIC
 #define STLPLUS_PERSISTENT_BASIC
-/*------------------------------------------------------------------------------
-
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
-
-  Persistence of basic types
-
-  ------------------------------------------------------------------------------*/
 ////////////////////////////////////////////////////////////////////////////////
 
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
+
+//   Persistence of basic types
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+#include "persistence_fixes.hpp"
 #include "persistent_bool.hpp"
 #include "persistent_int.hpp"
 #include "persistent_float.hpp"

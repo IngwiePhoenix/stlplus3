@@ -1,15 +1,15 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Simple wildcard matching function.
+//   Simple wildcard matching function.
 
-  WARNING: wheel re-invention follows
-  Given that all shells perform wildcard matching, why don't the library writers put it in the C run-time????????
+//   WARNING: wheel re-invention follows
+//   Given that all shells perform wildcard matching, why don't the library writers put it in the C run-time????????
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "wildcard.hpp"
 
 namespace stlplus

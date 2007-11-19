@@ -1,15 +1,15 @@
 #ifndef STLPLUS_TCP
 #define STLPLUS_TCP
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  A platform-independent (Unix and Windoze anyway) interface to TCP
+//   A platform-independent (Unix and Windoze anyway) interface to TCP
 
-  ------------------------------------------------------------------------------*/
-#include "os_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "portability_fixes.hpp"
 #include <string>
 
 namespace stlplus

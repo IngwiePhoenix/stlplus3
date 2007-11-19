@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_BOOL
 #define STLPLUS_STRING_BOOL
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Conversion of string to/from bool
+//   Conversion of string to/from bool
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "format_types.hpp"
 #include <string>
 #include <stdexcept>

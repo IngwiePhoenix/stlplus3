@@ -1,18 +1,18 @@
 #ifndef STLPLUS_FOURSOME
 #define STLPLUS_FOURSOME
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton, from an original by Dan Milton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton, from an original by Dan Milton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  The next in the series pair->triple->foursome
+//   The next in the series pair->triple->foursome
 
-  Originally called quadruple but that clashed (as did quad) with system
-  libraries on some operating systems
+//   Originally called quadruple but that clashed (as did quad) with system
+//   libraries on some operating systems
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
 
 namespace stlplus
 {

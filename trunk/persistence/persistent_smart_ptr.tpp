@@ -1,10 +1,10 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 #include "persistent_int.hpp"
 #include "persistent_pointer.hpp"
 #include "persistent_callback.hpp"
@@ -85,7 +85,7 @@ namespace stlplus
     // dump the contents but only if this is the first time this object has been seen
     // use the existing routines for ordinary pointers to dump the contents
     if (!mapping.first)
-      dump_callback<T>(context,data.pointer());
+      dump_callback(context,data.pointer());
   }
 
   template<typename T>
@@ -113,7 +113,7 @@ namespace stlplus
       context.pointer_add(magic,data.handle());
       // now restore the object
       T* value = 0;
-      restore_callback<T>(context,value);
+      restore_callback(context,value);
       data.set(value);
     }
   }
@@ -137,7 +137,7 @@ namespace stlplus
     // dump the contents but only if this is the first time this object has been seen
     // use the existing routines for ordinary pointers to dump the contents
     if (!mapping.first)
-      dump_interface<T>(context,data.pointer());
+      dump_interface(context,data.pointer());
   }
 
   template<typename T>
@@ -165,7 +165,7 @@ namespace stlplus
       context.pointer_add(magic,data.handle());
       // now restore the object
       T* value = 0;
-      restore_interface<T>(context,value);
+      restore_interface(context,value);
       data.set(value);
     }
   }

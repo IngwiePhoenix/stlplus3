@@ -1,14 +1,16 @@
 #ifndef STLPLUS_PERSISTENT_CONTEXTS
 #define STLPLUS_PERSISTENT_CONTEXTS
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Core context classes used to control the persistent dump/restore operations
+//   Core context classes used to control the persistent dump/restore operations
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+
+#include "persistence_fixes.hpp"
 #include "persistent.hpp"
 #include <iostream>
 #include <map>

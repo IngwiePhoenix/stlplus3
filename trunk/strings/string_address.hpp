@@ -1,14 +1,15 @@
 #ifndef STLPLUS_STRING_ADDRESS
 #define STLPLUS_STRING_ADDRESS
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Functions for converting addresses to/from strings
+//   Functions for converting addresses to/from strings
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "format_types.hpp"
 #include <string>
 #include <stdexcept>

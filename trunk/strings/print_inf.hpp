@@ -1,16 +1,17 @@
 #ifndef STLPLUS_PRINT_INF
 #define STLPLUS_PRINT_INF
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  String conversion functions for the infinite precision integer type inf
+//   String conversion functions for the infinite precision integer type inf
 
-  The conversion supports all the formatting modes defined on format_types
+//   The conversion supports all the formatting modes defined on format_types
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+#include "strings_fixes.hpp"
 #include "inf.hpp"
 #include "format_types.hpp"
 #include <stdexcept>

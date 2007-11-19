@@ -1,14 +1,14 @@
 #ifndef STLPLUS_PERSISTENT_STLPLUS
 #define STLPLUS_PERSISTENT_STLPLUS
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author:    Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author:    Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  Set of persistence routines for the STLplus classes
+//   Set of persistence routines for the STLplus classes
 
-  ------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
 
 #ifndef NO_STLPLUS_CONTAINERS
 #include "persistent_smart_ptr.hpp"

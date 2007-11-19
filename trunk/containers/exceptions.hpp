@@ -1,15 +1,15 @@
 #ifndef STLPLUS_EXCEPTIONS
 #define STLPLUS_EXCEPTIONS
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  Author: Andy Rushton
-  Copyright: (c) Andy Rushton, 2007
-  License:   BSD License, see ../docs/license.html
+//   Author: Andy Rushton
+//   Copyright: (c) Andy Rushton, 2007
+//   License:   BSD License, see ../docs/license.html
 
-  The set of general exceptions thrown by STLplus components
+//   The set of general exceptions thrown by STLplus components
 
-------------------------------------------------------------------------------*/
-#include "template_fixes.hpp"
+////////////////////////////////////////////////////////////////////////////////
+#include "containers_fixes.hpp"
 #include <stdexcept>
 #include <string>
 
