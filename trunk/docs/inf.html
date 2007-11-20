@@ -454,7 +454,7 @@ inf to_inf(const std::string&amp;, unsigned radix = 0)
 documentation for the meaning of the extra parameters. The default behaviour is
 a simple decimal number.</p>
 
-<p>There are also <a href="textio.html">TextIO</a> input (&gt;&gt;) and output
+<p>There are also IOStream input (&gt;&gt;) and output
 (&lt;&lt;) operators
 for the inf type so that integer values can be written to and read from a file
 or other I/O device:</p>
@@ -468,7 +468,7 @@ std::cout &lt;&lt; "the value is " &lt;&lt; a &lt;&lt; std::endl;
 
 <pre class="cpp">
 inf a;
-fin &gt;&gt; a;
+std::cin &gt;&gt; a;
 </pre>
 
 <p>As an example, here's the code to generate and display a googol. As you may
@@ -483,8 +483,7 @@ for (unsigned radix = 2; radix &lt;= 36; radix++)
   std::cout &lt;&lt; "base " &lt;&lt; radix &lt;&lt; " = " &lt;&lt; to_string(googol, radix) &lt;&lt; std::endl;
 </pre>
 
-<p>This code prints the googol in every radix from 2 to 36. The output looks
-like this:</p>
+<p>This code prints the googol in every radix from 2 to 36. The output looks like this:</p>
 
 <pre class="terminal">
 a googol is:

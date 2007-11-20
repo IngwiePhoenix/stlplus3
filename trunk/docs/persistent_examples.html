@@ -489,10 +489,10 @@ devices ofstream and ifstream.</p>
 <h2 id="interfaces">Polymorphic Classes using Interfaces</h2>
 
 <p>The concepts relating to making polymorphic types persistent are explained in the relevant page
-on <a href="persistent_polymorph.html">persistent polymorphs</a>. This section will work through an example.</p>
+on <a href="persistent_pointers.html#interfaces">persistent polymorphs</a>. This section will work through an example.</p>
 
 <p>To make a polymorphic class persistent, the first stage is to derive the base class of your
-family of polymorphic classes from the <a href="persistent.html">persistent interface</a>.</p>
+family of polymorphic classes from the <a href="persistent_pointers.html#interface">persistent interface</a>.</p>
 
 <pre class="cpp">
 #include "persistent_interface.hpp"
@@ -808,7 +808,7 @@ void restore(stlplus::restore_context&amp; context, base_vector&amp; vec)
 persistent in an object-oriented way through inheritance and virtual methods. However, it is not
 always possible to use this approach. For example, you might want to make a class persistent that
 you cannot change. The details of how this callback approach works is explained in the relevant page
-on <a href="persistent_polymorph.html">persistence of polymorphic types</a>. This section works
+on <a href="persistent_pointers.html#callback">persistence of polymorphic types</a>. This section works
 through an example.</p>
 
 <p>Consider the following example:</p>
