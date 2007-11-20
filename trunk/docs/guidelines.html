@@ -55,8 +55,6 @@ C++ Library Collection
 </ul>
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>These are a set of basic rules that I developed at a previous company that I worked for to try to
@@ -64,9 +62,6 @@ minimise the incompatibilities in interfaces between different people's code by 
 set of coding rules and guidelines. They are intended to be a minimum set since I don't see the
 point in dictating silly things like code layout. </p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="1">1. Use the STL</h2>
 
@@ -99,9 +94,6 @@ char*. Indeed, char* should be considered obsolete.</p>
 haven't found a <em>good</em> one yet. A reasonably-useful online guide is to be found at 
 <a href="http://www.cplusplus.com/">CPlusPlus.com</a>.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="2">2. Use STLplus</h2>
 
@@ -122,9 +114,6 @@ it provides a lot of utilities which you will find useful.</p>
 <tr><td>foursome</td><td>A container for holding a collection of four related objects</td></tr>
 </table>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="3">3. Use std::string</h2>
 
@@ -144,9 +133,6 @@ The wrapper function should have only std::string in the interface.</p>
 considered obsolete and either not used - if there is a C++ equivalent - or wrapped in
 such a C++ layer before use.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="4">4. Use IOStream</h2>
 
@@ -163,9 +149,6 @@ that any data structure that is dumped can later be restored - it is a two-way m
 text I/O is typically human-readable but one-way. See the <a href="persistence.html">persistence</a>
 functions for details.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="5">5. Modularise</h2>
 
@@ -186,9 +169,6 @@ is to have a third file type with a .tpp extension which contains template imple
 #include at the end of the .hpp file that declares the templates so that any code calling a template
 will have access to both declaration and implementation.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="6">6. #Include Rules</h2>
 
@@ -264,9 +244,6 @@ puts the header into the std:: namespace:</p>
 started, but you could alternatively refer to the contents of stdlib with the
 std:: prefix. </p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="7">7. Exceptions</h2>
 
@@ -283,9 +260,6 @@ impact on normal operation.</p>
 function, setting a flag, dropping out of a loop or other 'normal' C++ operations. Only program
 failures should be handled by exceptions.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="8">8. New/Delete versus Malloc/Free</h2>
 
@@ -307,9 +281,6 @@ but in a way which could make them incompatible with <code>malloc</code> and <co
 consider <code>malloc</code>, <code>realloc</code> and <code>free</code> to be obsolete, which of course they
 are, along with most of the C runtime.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="9">9. No Static Objects</h2>
 
@@ -338,9 +309,6 @@ bool do_something_now(...)
 }
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="10">10. Make your code portable</h2>
 
@@ -383,9 +351,6 @@ common platform-independent interface in the same way as the above STLPLus subsy
 therefore be no &quot;#ifdef WIN32&quot; or other platform-specific compiler switches anywhere else
 in your application code.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="11">11. Avoid the C Runtime Library</h2>
 
@@ -435,7 +400,6 @@ dynamically allocates more memory as required, so you can get on with writing th
 <p>Note also that rule <a href="#7">7</a> explained why malloc/free/realloc
 are obsolete and potentially dangerous.</p>
 
-</div>
 
 </div>
 

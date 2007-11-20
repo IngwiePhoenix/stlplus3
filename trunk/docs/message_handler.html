@@ -59,8 +59,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>The message handler subsystem is a class which can be used to perform all message printing in an
@@ -101,9 +99,6 @@ from) and inlining a function, you could push the original function call onto
 the context stack. Then, any error messages will be printed with supplementary
 messages showing the context of the error.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="initialisation">Initialisation</h2>
 
@@ -172,9 +167,6 @@ in the case where reading the message file fails, either because the file doesn'
 there was a format error in the file. This will be dealt with in more detail in the section on <a
 href="#message_files">Handling Message Files</a>.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="message_files">Handling Message Files</h2>
 
@@ -247,9 +239,6 @@ IAM             My name is @0!
 IAM             Je m'appelle @0!
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="formats">Format Control</h2>
 
@@ -323,9 +312,6 @@ POSITION     "@1" (@2,@3) : @0
 <p>These can be overridden in your own message files. This will be necessary for multi-lingual
 support unless you are happy to have English keywords starting each message.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="position">Source File Position Specifications</h2>
 
@@ -348,9 +334,6 @@ public:
 };
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="show">Source Code Display Control</h2>
 
@@ -363,9 +346,6 @@ void message_handler::show_position(void);
 void message_handler::hide_position(void);
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="messages">Printing Messages</h2>
 
@@ -468,9 +448,6 @@ message handlers.</p>
 exception if the error limit is reached. The fatal functions always throw a
 stlplus::message_handler_fatal_error exception.</p> 
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="plaintext">Printing Plain Text</h2>
 
@@ -488,9 +465,6 @@ bool message_handler::plaintext (const std::string&amp; text);
 words, do not terminate the text with a newline because the method will do
 it).</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="error_count">Handling Error Counts and Error Limit</h2>
 
@@ -520,9 +494,6 @@ void message_handler::reset_error_count(void);
 unsigned message_handler::error_count(void) const;
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="context">Context Stack</h2>
 
@@ -582,9 +553,6 @@ stlplus::message_context message_handler::auto_push_context(const std::string& i
 <p>In use the return object should be assigned to a local variable. When that
 local variable goes out of scope, the context stack is popped.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="supplement">Supplementary Messages</h2>
 
@@ -620,9 +588,6 @@ errors.error(current_position, "VDK_COMPONENT_AMBIGUOUS");
 "comp3.cpp" (48,8) supplement: this is one possible solution
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions Thrown by Message Handler</h2>
 
@@ -802,7 +767,6 @@ catch(std::exception&amp; exception)
 }
 </pre>
 
-</div>
 
 </div>
 

@@ -59,8 +59,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This header provides access to a set of operating-system independent file and
@@ -76,9 +74,6 @@ manipulation even where portability is not an issue.</p>
 names and full paths as strings. There are also functions for testing existence
 of files and directories and simply testing access permissions.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="terminology">Terminology</h2>
 
@@ -143,9 +138,6 @@ filespec.</dd>
 
 </dl>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="classifying">Classifying Functions</h2>
 
@@ -158,9 +150,6 @@ bool stlplus::is_folder (const std::string&amp; thing);
 bool stlplus::is_file (const std::string&amp; thing);
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="files">File Functions</h2>
 
@@ -243,9 +232,6 @@ followed by stlplus::file_delete of the old file. If the copy succeeds but the d
 fails, it deletes the new file to restore the original state. Returns true if
 the old file has gone and the new one is there.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="access">File Access Mode Functions</h2>
 
@@ -320,9 +306,6 @@ documented. Unless you are writing low-level system tools, there is no need to
 go there. If you are writing low-level system tools, then they will be
 platform-specific and so this package will be of no use to you anyway.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="timestamps">File Timestamp Functions</h2>
 
@@ -345,9 +328,6 @@ last read or written to.</p>
 <p>See <a href="time.html">time.hpp</a> for some simple utilities for
 manipulating the time_t type.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="filespec">File Specification Functions</h2>
 
@@ -390,9 +370,6 @@ in an operating-system independent way (for example, on Windows, the folder
 separator is '\' instead of '/'). They avoid a lot of fiddly string
 handling.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="folders">Folder Functions</h2>
 
@@ -515,9 +492,6 @@ simplicity.</p>
 <p>The levels argument specifies the number of directory levels to go up. The
 default is 1.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="folder_contents">Folder Contents Functions</h2>
 
@@ -558,9 +532,6 @@ allow filtering of subfolders or files, so for example only files matching the
 wildcard can be selected by setting the subfolders flag to false and the files
 flag to true.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="paths">Path Functions</h2>
 
@@ -643,9 +614,6 @@ other code that this reaslly represents a folder and not a file. For example,
 "fred/has/germs" could refer to a file or a folder called germs, but
 "fred/has/germs/" unambiguously represents a folder.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="dissection">Dissection Functions</h2>
 
@@ -711,9 +679,6 @@ std::vector&lt;std::string&gt; stlplus::filespec_elements(const std::string&amp;
 
 <p>As above but for a filespec, so the last element will be the filename part.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="lookup">Lookup Functions</h2>
 
@@ -816,7 +781,6 @@ int main(int argc, char* argv[])
   ...
 </pre>
 
-</div>
 
 </div>
 

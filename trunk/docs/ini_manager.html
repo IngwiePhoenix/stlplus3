@@ -52,8 +52,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>The Ini manager is a subsystem class which manages one or more Ini files.
@@ -101,9 +99,6 @@ be extracted as a vector of strings.</p>
 <p>The Ini manager also allows variables to be set. This is only allowed in
 the highest priority file - in other words the user's local file.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="initialise">Ini File Management</h2>
 
@@ -135,9 +130,6 @@ return false.</p>
 written to disk, thus making the change persistent. The destructor also saves
 to disk.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="sections">Section Management</h2>
 
@@ -163,9 +155,6 @@ i.e. the first one added to the Ini manager. Thus, for example, erasing a
 section only erases it from the local file, not from the system file, so the
 section may still exist.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="variables">Variable Management</h2>
 
@@ -225,9 +214,6 @@ visible value of a variable. In other words, the value that would be returned
 by variable_value. The variable_names function returns the set of all
 variables in a section, regardless of which Ini file they came from.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="diagnostics">Diagnostic Print Routines</h2>
 
@@ -238,7 +224,6 @@ interpretation of the contents of all the Ini files that have been loaded.</p>
 std::ostream&amp; operator &lt;&lt; (std::ostream&amp;, const ini_manager&amp;);
 </pre>
 
-</div>
 
 </div>
 

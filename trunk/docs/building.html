@@ -54,8 +54,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>The STLplus library collection is intended to be portable between operating systems and
@@ -72,9 +70,6 @@ documentation in "help" and error messages in "messages".</p>
 <p>The simplest approach is to simply build all of the libraries - using libraries stand-alone takes
 a bit more work.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="makefiles">Gnu Gcc Using My Makefiles</h2>
 
@@ -302,9 +297,6 @@ include ../../makefiles/gcc.mak
 </li>
 </ul>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="microsoft">Microsoft Visual Studio on Windows</h2>
 
@@ -407,9 +399,6 @@ try building again.</p>
 Multi-Threaded DLL and the Release configuration links with the Multi-Threaded DLL. You can either
 adopt the same conventions or change your copy of the stlplus project file.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="standalone">Building Stand-alone Libraries</h2>
 
@@ -437,9 +426,6 @@ portability library stand-alone, build it with these compiler directives. The sa
 be used to build any file in your program that includes headers from the portability library. The
 simplest way to do this is to enable the directives for the whole project.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="general">General Guidelines for Building STLplus</h2>
 
@@ -566,9 +552,6 @@ ld ... $STLPLUS3/portability/&lt;target_dir&gt;/libportability.a $STLPLUS3/conta
 <p>In this case, &lt;target_dir&gt; will be something like <code>LINUX-alpha-debug</code> for a
 debug build and <code>LINUX-alpha-release</code> for a release build.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="cygwin">Unix-emulation build on Windows using Cygwin and Gnu gcc</h2>
 
@@ -589,9 +572,6 @@ environment.</p>
 <p>You need to install Cygwin and, if you like it, XEmacs, before you can build the Cygwin version
 of the STLplus library. Then simply follow the instructions for building STLplus with Gnu tools.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="cygming">Native build on Windows using Cygwin and Gnu gcc</h2>
 
@@ -635,9 +615,6 @@ export CYGMING=on
 make
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="mingw">Native build on Windows using MinGW Gnu gcc</h2>
 
@@ -654,9 +631,6 @@ environment.</p>
 <p><b>Note:</b>The makefile system will mis-identify the compiler as a Cygwin build if you run the
 MinGW compilers in the Cygwin shell, but it will in fact build correctly as a MinGW build.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="unix-other">Other Unix builds using Gnu gcc</h2>
 
@@ -740,7 +714,6 @@ using the SUBDIR variable instead of PLATFORM. The SUBDIR variable includes a pr
 platform and the suffix for the different build configuration, so the debug build will be called
 CYGWIN-debug for the Cygwin build and LINUX-debug for the Linux build.</p>
 
-</div>
 
 </div>
 

@@ -60,8 +60,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This component is an infinite-precision integer type which, through operator
@@ -75,9 +73,6 @@ string representation and conversion in any base.</p>
 If you need a high-performance numeric library it is recommended that the Gnu Multi-Precision (GMP)
 library is used; it is seriously fast.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="declaring">Declaring and Initialising inf objects</h2>
 
@@ -132,9 +127,6 @@ with a googol (10<sup>100</sup>):</p>
 inf googol("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="assignments">Assignments</h2>
 
@@ -154,9 +146,6 @@ d = 0;     // legal
 initialisation and in fact calls a constructor and not an assignment operator,
 whilst the second is a true assignment.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="constants">Constant Values</h2>
 
@@ -185,9 +174,6 @@ a += inf(25);
 type inf which is initialised with an int argument. The resultant temporary can
 then be passed as the right-hand argument of the += operator.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="conversions">Converting an inf to an integer type</h2>
 
@@ -228,9 +214,6 @@ method actually looks like:</p>
 short inf::to_short(bool check = false) const throw(std::overflow_error)
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="bits">Bit Manipulation</h2>
 
@@ -279,9 +262,6 @@ a.preset(0, true);
 <p>The preset function is particularly useful when the bool value is the result
 of an expression rather than a constant as here.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="tests">Value Tests</h2>
 
@@ -305,9 +285,6 @@ if (!b) // tests for b not having a value, i.e. zero
   ...
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="comparisons">Comparisons</h2>
 
@@ -329,9 +306,6 @@ if (a == inf(0))
   ...
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="logical">Bitwise Logical Operations</h2>
 
@@ -363,9 +337,6 @@ bitwise-and of an 8-bit inf with a 16-bit inf is a 16-bit inf.</p>
 <p>The self-modifying operations are: invert, &amp;=, |= and ^= (xor). The
 value-returning operators are: ~, &amp;, | and ^.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="shift">Shift Operators</h2>
 
@@ -381,9 +352,6 @@ operators are: &lt;&lt; and &gt;&gt;.</p>
 a &lt;&lt; 2;
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="arithmetic">Arithmetic Operations</h2>
 
@@ -411,9 +379,6 @@ b = abs(a);
 <p>Note that the / and % operators can throw the inf::divide_by_zero
 exception.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="increment">Increment and Decrement Operators</h2>
 
@@ -424,9 +389,6 @@ post-increment/decrement (e.g. i++). The pre-increment operator increments the
 value and returns the incremented value. the post-increment increments the value
 but returns the previous non-incremented value.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="strings">String Representation and I/O</h2>
 
@@ -527,9 +489,6 @@ base 36 = 36#2hqbczu2ow52bala8lgc3s5y9mm5tiy0vo9tke25466gfi6ax8gs22x7kuu8l1tds
 <p>Note how hash format has been used except for base 10, which uses no
 prefix, base 2 which uses 0b, base 8 which uses 0 and base 16 which uses 0x.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions</h2>
 
@@ -586,7 +545,6 @@ catch (std::logic_error&amp; e)
 }
 </pre>
 
-</div>
 
 </div>
 

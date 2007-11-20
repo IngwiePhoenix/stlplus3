@@ -56,8 +56,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>The CLI parser component is a general-purpose command-line processor
@@ -90,9 +88,6 @@ defaults and user-specified options.</p>
 
 <p>The following sections will make all this clearer.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="initialisation">Initialisation</h2>
 
@@ -206,9 +201,6 @@ void cli_parser::set_defaults(const stlplus::ini_manager&amp; defaults, const st
 bool parse(char* argv[]);
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="definitions">Option Definitions</h2>
 
@@ -430,9 +422,6 @@ with the strings "on", "true" or "1" or to off with the strings "off", "false"
 or "0". Note how the "map" option has a default in the example,
 whereas the arguments field "" and the "work" option have no default.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="ini_files">Importing Defaults from Ini Files</h2>
 
@@ -472,9 +461,6 @@ the fact that the built-in definitions provided one.</p>
 any other value is currently regarded as off, but this may change in the
 future so the use of one of these three values is recommended.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="command_line">Parsing the Command-Line</h2>
 
@@ -538,9 +524,6 @@ If the option is a multiple mode, any values from lower levels (i.e. Ini file
 or built-in defaults) are cancelled. If the option is cumulative mode, no
 previous values are cancelled.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="interpreting">Interpreting the Command-Line</h2>
 
@@ -669,9 +652,6 @@ or off (false), whilst the string_value() function returns the value of that opt
 std::string. Note that the command line values will appear as value mode options with the name ""
 (or in the example above, ID 0).
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="usage">Usage Reports</h2>
 
@@ -704,9 +684,6 @@ values:
     -help : from command line
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions thrown</h2>
 
@@ -735,9 +712,6 @@ exception.</p>
 
 </dl>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="examples">Examples</h2>
 
@@ -871,7 +845,6 @@ VLIBRARY_VERSION                  vlibrary version @0 by Andy Rushton
 # ... other messages not needed for this example
 </pre>
 
-</div>
 
 </div>
 

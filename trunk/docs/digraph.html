@@ -60,8 +60,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This component is an STL-like template class which implements a
@@ -72,9 +70,6 @@ they come from and which they go to.</p>
 <p>This document assumes you know what a graph is and only deals with how to use
 the digraph class.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="instantiation">Instantiation</h2>
 
@@ -98,9 +93,6 @@ with a string on the node and an int on the arc:</p>
 digraph&lt;string,int&gt; graph;
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="basics">Basics - Nodes, Arcs and Iterators</h2>
 
@@ -181,9 +173,6 @@ or valid.</p>
 Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
 section below on <a href="#exceptions">Exceptions</a> to see which.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="supplementary">Supplementary Data Types</h2>
 
@@ -313,9 +302,6 @@ name of the function with no parentheses. For example:</p>
 digraph&lt;my_node,my_arc&gt;::path_vector paths = graph.all_paths(from,to,select_arc_from_node);
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="graph">Whole Graph Operations</h2>
 
@@ -332,9 +318,6 @@ void clear(void);
 maintaining the connectivity of the arcs. Clever huh? The clear function, as its
 name suggests, trashes the entire contents of the graph.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="nodes">Basic Node Functions</h2>
 
@@ -547,9 +530,6 @@ node, then the value npos() is returned (that is, digraph&lt;NT,AT&gt;::npos()).
 Don't blame me for the name, I adopted the name used in the STL string template
 which serves a similar purpose.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="arcs">Basic Arc Functions</h2>
 
@@ -678,9 +658,6 @@ arc, leaving the to node untouched. Similarly the arc_move_to function only
 changes the to node and leaves the from node untouched. Finally, the arc_flip
 function swaps the from and to nodes so as to flip the arc's direction.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="adjacency">Adjacency Functions</h2>
 
@@ -733,9 +710,6 @@ const_node_vector output_adjacencies(const_iterator from) const;
 node_vector output_adjacencies(iterator from);
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="sort">Topographical Sort Algorithms</h2>
 
@@ -805,9 +779,6 @@ sgraph::node_vector sort = graph.dag_sort(select_natural);
 for me... I kept hitting against the limitations of templates, or at least their
 limitations as implemented by gcc and by VC++.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="paths">Path Algorithms</h2>
 
@@ -918,9 +889,6 @@ arc in the path. There is one path in the path_vector for each reachable nodes,
 so the set of arc_to nodes for the path_vector is also the set of all reachable
 nodes.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="print">Print Functions</h2>
 
@@ -969,9 +937,6 @@ arc:a040c40 from node:a0409d8 to node:a0409d8
 <p>As you can see, pretty unreadable, but it is possible to work out the
 connectivity of the graph from this.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions</h2>
 
@@ -1004,9 +969,6 @@ from one graph and then use it in another, then this will throw the wrong_object
 <p>These exceptions are common to all STLplus iterators and are explained in
 the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="example">Noddy Example</h2>
 
@@ -1229,7 +1191,6 @@ reachable nodes from node5 are: {node:a0409b0,node:a0409d8}
 nodes which can reach node5 are: {node:a040960,node:a040988,node:a0409b0,node:a0409d8}
 </pre>
 
-</div>
 
 </div>
 

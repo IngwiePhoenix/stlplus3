@@ -54,8 +54,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This component is an STL-like template class which implements a
@@ -71,9 +69,6 @@ implements rehashing.</p>
 <p>This document assumes you know basically what a hash table is and only deals
 with how to use the hash class.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="instantiation">Instantiation</h2>
 
@@ -152,9 +147,6 @@ to be in the range 0..bins-1, since the hash class normalises the hash value to
 this range. This means the same hash function can be used with hashes of
 different sizes.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="rehashing">Rehashing</h2>
 
@@ -232,9 +224,6 @@ can grow large compared with the number of bins. Basically a loading of greater
 than 0.5 leads to efficiency creeping down and loadings of greater than 1.0 can
 really hit performance.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="hash">Whole Hash Operations</h2>
 
@@ -257,9 +246,6 @@ efficient since the hash keeps track of its size, so it is not necessary for it
 to count the number of elements. The empty() function tests for the special case
 of an empty hash, i.e. a hash with a size() == 0.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="elements">Adding, Removing, Changing and Accessing Hash Elements</h2>
 
@@ -344,9 +330,6 @@ table["two"] = table["one"] + 1;
 change the contents of the hash. If you don't want this, either guard against
 it using present() or avoid the issue completely by using find().</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="iterators">Iterators</h2>
 
@@ -445,9 +428,6 @@ or valid.</p>
 Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
 section below on <a href="#exceptions">Exceptions</a> to see which.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="print">Diagnostic Print Routines</h2>
 
@@ -479,9 +459,6 @@ and some summary statistics. The table looks like this:</p>
 ------------------------------------------------------------------------
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions</h2>
 
@@ -514,7 +491,6 @@ from one hash and then use it in another, then this will throw the wrong_object 
 <p>These exceptions are common to all STLplus iterators and are explained in
 the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
 
-</div>
 
 </div>
 

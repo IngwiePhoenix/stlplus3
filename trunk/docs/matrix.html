@@ -55,8 +55,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This component is a 2-dimensional rectangular matrix. It is a template
@@ -80,9 +78,6 @@ with a default value which is the value produced by the default constructor of
 the contained class. For example, the default value for the <a href="smart_ptr.html">smart_ptr</a> is a
 null pointer.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="instantiation">Instantiation</h2>
 
@@ -114,9 +109,6 @@ string.</p>
 matrix&lt;string&gt; string100(10, 10, ".");
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="resize">Resizing</h2>
 
@@ -137,9 +129,6 @@ discarding the old one, so with large matrices or matrices containing large
 data structures it could prove expensive. In this case, it is recommended that
 smart pointers are used as the matrix elements.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="elements">Manipulating Elements</h2>
 
@@ -192,9 +181,6 @@ for (unsigned r = 0; r &lt; string100.rows(); r++)
     string100(r,c) = uppercase(string100(r,c));
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="fill">Fill Functions</h2>
 
@@ -228,9 +214,6 @@ this would be elements (9,0), (8,1) etc.</p>
 the other elements in the matrix with the zero value. The zero value is
 optional and defaults to the type's default constructor.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="transforms">Transforming Methods</h2>
 
@@ -245,9 +228,6 @@ creating a new matrix and copying elements from the old to the new, discarding
 the old matrix. Once again, this is expensive if the element is a large
 type.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="persistence">Persistence Functions</h2>
 
@@ -268,9 +248,6 @@ void restore_matrix(restore_context&amp; str, matrix&lt;T&gt;&amp; data) throw(p
 defining dump and restore routines for the element. If the element is a basic
 C or C++ type then it is implicitly persistent.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="print">Print Functions</h2>
 
@@ -286,7 +263,6 @@ template&lt;typename T&gt; otext&amp; print(otext&amp; str, const matrix&lt;T&gt
 template&lt;typename T&gt; otext&amp; operator &lt;&lt; (otext&amp; str, const matrix&lt;T&gt;&amp; mat);
 </pre>
 
-</div>
 
 </div>
 

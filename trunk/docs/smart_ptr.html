@@ -60,8 +60,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>The problem with using pointers to objects is that the object "leaks" if it is not deleted when
@@ -201,9 +199,6 @@ anywhere in over a megabyte of application code that I'd written in that time. W
 leak testing program, there was not a single memory leak nor double-deletion nor buffer overrun
 anywhere.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="what">What Are Smart Pointers?</h2>
 
@@ -268,9 +263,6 @@ consistent.</p>
 counter-intuitive to people unused to using smart pointers. In my opinion the power of the design
 outweighs the slight strangeness.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="variants">Smart Pointer Variants</h2>
 
@@ -305,9 +297,6 @@ with each variant a subclass of that with a different copy-functor). I use the m
 smart_ptr - as the basis of this description and then describe the differences with the variants at
 the end.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="structors">Constructing and Destroying</h2>
 
@@ -396,9 +385,6 @@ stlplus::smart_ptr&lt;std::string&gt; s1(std::string("testing"));
 name (in this case "std::string") as if it was a function call. This is a common
 convention in 21<sup>st</sup> century C++.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="assignments">Assignments</h2>
 
@@ -473,9 +459,6 @@ pointer from any other aliases and deletes the contents if this was the
 last alias to it. It then makes this smart pointer a alias to the
 parameter.</a>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="set">Setting a simple pointer</h2>
 
@@ -491,9 +474,6 @@ smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(T* data);
 
 <p>It is present in the class because some people prefer its more explicit form.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="tests">Logical Tests</h2>
 
@@ -532,9 +512,6 @@ else if (s2.null())
   &lt;null handler&gt;
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="dereference">Dereferencing Operators</h2>
 
@@ -625,9 +602,6 @@ s1.value() += " 1, 2, 3";
 s2.pointer()-&gt;insert(s2.pointer()-&gt;begin(), "testing, ");
 </pre>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="copying">Forcing a Copy</h2>
 
@@ -673,9 +647,6 @@ negligible anyway. However, some people prefer this style.</p>
 <p><b>Note:</b> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown
 in all these examples.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="clear">Clearing</h2>
 
@@ -707,9 +678,6 @@ s2.clear_unique();
 
 <p>This makes s2 null and unique, leaving s1 still pointing to its original value.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="exceptions">Exceptions Thrown</h2>
 
@@ -731,9 +699,6 @@ be copied.</dd>
 <p>See also the STLplus <a href="exceptions.html">exceptions policy</a> for a
 discussion of how exceptions are used in the library</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="cloning">Clone Variant</h2>
 
@@ -800,9 +765,6 @@ interface. The only difference is in its implementation. In every case where
 smart_ptr would copy the contained object, smart_ptr_clone clones the object
 instead.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="nocopy">Nocopy Variant</h2>
 
@@ -830,7 +792,6 @@ void smart_ptr_nocopy&lt;T&gt;::copy(const smart_ptr_nocopy&lt;T&gt;&amp; data)
 smart_ptr_nocopy&lt;T&gt; smart_ptr_nocopy&lt;T&gt;::copy(void) const
 </pre>
 
-</div>
 
 </div>
 

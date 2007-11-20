@@ -52,8 +52,6 @@ C++ Library Collection
 
 </div>
 
-<div id="documentSection">
-
 <h2 id="introduction">Introduction</h2>
 
 <p>This component contains a set of macros which provide optional debug
@@ -62,9 +60,6 @@ out when compiling a release version of software. It is also optional in that a
 program compiled for debugging will still not produce any debug output unless it
 is switched on through the environment.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="mswindows">MSWINDOWS Macro</h2>
 
@@ -86,10 +81,7 @@ MSWINDOWS which is defined if either of the above macros is defined.</p>
 #endif
 </pre>
 
-</div>
 
-
-<div id="documentSection">
 
 <h2 id="warnings">Silencing Unnecessary Warnings</h2>
 
@@ -149,10 +141,7 @@ through.</td></tr>
 
 <p>All of these tend to happen a lot in template functions.</p>
 
-</div>
 
-
-<div id="documentSection">
 
 <h2 id="minmax">minimum/maximum Template Functions</h2>
 
@@ -180,9 +169,6 @@ template&lt;typename T&gt; const T&amp; stlplus::minimum(const T&amp; l, const T
 
 <p>Use these functions to avoid the min/max problem.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="sleep">Missing sleep function on Windows</h2>
 
@@ -191,9 +177,6 @@ template&lt;typename T&gt; const T&amp; stlplus::minimum(const T&amp; l, const T
 this is implemented as <code>Sleep(DWORD millseconds)</code>. To make programs just a little
 easier to write, I implemented a <code>sleep(unsigned seconds)</code> function on Windows.</p>
 
-</div>
-
-<div id="documentSection">
 
 <h2 id="endian">stlplus::little_endian function</h2>
 
@@ -224,7 +207,6 @@ order byte 0 is the msB, whereas in little-endian order byte 0 is the lsB.</p>
 bool stlplus::little_endian(void);
 </pre>
 
-</div>
 
 </div>
 
