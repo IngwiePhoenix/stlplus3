@@ -55,7 +55,7 @@ void restore_bitset_vector(stlplus::restore_context& str, bitset_vector& data)
   stlplus::restore_vector(str, data, restore_bitset_N);
 }
 
-bool compare (bitset_vector& left, bitset_vector& right)
+bool compare (const bitset_vector& left, const bitset_vector& right)
 {
   bool result = true;
   if (left.size() != right.size())
@@ -69,14 +69,11 @@ bool compare (bitset_vector& left, bitset_vector& right)
   {
     if (left[j] != right[j])
     {
-      std::cerr 
-		  << "bitset[" 
-		  << j 
-		  << "] is different: left = " 
-		  << left[j] 
-		  << " right = " 
-		  << right[j] 
-		  << std::endl;
+      std::cerr << "bitset[" << j << "] is different: left = ";
+	  stlplus::print_bitset(std::cerr, left[j]);
+	  std::cerr << " right = ";
+	  stlplus::print_bitset(std::cerr, right[j]);
+	  std::cerr << std::endl;
       result = false;
     }
   }
