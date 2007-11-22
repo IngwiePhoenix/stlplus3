@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>containers/foursome.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>containers/foursome.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_FOURSOME</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_FOURSOME</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton, from an original by Dan Milton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Andy Rushton, 2007</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    8: </span>
+<span style="color: #ff0099">    9: </span><span style="color: #000099">//   The next in the series pair-&gt;triple-&gt;foursome</span>
+<span style="color: #ff0099">   10: </span>
+<span style="color: #ff0099">   11: </span><span style="color: #000099">//   Originally called quadruple but that clashed (as did quad) with system</span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   libraries on some operating systems</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"containers_fixes.hpp"</span>
+<span style="color: #ff0099">   16: </span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   18: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   19: </span>
+<span style="color: #ff0099">   20: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   21: </span>  <span style="color: #000099">// the foursome class</span>
+<span style="color: #ff0099">   22: </span>
+<span style="color: #ff0099">   23: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T1</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T2</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T3</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T4</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #990000">struct</span> <span style="color: #000000">foursome</span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #330033">{</span>
+<span style="color: #ff0099">   26: </span>    <span style="color: #990000">typedef</span> <span style="color: #000000">T1</span> <span style="color: #000000">first_type</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   27: </span>    <span style="color: #990000">typedef</span> <span style="color: #000000">T2</span> <span style="color: #000000">second_type</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   28: </span>    <span style="color: #990000">typedef</span> <span style="color: #000000">T3</span> <span style="color: #000000">third_type</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   29: </span>    <span style="color: #990000">typedef</span> <span style="color: #000000">T4</span> <span style="color: #000000">fourth_type</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   30: </span>
+<span style="color: #ff0099">   31: </span>    <span style="color: #000000">T1</span> <span style="color: #000000">first</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   32: </span>    <span style="color: #000000">T2</span> <span style="color: #000000">second</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   33: </span>    <span style="color: #000000">T3</span> <span style="color: #000000">third</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   34: </span>    <span style="color: #000000">T4</span> <span style="color: #000000">fourth</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   35: </span>
+<span style="color: #ff0099">   36: </span>    <span style="color: #000000">foursome</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   37: </span>    <span style="color: #000000">foursome</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">T1</span><span style="color: #330033">&amp;</span> <span style="color: #000000">p1</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T2</span><span style="color: #330033">&amp;</span> <span style="color: #000000">p2</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T3</span><span style="color: #330033">&amp;</span> <span style="color: #000000">p3</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T4</span><span style="color: #330033">&amp;</span> <span style="color: #000000">p4</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   38: </span>    <span style="color: #000000">foursome</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">foursome</span><span style="color: #330033">&lt;</span><span style="color: #000000">T1</span><span style="color: #330033">,</span><span style="color: #000000">T2</span><span style="color: #330033">,</span><span style="color: #000000">T3</span><span style="color: #330033">,</span><span style="color: #000000">T4</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">t2</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   40: </span>
+<span style="color: #ff0099">   41: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   42: </span>  <span style="color: #000099">// creation</span>
+<span style="color: #ff0099">   43: </span>
+<span style="color: #ff0099">   44: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T1</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T2</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T3</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T4</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   45: </span>  <span style="color: #000000">foursome</span><span style="color: #330033">&lt;</span><span style="color: #000000">T1</span><span style="color: #330033">,</span><span style="color: #000000">T2</span><span style="color: #330033">,</span><span style="color: #000000">T3</span><span style="color: #330033">,</span><span style="color: #000000">T4</span><span style="color: #330033">&gt;</span> <span style="color: #000000">make_foursome</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">T1</span><span style="color: #330033">&amp;</span> <span style="color: #000000">first</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T2</span><span style="color: #330033">&amp;</span> <span style="color: #000000">second</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T3</span><span style="color: #330033">&amp;</span> <span style="color: #000000">third</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">T4</span><span style="color: #330033">&amp;</span> <span style="color: #000000">fourth</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   46: </span>
+<span style="color: #ff0099">   47: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   48: </span>  <span style="color: #000099">// comparison</span>
+<span style="color: #ff0099">   49: </span>
+<span style="color: #ff0099">   50: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T1</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T2</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T3</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T4</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   51: </span>  <span style="color: #990000">bool</span> <span style="color: #990000">operator</span> <span style="color: #330033">=</span><span style="color: #330033">=</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">foursome</span><span style="color: #330033">&lt;</span><span style="color: #000000">T1</span><span style="color: #330033">,</span><span style="color: #000000">T2</span><span style="color: #330033">,</span><span style="color: #000000">T3</span><span style="color: #330033">,</span><span style="color: #000000">T4</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">left</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">foursome</span><span style="color: #330033">&lt;</span><span style="color: #000000">T1</span><span style="color: #330033">,</span><span style="color: #000000">T2</span><span style="color: #330033">,</span><span style="color: #000000">T3</span><span style="color: #330033">,</span><span style="color: #000000">T4</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">right</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   52: </span>
+<span style="color: #ff0099">   53: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   54: </span>
+<span style="color: #ff0099">   55: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">   56: </span>
+<span style="color: #ff0099">   57: </span><span style="color: #990000">#include</span> <span style="color: #009900">"foursome.tpp"</span>
+<span style="color: #ff0099">   58: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

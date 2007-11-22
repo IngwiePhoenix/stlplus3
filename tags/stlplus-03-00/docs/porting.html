@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>STLplus Library Collection - Porting State</title>
+<link rel="icon" href="plus.png" type="image/png">
+<meta name="Author" content="Andy Rushton">
+<meta name="Copyright" content="(c) Andy Rushton 2007">
+<meta name="License" content="BSD license, see license.html">
+<link rel="stylesheet" href="screen.css" type="text/css">
+</head>
+
+<body>
+
+<div id="header">
+
+<div id="headerBanner">
+<p>
+The
+<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">+</span>
+C++ Library Collection
+</p>
+</div>
+
+<div id="headerNavigation">
+<p>
+<a href="http://stlplus.sourceforge.net/">Website</a>
+<a href="index.html">Collection</a>
+</p>
+</div>
+
+
+</div>
+
+<div id="document">
+
+<div id="documentTitle">
+<h1>Porting State</h1>
+</div>
+
+<div id="documentNavigation">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#issues">Porting Issues</a></li>
+<li><a href="#progress">Porting Progress</a></li>
+</ul>
+</div>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>My intention is to port the screen library to as many platforms as I can reasonably support.
+SourceForge help here by allowing access to a wide range of different platforms that I can run
+tests on.</p>
+
+
+<h2 id="issues">Porting Issues</h2>
+
+<p>There are a number of porting issues to be overcome:</p>
+
+<dl>
+
+<dt>Different Operating Systems</dt>
+
+<dd>
+<p>One of the objectives of this library is to provide platform-independent
+access to operating system services that differ between platforms. The idea is
+to hide the implementation behind a common interface. By writing software to
+that interface, you automatically get portable software. At least, that is the
+theory.</p>
+</dd>
+
+<dt>Different CPU Architectures</dt>
+<dd>
+<p>Different CPUs have different word lengths, different byte ordering and different integer type
+definitions. The intention is that STLplus will work with all variations of these characteristics
+that I come across.</p>
+</dd>
+
+<dt>Different Compilers</dt>
+
+<dd>
+<p>The concept of portability means portability between operating systems, not necessarily
+portability between compilers. However, to cater for different tastes in compilers, under Windows
+the library will work for either the Gnu gcc compiler or the Microsoft Visual C++ compiler.</p>
+</dd>
+
+<dt>Different Compiler Versions</dt>
+
+<dd>
+<p>It is also important that software will build with different versions of each compiler, because I
+have no control over which compiler you are using and there's a good chance that you don't either.
+The STLplus library should ideally work in whatever development environment you have chosen (within
+reason). So, STLplus works with different releases of these compilers, not just the latest one. At
+the time of writing STLplus builds with all versions of gcc from version 2.95 up to 3.4 and has been
+reported as working with version 4. It also works with Visual Studio versions 6, 7 and 8 although I
+only supply project files for v6.</p>
+</dd>
+
+</dl>
+
+<p>I refer to a "platform" as a particular combination of CPU, Operating System and Compiler.</p>
+
+
+<h2 id="progress">Porting Progress</h2>
+
+<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a
+Compile Farm so that I could test STLplus on different platforms. This enabled me, for example, to
+fix problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
+withdrawn, so I can only test the library on my Windows machine. However, I can still test
+against both Unix (Cygwin emulation) and Windows, and both Visual Studio (Windows native) and Gcc
+compilers (both Windows native and Unix emulation).</p>
+
+<p>In the past, the STLplus library has been compiled with Gcc versions 2.95 to 4.1, with Visual
+Studio versions from 6 (SP5) to 8 (2005 Express Edition) and it reportedly works with the Borland
+compiler. It has been built on both 32-bit and 64-bit architectures (Intel, AMD, IBM OpenPower, Sun
+Sparc) running Windows (NT/2000/XP) Linux (Debian, RedHat, Suse), other Unix (Open BSD, Net BSD,
+Free BSD, Solaris) and MacOS X.
+
+<p>If you can confirm the library works on any other platform or compiler combination, please let me
+know the details - Compiler, Compiler version, OS, CPU etc.</p>
+
+<p>The following table shows the platforms that STLplus3 has been tested on recently.</p>
+
+<table border="1" cellpadding="1" align="center" rules="cols,groups" frame="border">
+<caption>Porting State</caption>
+
+<colgroup>
+<col align="center">
+<col align="center">
+<col align="center">
+<col align="center">
+</colgroup>
+<colgroup>
+<col align="center">
+<col align="center">
+</colgroup>
+<colgroup>
+<col align="center">
+<col align="left">
+</colgroup>
+
+<thead valign="top">
+
+<tr>
+<th colspan="4">Platform</th>
+<th colspan="2">Build</th>
+<th colspan="2">State</th>
+</tr>
+
+<tr>
+<th>CPU</th>
+<th>Bits</th>
+<th>OS</th>
+<th>Compiler</th>
+<th>Name</th>
+<th>-D<sup>1</sup></th>
+<th>Tested</th>
+<th>Notes</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td align="center">Intel 686</td>
+<td align="center">32</td>
+<td align="center">Windows XP</td>
+<td align="center">gcc 3.4.4 (Unix emulation)</td>
+<td align="center"><code>CYGWIN-i686</code></td>
+<td align="center"><code></code></td>
+<td align="center">2 November 2007</td>
+<td align="left">Uses <a href="http://www.cygwin.com">Cygwin</a> to build a Unix-emulation program that runs on Windows</td>
+</tr>
+
+<tr>
+<td align="center">Intel 686</td>
+<td align="center">32</td>
+<td align="center">Windows XP</td>
+<td align="center">gcc 3.4.4 (Windows native)</td>
+<td align="center"><code>CYGMING-i686</code></td>
+<td align="center"><code>_WIN32</code></td>
+<td align="center">2 November 2007</td>
+<td align="left">Uses <a href="http://www.cygwin.com">Cygwin</a> to build a native Windows program</td>
+</tr>
+
+<tr>
+<td align="center">Intel 686</td>
+<td align="center">32</td>
+<td align="center">Windows XP</td>
+<td align="center">gcc 3.4.5 (MinGW)</td>
+<td align="center"><code>MINGW-i686</code></td>
+<td align="center"><code>_WIN32</code></td>
+<td align="center">2 November 2007</td>
+<td align="left">Uses <a href="http://www.mingw.org">MINGW</a> to build a native Windows program</td>
+</tr>
+
+<tr>
+<td align="center">Intel 686</td>
+<td align="center">32</td>
+<td align="center">Windows XP</td>
+<td align="center">Visual Studio, v6</td>
+<td align="center"></td>
+<td align="center"><code>_WIN32</code></td>
+<td align="center">2 November 2007</td>
+<td align="left">Visual Studio v6 - requires SP5</td>
+</tr>
+
+<tr>
+<td align="center">Intel 686</td>
+<td align="center">32</td>
+<td align="center">Windows XP</td>
+<td align="center">Visual Studio, v8</td>
+<td align="center"></td>
+<td align="center"><code>_WIN32</code></td>
+<td align="center">2 November 2007</td>
+<td align="left">Visual Studio 2005 Express Edition</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<p><b>Note 1</b>: The -D directive is a C macro that selects between different implementations of
+code for different platforms. For example, a Windows application will use different system calls to
+a Unix application. The correct directive for the platform must be defined for the STLplus library
+to build on the target platform. Typically this is set as an option to the compiler - for example
+with the gcc compiler you would specify "<tt>gcc -DSOLARIS</tt>" when building on Solaris. The
+_WIN32 value that selects the Windows native build is set automatically by the compilers so you
+don't have to do this. If no -D directive is shown, then the default build is a generic Unix build
+and needs no special rules. See the documentation on <a href="building.html">building the
+library</a> for more on this.</p>
+
+
+</div>
+
+</body>
+</html>
