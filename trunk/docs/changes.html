@@ -58,9 +58,90 @@ change log for all version 2 releases by looking at the version 2 documentation.
 version is only available through CVS and is subject to change. Pre-version 2.0 are not
 available from SourceForge.</p>
 
+<p><b>Note:</b> STLplus version 3 is <b>not</b> backwards-compatible with STLplus version 2. You should only make
+the changeover if you are prepared to do some porting work or if you are starting a new project.</p>
+
+<p><b>Use at Your Own Risk:</b> STLplus version 3.0 is classified as an <b>alpha</b> release. Although
+it is based on STLplus, which was a stable release, there is enough reworking for all sorts of
+errors to have crept in. Furthermore, I have not yet ported any significant applications to version
+3, so only small test programs have been written so far.</p>
 
 <h2 id="v2">Changes from Version 2 to 3.0</h2>
 
+<h3>Split the library into a Collection</h3>
+
+<p>The original STLplus was a single, rather large, library. It has now been split into 5 libraries.
+So STLplus is now referred to as a Library Collection, containing within it the STLplus <a
+href="containers.html">containers</a>, <a href="portability.html">portability</a>, <a
+href="persistence.html">persistence</a>, <a href="subsystems.html">subsystems</a> and <a
+href="strings.html">strings</a> libraries.</p>
+
+<h3>Added the stlplus Namespace</h3>
+
+<p>All of the components in the STLplus library collection now have their own namespace - stlplus.
+Thus, the smart_ptr class is now stlplus::smart_ptr.</p>
+
+<h3>Removed TextIO</h3>
+
+<p>STLplus had it's own I/O subsystem for historical reasons. That was OK when I was the only user,
+but a bit much for new users to be expected to accept. I decided that TextIO had to go, but needed
+to wait for other major changes to justify a change that makes the library not backwards
+compatible.</p>
+
+<p>STLplus version 3 does not have the TextIO subsystem any more - all functions using TextIO have
+been rewritten to use IOStream.</p>
+
+<h3>Removed string_arithmetic</h3>
+
+<p>The string_arithmetic package was an anachronism - it was part of another project which seemed
+suitable for inclusion into STLplus, but now seems not to fit. So I have removed it.</p>
+
+<h3>Renamed error_handler to message_handler</h3>
+
+<p>The old name error_handler I think confused people as to the purpose of this component. Since
+STLplus 3 is not compatible with previous versions, I am taking this opportunity to rename it to
+better reflect its purpose - <a href="message_handler.html">message_handler</a>.</p>
+
+<h3>Safe Iterators</h3>
+
+<p>Iterators in the STL are badly designed - there are several major pitfalls with using them as a
+result of their design. However, I wanted STLplus to feel like the STL to make it easier to use, so
+felt I should use the iterator concept despite the problems associated with them. Some of the
+STLplus components therefore also use iterators.</p>
+
+<p>In STLplus 2 I included some error checking for misuse of iterators. In STLplus 3 I have
+completed the job - so I have termed the STLplus iterators <a href="safe_iterators.html">safe
+iterators</a>.</p>
+
+<h3>Changed Interfaces to enable Namespace Support</h3>
+
+<p>The old STLplus used a technique for writing template functions that required external resources
+to be in the global namespace. This approach is not compatible with placing all of the STLplus into
+a separate namespace. All these functions have been rewritten to take an extra parameter so
+that those external resources are now passed as parameters.</p>
+
+<p>This rewrite applies to the <a href="persistence.html">persistence</a> library and the <a
+href="strings.html">strings</a> library.</p>
+
+<h3>Persistence Functions Renamed</h3>
+
+<p>STLplus 2 relied on overloading the functions dump and restore to implement persistence. However,
+because of the redesign of the functions discussed above, persistence functions are now passed as
+parameters to other persistence functions. To avoid ambiguity, all persistence functions now have
+unique names - dump_<i>type</i> and restore_<i>type</i>. See the <a
+href="persistence.html">persistence library</a> for more information.</p>
+
+<p><b>Note:</b> the persistence file format is unchanged by this rewrite, so STLplus version 2 files
+can be read by version 3 and vice versa.</p>
+
+<h3>Print and String-Conversion Functions Renamed</h3>
+
+<p>STLplus 2 string_utilities also relied on overloading the functions print and to_string to
+provide printing and formatting functions for whole data structures. However, because of the
+redesign of the functions discussed above, functions are now passed as parameters to other
+functions. To avoid ambiguity, all print and string-formatting functions now have unique names -
+print_<i>type</i> and <i>type</i>_to_string. See the <a href="strings.html">strings library</a> for
+more information.</p>
 
 </div>
 
