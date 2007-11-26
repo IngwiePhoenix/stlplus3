@@ -69,7 +69,7 @@ namespace stlplus
 
   // The C array of the C struct. The array must be terminated by END_CLI_DEFINITIONS.
   typedef cli_definition_t cli_definitions_t [];
-#define END_CLI_DEFINITIONS {0,cli_switch_kind,cli_single_mode,"",0}
+#define END_CLI_DEFINITIONS {0,stlplus::cli_switch_kind,stlplus::cli_single_mode,"",0}
 
   // The C++ class for definitions
   class cli_definition
@@ -95,8 +95,7 @@ namespace stlplus
     // built-in default value - empty string if not present
     const std::string& default_value(void) const;
 
-  public:
-    // Internals - these should be private, but for backwards compatibility have been left public
+  private:
     std::string m_name;
     cli_kind_t m_kind;
     cli_mode_t m_mode;
@@ -301,7 +300,7 @@ namespace stlplus
 
   private:
     friend class cli_parser_data;
-    smart_ptr<cli_parser_data> m_data;
+    smart_ptr_nocopy<cli_parser_data> m_data;
   };
 
 } // end namespace stlplus
