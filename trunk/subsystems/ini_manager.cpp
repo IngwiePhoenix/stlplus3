@@ -12,28 +12,29 @@
 #include <algorithm>
 #include <sys/stat.h>
 #include <ctype.h>
-
-////////////////////////////////////////////////////////////////////////////////
-// local utilities
-
-static std::string trim(const std::string& val)
-{
-  std::string result = val;
-  while (!result.empty() && isspace(result[0]))
-    result.erase(result.begin());
-  while (!result.empty() && isspace(result[result.size()-1]))
-    result.erase(result.end()-1);
-  return result;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// internal data structure for storing a single entry (i.e. line) from an ini file
-// lines are categorised as blanks, comments or variables
-// TODO - do I need an error category?
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
 {
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // local utilities
+
+  static std::string trim(const std::string& val)
+  {
+    std::string result = val;
+    while (!result.empty() && isspace(result[0]))
+      result.erase(result.begin());
+    while (!result.empty() && isspace(result[result.size()-1]))
+      result.erase(result.end()-1);
+    return result;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // internal data structure for storing a single entry (i.e. line) from an ini file
+  // lines are categorised as blanks, comments or variables
+  // TODO - do I need an error category?
+  ////////////////////////////////////////////////////////////////////////////////
 
   class ini_entry
   {
@@ -564,7 +565,7 @@ namespace stlplus
   };
 
   ////////////////////////////////////////////////////////////////////////////////
-  // body data structure contains all the data and us pointed-to by exported data structure
+  // body data structure contains all the data and is pointed-to by exported data structure
 
   class ini_manager_body
   {
@@ -1002,8 +1003,6 @@ namespace stlplus
       }
   };
 
-} // end namespace stlplus
-
   ////////////////////////////////////////////////////////////////////////////////
   // exported data structure representing the set of all ini files and providing
   // the access functions exported by the class
@@ -1012,227 +1011,229 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
   // constructors/destructors
 
-stlplus::ini_manager::ini_manager(void) : m_body(new ini_manager_body)
-{
-}
+  ini_manager::ini_manager(void) : m_body(new ini_manager_body)
+  {
+  }
 
-stlplus::ini_manager::ini_manager(const std::vector<std::string>& filenames) : m_body(new ini_manager_body)
-{
-  add_files(filenames);
-}
+  ini_manager::ini_manager(const std::vector<std::string>& filenames) : m_body(new ini_manager_body)
+  {
+    add_files(filenames);
+  }
 
-stlplus::ini_manager::ini_manager(const ini_manager& manager) : m_body(0)
-{
-  m_body = manager.m_body;
-  m_body->increment();
-}
+  ini_manager::ini_manager(const ini_manager& manager) : m_body(0)
+  {
+    m_body = manager.m_body;
+    m_body->increment();
+  }
 
-stlplus::ini_manager& stlplus::ini_manager::operator= (const stlplus::ini_manager& manager)
-{
-  if (m_body == manager.m_body) return *this;
-  if (m_body->decrement())
-    delete m_body;
-  m_body = manager.m_body;
-  m_body->increment();
-  return *this;
-}
+  ini_manager& ini_manager::operator= (const ini_manager& manager)
+  {
+    if (m_body == manager.m_body) return *this;
+    if (m_body->decrement())
+      delete m_body;
+    m_body = manager.m_body;
+    m_body->increment();
+    return *this;
+  }
 
-stlplus::ini_manager::~ini_manager(void)
-{
-  if (m_body->decrement())
-    delete m_body;
-}
+  ini_manager::~ini_manager(void)
+  {
+    if (m_body->decrement())
+      delete m_body;
+  }
 
-////////////////////////////////////////////////////////////////////////////////
-// file management
+  ////////////////////////////////////////////////////////////////////////////////
+  // file management
 
-bool stlplus::ini_manager::add_file(const std::string& filename)
-{
-  return m_body->add_file(filename);
-}
+  bool ini_manager::add_file(const std::string& filename)
+  {
+    return m_body->add_file(filename);
+  }
 
-bool stlplus::ini_manager::add_files(const std::vector<std::string>& filenames)
-{
-  return m_body->add_files(filenames);
-}
+  bool ini_manager::add_files(const std::vector<std::string>& filenames)
+  {
+    return m_body->add_files(filenames);
+  }
 
-bool stlplus::ini_manager::save(void)
-{
-  return m_body->save();
-}
+  bool ini_manager::save(void)
+  {
+    return m_body->save();
+  }
 
-unsigned stlplus::ini_manager::size(void) const
-{
-  return m_body->size();
-}
+  unsigned ini_manager::size(void) const
+  {
+    return m_body->size();
+  }
 
-std::string stlplus::ini_manager::filename(unsigned depth) const
-{
-  return m_body->filename(depth);
-}
+  std::string ini_manager::filename(unsigned depth) const
+  {
+    return m_body->filename(depth);
+  }
 
-bool stlplus::ini_manager::writable(unsigned depth) const
-{
-  return m_body->writable(depth);
-}
+  bool ini_manager::writable(unsigned depth) const
+  {
+    return m_body->writable(depth);
+  }
 
-bool stlplus::ini_manager::empty(unsigned depth) const
-{
-  return m_body->empty(depth);
-}
+  bool ini_manager::empty(unsigned depth) const
+  {
+    return m_body->empty(depth);
+  }
 
-bool stlplus::ini_manager::erase(unsigned depth)
-{
-  return m_body->erase(depth);
-}
+  bool ini_manager::erase(unsigned depth)
+  {
+    return m_body->erase(depth);
+  }
 
-bool stlplus::ini_manager::remove(unsigned depth)
-{
-  return m_body->remove(depth);
-}
+  bool ini_manager::remove(unsigned depth)
+  {
+    return m_body->remove(depth);
+  }
 
-////////////////////////////////////////////////////////////////////////////////
-// section management
+  ////////////////////////////////////////////////////////////////////////////////
+  // section management
 
-std::vector<std::string> stlplus::ini_manager::section_names(void) const
-{
-  return m_body->section_names();
-}
+  std::vector<std::string> ini_manager::section_names(void) const
+  {
+    return m_body->section_names();
+  }
 
-std::vector<std::string> stlplus::ini_manager::section_names(unsigned depth) const
-{
-  return m_body->section_names(depth);
-}
+  std::vector<std::string> ini_manager::section_names(unsigned depth) const
+  {
+    return m_body->section_names(depth);
+  }
 
-bool stlplus::ini_manager::section_exists(const std::string& section) const
-{
-  return m_body->section_exists(section);
-}
+  bool ini_manager::section_exists(const std::string& section) const
+  {
+    return m_body->section_exists(section);
+  }
 
-bool stlplus::ini_manager::section_exists(const std::string& section, unsigned depth) const
-{
-  return m_body->section_exists(section, depth);
-}
+  bool ini_manager::section_exists(const std::string& section, unsigned depth) const
+  {
+    return m_body->section_exists(section, depth);
+  }
 
-bool stlplus::ini_manager::add_section(const std::string& section, unsigned depth)
-{
-  return m_body->add_section(section, depth);  
-}
+  bool ini_manager::add_section(const std::string& section, unsigned depth)
+  {
+    return m_body->add_section(section, depth);  
+  }
 
-bool stlplus::ini_manager::empty_section(const std::string& section, unsigned depth)
-{
-  return m_body->empty_section(section, depth);  
-}
+  bool ini_manager::empty_section(const std::string& section, unsigned depth)
+  {
+    return m_body->empty_section(section, depth);  
+  }
 
-bool stlplus::ini_manager::erase_section(const std::string& section, unsigned depth)
-{
-  return m_body->erase_section(section, depth);  
-}
+  bool ini_manager::erase_section(const std::string& section, unsigned depth)
+  {
+    return m_body->erase_section(section, depth);  
+  }
 
-bool stlplus::ini_manager::clear_section(const std::string& section, unsigned depth)
-{
-  return m_body->clear_section(section, depth);  
-}
+  bool ini_manager::clear_section(const std::string& section, unsigned depth)
+  {
+    return m_body->clear_section(section, depth);  
+  }
 
-////////////////////////////////////////////////////////////////////////////////
-// variable management
+  ////////////////////////////////////////////////////////////////////////////////
+  // variable management
 
-bool stlplus::ini_manager::variable_exists(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_exists(section, variable);  
-}
+  bool ini_manager::variable_exists(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_exists(section, variable);  
+  }
 
-bool stlplus::ini_manager::variable_exists(const std::string& section, const std::string variable, unsigned depth) const
-{
-  return m_body->variable_exists(section, variable, depth);  
-}
+  bool ini_manager::variable_exists(const std::string& section, const std::string variable, unsigned depth) const
+  {
+    return m_body->variable_exists(section, variable, depth);  
+  }
 
-std::vector<std::string> stlplus::ini_manager::variable_names(const std::string& section) const
-{
-  return m_body->variable_names(section);  
-}
+  std::vector<std::string> ini_manager::variable_names(const std::string& section) const
+  {
+    return m_body->variable_names(section);  
+  }
 
-std::vector<std::string> stlplus::ini_manager::variable_names(const std::string& section, unsigned depth) const
-{
-  return m_body->variable_names(section, depth);  
-}
+  std::vector<std::string> ini_manager::variable_names(const std::string& section, unsigned depth) const
+  {
+    return m_body->variable_names(section, depth);  
+  }
 
-unsigned stlplus::ini_manager::variable_depth(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_depth(section, variable);  
-}
+  unsigned ini_manager::variable_depth(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_depth(section, variable);  
+  }
 
-std::string stlplus::ini_manager::variable_filename(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_filename(section, variable);  
-}
+  std::string ini_manager::variable_filename(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_filename(section, variable);  
+  }
 
-unsigned stlplus::ini_manager::variable_linenumber(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_linenumber(section, variable);  
-}
+  unsigned ini_manager::variable_linenumber(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_linenumber(section, variable);  
+  }
 
-std::string stlplus::ini_manager::variable_value(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_value(section, variable);  
-}
+  std::string ini_manager::variable_value(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_value(section, variable);  
+  }
 
-std::string stlplus::ini_manager::variable_value(const std::string& section, const std::string variable, unsigned depth) const
-{
-  return m_body->variable_value(section, variable, depth);  
-}
+  std::string ini_manager::variable_value(const std::string& section, const std::string variable, unsigned depth) const
+  {
+    return m_body->variable_value(section, variable, depth);  
+  }
 
-std::vector<std::string> stlplus::ini_manager::variable_values(const std::string& section, const std::string variable) const
-{
-  return m_body->variable_values(section, variable);  
-}
+  std::vector<std::string> ini_manager::variable_values(const std::string& section, const std::string variable) const
+  {
+    return m_body->variable_values(section, variable);  
+  }
 
-std::vector<std::string> stlplus::ini_manager::variable_values(const std::string& section, const std::string variable, unsigned depth) const
-{
-  return m_body->variable_values(section, variable, depth);  
-}
+  std::vector<std::string> ini_manager::variable_values(const std::string& section, const std::string variable, unsigned depth) const
+  {
+    return m_body->variable_values(section, variable, depth);  
+  }
 
-bool stlplus::ini_manager::add_variable(const std::string& section, const std::string& variable, const std::string& value, unsigned depth)
-{
-  return m_body->add_variable(section, variable, value, depth);
-}
+  bool ini_manager::add_variable(const std::string& section, const std::string& variable, const std::string& value, unsigned depth)
+  {
+    return m_body->add_variable(section, variable, value, depth);
+  }
 
-bool stlplus::ini_manager::add_variable(const std::string& section, const std::string& variable, const std::vector<std::string>& values, unsigned depth)
-{
-  return m_body->add_variable(section, variable, values, depth);
-}
+  bool ini_manager::add_variable(const std::string& section, const std::string& variable, const std::vector<std::string>& values, unsigned depth)
+  {
+    return m_body->add_variable(section, variable, values, depth);
+  }
 
-bool stlplus::ini_manager::erase_variable(const std::string& section, const std::string& variable, unsigned depth)
-{
-  return m_body->erase_variable(section, variable, depth);
-}
+  bool ini_manager::erase_variable(const std::string& section, const std::string& variable, unsigned depth)
+  {
+    return m_body->erase_variable(section, variable, depth);
+  }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// sundry entries
+  ////////////////////////////////////////////////////////////////////////////////
+  // sundry entries
 
-bool stlplus::ini_manager::add_comment(const std::string& section, const std::string& comment, unsigned depth)
-{
-  return m_body->add_comment(section, comment, depth);
-}
+  bool ini_manager::add_comment(const std::string& section, const std::string& comment, unsigned depth)
+  {
+    return m_body->add_comment(section, comment, depth);
+  }
 
-bool stlplus::ini_manager::add_blank(const std::string& section, unsigned depth)
-{
-  return m_body->add_blank(section, depth);
-}
+  bool ini_manager::add_blank(const std::string& section, unsigned depth)
+  {
+    return m_body->add_blank(section, depth);
+  }
 
-bool stlplus::ini_manager::print(std::ostream& str) const
-{
-  return m_body->print(str);
-}
+  bool ini_manager::print(std::ostream& str) const
+  {
+    return m_body->print(str);
+  }
 
-////////////////////////////////////////////////////////////////////////////////
-// diagnostic print
+  ////////////////////////////////////////////////////////////////////////////////
+  // diagnostic print
 
-std::ostream& operator << (std::ostream& str, const stlplus::ini_manager& manager)
-{
-  manager.print(str);
-  return str;
-}
+  std::ostream& operator << (std::ostream& str, const ini_manager& manager)
+  {
+    manager.print(str);
+    return str;
+  }
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+} // end namespace stlplus
