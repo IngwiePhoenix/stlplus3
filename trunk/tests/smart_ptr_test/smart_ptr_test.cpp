@@ -3,11 +3,13 @@
 #include "persistent_string.hpp"
 #include "persistent_pair.hpp"
 #include "persistent_shortcuts.hpp"
+#include "string_utilities.hpp"
 #include "string_string.hpp"
 #include "string_pair.hpp"
 #include "string_smart_ptr.hpp"
 #include <iostream>
-
+#include <vector>
+#include <string>
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef stlplus::smart_ptr<std::string> string_ptr;
@@ -64,45 +66,86 @@ static const char* DATA = "data.tmp";
 
 int main (int argc, char* argv[])
 {
-  // smart_ptr()
-  string_ptr s0;
-  print("created s0", s0);
-  for (int i = 1; i < argc; i++)
+  try
   {
-    std::string value = argv[i];
-    // smart_ptr(T)
-    string_ptr s1(value);
-    print("created s1(value)", s1);
-    // smart_ptr(smart_ptr<T>)
-    string_ptr s2(s1);
-    print("created s2(s1)", s2);
-    // smart_ptr(T*)
-    string_ptr s3(new std::string(value));
-    print("created s3(new string(value))", s3);
-    // operator=(smart_ptr<T>)
-    s3 = s2;
-    print("s3 = s2", s3);
-    // operator=(T)
-    s3 = value;
-    print("s3 = value", s3);
-    print("s2", s2);
-    print("s1", s1);
-    // create a pair containing two aliases
-    string_ptr_pair p1 = std::make_pair(s1,s1);
-    print("make_pair(s1,s1)",p1);
-    // dump/restore
-    stlplus::dump_to_file(p1, DATA, dump_string_ptr_pair, 0);
-    string_ptr_pair p2;
-    stlplus::restore_from_file(DATA, p2, restore_string_ptr_pair, 0);
-    print("p2 = dump/restore(p1)", p2);
-    // dealias one of these
-    p1.second.make_unique();
-    print("p1.second.make_unique()", p1);
-    // dump/restore
-    stlplus::dump_to_file(p1, DATA, dump_string_ptr_pair, 0);
-    string_ptr_pair p3;
-    stlplus::restore_from_file(DATA, p3, restore_string_ptr_pair, 0);
-    print("p3 = dump/restore(p1)", p3);
+    std::vector<std::string> data = stlplus::split("one:two:three",":");
+    unsigned errors = 0;
+    // smart_ptr()
+    string_ptr s0;
+    print("created s0", s0);
+    for (unsigned i = 0; i < data.size(); i++)
+    {
+      std::string value = data[i];
+      // smart_ptr(T)
+      string_ptr s1(value);
+      print("created s1(value)", s1);
+      // smart_ptr(smart_ptr<T>)
+      string_ptr s2(s1);
+      print("created s2(s1)", s2);
+      if (!s1.aliases(s2))
+      {
+        std::cerr << "error: s2 not an alias of s1" << std::endl;
+        errors++;
+      }
+      // smart_ptr(T*)
+      string_ptr s3(new std::string(value));
+      print("created s3(new string(value))", s3);
+      // operator=(smart_ptr<T>)
+      s3 = s2;
+      print("s3 = s2", s3);
+      if (!s3.aliases(s2))
+      {
+        std::cerr << "error: s3 not an alias of s2" << std::endl;
+        errors++;
+      }
+      // operator=(T)
+      s3 = value;
+      print("s3 = value", s3);
+      print("s2", s2);
+      print("s1", s1);
+      if (!s3.aliases(s2))
+      {
+        std::cerr << "error: s3 not an alias of s2" << std::endl;
+        errors++;
+      }
+      // create a pair containing two aliases
+      string_ptr_pair p1 = std::make_pair(s1,s1);
+      print("make_pair(s1,s1)",p1);
+      // dump/restore
+      stlplus::dump_to_file(p1, DATA, dump_string_ptr_pair, 0);
+      string_ptr_pair p2;
+      stlplus::restore_from_file(DATA, p2, restore_string_ptr_pair, 0);
+      print("p2 = dump/restore(p1)", p2);
+      if (!p2.first.aliases(p2.second))
+      {
+        std::cerr << "error: first not an alias of second" << std::endl;
+        errors++;
+      }
+      // dealias one of these
+      p1.second.make_unique();
+      print("p1.second.make_unique()", p1);
+      if (p1.first.aliases(p1.second))
+      {
+        std::cerr << "error: first still an alias of second" << std::endl;
+        errors++;
+      }
+      // dump/restore
+      stlplus::dump_to_file(p1, DATA, dump_string_ptr_pair, 0);
+      string_ptr_pair p3;
+      stlplus::restore_from_file(DATA, p3, restore_string_ptr_pair, 0);
+      print("p3 = dump/restore(p1)", p3);
+      if (p3.first.aliases(p3.second))
+      {
+        std::cerr << "error: first still an alias of second" << std::endl;
+        errors++;
+      }
+    }
+    return errors;
   }
-  return 0;
+  catch(std::exception& exception)
+  {
+    std::cerr << "exception: failed with " << exception.what() << std::endl;
+    return -1;
+  }
+  return -2;
 }
