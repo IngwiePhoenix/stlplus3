@@ -36,7 +36,7 @@ namespace stlplus
   class assert_failed : public std::logic_error
   {
   public:
-    assert_failed(const char* file, int line, const char* function, const std::string& message) throw();
+    assert_failed(const char* file, int line, const char* function, const char* message) throw();
     ~assert_failed(void) throw();
   };
 
@@ -47,7 +47,7 @@ namespace stlplus
 
 #ifndef NDEBUG
 
-#define DEBUG_TRACE stlplus_debug_trace stlplus::debug_trace(__FILE__,__LINE__,__FUNCTION__)
+#define DEBUG_TRACE stlplus::debug_trace stlplus_debug_trace(__FILE__,__LINE__,__FUNCTION__)
 #define IF_DEBUG(stmts) {if (stlplus_debug_trace.debug()){stlplus_debug_trace.prefix(__LINE__);stmts;}}
 #define DEBUG_REPORT(str) IF_DEBUG(stlplus_debug_trace.report(__LINE__,str))
 #define DEBUG_ERROR(str) stlplus_debug_trace.error(__LINE__,str)
