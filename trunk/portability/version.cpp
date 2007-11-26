@@ -6,15 +6,14 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "version.hpp"
-#include "dprintf.hpp"
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
 {
 
-std::string version(void)
-{
-  return STLPLUS_VERSION;
-}
+  std::string version(void)
+  {
+    return STLPLUS_VERSION;
+  }
 
 } // end namespace stlplus
