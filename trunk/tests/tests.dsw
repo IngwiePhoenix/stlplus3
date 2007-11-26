@@ -117,6 +117,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ini_manager_test"=.\ini_manager_test\ini_manager_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "interface_test"=.\interface_test\interface_test.dsp - Package Owner=<4>
 
 Package=<5>
