@@ -6,7 +6,7 @@
 
 ------------------------------------------------------------------------------*/
 #include "debug.hpp"
-#include <sstream>
+#include "dprintf.hpp"
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
@@ -14,17 +14,18 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  static std::string format(const char* file, int line, const char* function, const std::string& message)
+  static std::string format(const char* file, int line, const char* function, const char* message)
   {
-    std::ostringstream result;
-    result << file << ":" << line << ":" << (function ? function : "") 
-           << ": assertion failed: " << message;
-    return result.str();
+    return dformat("%s:%d:%s: assertion failed: %s",
+                   (file ? file : ""),
+                   line,
+                   (function ? function : "") ,
+                   (message ? message : ""));
   }
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  assert_failed::assert_failed(const char* file, int line, const char* function, const std::string& message)
+  assert_failed::assert_failed(const char* file, int line, const char* function, const char* message)
     throw() : 
     std::logic_error(format(file, line, function, message))
   {
@@ -57,7 +58,7 @@ namespace stlplus
     fprintf(stderr, "%s:%i:[%i]%s: assertion failed: %s\n", 
             file, line, _debug_depth, function ? function : "", test);
     if (debug_last) debug_last->stackdump();
-    throw assert_failed(file, line, function, std::string(test));
+    throw assert_failed(file, line, function, test);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
