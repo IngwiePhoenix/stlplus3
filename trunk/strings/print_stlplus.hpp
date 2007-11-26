@@ -20,8 +20,6 @@
 #include "print_ntree.hpp"
 #endif
 
-#ifndef NO_STLPLUS_ARITHMETIC
 #include "print_inf.hpp"
-#endif
 
 #endif

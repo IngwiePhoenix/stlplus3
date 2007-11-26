@@ -406,8 +406,8 @@ adopt the same conventions or change your copy of the stlplus project file.</p>
 href="index.html#dependencies">introduction</a>), then you cannot use it stand-alone - you must
 incorporate both the library and all of its dependencies into your project.</p>
 
-<p>However, most of the project dependencies are optional. The key to building a library without an
-optional dependency is to build using one of the following compiler directives:</p>
+<p>However, some of the project dependencies are optional. The key to building a library without an
+optional dependency is to build using the following compiler directive:</p>
 
 <dl>
 
@@ -415,13 +415,9 @@ optional dependency is to build using one of the following compiler directives:<
 <dd>Builds the library without the dependency on the containers library. All features
 provided by the containers library will be disabled.</dd>
 
-<dt>-D NO_STLPLUS_ARITHMETIC</dt>
-<dd>Builds the library without the dependency on the arithmetic library. All features
-provided by the arithmetic library will be disabled.</dd>
-
 </dl>
 
-<p>These compiler directives must be used to build the library - for example, to make the
+<p>This compiler directives must be used to build the library - for example, to make the
 portability library stand-alone, build it with these compiler directives. The same directives must
 be used to build any file in your program that includes headers from the portability library. The
 simplest way to do this is to enable the directives for the whole project.</p>

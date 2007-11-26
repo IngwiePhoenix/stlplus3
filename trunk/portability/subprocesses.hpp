@@ -189,6 +189,11 @@ namespace stlplus
     std::string error_text(void) const;
 
     int exit_status(void) const;
+
+  private:
+    // disallow copying
+    subprocess(const subprocess&);
+    subprocess& operator=(const subprocess&);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -253,6 +258,11 @@ namespace stlplus
     std::string error_text(void) const;
 
     int exit_status(void) const;
+
+  private:
+    // disallow copying
+    async_subprocess(const async_subprocess&);
+    async_subprocess& operator=(const async_subprocess&);
   };
 
   ////////////////////////////////////////////////////////////////////////////////

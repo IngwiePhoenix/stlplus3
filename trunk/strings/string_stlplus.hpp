@@ -20,8 +20,6 @@
 #include "string_ntree.hpp"
 #endif
 
-#ifndef NO_STLPLUS_ARITHMETIC
 #include "string_inf.hpp"
-#endif
 
 #endif

@@ -56,17 +56,17 @@
 
 <h2 id="dependencies">Dependencies</h2>
 
-<p>The persistence library has a soft dependency on the arithmetic and containers libraries. This
-means that they require those libraries only in order to make their contents persistent. If there is
-no need for those libraries, then it is possible to compile the persistence library to exclude
-them.</p>
+<p>The persistence library has a soft dependency on the containers libraries. This
+means that it requires the containers library only in order to make its contents persistent. If there is
+no need for the containers library, then it is possible to compile the persistence library to exclude
+it.</p>
 
 <p>To compile the persistence library in stand-alone mode, you need to add the following
-pre-processor switches to the compiler setup. If you are building using the provided makefile
+pre-processor switch to the compiler setup. If you are building using the provided makefile
 system, then this can be added to the file <code>persistence/Makefile</code>.</p>
 
 <pre class="script">
-CPPFLAGS += -DNO_STLPLUS_CONTAINERS -DNO_STLPLUS_ARITHMETIC
+CPPFLAGS += -DNO_STLPLUS_CONTAINERS
 </pre>
 
 <p>In fact, this line is already present in the makefile, but commented out.</p>
