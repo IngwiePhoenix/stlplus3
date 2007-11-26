@@ -10,6 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "subsystems_fixes.hpp"
+#include "smart_ptr.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -80,9 +81,6 @@ namespace stlplus
   {
   public:
     message_context(message_handler_base& handler);
-    message_context(const message_context&);
-    message_context& operator = (const message_context&);
-    ~message_context(void);
 
     void set(message_handler_base& handler);
     void pop(void);
@@ -90,7 +88,7 @@ namespace stlplus
   private:
     friend class message_context_body;
     friend class message_handler_base;
-    message_context_body* m_body;
+    smart_ptr_nocopy<message_context_body> m_body;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -198,12 +196,6 @@ namespace stlplus
     message_handler_base(const std::vector<std::string>& message_files, bool show = true)
       throw(message_handler_read_error);
 
-    message_handler_base(const message_handler_base&)
-      throw();
-
-    message_handler_base& operator= (const message_handler_base&)
-      throw();
-
     virtual ~message_handler_base(void)
       throw();
 
@@ -234,6 +226,9 @@ namespace stlplus
       throw(message_handler_read_error);
 
     void add_message(const std::string& id, const std::string& text)
+      throw();
+
+    bool message_present(const std::string& id) const
       throw();
 
     //////////////////////////////////////////////////////////////////////////////
@@ -723,7 +718,7 @@ namespace stlplus
 
   private:
     friend class message_handler_base_body;
-    message_handler_base_body* m_body;
+    smart_ptr_nocopy<message_handler_base_body> m_base_body;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -758,12 +753,6 @@ namespace stlplus
     message_handler(std::ostream& device,
                     const std::vector<std::string>& message_files,unsigned limit = 0,bool show = true) 
       throw(message_handler_read_error);
-
-    message_handler(const message_handler& handler)
-      throw();
-
-    message_handler& operator=(const message_handler& handler)
-      throw();
 
     ~message_handler(void)
       throw();
@@ -1015,7 +1004,7 @@ namespace stlplus
 
   private:
     friend class message_handler_body;
-    message_handler_body* m_body;
+    smart_ptr_nocopy<message_handler_body> m_body;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
