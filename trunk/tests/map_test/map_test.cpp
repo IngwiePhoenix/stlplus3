@@ -48,9 +48,14 @@ bool compare(const int_string_map& left, const int_string_map& right)
   return result;
 }
 
+std::string int_to_string(int data)
+{
+	return stlplus::int_to_string(data);
+}
+
 std::ostream& operator<< (std::ostream& str, const int_string_map& data)
 {
-  return str << stlplus::map_to_string(data, stlplus::int_to_string, stlplus::string_to_string, ":", ",");
+  return str << stlplus::map_to_string(data, int_to_string, stlplus::string_to_string, ":", ",");
 }
 
 ////////////////////////////////////////////////////////////////////////////////

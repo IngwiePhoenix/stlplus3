@@ -29,9 +29,14 @@ public:
 
 typedef stlplus::hash<int,std::string,hash_int> int_string_hash;
 
+std::string int_to_string(int data)
+{
+	return stlplus::int_to_string(data);
+}
+
 std::ostream& operator<< (std::ostream& str, const int_string_hash& data)
 {
-  return str << stlplus::hash_to_string(data, stlplus::int_to_string, stlplus::string_to_string, ":", ",");
+  return str << stlplus::hash_to_string(data, int_to_string, stlplus::string_to_string, ":", ",");
 }
 
 void dump_int_string_hash(stlplus::dump_context& context, const int_string_hash& data)

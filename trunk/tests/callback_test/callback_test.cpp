@@ -25,8 +25,9 @@ static std::string to_string(int number)
 
 class base
 {
-  int m_value;
 public:
+  int m_value;
+
   base(int value = 0) : m_value(value) {}
   virtual ~base(void) {}
 
@@ -36,29 +37,40 @@ public:
   virtual base* clone(void) const {return new base(*this);}
 
   virtual std::ostream& print(std::ostream& str) const {return str << "base: " << m_value;}
-  friend std::ostream& operator << (std::ostream& str, const base& object) {return object.print(str);}
-  friend bool operator == (const base& left, const base& right) {return typeid(left) == typeid(right) && left.value() == right.value();}
-
-  friend void dump_base(stlplus::dump_context& context, const void* data)
-    {
-      stlplus::dump_int(context,((const base*)data)->m_value);
-    }
-  friend void* create_base(void)
-    {
-      return new base;
-    }
-  friend void restore_base(stlplus::restore_context& context, void* data)
-    {
-      stlplus::restore_int(context,((base*)data)->m_value);
-    }
 };
+
+std::ostream& operator << (std::ostream& str, const base& object)
+{
+  return object.print(str);
+}
+
+bool operator == (const base& left, const base& right)
+{
+  return typeid(left) == typeid(right) && left.value() == right.value();
+}
+
+void dump_base(stlplus::dump_context& context, const void* data)
+{
+  stlplus::dump_int(context,((const base*)data)->m_value);
+}
+
+void* create_base(void)
+{
+  return new base;
+}
+
+void restore_base(stlplus::restore_context& context, void* data)
+{
+  stlplus::restore_int(context,((base*)data)->m_value);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
 class derived : public base
 {
-  std::string m_image;
 public:
+  std::string m_image;
+
   derived(int value = 0) : base(value), m_image(to_string(value)) {}
   virtual ~derived(void) {}
 
@@ -67,22 +79,24 @@ public:
   virtual base* clone(void) const {return new derived(*this);}
 
   virtual std::ostream& print(std::ostream& str) const {return str << "derived: " << m_image << "(" << value() << ")";}
-
-  friend void dump_derived(stlplus::dump_context& context, const void* data)
-    {
-      dump_base(context,data);
-      stlplus::dump_string(context,((const derived*)data)->m_image);
-    }
-  friend void* create_derived(void)
-    {
-      return new derived;
-    }
-  friend void restore_derived(stlplus::restore_context& context, void* data)
-    {
-      restore_base(context,data);
-      stlplus::restore_string(context,((derived*)data)->m_image);
-    }
 };
+
+void dump_derived(stlplus::dump_context& context, const void* data)
+{
+  dump_base(context,data);
+  stlplus::dump_string(context,((const derived*)data)->m_image);
+}
+
+void* create_derived(void)
+{
+  return new derived;
+}
+
+void restore_derived(stlplus::restore_context& context, void* data)
+{
+  restore_base(context,data);
+  stlplus::restore_string(context,((derived*)data)->m_image);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
