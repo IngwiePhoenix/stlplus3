@@ -73,7 +73,7 @@ namespace stlplus
         else
           result += ch;
       }
-      if (ch == '\"')
+      else if (ch == '\"')
         dquote = true;
       else
         result += ch;
