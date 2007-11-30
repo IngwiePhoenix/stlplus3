@@ -21,6 +21,8 @@
 #include <string>
 #include <map> // for std::pair - why is this not defined separately?
 
+////////////////////////////////////////////////////////////////////////////////
+
 namespace stlplus
 {
 
@@ -153,7 +155,11 @@ namespace stlplus
   class subprocess
   {
   private:
+
     PID_TYPE pid;
+#ifdef MSWINDOWS
+    HANDLE job;
+#endif
     PIPE_TYPE child_in;
     PIPE_TYPE child_out;
     PIPE_TYPE child_err;
@@ -221,6 +227,9 @@ namespace stlplus
   {
   private:
     PID_TYPE pid;
+#ifdef MSWINDOWS
+    HANDLE job;
+#endif
     PIPE_TYPE child_in;
     PIPE_TYPE child_out;
     PIPE_TYPE child_err;

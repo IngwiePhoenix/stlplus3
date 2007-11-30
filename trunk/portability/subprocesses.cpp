@@ -5,6 +5,14 @@
 //   License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////
+
+// Bug fix by Alistair Low: kill on Windows now kills grandchild processes as
+// well as the child process. This has to be enabled by stating that the
+// version of Windows is at least 5.0
+#if defined(_WIN32) || defined(_WIN32_WCE)
+#define _WIN32_WINNT 0x0500
+#endif
+
 #include "subprocesses.hpp"
 #include "file_system.hpp"
 #include "dprintf.hpp"
@@ -26,23 +34,8 @@
 namespace stlplus
 {
 
-////////////////////////////////////////////////////////////////////////////////
-
-#ifdef MSWINDOWS
-
-  // Windows environment variables are case-insensitive and I do comparisons by converting to lowercase
-  static std::string lowercase(const std::string& val)
-  {
-    std::string text = val;
-    for (unsigned i = 0; i < text.size(); i++)
-      text[i] = tolower(text[i]);
-    return text;
-  }
-
-#endif
-
-////////////////////////////////////////////////////////////////////////////////
-// argument-vector related stuff
+  ////////////////////////////////////////////////////////////////////////////////
+  // argument-vector related stuff
 
   static void skip_white (const std::string& command, unsigned& i)
   {
@@ -50,17 +43,17 @@ namespace stlplus
       i++;
   }
 
-// get_argument is the main function for breaking a string down into separate command arguments
-// it mimics the way shells break down a command into an argv[] and unescapes the escaped characters on the way
-
-#ifdef MSWINDOWS
-
-// as far as I know, there is only double-quoting and no escape character in DOS
-// so, how do you include a double-quote in an argument???
+  // get_argument is the main function for breaking a string down into separate command arguments
+  // it mimics the way shells break down a command into an argv[] and unescapes the escaped characters on the way
 
   static std::string get_argument (const std::string& command, unsigned& i)
   {
     std::string result;
+#ifdef MSWINDOWS
+
+  // as far as I know, there is only double-quoting and no escape character in DOS
+  // so, how do you include a double-quote in an argument???
+
     bool dquote = false;
     for ( ; i < command.size(); i++)
     {
@@ -78,14 +71,7 @@ namespace stlplus
       else
         result += ch;
     }
-    return result;
-  }
-
 #else
-
-  static std::string get_argument (const std::string& command, unsigned& i)
-  {
-    std::string result;
     bool squote = false;
     bool dquote = false;
     bool escaped = false;
@@ -121,58 +107,32 @@ namespace stlplus
       else
         result += ch;
     }
-    return result;
-  }
-
 #endif
 
-// this function performs the reverse of the above on a single argument
-// it escapes special characters and quotes the argument if necessary ready for shell interpretation
-
-#ifdef MSWINDOWS
-
-  static std::string make_argument (const std::string& arg)
-  {
-    std::string result;
-    bool needs_quotes = false;
-    for (unsigned i = 0; i < arg.size(); i++)
-    {
-      switch (arg[i])
-      {
-        // set of whitespace characters that force quoting
-      case ' ':
-        result += arg[i];
-        needs_quotes = true;
-        break;
-      default:
-        result += arg[i];
-        break;
-      }
-    }
-    if (needs_quotes)
-    {
-      result.insert(result.begin(), '"');
-      result += '"';
-    }
     return result;
   }
 
-#else
+
+  // this function performs the reverse of the above on a single argument
+  // it escapes special characters and quotes the argument if necessary ready for shell interpretation
 
   static std::string make_argument (const std::string& arg)
   {
     std::string result;
     bool needs_quotes = false;
+
     for (unsigned i = 0; i < arg.size(); i++)
     {
       switch (arg[i])
       {
+#ifndef MSWINDOWS
         // set of characters requiring escapes
       case '\\': case '\'': case '\"': case '`': case '(': case ')': 
       case '&': case '|': case '<': case '>': case '*': case '?': case '!':
         result += '\\';
         result += arg[i];
         break;
+#endif
         // set of whitespace characters that force quoting
       case ' ':
         result += arg[i];
@@ -183,6 +143,7 @@ namespace stlplus
         break;
       }
     }
+
     if (needs_quotes)
     {
       result.insert(result.begin(), '"');
@@ -190,8 +151,6 @@ namespace stlplus
     }
     return result;
   }
-
-#endif
 
   static char* copy_string (const char* str)
   {
@@ -200,7 +159,7 @@ namespace stlplus
     return result;
   }
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
   arg_vector::arg_vector (void)
   {
@@ -360,15 +319,28 @@ namespace stlplus
     return result;
   }
 
-////////////////////////////////////////////////////////////////////////////////
-// environment-vector
+  ////////////////////////////////////////////////////////////////////////////////
+  // environment-vector
 
-// Windoze environment is a single string containing null-terminated
-// name=value strings and the whole terminated by a null
+  // Windoze environment is a single string containing null-terminated
+  // name=value strings and the whole terminated by a null
 
-// Unix environment is a null-terminated vector of pointers to null-terminated strings
+  // Unix environment is a null-terminated vector of pointers to null-terminated strings
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // platform specifics
 
 #ifdef MSWINDOWS
+  // Windows utilities
+
+  // Windows environment variables are case-insensitive and I do comparisons by converting to lowercase
+  static std::string lowercase(const std::string& val)
+  {
+    std::string text = val;
+    for (unsigned i = 0; i < text.size(); i++)
+      text[i] = tolower(text[i]);
+    return text;
+  }
 
   static unsigned envp_size(const char* envp)
   {
@@ -430,7 +402,20 @@ namespace stlplus
     }
   }
 
+  static bool envp_equal(const std::string& left, const std::string& right)
+  {
+    return lowercase(left) == lowercase(right);
+  }
+
+  static bool envp_less(const std::string& left, const std::string& right)
+  {
+    return lowercase(left) < lowercase(right);
+  }
+
 #else
+  // Unix utilities
+
+  extern char** environ;
 
   static unsigned envp_size(char* const* envp)
   {
@@ -489,27 +474,29 @@ namespace stlplus
     }
   }
 
-#endif
+  static bool envp_equal(const std::string& left, const std::string& right)
+  {
+    return left == right;
+  }
 
-#ifdef MSWINDOWS
+  static bool envp_less(const std::string& left, const std::string& right)
+  {
+    return left < right;
+  }
+
+#endif
+  ////////////////////////////////////////////////////////////////////////////////
 
   env_vector::env_vector(void)
   {
+#ifdef MSWINDOWS
     char* env = (char*)GetEnvironmentStrings();
     v = envp_copy(env);
     FreeEnvironmentStrings(env);
-  }
-
 #else
-
-  extern char** environ;
-
-  env_vector::env_vector (void)
-  {
     v = envp_copy(environ);
-  }
-
 #endif
+  }
 
   env_vector::env_vector (const env_vector& a)
   {
@@ -534,60 +521,21 @@ namespace stlplus
     envp_clear(v);
   }
 
-#ifdef MSWINDOWS
-
   void env_vector::add(const std::string& name, const std::string& value)
   {
     // the trick is to add the value in alphabetic order
-    // this is done by copying the existing environment string to a new string, inserting the new value when a name greater than it is found
+    // this is done by copying the existing environment string to a new
+    // string, inserting the new value when a name greater than it is found
     unsigned size = envp_size(v);
+#ifdef MSWINDOWS
     unsigned new_size = size + name.size() + value.size() + 2;
     char* new_v = new char[new_size];
     new_v[0] = '\0';
-    // now envp_extract each name=value pair and check the ordering
-    bool added = false;
-    unsigned i = 0;
-    unsigned j = 0;
-    while(v[i])
-    {
-      std::string current_name;
-      std::string current_value;
-      envp_extract(current_name, current_value, v, i);
-      // Note: Windoze variables are case-insensitive!
-      if (lowercase(name) == lowercase(current_name))
-      {
-        // replace an existing value
-        envp_append(name, value, new_v, j);
-      }
-      else if (!added && lowercase(name) < lowercase(current_name))
-      {
-        // add the new value first, then the existing one
-        envp_append(name, value, new_v, j);
-        envp_append(current_name, current_value, new_v, j);
-        added = true;
-      }
-      else
-      {
-        // just add the existing value
-        envp_append(current_name, current_value, new_v, j);
-      }
-    }
-    if (!added)
-      envp_append(name, value, new_v, j);
-    envp_clear(v);
-    v = new_v;
-  }
-
 #else
-
-  void env_vector::add(const std::string& name, const std::string& value)
-  {
-    // the trick is to add the value in alphabetic order
-    // this is done by copying the existing environment vector and inserting the new value when a name greater than it is found
-    unsigned size = envp_size(v);
     unsigned new_size = size + 1;
     char** new_v = new char*[new_size];
     new_v[0] = 0;
+#endif
     // now extract each name=value pair and check the ordering
     bool added = false;
     unsigned i = 0;
@@ -597,13 +545,12 @@ namespace stlplus
       std::string current_name;
       std::string current_value;
       envp_extract(current_name, current_value, v, i);
-      // Note: Unix variables are case-sensitive
-      if (name == current_name)
+      if (envp_equal(name,current_name))
       {
         // replace an existing value
         envp_append(name, value, new_v, j);
       }
-      else if (!added && name < current_name)
+      else if (!added && envp_less(name,current_name))
       {
         // add the new value first, then the existing one
         envp_append(name, value, new_v, j);
@@ -622,43 +569,19 @@ namespace stlplus
     v = new_v;
   }
 
-#endif
-
-#ifdef MSWINDOWS
 
   bool env_vector::remove (const std::string& name)
   {
     bool result = false;
     // this is done by copying the existing environment string to a new string, but excluding the specified name
     unsigned size = envp_size(v);
+#ifdef MSWINDOWS
     char* new_v = new char[size];
     new_v[0] = '\0';
-    unsigned i = 0;
-    unsigned j = 0;
-    while(v[i])
-    {
-      std::string current_name;
-      std::string current_value;
-      envp_extract(current_name, current_value, v, i);
-      if (lowercase(name) == lowercase(current_name))
-        result = true;
-      else
-        envp_append(current_name, current_value, new_v, j);
-    }
-    envp_clear(v);
-    v = new_v;
-    return result;
-  }
-
 #else
-
-  bool env_vector::remove (const std::string& name)
-  {
-    bool result = false;
-    // this is done by copying the existing environment vector, but excluding the specified name
-    unsigned size = envp_size(v);
     char** new_v = new char*[size];
     new_v[0] = 0;
+#endif
     unsigned i = 0;
     unsigned j = 0;
     while(v[i])
@@ -666,7 +589,7 @@ namespace stlplus
       std::string current_name;
       std::string current_value;
       envp_extract(current_name, current_value, v, i);
-      if (name == current_name)
+      if (envp_equal(name,current_name))
         result = true;
       else
         envp_append(current_name, current_value, new_v, j);
@@ -675,16 +598,12 @@ namespace stlplus
     v = new_v;
     return result;
   }
-
-#endif
 
   std::string env_vector::operator [] (const std::string& name) const
   {
     return get(name);
   }
 
-#ifdef MSWINDOWS
-
   std::string env_vector::get (const std::string& name) const
   {
     unsigned i = 0;
@@ -693,35 +612,16 @@ namespace stlplus
       std::string current_name;
       std::string current_value;
       envp_extract(current_name, current_value, v, i);
-      if (lowercase(name) == lowercase(current_name))
+      if (envp_equal(name,current_name))
         return current_value;
     }
     return std::string();
   }
-
-#else
-
-  std::string env_vector::get (const std::string& name) const
-  {
-    unsigned i = 0;
-    while(v[i])
-    {
-      std::string current_name;
-      std::string current_value;
-      envp_extract(current_name, current_value, v, i);
-      if (name == current_name)
-        return current_value;
-    }
-    return std::string();
-  }
-
-#endif
-
-#ifdef MSWINDOWS
 
   unsigned env_vector::size (void) const
   {
     unsigned i = 0;
+#ifdef MSWINDOWS
     unsigned offset = 0;
     while(v[offset])
     {
@@ -730,20 +630,13 @@ namespace stlplus
       envp_extract(current_name, current_value, v, offset);
       i++;
     }
-    return i;
-  }
-
 #else
-
-  unsigned env_vector::size (void) const
-  {
-    unsigned i = 0;
     while(v[i])
       i++;
+#endif
+
     return i;
   }
-
-#endif
 
   std::pair<std::string,std::string> env_vector::operator [] (unsigned index) const throw(std::out_of_range)
   {
@@ -771,17 +664,18 @@ namespace stlplus
     return v;
   }
 
-////////////////////////////////////////////////////////////////////////////////
-// Synchronous subprocess
-// Win32 implementation mostly cribbed from MSDN examples and then made (much) more readable
-// Unix implementation mostly from man pages and bitter experience
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  // Synchronous subprocess
+  // Win32 implementation mostly cribbed from MSDN examples and then made (much) more readable
+  // Unix implementation mostly from man pages and bitter experience
+  ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef MSWINDOWS
 
   subprocess::subprocess(void)
   {
     pid.hProcess = 0;
+    job = 0;
     child_in = 0;
     child_out = 0;
     child_err = 0;
@@ -816,6 +710,7 @@ namespace stlplus
       WaitForSingleObject(pid.hProcess, INFINITE);
       CloseHandle(pid.hThread);
       CloseHandle(pid.hProcess);
+      CloseHandle(job);
     }
   }
 
@@ -896,9 +791,11 @@ namespace stlplus
     // Now create the subprocess
     // The horrible trick of creating a console window and hiding it seems to be required for the pipes to work
     // Note that the child will inherit a copy of the pipe handles
-    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
+    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
+                           STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
                            parent_stdin,parent_stdout,parent_stderr};
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,0,env.envp(),0,&startup,&pid) != 0;
+    job = CreateJobObject(NULL, NULL);
+    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,env.envp(),0,&startup,&pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
@@ -913,6 +810,9 @@ namespace stlplus
     }
     else
     {
+      AssignProcessToJobObject(job, pid.hProcess);
+      ResumeThread(pid.hThread);
+
       // The child process is now running so call the user's callback
       // The convention is that the callback can return false, in which case this will kill the child (if its still running)
       if (!callback())
@@ -1092,7 +992,7 @@ namespace stlplus
     close_stdin();
     close_stdout();
     close_stderr();
-    if (!TerminateProcess(pid.hProcess, (UINT)-1))
+    if (!TerminateJobObject(job, (UINT)-1))
     {
       err = GetLastError();
       return false;
@@ -1388,8 +1288,8 @@ namespace stlplus
     return status;
   }
 
-////////////////////////////////////////////////////////////////////////////////
-// backtick subprocess and operations
+  ////////////////////////////////////////////////////////////////////////////////
+  // backtick subprocess and operations
 
   backtick_subprocess::backtick_subprocess(void) : subprocess()
   {
@@ -1469,14 +1369,15 @@ namespace stlplus
     return sub.text();
   }
 
-////////////////////////////////////////////////////////////////////////////////
-// Asynchronous subprocess
+  ////////////////////////////////////////////////////////////////////////////////
+  // Asynchronous subprocess
 
 #ifdef MSWINDOWS
 
   async_subprocess::async_subprocess(void)
   {
     pid.hProcess = 0;
+    job = 0;
     child_in = 0;
     child_out = 0;
     child_err = 0;
@@ -1511,6 +1412,7 @@ namespace stlplus
       WaitForSingleObject(pid.hProcess, INFINITE);
       CloseHandle(pid.hThread);
       CloseHandle(pid.hProcess);
+      CloseHandle(job);
     }
   }
 
@@ -1596,9 +1498,11 @@ namespace stlplus
     // Now create the subprocess
     // The horrible trick of creating a console window and hiding it seems to be required for the pipes to work
     // Note that the child will inherit a copy of the pipe handles
-    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
+    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
+                           STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
                            parent_stdin,parent_stdout,parent_stderr};
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,0,env.envp(),0,&startup,&pid) != 0;
+    job = CreateJobObject(NULL, NULL);
+    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,env.envp(),0,&startup,&pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
@@ -1610,6 +1514,11 @@ namespace stlplus
       close_stdout();
       close_stderr();
       result = false;
+    }
+    else
+    {
+      AssignProcessToJobObject(job, pid.hProcess);
+      ResumeThread(pid.hThread);
     }
     return result;
   }
@@ -1809,7 +1718,7 @@ namespace stlplus
     close_stdin();
     close_stdout();
     close_stderr();
-    if (!TerminateProcess(pid.hProcess, (UINT)-1))
+    if (!TerminateJobObject(job, (UINT)-1))
     {
       set_error(GetLastError());
       return false;
@@ -2147,6 +2056,6 @@ namespace stlplus
     return status;
   }
 
-////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus
