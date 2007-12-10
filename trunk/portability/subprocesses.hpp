@@ -35,7 +35,7 @@ namespace stlplus
   class arg_vector
   {
   private:
-    char** v;
+    char** m_argv;
 
   public:
     // create an empty vector
@@ -105,7 +105,7 @@ namespace stlplus
   class env_vector
   {
   private:
-    ENVIRON_TYPE v;
+    ENVIRON_TYPE m_env;
 
   public:
     // create an env_vector vector from the current process
@@ -156,16 +156,16 @@ namespace stlplus
   {
   private:
 
-    PID_TYPE pid;
+    PID_TYPE m_pid;
 #ifdef MSWINDOWS
-    HANDLE job;
+    HANDLE m_job;
 #endif
-    PIPE_TYPE child_in;
-    PIPE_TYPE child_out;
-    PIPE_TYPE child_err;
-    env_vector env;
-    int err;
-    int status;
+    PIPE_TYPE m_child_in;
+    PIPE_TYPE m_child_out;
+    PIPE_TYPE m_child_err;
+    env_vector m_env;
+    int m_err;
+    int m_status;
 
   public:
     subprocess(void);
@@ -226,16 +226,16 @@ namespace stlplus
   class async_subprocess
   {
   private:
-    PID_TYPE pid;
+    PID_TYPE m_pid;
 #ifdef MSWINDOWS
-    HANDLE job;
+    HANDLE m_job;
 #endif
-    PIPE_TYPE child_in;
-    PIPE_TYPE child_out;
-    PIPE_TYPE child_err;
-    env_vector env;
-    int err;
-    int status;
+    PIPE_TYPE m_child_in;
+    PIPE_TYPE m_child_out;
+    PIPE_TYPE m_child_err;
+    env_vector m_env;
+    int m_err;
+    int m_status;
     void set_error(int);
 
   public:

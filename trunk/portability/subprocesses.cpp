@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Bug fix by Alistair Low: kill on Windows now kills grandchild processes as
-// well as the child process. This has to be enabled by stating that the
-// version of Windows is at least 5.0
+// well as the child process. This is done using jobs - which has to be
+// enabled by stating that the version of Windows is at least 5.0
 #if defined(_WIN32) || defined(_WIN32_WCE)
 #define _WIN32_WINNT 0x0500
 #endif
@@ -163,30 +163,30 @@ namespace stlplus
 
   arg_vector::arg_vector (void)
   {
-    v = 0;
+    m_argv = 0;
   }
 
   arg_vector::arg_vector (const arg_vector& a)
   {
-    v = 0;
+    m_argv = 0;
     *this = a;
   }
 
   arg_vector::arg_vector (char** a)
   {
-    v = 0;
+    m_argv = 0;
     *this = a;
   }
 
   arg_vector::arg_vector (const std::string& command)
   {
-    v = 0;
+    m_argv = 0;
     *this = command;
   }
 
   arg_vector::arg_vector (const char* command)
   {
-    v = 0;
+    m_argv = 0;
     *this = command;
   }
 
@@ -197,14 +197,14 @@ namespace stlplus
 
   arg_vector& arg_vector::operator = (const arg_vector& a)
   {
-    return *this = a.v;
+    return *this = a.m_argv;
   }
 
-  arg_vector& arg_vector::operator = (char** a)
+  arg_vector& arg_vector::operator = (char** argv)
   {
     clear();
-    for (unsigned i = 0; a[i]; i++)
-      operator += (a[i]);
+    for (unsigned i = 0; argv[i]; i++)
+      operator += (argv[i]);
     return *this;
   }
 
@@ -244,13 +244,13 @@ namespace stlplus
     char** new_argv = new char*[size()+2];
     unsigned i = 0;
     for ( ; i < index; i++)
-      new_argv[i] = copy_string(v[i]);
+      new_argv[i] = copy_string(m_argv[i]);
     new_argv[index] = copy_string(str.c_str());
     for ( ; i < size(); i++)
-      new_argv[i+1] = copy_string(v[i]);
+      new_argv[i+1] = copy_string(m_argv[i]);
     new_argv[i+1] = 0;
     clear();
-    v = new_argv;
+    m_argv = new_argv;
   }
 
   void arg_vector::clear (unsigned index) throw(std::out_of_range)
@@ -260,47 +260,49 @@ namespace stlplus
     char** new_argv = new char*[size()];
     unsigned i = 0;
     for ( ; i < index; i++)
-      new_argv[i] = copy_string(v[i]);
+      new_argv[i] = copy_string(m_argv[i]);
     i++;
     for ( ; i < size(); i++)
-      new_argv[i-1] = copy_string(v[i]);
+      new_argv[i-1] = copy_string(m_argv[i]);
     new_argv[i-1] = 0;
     clear();
-    v = new_argv;
+    m_argv = new_argv;
   }
 
   void arg_vector::clear(void)
   {
-    if (v)
+    if (m_argv)
     {
-      for (unsigned i = 0; v[i]; i++)
-        delete[] v[i];
-      delete[] v;
-      v = 0;
+      for (unsigned i = 0; m_argv[i]; i++)
+        delete[] m_argv[i];
+      delete[] m_argv;
+      m_argv = 0;
     }
   }
 
   unsigned arg_vector::size (void) const
   {
     unsigned i = 0;
-    if (v) while (v[i]) i++;
+    if (m_argv)
+      while (m_argv[i])
+        i++;
     return i;
   }
 
   arg_vector::operator char** (void) const
   {
-    return v;
+    return m_argv;
   }
 
   char** arg_vector::argv (void) const
   {
-    return v;
+    return m_argv;
   }
 
   char* arg_vector::operator [] (unsigned index) const throw(std::out_of_range)
   {
     if (index >= size()) throw std::out_of_range("arg_vector::operator[]");
-    return v[index];
+    return m_argv[index];
   }
 
   char* arg_vector::argv0 (void) const throw(std::out_of_range)
@@ -314,7 +316,7 @@ namespace stlplus
     for (unsigned i = 0; i < size(); i++)
     {
       if (i) result += ' ';
-      result += make_argument(v[i]);
+      result += make_argument(m_argv[i]);
     }
     return result;
   }
@@ -491,16 +493,16 @@ namespace stlplus
   {
 #ifdef MSWINDOWS
     char* env = (char*)GetEnvironmentStrings();
-    v = envp_copy(env);
+    m_env = envp_copy(env);
     FreeEnvironmentStrings(env);
 #else
-    v = envp_copy(environ);
+    m_env = envp_copy(environ);
 #endif
   }
 
   env_vector::env_vector (const env_vector& a)
   {
-    v = 0;
+    m_env = 0;
     *this = a;
   }
 
@@ -512,13 +514,13 @@ namespace stlplus
   env_vector& env_vector::operator = (const env_vector& a)
   {
     clear();
-    v = envp_copy(a.v);
+    m_env = envp_copy(a.m_env);
     return *this;
   }
 
   void env_vector::clear(void)
   {
-    envp_clear(v);
+    envp_clear(m_env);
   }
 
   void env_vector::add(const std::string& name, const std::string& value)
@@ -526,7 +528,7 @@ namespace stlplus
     // the trick is to add the value in alphabetic order
     // this is done by copying the existing environment string to a new
     // string, inserting the new value when a name greater than it is found
-    unsigned size = envp_size(v);
+    unsigned size = envp_size(m_env);
 #ifdef MSWINDOWS
     unsigned new_size = size + name.size() + value.size() + 2;
     char* new_v = new char[new_size];
@@ -540,11 +542,11 @@ namespace stlplus
     bool added = false;
     unsigned i = 0;
     unsigned j = 0;
-    while(v[i])
+    while(m_env[i])
     {
       std::string current_name;
       std::string current_value;
-      envp_extract(current_name, current_value, v, i);
+      envp_extract(current_name, current_value, m_env, i);
       if (envp_equal(name,current_name))
       {
         // replace an existing value
@@ -565,8 +567,8 @@ namespace stlplus
     }
     if (!added)
       envp_append(name, value, new_v, j);
-    envp_clear(v);
-    v = new_v;
+    envp_clear(m_env);
+    m_env = new_v;
   }
 
 
@@ -574,7 +576,7 @@ namespace stlplus
   {
     bool result = false;
     // this is done by copying the existing environment string to a new string, but excluding the specified name
-    unsigned size = envp_size(v);
+    unsigned size = envp_size(m_env);
 #ifdef MSWINDOWS
     char* new_v = new char[size];
     new_v[0] = '\0';
@@ -584,18 +586,18 @@ namespace stlplus
 #endif
     unsigned i = 0;
     unsigned j = 0;
-    while(v[i])
+    while(m_env[i])
     {
       std::string current_name;
       std::string current_value;
-      envp_extract(current_name, current_value, v, i);
+      envp_extract(current_name, current_value, m_env, i);
       if (envp_equal(name,current_name))
         result = true;
       else
         envp_append(current_name, current_value, new_v, j);
     }
-    envp_clear(v);
-    v = new_v;
+    envp_clear(m_env);
+    m_env = new_v;
     return result;
   }
 
@@ -607,11 +609,11 @@ namespace stlplus
   std::string env_vector::get (const std::string& name) const
   {
     unsigned i = 0;
-    while(v[i])
+    while(m_env[i])
     {
       std::string current_name;
       std::string current_value;
-      envp_extract(current_name, current_value, v, i);
+      envp_extract(current_name, current_value, m_env, i);
       if (envp_equal(name,current_name))
         return current_value;
     }
@@ -623,15 +625,15 @@ namespace stlplus
     unsigned i = 0;
 #ifdef MSWINDOWS
     unsigned offset = 0;
-    while(v[offset])
+    while(m_env[offset])
     {
       std::string current_name;
       std::string current_value;
-      envp_extract(current_name, current_value, v, offset);
+      envp_extract(current_name, current_value, m_env, offset);
       i++;
     }
 #else
-    while(v[i])
+    while(m_env[i])
       i++;
 #endif
 
@@ -651,17 +653,17 @@ namespace stlplus
     {
       std::string current_name;
       std::string current_value;
-      envp_extract(current_name, current_value, v, j);
+      envp_extract(current_name, current_value, m_env, j);
     }
     std::string name;
     std::string value;
-    envp_extract(name, value, v, j);
+    envp_extract(name, value, m_env, j);
     return std::make_pair(name,value);
   }
 
   ENVIRON_TYPE env_vector::envp (void) const
   {
-    return v;
+    return m_env;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -674,25 +676,25 @@ namespace stlplus
 
   subprocess::subprocess(void)
   {
-    pid.hProcess = 0;
-    job = 0;
-    child_in = 0;
-    child_out = 0;
-    child_err = 0;
-    err = 0;
-    status = 0;
+    m_pid.hProcess = 0;
+    m_job = 0;
+    m_child_in = 0;
+    m_child_out = 0;
+    m_child_err = 0;
+    m_err = 0;
+    m_status = 0;
   }
 
 #else
 
   subprocess::subprocess(void)
   {
-    pid = -1;
-    child_in = -1;
-    child_out = -1;
-    child_err = -1;
-    err = 0;
-    status = 0;
+    m_pid = -1;
+    m_child_in = -1;
+    m_child_out = -1;
+    m_child_err = -1;
+    m_err = 0;
+    m_status = 0;
   }
 
 #endif
@@ -701,16 +703,16 @@ namespace stlplus
 
   subprocess::~subprocess(void)
   {
-    if (pid.hProcess != 0)
+    if (m_pid.hProcess != 0)
     {
       close_stdin();
       close_stdout();
       close_stderr();
       kill();
-      WaitForSingleObject(pid.hProcess, INFINITE);
-      CloseHandle(pid.hThread);
-      CloseHandle(pid.hProcess);
-      CloseHandle(job);
+      WaitForSingleObject(m_pid.hProcess, INFINITE);
+      CloseHandle(m_pid.hThread);
+      CloseHandle(m_pid.hProcess);
+      CloseHandle(m_job);
     }
   }
 
@@ -718,7 +720,7 @@ namespace stlplus
 
   subprocess::~subprocess(void)
   {
-    if (pid != -1)
+    if (m_pid != -1)
     {
       close_stdin();
       close_stdout();
@@ -727,7 +729,7 @@ namespace stlplus
       for (;;)
       {
         int wait_status = 0;
-        int wait_ret_val = waitpid(pid, &wait_status, 0);
+        int wait_ret_val = waitpid(m_pid, &wait_status, 0);
         if (wait_ret_val != -1 || errno != EINTR) break;
       }
     }
@@ -737,18 +739,18 @@ namespace stlplus
 
   void subprocess::add_variable(const std::string& name, const std::string& value)
   {
-    env.add(name, value);
+    m_env.add(name, value);
   }
 
   bool subprocess::remove_variable(const std::string& name)
   {
-    return env.remove(name);
+    return m_env.remove(name);
   }
 
 #ifdef MSWINDOWS
 
   bool subprocess::spawn(const std::string& path, const arg_vector& argv,
-                                  bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                         bool connect_stdin, bool connect_stdout, bool connect_stderr)
   {
     bool result = true;
     // first create the pipes to be used to connect to the child stdin/out/err
@@ -763,7 +765,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&parent_stdin, &tmp, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_in, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_in, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     PIPE_TYPE parent_stdout = 0;
@@ -774,7 +776,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&tmp, &parent_stdout, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_out, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_out, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     PIPE_TYPE parent_stderr = 0;
@@ -785,7 +787,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&tmp, &parent_stderr, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_err, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_err, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     // Now create the subprocess
@@ -794,15 +796,14 @@ namespace stlplus
     STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
                            STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
                            parent_stdin,parent_stdout,parent_stderr};
-    job = CreateJobObject(NULL, NULL);
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,env.envp(),0,&startup,&pid) != 0;
+    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
     if (connect_stderr) CloseHandle(parent_stderr);
     if (!created)
     {
-      err = GetLastError();
+      m_err = GetLastError();
       close_stdin();
       close_stdout();
       close_stderr();
@@ -810,8 +811,9 @@ namespace stlplus
     }
     else
     {
-      AssignProcessToJobObject(job, pid.hProcess);
-      ResumeThread(pid.hThread);
+      m_job = CreateJobObject(NULL, NULL);
+      AssignProcessToJobObject(m_job, m_pid.hProcess);
+      ResumeThread(m_pid.hThread);
 
       // The child process is now running so call the user's callback
       // The convention is that the callback can return false, in which case this will kill the child (if its still running)
@@ -825,27 +827,28 @@ namespace stlplus
       close_stderr();
       // wait for the child to finish
       // TODO - kill the child if a timeout happens
-      WaitForSingleObject(pid.hProcess, INFINITE);
+      WaitForSingleObject(m_pid.hProcess, INFINITE);
       DWORD exit_status = 0;
-      if (!GetExitCodeProcess(pid.hProcess, &exit_status))
+      if (!GetExitCodeProcess(m_pid.hProcess, &exit_status))
       {
-        err = GetLastError();
+        m_err = GetLastError();
         result = false;
       }
       else if (exit_status != 0)
         result = false;
-      status = (int)exit_status;
-      CloseHandle(pid.hThread);
-      CloseHandle(pid.hProcess);
+      m_status = (int)exit_status;
+      CloseHandle(m_pid.hThread);
+      CloseHandle(m_pid.hProcess);
+      CloseHandle(m_job);
     }
-    pid.hProcess = 0;
+    m_pid.hProcess = 0;
     return result;
   }
 
 #else
 
   bool subprocess::spawn(const std::string& path, const arg_vector& argv,
-                                  bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                         bool connect_stdin, bool connect_stdout, bool connect_stderr)
   {
     bool result = true;
     // first create the pipes to be used to connect to the child stdin/out/err
@@ -864,11 +867,11 @@ namespace stlplus
 
     // now create the subprocess
     // In Unix, this is done by forking (creating two copies of the parent), then overwriting the child copy using exec
-    pid = ::fork();
-    switch(pid)
+    m_pid = ::fork();
+    switch(m_pid)
     {
     case -1:   // failed to fork
-      err = errno;
+      m_err = errno;
       if (connect_stdin)
       {
         ::close(stdin_pipe[0]);
@@ -905,7 +908,7 @@ namespace stlplus
         ::close(stderr_pipe[0]);
         dup2(stderr_pipe[1],STDERR_FILENO);
       }
-      execve(path.c_str(), argv.argv(), env.envp());
+      execve(path.c_str(), argv.argv(), m_env.envp());
       // will only ever get here if the exec() failed completely - *must* now exit the child process
       // by using errno, the parent has some chance of diagnosing the cause of the problem
       exit(errno);
@@ -918,17 +921,17 @@ namespace stlplus
       if (connect_stdin)
       {
         ::close(stdin_pipe[0]);
-        child_in = stdin_pipe[1];
+        m_child_in = stdin_pipe[1];
       }
       if (connect_stdout)
       {
         ::close(stdout_pipe[1]);
-        child_out = stdout_pipe[0];
+        m_child_out = stdout_pipe[0];
       }
       if (connect_stderr)
       {
         ::close(stderr_pipe[1]);
-        child_err = stderr_pipe[0];
+        m_child_err = stderr_pipe[0];
       }
       // call the user's callback
       if (!callback())
@@ -944,23 +947,23 @@ namespace stlplus
       int wait_status = 0;
       for (;;)
       {
-        int wait_ret_val = waitpid(pid, &wait_status, 0);
+        int wait_ret_val = waitpid(m_pid, &wait_status, 0);
         if (wait_ret_val != -1 || errno != EINTR) break;
       }
       // establish whether an error occurred
       if (WIFSIGNALED(wait_status))
       {
         // set_error(errno);
-        status = WTERMSIG(wait_status);
+        m_status = WTERMSIG(wait_status);
         result = false;
       }
       else if (WIFEXITED(wait_status))
       {
-        status = WEXITSTATUS(wait_status);
-        if (status != 0)
+        m_status = WEXITSTATUS(wait_status);
+        if (m_status != 0)
           result = false;
       }
-      pid = -1;
+      m_pid = -1;
     }
     break;
     }
@@ -988,13 +991,13 @@ namespace stlplus
 
   bool subprocess::kill (void)
   {
-    if (!pid.hProcess) return false;
+    if (!m_pid.hProcess) return false;
     close_stdin();
     close_stdout();
     close_stderr();
-    if (!TerminateJobObject(job, (UINT)-1))
+    if (!TerminateJobObject(m_job, (UINT)-1))
     {
-      err = GetLastError();
+      m_err = GetLastError();
       return false;
     }
     return true;
@@ -1004,13 +1007,13 @@ namespace stlplus
 
   bool subprocess::kill (void)
   {
-    if (pid == -1) return false;
+    if (m_pid == -1) return false;
     close_stdin();
     close_stdout();
     close_stderr();
-    if (::kill(pid, SIGINT) == -1)
+    if (::kill(m_pid, SIGINT) == -1)
     {
-      err = errno;
+      m_err = errno;
       return false;
     }
     return true;
@@ -1022,12 +1025,12 @@ namespace stlplus
 
   int subprocess::write_stdin (std::string& buffer)
   {
-    if (child_in == 0) return -1;
+    if (m_child_in == 0) return -1;
     // do a blocking write of the whole buffer
     DWORD bytes = 0;
-    if (!WriteFile(child_in, buffer.c_str(), (DWORD)buffer.size(), &bytes, 0))
+    if (!WriteFile(m_child_in, buffer.c_str(), (DWORD)buffer.size(), &bytes, 0))
     {
-      err = GetLastError();
+      m_err = GetLastError();
       close_stdin();
       return -1;
     }
@@ -1041,12 +1044,12 @@ namespace stlplus
 
   int subprocess::write_stdin (std::string& buffer)
   {
-    if (child_in == -1) return -1;
+    if (m_child_in == -1) return -1;
     // do a blocking write of the whole buffer
-    int bytes = write(child_in, buffer.c_str(), buffer.size());
+    int bytes = write(m_child_in, buffer.c_str(), buffer.size());
     if (bytes == -1)
     {
-      err = errno;
+      m_err = errno;
       close_stdin();
       return -1;
     }
@@ -1062,14 +1065,14 @@ namespace stlplus
 
   int subprocess::read_stdout (std::string& buffer)
   {
-    if (child_out == 0) return -1;
+    if (m_child_out == 0) return -1;
     DWORD bytes = 0;
     DWORD buffer_size = 256;
     char* tmp = new char[buffer_size];
-    if (!ReadFile(child_out, tmp, buffer_size, &bytes, 0))
+    if (!ReadFile(m_child_out, tmp, buffer_size, &bytes, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
-        err = GetLastError();
+        m_err = GetLastError();
       close_stdout();
       delete[] tmp;
       return -1;
@@ -1090,13 +1093,13 @@ namespace stlplus
 
   int subprocess::read_stdout (std::string& buffer)
   {
-    if (child_out == -1) return -1;
+    if (m_child_out == -1) return -1;
     int buffer_size = 256;
     char* tmp = new char[buffer_size];
-    int bytes = read(child_out, tmp, buffer_size);
+    int bytes = read(m_child_out, tmp, buffer_size);
     if (bytes == -1)
     {
-      err = errno;
+      m_err = errno;
       close_stdout();
       delete[] tmp;
       return -1;
@@ -1119,14 +1122,14 @@ namespace stlplus
 
   int subprocess::read_stderr(std::string& buffer)
   {
-    if (child_err == 0) return -1;
+    if (m_child_err == 0) return -1;
     DWORD bytes = 0;
     DWORD buffer_size = 256;
     char* tmp = new char[buffer_size];
-    if (!ReadFile(child_err, tmp, buffer_size, &bytes, 0))
+    if (!ReadFile(m_child_err, tmp, buffer_size, &bytes, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
-        err = GetLastError();
+        m_err = GetLastError();
       close_stderr();
       delete[] tmp;
       return -1;
@@ -1147,13 +1150,13 @@ namespace stlplus
 
   int subprocess::read_stderr (std::string& buffer)
   {
-    if (child_err == -1) return -1;
+    if (m_child_err == -1) return -1;
     int buffer_size = 256;
     char* tmp = new char[buffer_size];
-    int bytes = read(child_err, tmp, buffer_size);
+    int bytes = read(m_child_err, tmp, buffer_size);
     if (bytes == -1)
     {
-      err = errno;
+      m_err = errno;
       close_stderr();
       delete[] tmp;
       return -1;
@@ -1176,10 +1179,10 @@ namespace stlplus
 
   void subprocess::close_stdin (void)
   {
-    if (child_in)
+    if (m_child_in)
     {
-      CloseHandle(child_in);
-      child_in = 0;
+      CloseHandle(m_child_in);
+      m_child_in = 0;
     }
   }
 
@@ -1187,10 +1190,10 @@ namespace stlplus
 
   void subprocess::close_stdin (void)
   {
-    if (child_in != -1)
+    if (m_child_in != -1)
     {
-      ::close(child_in);
-      child_in = -1;
+      ::close(m_child_in);
+      m_child_in = -1;
     }
   }
 
@@ -1200,10 +1203,10 @@ namespace stlplus
 
   void subprocess::close_stdout (void)
   {
-    if (child_out)
+    if (m_child_out)
     {
-      CloseHandle(child_out);
-      child_out = 0;
+      CloseHandle(m_child_out);
+      m_child_out = 0;
     }
   }
 
@@ -1211,10 +1214,10 @@ namespace stlplus
 
   void subprocess::close_stdout (void)
   {
-    if (child_out != -1)
+    if (m_child_out != -1)
     {
-      ::close(child_out);
-      child_out = -1;
+      ::close(m_child_out);
+      m_child_out = -1;
     }
   }
 
@@ -1224,10 +1227,10 @@ namespace stlplus
 
   void subprocess::close_stderr (void)
   {
-    if (child_err)
+    if (m_child_err)
     {
-      CloseHandle(child_err);
-      child_err = 0;
+      CloseHandle(m_child_err);
+      m_child_err = 0;
     }
   }
 
@@ -1235,10 +1238,10 @@ namespace stlplus
 
   void subprocess::close_stderr (void)
   {
-    if (child_err != -1)
+    if (m_child_err != -1)
     {
-      ::close(child_err);
-      child_err = -1;
+      ::close(m_child_err);
+      m_child_err = -1;
     }
   }
 
@@ -1246,23 +1249,23 @@ namespace stlplus
 
   bool subprocess::error(void) const
   {
-    return err != 0;
+    return m_err != 0;
   }
 
   int subprocess::error_number(void) const
   {
-    return err;
+    return m_err;
   }
 
 #ifdef MSWINDOWS
 
   std::string subprocess::error_text(void) const
   {
-    if (err == 0) return std::string();
+    if (m_err == 0) return std::string();
     char* message;
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
                   0,
-                  err,
+                  m_err,
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                   (LPTSTR)&message,
                   0,0);
@@ -1275,17 +1278,17 @@ namespace stlplus
 
   std::string subprocess::error_text(void) const
   {
-    if (err == 0) return std::string();
-    char* text = strerror(err);
+    if (m_err == 0) return std::string();
+    char* text = strerror(m_err);
     if (text) return std::string(text);
-    return "error number " + dformat("%d",err);
+    return "error number " + dformat("%d",m_err);
   }
 
 #endif
 
   int subprocess::exit_status(void) const
   {
-    return status;
+    return m_status;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -1376,25 +1379,25 @@ namespace stlplus
 
   async_subprocess::async_subprocess(void)
   {
-    pid.hProcess = 0;
-    job = 0;
-    child_in = 0;
-    child_out = 0;
-    child_err = 0;
-    err = 0;
-    status = 0;
+    m_pid.hProcess = 0;
+    m_job = 0;
+    m_child_in = 0;
+    m_child_out = 0;
+    m_child_err = 0;
+    m_err = 0;
+    m_status = 0;
   }
 
 #else
 
   async_subprocess::async_subprocess(void)
   {
-    pid = -1;
-    child_in = -1;
-    child_out = -1;
-    child_err = -1;
-    err = 0;
-    status = 0;
+    m_pid = -1;
+    m_child_in = -1;
+    m_child_out = -1;
+    m_child_err = -1;
+    m_err = 0;
+    m_status = 0;
   }
 
 #endif
@@ -1403,16 +1406,16 @@ namespace stlplus
 
   async_subprocess::~async_subprocess(void)
   {
-    if (pid.hProcess != 0)
+    if (m_pid.hProcess != 0)
     {
       close_stdin();
       close_stdout();
       close_stderr();
       kill();
-      WaitForSingleObject(pid.hProcess, INFINITE);
-      CloseHandle(pid.hThread);
-      CloseHandle(pid.hProcess);
-      CloseHandle(job);
+      WaitForSingleObject(m_pid.hProcess, INFINITE);
+      CloseHandle(m_pid.hThread);
+      CloseHandle(m_pid.hProcess);
+      CloseHandle(m_job);
     }
   }
 
@@ -1420,7 +1423,7 @@ namespace stlplus
 
   async_subprocess::~async_subprocess(void)
   {
-    if (pid != -1)
+    if (m_pid != -1)
     {
       close_stdin();
       close_stdout();
@@ -1429,7 +1432,7 @@ namespace stlplus
       for (;;)
       {
         int wait_status = 0;
-        int wait_ret_val = waitpid(pid, &wait_status, 0);
+        int wait_ret_val = waitpid(m_pid, &wait_status, 0);
         if (wait_ret_val != -1 || errno != EINTR) break;
       }
     }
@@ -1439,17 +1442,17 @@ namespace stlplus
 
   void async_subprocess::set_error(int e)
   {
-    err = e;
+    m_err = e;
   }
 
   void async_subprocess::add_variable(const std::string& name, const std::string& value)
   {
-    env.add(name, value);
+    m_env.add(name, value);
   }
 
   bool async_subprocess::remove_variable(const std::string& name)
   {
-    return env.remove(name);
+    return m_env.remove(name);
   }
 
 #ifdef MSWINDOWS
@@ -1470,7 +1473,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&parent_stdin, &tmp, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_in, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_in, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     PIPE_TYPE parent_stdout = 0;
@@ -1481,7 +1484,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&tmp, &parent_stdout, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_out, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_out, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     PIPE_TYPE parent_stderr = 0;
@@ -1492,7 +1495,7 @@ namespace stlplus
       PIPE_TYPE tmp = 0;
       SECURITY_ATTRIBUTES inherit_handles = {sizeof(SECURITY_ATTRIBUTES), 0, TRUE};
       CreatePipe(&tmp, &parent_stderr, &inherit_handles, 0);
-      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &child_err, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+      DuplicateHandle(GetCurrentProcess(), tmp, GetCurrentProcess(), &m_child_err, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
     }
 
     // Now create the subprocess
@@ -1501,8 +1504,7 @@ namespace stlplus
     STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
                            STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
                            parent_stdin,parent_stdout,parent_stderr};
-    job = CreateJobObject(NULL, NULL);
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,env.envp(),0,&startup,&pid) != 0;
+    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
@@ -1517,8 +1519,9 @@ namespace stlplus
     }
     else
     {
-      AssignProcessToJobObject(job, pid.hProcess);
-      ResumeThread(pid.hThread);
+      m_job = CreateJobObject(NULL, NULL);
+      AssignProcessToJobObject(m_job, m_pid.hProcess);
+      ResumeThread(m_pid.hThread);
     }
     return result;
   }
@@ -1526,7 +1529,7 @@ namespace stlplus
 #else
 
   bool async_subprocess::spawn(const std::string& path, const arg_vector& argv,
-                                        bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                               bool connect_stdin, bool connect_stdout, bool connect_stderr)
   {
     bool result = true;
     // first create the pipes to be used to connect to the child stdin/out/err
@@ -1545,8 +1548,8 @@ namespace stlplus
 
     // now create the subprocess
     // In Unix, this is done by forking (creating two copies of the parent), then overwriting the child copy using exec
-    pid = ::fork();
-    switch(pid)
+    m_pid = ::fork();
+    switch(m_pid)
     {
     case -1:   // failed to fork
       set_error(errno);
@@ -1586,7 +1589,7 @@ namespace stlplus
         ::close(stderr_pipe[0]);
         dup2(stderr_pipe[1],STDERR_FILENO);
       }
-      execve(path.c_str(), argv.argv(), env.envp());
+      execve(path.c_str(), argv.argv(), m_env.envp());
       // will only ever get here if the exec() failed completely - *must* now exit the child process
       // by using errno, the parent has some chance of diagnosing the cause of the problem
       exit(errno);
@@ -1599,8 +1602,8 @@ namespace stlplus
       if (connect_stdin)
       {
         ::close(stdin_pipe[0]);
-        child_in = stdin_pipe[1];
-        if (fcntl(child_in, F_SETFL, O_NONBLOCK) == -1)
+        m_child_in = stdin_pipe[1];
+        if (fcntl(m_child_in, F_SETFL, O_NONBLOCK) == -1)
         {
           set_error(errno);
           result = false;
@@ -1609,8 +1612,8 @@ namespace stlplus
       if (connect_stdout)
       {
         ::close(stdout_pipe[1]);
-        child_out = stdout_pipe[0];
-        if (fcntl(child_out, F_SETFL, O_NONBLOCK) == -1)
+        m_child_out = stdout_pipe[0];
+        if (fcntl(m_child_out, F_SETFL, O_NONBLOCK) == -1)
         {
           set_error(errno);
           result = false;
@@ -1619,8 +1622,8 @@ namespace stlplus
       if (connect_stderr)
       {
         ::close(stderr_pipe[1]);
-        child_err = stderr_pipe[0];
-        if (fcntl(child_err, F_SETFL, O_NONBLOCK) == -1)
+        m_child_err = stderr_pipe[0];
+        if (fcntl(m_child_err, F_SETFL, O_NONBLOCK) == -1)
         {
           set_error(errno);
           result = false;
@@ -1635,7 +1638,7 @@ namespace stlplus
 #endif
 
   bool async_subprocess::spawn(const std::string& command_line,
-                                        bool connect_stdin, bool connect_stdout, bool connect_stderr)
+                               bool connect_stdin, bool connect_stdout, bool connect_stderr)
   {
     arg_vector arguments = command_line;
     if (arguments.size() == 0) return false;
@@ -1657,19 +1660,20 @@ namespace stlplus
     if (!callback())
       kill();
     DWORD exit_status = 0;
-    if (!GetExitCodeProcess(pid.hProcess, &exit_status))
+    if (!GetExitCodeProcess(m_pid.hProcess, &exit_status))
     {
       set_error(GetLastError());
       result = false;
     }
     else if (exit_status != STILL_ACTIVE)
     {
-      CloseHandle(pid.hThread);
-      CloseHandle(pid.hProcess);
-      pid.hProcess = 0;
+      CloseHandle(m_pid.hThread);
+      CloseHandle(m_pid.hProcess);
+      CloseHandle(m_job);
+      m_pid.hProcess = 0;
       result = false;
     }
-    status = (int)exit_status;
+    m_status = (int)exit_status;
     return result;
   }
 
@@ -1681,7 +1685,7 @@ namespace stlplus
     if (!callback())
       kill();
     int wait_status = 0;
-    int wait_ret_val = waitpid(pid, &wait_status, WNOHANG);
+    int wait_ret_val = waitpid(m_pid, &wait_status, WNOHANG);
     if (wait_ret_val == -1 && errno != EINTR)
     {
       set_error(errno);
@@ -1693,18 +1697,18 @@ namespace stlplus
       if (WIFSIGNALED(wait_status))
       {
         // set_error(errno);
-        status = WTERMSIG(wait_status);
+        m_status = WTERMSIG(wait_status);
         result = false;
       }
       else if (WIFEXITED(wait_status))
       {
         // child has exited
-        status = WEXITSTATUS(wait_status);
+        m_status = WEXITSTATUS(wait_status);
         result = false;
       }
     }
     if (!result)
-      pid = -1;
+      m_pid = -1;
     return result;
   }
 
@@ -1714,11 +1718,11 @@ namespace stlplus
 
   bool async_subprocess::kill(void)
   {
-    if (!pid.hProcess) return false;
+    if (!m_pid.hProcess) return false;
     close_stdin();
     close_stdout();
     close_stderr();
-    if (!TerminateJobObject(job, (UINT)-1))
+    if (!TerminateJobObject(m_job, (UINT)-1))
     {
       set_error(GetLastError());
       return false;
@@ -1730,11 +1734,11 @@ namespace stlplus
 
   bool async_subprocess::kill(void)
   {
-    if (pid == -1) return false;
+    if (m_pid == -1) return false;
     close_stdin();
     close_stdout();
     close_stderr();
-    if (::kill(pid, SIGINT) == -1)
+    if (::kill(m_pid, SIGINT) == -1)
     {
       set_error(errno);
       return false;
@@ -1748,10 +1752,10 @@ namespace stlplus
 
   int async_subprocess::write_stdin (std::string& buffer)
   {
-    if (child_in == 0) return -1;
+    if (m_child_in == 0) return -1;
     // there doesn't seem to be a way of doing non-blocking writes under Windoze
     DWORD bytes = 0;
-    if (!WriteFile(child_in, buffer.c_str(), (DWORD)buffer.size(), &bytes, 0))
+    if (!WriteFile(m_child_in, buffer.c_str(), (DWORD)buffer.size(), &bytes, 0))
     {
       set_error(GetLastError());
       close_stdin();
@@ -1767,10 +1771,10 @@ namespace stlplus
 
   int async_subprocess::write_stdin (std::string& buffer)
   {
-    if (child_in == -1) return -1;
+    if (m_child_in == -1) return -1;
     // relies on the pipe being non-blocking
     // This does block under Windoze
-    int bytes = write(child_in, buffer.c_str(), buffer.size());
+    int bytes = write(m_child_in, buffer.c_str(), buffer.size());
     if (bytes == -1 && errno == EAGAIN)
     {
       // not ready
@@ -1796,10 +1800,10 @@ namespace stlplus
 
   int async_subprocess::read_stdout (std::string& buffer)
   {
-    if (child_out == 0) return -1;
+    if (m_child_out == 0) return -1;
     // peek at the buffer to see how much data there is in the first place
     DWORD buffer_size = 0;
-    if (!PeekNamedPipe(child_out, 0, 0, 0, &buffer_size, 0))
+    if (!PeekNamedPipe(m_child_out, 0, 0, 0, &buffer_size, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
         set_error(GetLastError());
@@ -1809,7 +1813,7 @@ namespace stlplus
     if (buffer_size == 0) return 0;
     DWORD bytes = 0;
     char* tmp = new char[buffer_size];
-    if (!ReadFile(child_out, tmp, buffer_size, &bytes, 0))
+    if (!ReadFile(m_child_out, tmp, buffer_size, &bytes, 0))
     {
       set_error(GetLastError());
       close_stdout();
@@ -1832,11 +1836,11 @@ namespace stlplus
 
   int async_subprocess::read_stdout (std::string& buffer)
   {
-    if (child_out == -1) return -1;
+    if (m_child_out == -1) return -1;
     // rely on the pipe being non-blocking
     int buffer_size = 256;
     char* tmp = new char[buffer_size];
-    int bytes = read(child_out, tmp, buffer_size);
+    int bytes = read(m_child_out, tmp, buffer_size);
     if (bytes == -1 && errno == EAGAIN)
     {
       // not ready
@@ -1870,10 +1874,10 @@ namespace stlplus
 
   int async_subprocess::read_stderr (std::string& buffer)
   {
-    if (child_err == 0) return -1;
+    if (m_child_err == 0) return -1;
     // peek at the buffer to see how much data there is in the first place
     DWORD buffer_size = 0;
-    if (!PeekNamedPipe(child_err, 0, 0, 0, &buffer_size, 0))
+    if (!PeekNamedPipe(m_child_err, 0, 0, 0, &buffer_size, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
         set_error(GetLastError());
@@ -1883,7 +1887,7 @@ namespace stlplus
     if (buffer_size == 0) return 0;
     DWORD bytes = 0;
     char* tmp = new char[buffer_size];
-    if (!ReadFile(child_err, tmp, buffer_size, &bytes, 0))
+    if (!ReadFile(m_child_err, tmp, buffer_size, &bytes, 0))
     {
       set_error(GetLastError());
       close_stderr();
@@ -1906,11 +1910,11 @@ namespace stlplus
 
   int async_subprocess::read_stderr (std::string& buffer)
   {
-    if (child_err == -1) return -1;
+    if (m_child_err == -1) return -1;
     // rely on the pipe being non-blocking
     int buffer_size = 256;
     char* tmp = new char[buffer_size];
-    int bytes = read(child_err, tmp, buffer_size);
+    int bytes = read(m_child_err, tmp, buffer_size);
     if (bytes == -1 && errno == EAGAIN)
     {
       // not ready
@@ -1944,10 +1948,10 @@ namespace stlplus
 
   void async_subprocess::close_stdin (void)
   {
-    if (child_in)
+    if (m_child_in)
     {
-      CloseHandle(child_in);
-      child_in = 0;
+      CloseHandle(m_child_in);
+      m_child_in = 0;
     }
   }
 
@@ -1955,10 +1959,10 @@ namespace stlplus
 
   void async_subprocess::close_stdin (void)
   {
-    if (child_in != -1)
+    if (m_child_in != -1)
     {
-      ::close(child_in);
-      child_in = -1;
+      ::close(m_child_in);
+      m_child_in = -1;
     }
   }
 
@@ -1968,10 +1972,10 @@ namespace stlplus
 
   void async_subprocess::close_stdout (void)
   {
-    if (child_out)
+    if (m_child_out)
     {
-      CloseHandle(child_out);
-      child_out = 0;
+      CloseHandle(m_child_out);
+      m_child_out = 0;
     }
   }
 
@@ -1979,10 +1983,10 @@ namespace stlplus
 
   void async_subprocess::close_stdout (void)
   {
-    if (child_out != -1)
+    if (m_child_out != -1)
     {
-      ::close(child_out);
-      child_out = -1;
+      ::close(m_child_out);
+      m_child_out = -1;
     }
   }
 
@@ -1992,10 +1996,10 @@ namespace stlplus
 
   void async_subprocess::close_stderr (void)
   {
-    if (child_err)
+    if (m_child_err)
     {
-      CloseHandle(child_err);
-      child_err = 0;
+      CloseHandle(m_child_err);
+      m_child_err = 0;
     }
   }
 
@@ -2003,10 +2007,10 @@ namespace stlplus
 
   void async_subprocess::close_stderr (void)
   {
-    if (child_err != -1)
+    if (m_child_err != -1)
     {
-      ::close(child_err);
-      child_err = -1;
+      ::close(m_child_err);
+      m_child_err = -1;
     }
   }
 
@@ -2014,23 +2018,23 @@ namespace stlplus
 
   bool async_subprocess::error(void) const
   {
-    return err != 0;
+    return m_err != 0;
   }
 
   int async_subprocess::error_number(void) const
   {
-    return err;
+    return m_err;
   }
 
 #ifdef MSWINDOWS
 
   std::string async_subprocess::error_text(void) const
   {
-    if (err == 0) return std::string();
+    if (m_err == 0) return std::string();
     char* message;
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
                   0,
-                  err,
+                  m_err,
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                   (LPTSTR)&message,
                   0,0);
@@ -2043,17 +2047,17 @@ namespace stlplus
 
   std::string async_subprocess::error_text(void) const
   {
-    if (err == 0) return std::string();
-    char* text = strerror(err);
+    if (m_err == 0) return std::string();
+    char* text = strerror(m_err);
     if (text) return std::string(text);
-    return "error number " + dformat("%d",err);
+    return "error number " + dformat("%d",m_err);
   }
 
 #endif
 
   int async_subprocess::exit_status(void) const
   {
-    return status;
+    return m_status;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
