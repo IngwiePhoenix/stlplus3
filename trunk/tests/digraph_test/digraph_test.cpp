@@ -5,6 +5,7 @@
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
+#include "build.hpp"
 #include <vector>
 #include <iostream>
 
@@ -252,6 +253,8 @@ void restore_test_graph(stlplus::restore_context& context, test_graph& graph)
 
 int main(int argc, char* argv[])
 {
+  std::cerr << stlplus::build() << std::endl;
+
   bool result = true;
 
   try

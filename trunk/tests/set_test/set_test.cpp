@@ -3,6 +3,7 @@
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
 #include "dprintf.hpp"
+#include "build.hpp"
 #include <string>
 #include <set>
 
@@ -61,7 +62,7 @@ std::ostream& operator<< (std::ostream& device, const string_set& values)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << NUMBER << " set members" << std::endl;
+  std::cerr << stlplus::build() << " testing " << NUMBER << " set members" << std::endl;
 
   try
   {

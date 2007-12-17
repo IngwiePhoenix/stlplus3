@@ -2,6 +2,7 @@
 #include "file_system.hpp"
 #include "string_stl.hpp"
 #include "string_basic.hpp"
+#include "build.hpp"
 #include <string>
 #include <list>
 #include <iostream>
@@ -54,7 +55,7 @@ bool compare(const string_list& left, const string_list& right)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << NUMBER << " list elements of " << SIZE << "-byte strings" << std::endl;
+  std::cerr << stlplus::build() << " testing " << NUMBER << " list elements of " << SIZE << "-byte strings" << std::endl;
 
   try
   {

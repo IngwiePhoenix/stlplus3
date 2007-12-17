@@ -6,6 +6,7 @@
 #include "print_ntree.hpp"
 #include "print_map.hpp"
 #include "print_string.hpp"
+#include "build.hpp"
 #include <string>
 #include <map>
 
@@ -187,6 +188,7 @@ public:
 
 int main(unsigned argc, char* argv[])
 {
+  std::cerr << stlplus::build() << std::endl;
   bool result = true;
 
   try

@@ -8,6 +8,7 @@
 #include "string_hash.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
+#include "build.hpp"
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +79,7 @@ bool compare(const int_string_hash& left, const int_string_hash& right)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << NUMBER << " mappings" << std::endl;
+  std::cerr << stlplus::build() << " testing " << NUMBER << " mappings" << std::endl;
 
   try
   {

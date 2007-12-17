@@ -7,6 +7,7 @@
 #include "string_string.hpp"
 #include "string_pair.hpp"
 #include "string_smart_ptr.hpp"
+#include "build.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -66,6 +67,7 @@ static const char* DATA = "data.tmp";
 
 int main (int argc, char* argv[])
 {
+  std::cerr << stlplus::build() << std::endl;
   try
   {
     std::vector<std::string> data = stlplus::split("one:two:three",":");

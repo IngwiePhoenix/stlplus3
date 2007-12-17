@@ -5,6 +5,7 @@
 #include "dprintf.hpp"
 #include "strings.hpp"
 #include "file_system.hpp"
+#include "build.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -69,7 +70,7 @@ bool compare(const string_matrix& left, const string_matrix& right)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << R << "*" << C << " mappings" << std::endl;
+  std::cerr << stlplus::build() << " testing " << R << "*" << C << " mappings" << std::endl;
 
   try
   {

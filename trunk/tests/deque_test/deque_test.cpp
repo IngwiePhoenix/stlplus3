@@ -2,6 +2,7 @@
 #include "persistent_string.hpp"
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
+#include "build.hpp"
 #include <string>
 #include <deque>
 
@@ -48,7 +49,7 @@ bool compare(const string_deque& left, string_deque& right)
 
 int main(unsigned argc, char* argv[])
 {
-  std::cerr << "testing " << NUMBER << " deque elements of " << SIZE << "-byte strings" << std::endl;
+  std::cerr << stlplus::build() << " testing " << NUMBER << " deque elements of " << SIZE << "-byte strings" << std::endl;
   bool result = true;
 
   try

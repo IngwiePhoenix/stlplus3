@@ -8,6 +8,7 @@
 #include "persistent_shortcuts.hpp"
 #include "persistent_smart_ptr.hpp"
 #include "file_system.hpp"
+#include "build.hpp"
 
 #define NUMBER 1000
 #define DATA "interface_test.tmp"
@@ -184,7 +185,7 @@ bool compare(const base_vector& left, const base_vector& right)
 int main (int argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << NUMBER << " objects" << std::endl;
+  std::cerr << stlplus::build() << " testing " << NUMBER << " objects" << std::endl;
 
   try
   {

@@ -2,6 +2,7 @@
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
 #include "strings.hpp"
+#include "build.hpp"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -69,7 +70,7 @@ bool compare (bool_vector_vector& left, bool_vector_vector& right)
 int main(unsigned argc, char* argv[])
 {
   bool result = true;
-  std::cerr << "testing " << COUNT << " bool_vector size " << SIZE << std::endl;
+  std::cerr << stlplus::build() << " testing " << COUNT << " bool_vector size " << SIZE << std::endl;
 
   try
   {

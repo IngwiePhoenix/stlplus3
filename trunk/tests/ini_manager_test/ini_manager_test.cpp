@@ -152,6 +152,8 @@ bool test_ini_manager(stlplus::ini_manager& manager, const std::string& name)
 int main (unsigned argc, char* argv[])
 {
   DEBUG_TRACE;
+  std::cerr << stlplus::build() << std::endl;
+
   try
   {
     unsigned errors = 0;
