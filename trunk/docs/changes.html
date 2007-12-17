@@ -41,6 +41,7 @@ C++ Library Collection
 <div id="documentNavigation">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#v3.0">Changes from Version 3.0 to 3.1</a></li>
 <li><a href="#v2">Changes from Version 2 to 3.0</a></li>
 </ul>
 </div>
@@ -65,6 +66,43 @@ the changeover if you are prepared to do some porting work or if you are startin
 it is based on STLplus, which was a stable release, there is enough reworking for all sorts of
 errors to have crept in. Furthermore, I have not yet ported any significant applications to version
 3, so only small test programs have been written so far.</p>
+
+<h2 id="v3.1">Changes from Version 3.0 to 3.1</h2>
+
+<h3>Bug in subsystems/cli_parser</h3>
+
+<p>The macro END_CLI_DEFINITIONS contained an error with namespaces - so it would only work if you
+were "using namespace stlplus". This should now work when using the stlplus:: prefix notation as
+well.</p>
+
+<h3>Bug in subsystems/cli_parser</h3>
+
+<p>There was a bug related to the use of a definition_t to define a command-line argument. The bug
+caused the cli_parser to crash with a segmentation fault due to a null pointer being passed to a
+std::string.</p>
+
+<h3>Built-in messages in subsystems/message_handler</h3>
+
+<p>The minimum set of messages (for the cli_handler) has now been built-in to the message_handler so
+that applications can more easily be built with no message-file handling.</p>
+
+<h3>Bug in Windows port of quoted command-line arguments in portability/subprocesses.</h3>
+
+<p>This bug resulted in a quoted string being converted by the argument_vector class into a
+doubled-up string - i.e. "./fred" would get converted into "..//ffrreedd". The bug only manifested
+on Windows.</p>
+
+<h3>Change to kill semantics in portability/subprocesses</h3>
+
+<p>A bug fix was submitted by Alistair Low to enable the subprocess classes to kill a whole
+subprocess tree rather than just the parent process. I have yet to confirm whether this is the
+behaviour of the Unix port - it should be.</p>
+
+<h3>Bug in portability/debug</h3>
+
+<p>One of the macros in the debug header had a typo - which broke the debug utilities. The symptom
+was in DEBUG_TRACE which would result in a compilation error due to a reference to the undefined
+class stlplus_debug_trace. This has been fixed.</p>
 
 <h2 id="v2">Changes from Version 2 to 3.0</h2>
 
