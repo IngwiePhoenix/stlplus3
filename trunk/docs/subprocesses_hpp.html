@@ -45,7 +45,7 @@
 <span style="color: #ff0099">   35: </span>  <span style="color: #990000">class</span> <span style="color: #000000">arg_vector</span>
 <span style="color: #ff0099">   36: </span>  <span style="color: #330033">{</span>
 <span style="color: #ff0099">   37: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
-<span style="color: #ff0099">   38: </span>    <span style="color: #990000">char</span><span style="color: #330033">*</span><span style="color: #330033">*</span> <span style="color: #000000">v</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   38: </span>    <span style="color: #990000">char</span><span style="color: #330033">*</span><span style="color: #330033">*</span> <span style="color: #000000">m_argv</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">   39: </span>
 <span style="color: #ff0099">   40: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">   41: </span>    <span style="color: #000099">// create an empty vector</span>
@@ -115,7 +115,7 @@
 <span style="color: #ff0099">  105: </span>  <span style="color: #990000">class</span> <span style="color: #000000">env_vector</span>
 <span style="color: #ff0099">  106: </span>  <span style="color: #330033">{</span>
 <span style="color: #ff0099">  107: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
-<span style="color: #ff0099">  108: </span>    <span style="color: #000000">ENVIRON_TYPE</span> <span style="color: #000000">v</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  108: </span>    <span style="color: #000000">ENVIRON_TYPE</span> <span style="color: #000000">m_env</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  109: </span>
 <span style="color: #ff0099">  110: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  111: </span>    <span style="color: #000099">// create an env_vector vector from the current process</span>
@@ -166,16 +166,16 @@
 <span style="color: #ff0099">  156: </span>  <span style="color: #330033">{</span>
 <span style="color: #ff0099">  157: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  158: </span>
-<span style="color: #ff0099">  159: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">pid</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  159: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">m_pid</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  160: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">MSWINDOWS</span>
-<span style="color: #ff0099">  161: </span>    <span style="color: #000000">HANDLE</span> <span style="color: #000000">job</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  161: </span>    <span style="color: #000000">HANDLE</span> <span style="color: #000000">m_job</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  162: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">  163: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_in</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  164: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_out</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  165: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_err</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  166: </span>    <span style="color: #000000">env_vector</span> <span style="color: #000000">env</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  167: </span>    <span style="color: #990000">int</span> <span style="color: #000000">err</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  168: </span>    <span style="color: #990000">int</span> <span style="color: #000000">status</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  163: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_in</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  164: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_out</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  165: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_err</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  166: </span>    <span style="color: #000000">env_vector</span> <span style="color: #000000">m_env</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  167: </span>    <span style="color: #990000">int</span> <span style="color: #000000">m_err</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  168: </span>    <span style="color: #990000">int</span> <span style="color: #000000">m_status</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  169: </span>
 <span style="color: #ff0099">  170: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  171: </span>    <span style="color: #000000">subprocess</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
@@ -236,16 +236,16 @@
 <span style="color: #ff0099">  226: </span>  <span style="color: #990000">class</span> <span style="color: #000000">async_subprocess</span>
 <span style="color: #ff0099">  227: </span>  <span style="color: #330033">{</span>
 <span style="color: #ff0099">  228: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
-<span style="color: #ff0099">  229: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">pid</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  229: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">m_pid</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  230: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">MSWINDOWS</span>
-<span style="color: #ff0099">  231: </span>    <span style="color: #000000">HANDLE</span> <span style="color: #000000">job</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  231: </span>    <span style="color: #000000">HANDLE</span> <span style="color: #000000">m_job</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  232: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">  233: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_in</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  234: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_out</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  235: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">child_err</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  236: </span>    <span style="color: #000000">env_vector</span> <span style="color: #000000">env</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  237: </span>    <span style="color: #990000">int</span> <span style="color: #000000">err</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  238: </span>    <span style="color: #990000">int</span> <span style="color: #000000">status</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  233: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_in</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  234: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_out</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  235: </span>    <span style="color: #000000">PIPE_TYPE</span> <span style="color: #000000">m_child_err</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  236: </span>    <span style="color: #000000">env_vector</span> <span style="color: #000000">m_env</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  237: </span>    <span style="color: #990000">int</span> <span style="color: #000000">m_err</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  238: </span>    <span style="color: #990000">int</span> <span style="color: #000000">m_status</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  239: </span>    <span style="color: #990000">void</span> <span style="color: #000000">set_error</span><span style="color: #330033">(</span><span style="color: #990000">int</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  240: </span>
 <span style="color: #ff0099">  241: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
