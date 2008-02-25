@@ -23,7 +23,7 @@ namespace stlplus
 {
 
   ////////////////////////////////////////////////////////////////////////////////
-  // implement string comparison of paths - Unix is case-sensitive, Windoze is case-insensitive
+  // implement string comparison of paths - Unix is case-sensitive, Windows is case-insensitive
 
   bool path_compare(const std::string& l, const std::string& r);
 

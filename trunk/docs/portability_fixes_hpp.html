@@ -25,7 +25,7 @@
 <span style="color: #ff0099">   15: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   16: </span>
 <span style="color: #ff0099">   17: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   18: </span><span style="color: #000099">// Problem with MicroSoft defining two different macros to identify Windoze</span>
+<span style="color: #ff0099">   18: </span><span style="color: #000099">// Problem with MicroSoft defining two different macros to identify Windows</span>
 <span style="color: #ff0099">   19: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   20: </span>
 <span style="color: #ff0099">   21: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_WIN32</span><span style="color: #330033">)</span> <span style="color: #330033">||</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_WIN32_WCE</span><span style="color: #330033">)</span>
@@ -77,7 +77,7 @@
 <span style="color: #ff0099">   67: </span><span style="color: #000099">// Problems with redefinition of min/max in various different versions of library headers</span>
 <span style="color: #ff0099">   68: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   69: </span>
-<span style="color: #ff0099">   70: </span><span style="color: #000099">// The Windoze headers define macros called max/min which conflict with the templates std::max and std::min.</span>
+<span style="color: #ff0099">   70: </span><span style="color: #000099">// The Windows headers define macros called max/min which conflict with the templates std::max and std::min.</span>
 <span style="color: #ff0099">   71: </span><span style="color: #000099">// So, to avoid conflicts, MS removed the std::max/min rather than fixing the problem!</span>
 <span style="color: #ff0099">   72: </span><span style="color: #000099">// From Visual Studio .NET (SV7, compiler version 13.00) the STL templates have been added correctly.</span>
 <span style="color: #ff0099">   73: </span><span style="color: #000099">// For MFC compatibility, only undef min and max in non-MFC programs - some bits of MFC</span>

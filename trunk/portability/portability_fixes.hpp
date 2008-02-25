@@ -15,7 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-// Problem with MicroSoft defining two different macros to identify Windoze
+// Problem with MicroSoft defining two different macros to identify Windows
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined(_WIN32) || defined(_WIN32_WCE)
@@ -67,7 +67,7 @@
 // Problems with redefinition of min/max in various different versions of library headers
 ////////////////////////////////////////////////////////////////////////////////
 
-// The Windoze headers define macros called max/min which conflict with the templates std::max and std::min.
+// The Windows headers define macros called max/min which conflict with the templates std::max and std::min.
 // So, to avoid conflicts, MS removed the std::max/min rather than fixing the problem!
 // From Visual Studio .NET (SV7, compiler version 13.00) the STL templates have been added correctly.
 // For MFC compatibility, only undef min and max in non-MFC programs - some bits of MFC

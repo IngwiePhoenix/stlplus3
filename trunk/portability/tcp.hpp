@@ -6,7 +6,7 @@
 //   Copyright: (c) Andy Rushton, 2007
 //   License:   BSD License, see ../docs/license.html
 
-//   A platform-independent (Unix and Windoze anyway) interface to TCP
+//   A platform-independent (Unix and Windows anyway) interface to TCP
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "portability_fixes.hpp"

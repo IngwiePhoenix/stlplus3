@@ -368,7 +368,7 @@ stlplus::env_vector env;
 std::string path = env["PATH"];
 </pre>
 
-<p>Variables are case-sensitive on Unix but case-insensitive on Windoze.</p>
+<p>Variables are case-sensitive on Unix but case-insensitive on Windows.</p>
 
 <p>Alternatively, the variables can be accessed by index. The env_vector::size() function
 gives the number of variables and the env_vector::get and operator[] functions with an
@@ -382,7 +382,7 @@ ENVIRON_TYPE envp (void) const;
 <p>This function gets the env_vector values in the class in the
 operating-system specific form expected by the subprocess classes. It is only
 really used within the subprocess classes since you are unlikely to use the raw
-data yourself. ENVIRON_TYPE is char** on Unix and char* on Windoze.</p>
+data yourself. ENVIRON_TYPE is char** on Unix and char* on Windows.</p>
 
 
 <h2 id="synchronous">Synchronous Subprocesses</h2>
