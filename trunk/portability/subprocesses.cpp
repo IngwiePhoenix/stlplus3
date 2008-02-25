@@ -496,7 +496,7 @@ namespace stlplus
     m_env = envp_copy(env);
     FreeEnvironmentStrings(env);
 #else
-    m_env = envp_copy(environ);
+    m_env = envp_copy(::environ);
 #endif
   }
 
