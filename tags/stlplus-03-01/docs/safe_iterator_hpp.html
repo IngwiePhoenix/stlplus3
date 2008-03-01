@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>containers/safe_iterator.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>containers/safe_iterator.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_SAFE_ITERATOR</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_SAFE_ITERATOR</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Andy Rushton, 2007</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    8: </span>
+<span style="color: #ff0099">    9: </span><span style="color: #000099">//   The STLplus safe_iterator superclasses. This implements the STLplus safe</span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   iterator principles. Data structures can then be built using subclasses</span>
+<span style="color: #ff0099">   11: </span><span style="color: #000099">//   of safe_iterator for their iterator objects and they will inherit the</span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   safe iterator behaviour.</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">//   The data structure must contain a master iterator for each node in the</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">//   structure. When an iterator is returned to the user, it must be created</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">//   by the master iterator. When a node is removed from the data structure,</span>
+<span style="color: #ff0099">   17: </span><span style="color: #000099">//   its master iterator is destroyed. This sets all iterators pointing to the</span>
+<span style="color: #ff0099">   18: </span><span style="color: #000099">//   master iterator to end iterators.</span>
+<span style="color: #ff0099">   19: </span>
+<span style="color: #ff0099">   20: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   21: </span><span style="color: #990000">#include</span> <span style="color: #009900">"containers_fixes.hpp"</span>
+<span style="color: #ff0099">   22: </span><span style="color: #990000">#include</span> <span style="color: #009900">"exceptions.hpp"</span>
+<span style="color: #ff0099">   23: </span>
+<span style="color: #ff0099">   24: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   25: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   26: </span>
+<span style="color: #ff0099">   27: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #000099">// internals</span>
+<span style="color: #ff0099">   29: </span>
+<span style="color: #ff0099">   30: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">O</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">N</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #990000">class</span> <span style="color: #000000">safe_iterator_body</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">O</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">N</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #990000">class</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   35: </span>
+<span style="color: #ff0099">   36: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   37: </span>  <span style="color: #000099">// Master Iterator</span>
+<span style="color: #ff0099">   38: </span>  <span style="color: #000099">// Create one of these in each node in the data structure</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #000099">// Generate iterators by obtaining a safe-iterator object from the master iterator</span>
+<span style="color: #ff0099">   40: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   41: </span>
+<span style="color: #ff0099">   42: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">O</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">N</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   43: </span>  <span style="color: #990000">class</span> <span style="color: #000000">master_iterator</span>
+<span style="color: #ff0099">   44: </span>  <span style="color: #330033">{</span>
+<span style="color: #ff0099">   45: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   46: </span>
+<span style="color: #ff0099">   47: </span>    <span style="color: #000099">// construct a valid master iterator connected to the node</span>
+<span style="color: #ff0099">   48: </span>    <span style="color: #000000">master_iterator</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">,</span> <span style="color: #000000">N</span><span style="color: #330033">*</span> <span style="color: #000000">node</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   49: </span>
+<span style="color: #ff0099">   50: </span>    <span style="color: #000099">// destructor - disconnects all iterators from the node</span>
+<span style="color: #ff0099">   51: </span>    <span style="color: #330033">~</span><span style="color: #000000">master_iterator</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   52: </span>
+<span style="color: #ff0099">   53: </span>    <span style="color: #000099">// dereference</span>
+<span style="color: #ff0099">   54: </span>    <span style="color: #000000">N</span><span style="color: #330033">*</span> <span style="color: #000000">node</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   55: </span>    <span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   56: </span>
+<span style="color: #ff0099">   57: </span>    <span style="color: #000099">// when you move a node from one owner to another, call this on the node's master iterator</span>
+<span style="color: #ff0099">   58: </span>    <span style="color: #000099">// this effectively moves all other iterators to the node so that they are owned by the new owner too</span>
+<span style="color: #ff0099">   59: </span>    <span style="color: #990000">void</span> <span style="color: #000000">change_owner</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   60: </span>
+<span style="color: #ff0099">   61: </span>    <span style="color: #990000">friend</span> <span style="color: #990000">class</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   62: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   63: </span>    <span style="color: #000000">master_iterator</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">master_iterator</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   64: </span>    <span style="color: #000000">master_iterator</span><span style="color: #330033">&amp;</span> <span style="color: #990000">operator</span><span style="color: #330033">=</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">master_iterator</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   65: </span>    <span style="color: #000000">safe_iterator_body</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">*</span> <span style="color: #000000">m_body</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   66: </span>  <span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   67: </span>
+<span style="color: #ff0099">   68: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   69: </span>  <span style="color: #000099">// Safe Iterator</span>
+<span style="color: #ff0099">   70: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   71: </span>
+<span style="color: #ff0099">   72: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">O</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">N</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   73: </span>  <span style="color: #990000">class</span> <span style="color: #000000">safe_iterator</span>
+<span style="color: #ff0099">   74: </span>  <span style="color: #330033">{</span>
+<span style="color: #ff0099">   75: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   76: </span>
+<span style="color: #ff0099">   77: </span>    <span style="color: #000099">// construct a null iterator</span>
+<span style="color: #ff0099">   78: </span>    <span style="color: #000000">safe_iterator</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   79: </span>
+<span style="color: #ff0099">   80: </span>    <span style="color: #000099">// construct a valid iterator by aliasing from the owner node's master iterator</span>
+<span style="color: #ff0099">   81: </span>    <span style="color: #000000">safe_iterator</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">master_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   82: </span>
+<span style="color: #ff0099">   83: </span>    <span style="color: #000099">// copy constructor does aliasing</span>
+<span style="color: #ff0099">   84: </span>    <span style="color: #000000">safe_iterator</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   85: </span>
+<span style="color: #ff0099">   86: </span>    <span style="color: #000099">// alias an iterator by assignment</span>
+<span style="color: #ff0099">   87: </span>    <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #990000">operator</span><span style="color: #330033">=</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   88: </span>
+<span style="color: #ff0099">   89: </span>    <span style="color: #000099">// destructor</span>
+<span style="color: #ff0099">   90: </span>    <span style="color: #330033">~</span><span style="color: #000000">safe_iterator</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   91: </span>
+<span style="color: #ff0099">   92: </span>    <span style="color: #000099">// reassignment to another node used in increment/decrement operation</span>
+<span style="color: #ff0099">   93: </span>    <span style="color: #990000">void</span> <span style="color: #000000">set</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">master_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   94: </span>
+<span style="color: #ff0099">   95: </span>    <span style="color: #000099">// dereference</span>
+<span style="color: #ff0099">   96: </span>    <span style="color: #000000">N</span><span style="color: #330033">*</span> <span style="color: #000000">node</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   97: </span>    <span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   98: </span>
+<span style="color: #ff0099">   99: </span>    <span style="color: #000099">// change to a null iterator - i.e. one that does not belong to any object</span>
+<span style="color: #ff0099">  100: </span>    <span style="color: #000099">// this does not affect any other iterators pointing to the same node</span>
+<span style="color: #ff0099">  101: </span>    <span style="color: #990000">void</span> <span style="color: #000000">set_null</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  102: </span>
+<span style="color: #ff0099">  103: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  104: </span>    <span style="color: #000099">// operations for clients that do not have a master end iterator</span>
+<span style="color: #ff0099">  105: </span>    <span style="color: #000099">// alternatively, have a master end iterator as part of the container</span>
+<span style="color: #ff0099">  106: </span>    <span style="color: #000099">// and call constructor(master_end) or set(master_end)</span>
+<span style="color: #ff0099">  107: </span>
+<span style="color: #ff0099">  108: </span>    <span style="color: #000099">// construct an end iterator</span>
+<span style="color: #ff0099">  109: </span>    <span style="color: #000000">safe_iterator</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  110: </span>
+<span style="color: #ff0099">  111: </span>    <span style="color: #000099">// change to an end iterator - e.g. as a result of incrementing off the end</span>
+<span style="color: #ff0099">  112: </span>    <span style="color: #990000">void</span> <span style="color: #000000">set_end</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  113: </span>
+<span style="color: #ff0099">  114: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  115: </span>    <span style="color: #000099">// tests</span>
+<span style="color: #ff0099">  116: </span>
+<span style="color: #ff0099">  117: </span>    <span style="color: #000099">// comparison</span>
+<span style="color: #ff0099">  118: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">equal</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">right</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  119: </span>    <span style="color: #990000">int</span> <span style="color: #000000">compare</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">safe_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">right</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  120: </span>
+<span style="color: #ff0099">  121: </span>    <span style="color: #000099">// a null iterator is one that has not been initialised with a value yet</span>
+<span style="color: #ff0099">  122: </span>    <span style="color: #000099">// i.e. you just declared it but didn't assign to it</span>
+<span style="color: #ff0099">  123: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">null</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  124: </span>
+<span style="color: #ff0099">  125: </span>    <span style="color: #000099">// an end iterator is one that points to the end element of the list of nodes</span>
+<span style="color: #ff0099">  126: </span>    <span style="color: #000099">// in STL conventions this is one past the last valid element and must not be dereferenced</span>
+<span style="color: #ff0099">  127: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">end</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  128: </span>
+<span style="color: #ff0099">  129: </span>    <span style="color: #000099">// a valid iterator is one that can be dereferenced</span>
+<span style="color: #ff0099">  130: </span>    <span style="color: #000099">// i.e. non-null and non-end</span>
+<span style="color: #ff0099">  131: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">valid</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  132: </span>
+<span style="color: #ff0099">  133: </span>    <span style="color: #000099">// check the rules for a valid iterator that can be dereferenced</span>
+<span style="color: #ff0099">  134: </span>    <span style="color: #000099">// optionally also check that the iterator is owned by the owner</span>
+<span style="color: #ff0099">  135: </span>    <span style="color: #990000">void</span> <span style="color: #000000">assert_valid</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">null_dereference</span><span style="color: #330033">,</span><span style="color: #000000">end_dereference</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  136: </span>    <span style="color: #990000">void</span> <span style="color: #000000">assert_valid</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">wrong_object</span><span style="color: #330033">,</span><span style="color: #000000">null_dereference</span><span style="color: #330033">,</span><span style="color: #000000">end_dereference</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  137: </span>    <span style="color: #000099">// assert the rules for a non-null iterator - i.e. valid or end, values that occur in increment operations</span>
+<span style="color: #ff0099">  138: </span>    <span style="color: #990000">void</span> <span style="color: #000000">assert_non_null</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">null_dereference</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  139: </span>    <span style="color: #000099">// assert that this iterator is owned by this container</span>
+<span style="color: #ff0099">  140: </span>    <span style="color: #990000">void</span> <span style="color: #000000">assert_owner</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">O</span><span style="color: #330033">*</span> <span style="color: #000000">owner</span><span style="color: #330033">)</span> <span style="color: #990000">const</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">wrong_object</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  141: </span>
+<span style="color: #ff0099">  142: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  143: </span>
+<span style="color: #ff0099">  144: </span>    <span style="color: #990000">friend</span> <span style="color: #990000">class</span> <span style="color: #000000">master_iterator</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  145: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">  146: </span>    <span style="color: #000000">safe_iterator_body</span><span style="color: #330033">&lt;</span><span style="color: #000000">O</span><span style="color: #330033">,</span><span style="color: #000000">N</span><span style="color: #330033">&gt;</span><span style="color: #330033">*</span> <span style="color: #000000">m_body</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  147: </span>  <span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  148: </span>
+<span style="color: #ff0099">  149: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  150: </span>
+<span style="color: #ff0099">  151: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">  152: </span>
+<span style="color: #ff0099">  153: </span><span style="color: #990000">#include</span> <span style="color: #009900">"safe_iterator.tpp"</span>
+<span style="color: #ff0099">  154: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
