@@ -186,6 +186,11 @@ The <code>gcc.mak</code> makefile rules will build the current directory and
 will add the LIBRARIES as extra include paths during compilation. Since this
 Makefile only builds an object library, there is no link step.</p>
 
+<p><b>Note:</b> that the LIBRARIES should list the libraries in their dependency order (see the <a
+href="index.html#dependencies">section on dependencies</a>) with the higher-level libraries first
+and their required libraries after them. For example, the subsystems library should be listed before
+the portability library.</p>
+
 <p>When using this generic makefile, there are some rules to follow to make it
 work.</p>
 
@@ -296,7 +301,6 @@ include ../../makefiles/gcc.mak
 </ul>
 </li>
 </ul>
-
 
 <h2 id="microsoft">Microsoft Visual Studio on Windows</h2>
 
@@ -548,6 +552,10 @@ ld ... $STLPLUS3/portability/&lt;target_dir&gt;/libportability.a $STLPLUS3/conta
 <p>In this case, &lt;target_dir&gt; will be something like <code>LINUX-alpha-debug</code> for a
 debug build and <code>LINUX-alpha-release</code> for a release build.</p>
 
+<p><b>Note:</b> that you should list the libraries in their dependency order (see the <a
+href="index.html#dependencies">section on dependencies</a>) with the higher-level libraries first
+and their required libraries after them. For example, the subsystems library should be listed before
+the portability library.</p>
 
 <h2 id="cygwin">Unix-emulation build on Windows using Cygwin and Gnu gcc</h2>
 
@@ -611,7 +619,6 @@ export CYGMING=on
 make
 </pre>
 
-
 <h2 id="mingw">Native build on Windows using MinGW Gnu gcc</h2>
 
 <p>The <a href="http://www.mingw.org/">MinGW</a> development environment also allows <i>native</i>
@@ -626,7 +633,6 @@ environment.</p>
 
 <p><b>Note:</b>The makefile system will mis-identify the compiler as a Cygwin build if you run the
 MinGW compilers in the Cygwin shell, but it will in fact build correctly as a MinGW build.</p>
-
 
 <h2 id="unix-other">Other Unix builds using Gnu gcc</h2>
 
@@ -646,7 +652,9 @@ for the Cygwin Unix-emulation build.</p>
 <h3>Using With my Make System</h3>
 
 <p>The only problem you may have is that your version of Unix is not recognised by the default
-makefile gcc.mak. In that case, you can easily add support for your platform. The key is the first
+makefile gcc.mak. You can test this by running make and seeing if you get an error message.</p>
+
+<p>In that case, you can easily add support for your platform. The key is the first
 executable code in the gcc.mak file:</p>
 
 <pre class="script">
@@ -677,10 +685,10 @@ endif
 be added as I try them.</p>
 
 <p>The PLATFORM name is used as the prefix to the subdirectory used to store object code. Thus the
-Cygwin debug build is stored in CYGWIN-debug whilst the Linux debug build is stored in LINUXdebug.
-This organisation means that the same disk can be mounted on different operating systems and built
-without the different operating systems conflicting with each other. It also keeps the different
-kinds of build (e.g. release or debug) in separate directories.</p>
+Cygwin debug build is stored in CYGWIN-i686-debug whilst the Linux debug build is stored in
+LINUX-i686-debug. This organisation means that the same disk can be mounted on different operating
+systems and built without the different operating systems conflicting with each other. It also keeps
+the different kinds of build (e.g. release or debug) in separate directories.</p>
 
 <p>The PLATFORM value is also passed to the compiler as a macro definition in the form
 -D&lt;platform&gt;, where &lt;platform&gt; is the name of the platform (e.g. -DLINUX). This means
@@ -708,7 +716,7 @@ include ../../makefiles/gcc.mak
 <p>Furthermore, the IMAGE variable can put each different build into a different subdirectory by
 using the SUBDIR variable instead of PLATFORM. The SUBDIR variable includes a prefix for the
 platform and the suffix for the different build configuration, so the debug build will be called
-CYGWIN-debug for the Cygwin build and LINUX-debug for the Linux build.</p>
+CYGWIN-i686-debug for the Cygwin build and LINUX-i686-debug for the Linux build.</p>
 
 
 </div>
