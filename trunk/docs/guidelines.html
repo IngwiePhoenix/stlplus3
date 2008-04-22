@@ -176,7 +176,7 @@ will have access to both declaration and implementation.</p>
 the types used in the header available. Any additional headers needed in the
 C++ body should be included in the body file. This minimises the number of
 includes that someone including your header will inherit from you and is
-considered fristd::endly.</p>
+considered friendly.</p>
 
 <p>Use a sentinel within each header so that the includes in a file become
 order independent. A sentinel puts a pre-processor conditional around the
@@ -211,7 +211,7 @@ sentinel names are different. The second style is:</p>
 header. All STL classes referred to in the header should have the std::
 namespace prefix added - for example, string should be referred to as
 std::string within headers. The reason for this rule is that it is considered
-unfristd::endly to people who may wish to include your header in their code to dump
+unfriendly to people who may wish to include your header in their code to dump
 all of the std namespace into their code against their wishes, which is what
 the using... clause does.</p>
 
