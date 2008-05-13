@@ -36,6 +36,10 @@ namespace stlplus
   void restore_string(restore_context&, std::string& data) 
     throw(persistent_restore_failed);
 
+
+  // Note: persistence of wstring not supported because it is too weakly defined and messy
+  //       decide on a byte-wide encoding of wide strings (e.g. UTF8) and use the string persistence on that
+
 } // end namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////

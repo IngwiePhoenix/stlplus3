@@ -77,6 +77,7 @@ namespace stlplus
       throw(null_dereference,end_dereference);
 
     // test useful for testing whether iteration has completed and for inclusion in other containers
+    // Note: this class also inherits the safe_iterator methods: valid(), null(), end()
     bool operator == (const this_iterator& r) const;
     bool operator != (const this_iterator& r) const;
     bool operator < (const this_iterator& r) const;
@@ -89,9 +90,9 @@ namespace stlplus
       throw(null_dereference,end_dereference);
 
   public:
-    // constructor used by ntree to create a non-null iterator
+    // constructor used by digraph to create a non-null iterator
     explicit digraph_iterator(digraph_node<NT,AT>* node);
-    // constructor used by ntree to create an end iterator
+    // constructor used by digraph to create an end iterator
     explicit digraph_iterator(const digraph<NT,AT>* owner);
     // used to create an alias of an iterator
     explicit digraph_iterator(const safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >& iterator);
@@ -139,6 +140,7 @@ namespace stlplus
       throw(null_dereference,end_dereference);
 
     // test useful for testing whether iteration has completed and for inclusion in other containers
+    // Note: this class also inherits the safe_iterator methods: valid(), null(), end()
     bool operator == (const this_iterator&) const;
     bool operator != (const this_iterator&) const;
     bool operator < (const this_iterator&) const;
@@ -151,9 +153,9 @@ namespace stlplus
       throw(null_dereference,end_dereference);
 
   public:
-    // constructor used by ntree to create a non-null iterator
+    // constructor used by digraph to create a non-null iterator
     explicit digraph_arc_iterator(digraph_arc<NT,AT>* arc);
-    // constructor used by ntree to create an end iterator
+    // constructor used by digraph to create an end iterator
     explicit digraph_arc_iterator(const digraph<NT,AT>* owner);
     // used to create an alias of an iterator
     explicit digraph_arc_iterator(const safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >& iterator);
@@ -161,8 +163,8 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
   // The Graph class
-  ////////////////////////////////////////////////////////////////////////////////
   // NT is the Node type and AT is the Arc type
+  ////////////////////////////////////////////////////////////////////////////////
 
   template<typename NT, typename AT>
   class digraph
@@ -178,8 +180,9 @@ namespace stlplus
 
     // supplementary types used throughout
 
-    // a path is represented as a vector of arcs so the forward traversal is done by going from begin() to end() or 0 to size-1
-    // of course a backward traversal can be done by traversing the vector backwards
+    // a path is represented as a vector of arcs so the forward traversal is
+    // done by going from begin() to end() or 0 to size-1 - of course a backward
+    // traversal can be done by traversing the vector backwards
     typedef std::vector<arc_iterator> arc_vector;
     typedef std::vector<const_arc_iterator> const_arc_vector;
     const_arc_vector constify_arcs(const arc_vector&) const
@@ -187,7 +190,7 @@ namespace stlplus
     arc_vector deconstify_arcs(const const_arc_vector&) const
       throw(wrong_object,null_dereference,end_dereference);
 
-    // a path list is a vector of paths used to represent all the paths from one node to another
+    // a path vector is a vector of paths used to represent all the paths from one node to another
     // there is no particular ordering to the paths in the vector
     typedef std::vector<arc_vector> path_vector;
     typedef std::vector<const_arc_vector> const_path_vector;
@@ -237,6 +240,7 @@ namespace stlplus
 
     // add a new node and return its iterator
     iterator insert(const NT& node_data);
+
     // remove a node and return the iterator to the next node
     // erasing a node erases its arcs
     iterator erase(iterator)
@@ -244,7 +248,7 @@ namespace stlplus
     // remove all nodes
     void clear(void);
 
-    // traverse all the nodes using STL-style iteration
+    // traverse all the nodes in no particular order using STL-style iteration
     const_iterator begin(void) const;
     iterator begin(void);
     const_iterator end(void) const;
@@ -272,6 +276,7 @@ namespace stlplus
     arc_iterator output(iterator, unsigned)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // convenience routines for getting the set of all inputs or all outputs as vectors
     const_arc_vector inputs(const_iterator) const
       throw(wrong_object,null_dereference,end_dereference);
     arc_vector inputs(iterator)
@@ -301,19 +306,27 @@ namespace stlplus
     // Each arc has a from field and a to field which contain the node iterators of the endpoints of the arc
     // Of course, the arc data can be accessed by simply dereferencing the iterator
 
+    // tests for the number of arcs and the special test for zero arcs
     bool arc_empty (void) const;
     unsigned arc_size(void) const;
+
+    // add a new arc and return its iterator
     arc_iterator arc_insert(iterator from, iterator to, const AT& arc_data = AT())
       throw(wrong_object,null_dereference,end_dereference);
+
+    // remove an arc and return the iterator to the next arc
     arc_iterator arc_erase(arc_iterator)
       throw(wrong_object,null_dereference,end_dereference);
+    // remove all arcs
     void arc_clear(void);
 
+    // traverse all the arcs in no particular order using STL-style iteration
     const_arc_iterator arc_begin(void) const;
     arc_iterator arc_begin(void);
     const_arc_iterator arc_end(void) const;
     arc_iterator arc_end(void);
 
+    // find the node that an arc points from or to
     const_iterator arc_from(const_arc_iterator) const
       throw(wrong_object,null_dereference,end_dereference);
     iterator arc_from(arc_iterator)
@@ -323,12 +336,16 @@ namespace stlplus
     iterator arc_to(arc_iterator)
       throw(wrong_object,null_dereference,end_dereference);
 
+    // reconnect an arc to a different from and to node
     void arc_move(arc_iterator arc, iterator from, iterator to)
       throw(wrong_object,null_dereference,end_dereference);
+    // reconnect just the from node
     void arc_move_from(arc_iterator arc, iterator from)
       throw(wrong_object,null_dereference,end_dereference);
+    // reconnect just the to node
     void arc_move_to(arc_iterator arc, iterator to)
       throw(wrong_object,null_dereference,end_dereference);
+    // reverse the arc direction so that to becomes from and vice-versa
     void arc_flip(arc_iterator arc)
       throw(wrong_object,null_dereference,end_dereference);
 
