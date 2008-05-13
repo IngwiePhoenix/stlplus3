@@ -385,8 +385,6 @@ namespace stlplus
 // file type tests are not defined for some reason on Windows despite them providing the stat() function!
 #define R_OK 4
 #define W_OK 2
-#define X_OK 1
-#define F_OK 0
 #endif
 
   bool is_present (const std::string& thing)
@@ -505,28 +503,6 @@ namespace stlplus
       return true;
     file_delete(new_filespec);
     return false;
-  }
-
-  const int read_mode = 0444;
-  const int write_mode = 0222;
-  const int execute_mode = 0111;
-  const int none_mode = 0000;
-  const int read_write_mode = read_mode | write_mode;
-  const int all_mode = read_mode | write_mode | execute_mode;
-  const int owner_mask = 0700;
-  const int group_mask = 0070;
-  const int other_mask = 0007;
-  const int non_owner_mask = group_mask | other_mask;
-  const int all_mask = owner_mask | group_mask | other_mask;
-  const int read_mode_all = read_mode & all_mask;
-  const int read_write_mode_owner_read_mode_all = (read_write_mode & owner_mask) | (read_mode & non_owner_mask);
-  const int read_mode_owner_only = read_mode & owner_mask;
-  const int read_write_mode_owner_only = read_write_mode & owner_mask;
-
-  bool file_set_mode (const std::string& filespec, int mode)
-  {
-    if (!is_file(filespec)) return false;
-    return chmod(filespec.c_str(), mode)==0;
   }
 
   time_t file_created (const std::string& filespec)
@@ -685,7 +661,7 @@ namespace stlplus
       return false;
 #ifdef MSWINDOWS
     // Windose implementation - this returns non-zero for success
-    return (SetCurrentDirectory(folder.c_str()) != 0);
+    return (SetCurrentDirectoryA(folder.c_str()) != 0);
 #else
     // Unix implementation - this returns zero for success
     return (chdir(folder.c_str()) == 0);
