@@ -492,9 +492,9 @@ namespace stlplus
   env_vector::env_vector(void)
   {
 #ifdef MSWINDOWS
-    char* env = (char*)GetEnvironmentStrings();
+    char* env = (char*)GetEnvironmentStringsA();
     m_env = envp_copy(env);
-    FreeEnvironmentStrings(env);
+    FreeEnvironmentStringsA(env);
 #else
     m_env = envp_copy(::environ);
 #endif
@@ -793,10 +793,10 @@ namespace stlplus
     // Now create the subprocess
     // The horrible trick of creating a console window and hiding it seems to be required for the pipes to work
     // Note that the child will inherit a copy of the pipe handles
-    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
-                           STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
-                           parent_stdin,parent_stdout,parent_stderr};
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
+    STARTUPINFOA startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
+                            STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
+                            parent_stdin,parent_stdout,parent_stderr};
+    bool created = CreateProcessA(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
@@ -1501,10 +1501,10 @@ namespace stlplus
     // Now create the subprocess
     // The horrible trick of creating a console window and hiding it seems to be required for the pipes to work
     // Note that the child will inherit a copy of the pipe handles
-    STARTUPINFO startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
-                           STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
-                           parent_stdin,parent_stdout,parent_stderr};
-    bool created = CreateProcess(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
+    STARTUPINFOA startup = {sizeof(STARTUPINFO),0,0,0,0,0,0,0,0,0,0,
+                            STARTF_USESTDHANDLES|STARTF_USESHOWWINDOW,SW_HIDE,0,0,
+                            parent_stdin,parent_stdout,parent_stderr};
+    bool created = CreateProcessA(path.c_str(),(char*)argv.image().c_str(),0,0,TRUE,CREATE_SUSPENDED,m_env.envp(),0,&startup,&m_pid) != 0;
     // close the parent copy of the pipe handles so that the pipes will be closed when the child releases them
     if (connect_stdin) CloseHandle(parent_stdin);
     if (connect_stdout) CloseHandle(parent_stdout);
