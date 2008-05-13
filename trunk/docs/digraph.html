@@ -53,7 +53,6 @@ C++ Library Collection
 <li><a href="#adjacency">Adjacency Functions</a></li>
 <li><a href="#sort">Topographical Sort Algorithms</a></li>
 <li><a href="#paths">Path Algorithms</a></li>
-<li><a href="#print">Print Functions</a></li>
 <li><a href="#exceptions">Exceptions</a></li>
 <li><a href="#example">Example</a></li>
 </ul>
@@ -888,55 +887,6 @@ reachable node each path referes to, you can find the arc_to node of the last
 arc in the path. There is one path in the path_vector for each reachable nodes,
 so the set of arc_to nodes for the path_vector is also the set of all reachable
 nodes.</p>
-
-
-<h2 id="print">Print Functions</h2>
-
-<p>The print function for the digraph produces a report giving the set of nodes
-and their input/output arcs and the set of arcs with their to/from nodes.
-There are other print routines allow printing of other structures representing
-paths etc.</p>
-
-<pre class="cpp">
-otext&amp; print_arc_vector(otext&amp; str, const const_arc_vector&amp; p) const;
-otext&amp; print_arc_vector(otext&amp; str, const arc_vector&amp; p);
-
-otext&amp; print_path_vector(otext&amp; str, const const_path_vector&amp; paths) const;
-otext&amp; print_path_vector(otext&amp; str, const path_vector&amp; paths);
-
-otext&amp; print_node_vector(otext&amp; str, const const_node_vector&amp; nodes) const;
-otext&amp; print_node_vector(otext&amp; str, const node_vector&amp; nodes);
-
-otext&amp; print(otext&amp; str, unsigned indent = 0) const;
-</pre>
-
-<p>The builtin print functions give a basic format using the addresses of the
-node data and arc data fields to represent the nodes and arcs. The idea is
-that these are diagnostic routines that allow the structure of the graph to be
-examined, but not the contents.</p>
-
-<p>Here's a sample output from the print method on a whole graph:</p>
-
-<pre class="terminal">
-nodes:
-node:a040960 inputs: {} outputs: {arc:a040a28,arc:a040bf8}
-node:a040988 inputs: {arc:a040a28} outputs: {arc:a040bc8}
-node:a0409b0 inputs: {arc:a040be0,arc:a040bf8} outputs: {arc:a040c10}
-node:a0409d8 inputs: {arc:a040bc8,arc:a040c28,arc:a040c40} outputs: {arc:a040be0,arc:a040c40}
-node:a040a00 inputs: {arc:a040c10} outputs: {arc:a040c28}
-arcs:
-arc:a040a28 from node:a040960 to node:a040988
-arc:a040bc8 from node:a040988 to node:a0409d8
-arc:a040be0 from node:a0409d8 to node:a0409b0
-arc:a040bf8 from node:a040960 to node:a0409b0
-arc:a040c10 from node:a0409b0 to node:a040a00
-arc:a040c28 from node:a040a00 to node:a0409d8
-arc:a040c40 from node:a0409d8 to node:a0409d8
-</pre>
-
-<p>As you can see, pretty unreadable, but it is possible to work out the
-connectivity of the graph from this.</p>
-
 
 <h2 id="exceptions">Exceptions</h2>
 

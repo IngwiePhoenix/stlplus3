@@ -49,8 +49,6 @@ C++ Library Collection
 <li><a href="#elements">Manipulating Elements</a></li>
 <li><a href="#fill">Fill Functions</a></li>
 <li><a href="#transforms">Transforming Methods</a></li>
-<li><a href="#persistence">Persistence Functions</a></li>
-<li><a href="#print">Print Functions</a></li>
 </ul>
 
 </div>
@@ -227,42 +225,6 @@ void matrix::transpose(void);
 creating a new matrix and copying elements from the old to the new, discarding
 the old matrix. Once again, this is expensive if the element is a large
 type.</p>
-
-
-<h2 id="persistence">Persistence Functions</h2>
-
-<p>The matrix container is persistent, following the guidelines laid out in the <a
-href="persistence.html">persistence documentation</a>. There are two methods called dump and
-restore. However, for persistence the convention is to use non-member functions. The functions you
-should use for persistence are the separate dump_matrix and restore_matrix functions:</p>
-
-<pre class="cpp">
-template&lt;typename T&gt;
-void dump_matrix(dump_context&amp; str, const matrix&lt;T&gt;&amp; data) throw(persistent_dump_failed);
-
-template&lt;typename T&gt;
-void restore_matrix(restore_context&amp; str, matrix&lt;T&gt;&amp; data) throw(persistent_restore_failed);
-</pre>
-
-<p>As with all persistence templates, the matrix is made persistent by
-defining dump and restore routines for the element. If the element is a basic
-C or C++ type then it is implicitly persistent.</p>
-
-
-<h2 id="print">Print Functions</h2>
-
-<p>In a similar vein to the persistence functions, a matrix is printable if
-the element is printable. If the element is a basic C or C++ type then it is
-implicitly printable. This is very much a diagnostic dump and isn't meant to
-be awesomely pretty, just functional. See the documentation on <a
-href="string_utilities.html">string utilities</a> for guidelines on how to use
-this feature.</p>
-
-<pre class="cpp">
-template&lt;typename T&gt; otext&amp; print(otext&amp; str, const matrix&lt;T&gt;&amp; mat, unsigned indent = 0);
-template&lt;typename T&gt; otext&amp; operator &lt;&lt; (otext&amp; str, const matrix&lt;T&gt;&amp; mat);
-</pre>
-
 
 </div>
 

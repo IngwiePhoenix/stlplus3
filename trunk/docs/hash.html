@@ -48,7 +48,6 @@ C++ Library Collection
 <li><a href="#hash">Whole Hash Operations</a></li>
 <li><a href="#elements">Adding, Removing, Changing and Accessing Hash Elements</a></li>
 <li><a href="#iterators">Iterators</a></li>
-<li><a href="#print">Diagnostic Print Routines</a></li>
 <li><a href="#exceptions">Exceptions</a></li>
 </ul>
 
@@ -427,38 +426,6 @@ or valid.</p>
 <p>Only a valid iterator can be dereferenced to access the element pair pointed to by the iterator.
 Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
 section below on <a href="#exceptions">Exceptions</a> to see which.</p>
-
-
-<h2 id="print">Diagnostic Print Routines</h2>
-
-<p>A hash table is very sensitive to the hashing function and the number of bins
-in the hash. To help diagnose performance problems with the hash class, there
-is a diagnostic print routine with three forms: a member function and two
-friend functions:</p>
-
-<pre class="cpp">
-void debug_report(otext&amp;, unsigned indent = 0) const;
-template&lt;typename K, typename T, class H, class E&gt; otext&amp; print(otext&amp; str, const hash&amp; table, unsigned indent = 0);
-template&lt;typename K, typename T, class H, class E&gt; otext&amp; operator &lt;&lt; (otext&amp; str, const hash&amp; table);
-</pre>
-
-<p>These functions print out a table showing the number of elements in each bin
-and some summary statistics. The table looks like this:</p>
-
-<pre class="terminal">
-------------------------------------------------------------------------
-| size:     7
-| bins:     20
-| loading:  0.35 auto-rehash
-| occupied: 7 (35.0%), min = 0, max = 1
-|-----------------------------------------------------------------------
-|  bin         0     1     2     3     4     5     6     7     8     9
-|        ---------------------------------------------------------------
-|      0 |     1     .     1     1     .     1     .     .     .     .
-|     10 |     .     .     .     1     .     .     .     1     1     .
-------------------------------------------------------------------------
-</pre>
-
 
 <h2 id="exceptions">Exceptions</h2>
 
