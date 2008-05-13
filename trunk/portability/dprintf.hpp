@@ -90,8 +90,6 @@
 //       x, X - short/int/long as unsigned hexadecimal - # adds leading 0x
 //       c    - char
 //       s    - char*
-//       C    - wchar_t
-//       S    - wchar_t*
 //       f    - double/long double as fixed point
 //       e, E - double/long double as floating point
 //       g, G - double/long double as fixed point/floating point depending on value
