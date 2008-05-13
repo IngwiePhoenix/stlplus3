@@ -100,37 +100,35 @@
 <span style="color: #ff0099">   90: </span><span style="color: #000099">//       x, X - short/int/long as unsigned hexadecimal - # adds leading 0x</span>
 <span style="color: #ff0099">   91: </span><span style="color: #000099">//       c    - char</span>
 <span style="color: #ff0099">   92: </span><span style="color: #000099">//       s    - char*</span>
-<span style="color: #ff0099">   93: </span><span style="color: #000099">//       C    - wchar_t</span>
-<span style="color: #ff0099">   94: </span><span style="color: #000099">//       S    - wchar_t*</span>
-<span style="color: #ff0099">   95: </span><span style="color: #000099">//       f    - double/long double as fixed point</span>
-<span style="color: #ff0099">   96: </span><span style="color: #000099">//       e, E - double/long double as floating point</span>
-<span style="color: #ff0099">   97: </span><span style="color: #000099">//       g, G - double/long double as fixed point/floating point depending on value</span>
-<span style="color: #ff0099">   98: </span><span style="color: #000099">//       p    - void* as unsigned hexadecimal</span>
-<span style="color: #ff0099">   99: </span><span style="color: #000099">//       %    - literal %</span>
-<span style="color: #ff0099">  100: </span><span style="color: #000099">//       n    - int* as recipient of length of formatted string so far</span>
-<span style="color: #ff0099">  101: </span>
-<span style="color: #ff0099">  102: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">  103: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
-<span style="color: #ff0099">  104: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
-<span style="color: #ff0099">  105: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdexcept&gt;</span>
-<span style="color: #ff0099">  106: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdarg.h&gt;</span>
-<span style="color: #ff0099">  107: </span>
-<span style="color: #ff0099">  108: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
-<span style="color: #ff0099">  109: </span><span style="color: #330033">{</span>
-<span style="color: #ff0099">  110: </span>
-<span style="color: #ff0099">  111: </span>  <span style="color: #000099">// format by appending to a string and return the increase in length</span>
-<span style="color: #ff0099">  112: </span>  <span style="color: #000099">// if there is an error, return a negative number and leave the string unchanged</span>
-<span style="color: #ff0099">  113: </span>  <span style="color: #990000">int</span> <span style="color: #000000">dprintf</span> <span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">formatted</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  114: </span>  <span style="color: #990000">int</span> <span style="color: #000000">vdprintf</span> <span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">formatted</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #000000">va_list</span> <span style="color: #000000">args</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  115: </span>
-<span style="color: #ff0099">  116: </span>  <span style="color: #000099">// format into a new string and return the result</span>
-<span style="color: #ff0099">  117: </span>  <span style="color: #000099">// if there is an error, throw an exception</span>
-<span style="color: #ff0099">  118: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">dformat</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  119: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">vdformat</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #000000">va_list</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   93: </span><span style="color: #000099">//       f    - double/long double as fixed point</span>
+<span style="color: #ff0099">   94: </span><span style="color: #000099">//       e, E - double/long double as floating point</span>
+<span style="color: #ff0099">   95: </span><span style="color: #000099">//       g, G - double/long double as fixed point/floating point depending on value</span>
+<span style="color: #ff0099">   96: </span><span style="color: #000099">//       p    - void* as unsigned hexadecimal</span>
+<span style="color: #ff0099">   97: </span><span style="color: #000099">//       %    - literal %</span>
+<span style="color: #ff0099">   98: </span><span style="color: #000099">//       n    - int* as recipient of length of formatted string so far</span>
+<span style="color: #ff0099">   99: </span>
+<span style="color: #ff0099">  100: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  101: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
+<span style="color: #ff0099">  102: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">  103: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdexcept&gt;</span>
+<span style="color: #ff0099">  104: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdarg.h&gt;</span>
+<span style="color: #ff0099">  105: </span>
+<span style="color: #ff0099">  106: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">  107: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">  108: </span>
+<span style="color: #ff0099">  109: </span>  <span style="color: #000099">// format by appending to a string and return the increase in length</span>
+<span style="color: #ff0099">  110: </span>  <span style="color: #000099">// if there is an error, return a negative number and leave the string unchanged</span>
+<span style="color: #ff0099">  111: </span>  <span style="color: #990000">int</span> <span style="color: #000000">dprintf</span> <span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">formatted</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  112: </span>  <span style="color: #990000">int</span> <span style="color: #000000">vdprintf</span> <span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">formatted</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #000000">va_list</span> <span style="color: #000000">args</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  113: </span>
+<span style="color: #ff0099">  114: </span>  <span style="color: #000099">// format into a new string and return the result</span>
+<span style="color: #ff0099">  115: </span>  <span style="color: #000099">// if there is an error, throw an exception</span>
+<span style="color: #ff0099">  116: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">dformat</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">.</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  117: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">vdformat</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #990000">char</span><span style="color: #330033">*</span> <span style="color: #000000">format</span><span style="color: #330033">,</span> <span style="color: #000000">va_list</span><span style="color: #330033">)</span> <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  118: </span>
+<span style="color: #ff0099">  119: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
 <span style="color: #ff0099">  120: </span>
-<span style="color: #ff0099">  121: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
-<span style="color: #ff0099">  122: </span>
-<span style="color: #ff0099">  123: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  121: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
