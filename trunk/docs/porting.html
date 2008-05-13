@@ -101,6 +101,16 @@ only supply project files for v6.</p>
 <p>I refer to a "platform" as a particular combination of CPU, Operating System and Compiler.</p>
 
 
+<p>These requirements create some limitations on the extent of the library - the primary objective
+is for it to be portable such that it presents exactly the same interface on all platforms. This
+means that I do not have anything that cannot be implemented on all platforms with all supported
+compilers.</p>
+
+<p>For example there's no Unicode support because some compilers have little or no support for
+Unicode and there are major differences in how Unicode is implemented on different operating
+systems. There are other libraries that deal with this issue better than I can and so I consider it
+beyond the scope of the STLplus library to resolve it.</p>
+
 <h2 id="progress">Porting Progress</h2>
 
 <p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a

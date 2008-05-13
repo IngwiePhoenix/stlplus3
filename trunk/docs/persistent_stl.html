@@ -177,12 +177,18 @@ void stlplus::restore_string(stlplus::restore_context&amp;, std::string&amp; dat
 </pre>
 
 <p>The first pair of functions are template persistence functions for the templatised class
-std::basic_string which can be used to represent strings of any character width. For example,
-Unicode-compatible programs use a wide string (typically 16-bit characters, though 21 bits is
-required by the standard!).</p>
+std::basic_string which can be used to represent strings of any character width.</p>
 
 <p>The second pair of functions are non-templatised functions for the persistence of std::string -
 the specialisation of std::basic_string for 8-bit characters.</p>
+
+<p><b>Note:</b>The 'standard' type std::wstring is not supported because it is too weakly defined. 
+It is ostensibly the Unicode string, which requires a minimum of 21 bits. On Windows wstring is only
+16 bits wide so is actually UTF-16 encoded Unicode. On Linux, wstring is 32 bits wide and therefore
+is unencoded UCS-4. Since UTF-16 and UCS-4 are not compatible and are not easily convertible, it is
+not possible to implement platform-independent persistence of this type. I recommend that you
+convert wide strings into UTF-8 encoding and dump/restore them using the std::string persistence
+above.</p>
 
 <h2 id="pair">Persistence of std::pair</h2>
 
