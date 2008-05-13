@@ -55,7 +55,7 @@ C++ Library Collection
 <li><a href="#paths">Path Algorithms</a></li>
 <li><a href="#print">Print Functions</a></li>
 <li><a href="#exceptions">Exceptions</a></li>
-<li><a href="#example">Noddy Example</a></li>
+<li><a href="#example">Example</a></li>
 </ul>
 
 </div>
@@ -970,32 +970,96 @@ from one graph and then use it in another, then this will throw the wrong_object
 the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
 
 
-<h2 id="example">Noddy Example</h2>
+<h2 id="example">Example</h2>
 
-<p>Big Ears was too busy to write one...</p>
-
-<p>Here's a trivial example which just shows how all the bits fit together:</p>
+<p>Here's an example which just shows how all the bits fit together:</p>
 
 <pre class="cpp">
-#include "stlplus.hpp"
+#include "digraph.hpp"
+#include "persistent_contexts.hpp"
+#include "persistent_digraph.hpp"
+#include "persistent_vector.hpp"
+#include "persistent_string.hpp"
+#include "persistent_int.hpp"
+#include "persistent_shortcuts.hpp"
+#include "build.hpp"
 #include &lt;vector&gt;
-using namespace std;
+#include &lt;iostream&gt;
 
-bool select_less_than_4 (const digraph&lt;string,int&gt;&amp; graph, digraph&lt;string,int&gt;::const_arc_iterator arc)
+////////////////////////////////////////////////////////////////////////////////
+
+typedef stlplus::digraph&lt;std::string,int&gt; string_int_graph;
+
+////////////////////////////////////////////////////////////////////////////////
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph::iterator i)
 {
-  return *arc &lt; 4;
+  return output &lt;&lt; ((long)((void*)&amp;*i)) &lt;&lt; "-&gt;" &lt;&lt; *i;
 }
 
-static void report (digraph&lt;string,int&gt;&amp; graph)
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph::arc_iterator i)
 {
-  print_graph(std::cout, graph, 1);
+  return output &lt;&lt; ((long)((void*)&amp;*i)) &lt;&lt; "-&gt;" &lt;&lt; *i;
 }
 
-static void test (const digraph&lt;string,int&gt;&amp; graph)
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph::arc_vector arcs)
 {
-  for (digraph&lt;string,int&gt;::const_iterator i = graph.begin(); i != graph.end(); i++)
+  for (unsigned i = 0; i &lt; arcs.size(); i++)
   {
-    for (digraph&lt;string,int&gt;::const_iterator j = graph.begin(); j != graph.end(); j++)
+    if (i &gt; 0) output &lt;&lt; " : ";
+    output &lt;&lt; arcs[i];
+  }
+  return output;
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph::path_vector paths)
+{
+  for (unsigned i = 0; i &lt; paths.size(); i++)
+  {
+    if (i &gt; 0) output &lt;&lt; " - ";
+    output &lt;&lt; paths[i];
+  }
+  return output;
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph::node_vector nodes)
+{
+  for (unsigned i = 0; i &lt; nodes.size(); i++)
+  {
+    if (i &gt; 0) output &lt;&lt; " - ";
+    output &lt;&lt; nodes[i];
+  }
+  return output;
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, string_int_graph&amp; graph)
+{
+  output &lt;&lt; "nodes:" &lt;&lt; std::endl;
+  for (string_int_graph::iterator n = graph.begin(); n != graph.end(); ++n)
+    output &lt;&lt; n &lt;&lt; " inputs: " &lt;&lt; graph.inputs(n) &lt;&lt; " outputs: " &lt;&lt; graph.outputs(n) &lt;&lt; std::endl;
+  output &lt;&lt; "arcs:" &lt;&lt; std::endl;
+  for (string_int_graph::arc_iterator a = graph.arc_begin(); a != graph.arc_end(); ++a)
+    output &lt;&lt; a &lt;&lt; " from " &lt;&lt; graph.arc_from(a) &lt;&lt; " to " &lt;&lt; graph.arc_to(a) &lt;&lt; std::endl;
+  return output;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool select_less_than_4 (const string_int_graph&amp; graph, string_int_graph::const_arc_iterator arc)
+{
+  return abs(*arc) &lt; 4;
+}
+
+bool select_natural (const string_int_graph&amp; graph, string_int_graph::const_arc_iterator arc)
+{
+  return *arc &gt;= 0;
+}
+
+static void test (string_int_graph&amp; graph)
+{
+  for (string_int_graph::iterator i = graph.begin(); i != graph.end(); i++)
+  {
+    for (string_int_graph::iterator j = graph.begin(); j != graph.end(); j++)
     {
       if (!graph.adjacent(i, j))
         std::cout &lt;&lt; "  " &lt;&lt; *i &lt;&lt; " is NOT adjacent to " &lt;&lt; *j &lt;&lt; std::endl;
@@ -1006,60 +1070,200 @@ static void test (const digraph&lt;string,int&gt;&amp; graph)
       else
       {
         std::cout &lt;&lt; "  " &lt;&lt; *i &lt;&lt; " has a path to " &lt;&lt; *j &lt;&lt; std::endl;
-        std::cout &lt;&lt; "  " &lt;&lt; "the paths from " &lt;&lt; *i &lt;&lt; " to " &lt;&lt; *j &lt;&lt; " are: ";
-        graph.print_path_vector(std::cout, graph.all_paths(i, j));
-        std::cout &lt;&lt; std::endl;
-        std::cout &lt;&lt; "  " &lt;&lt; "the shortest path from " &lt;&lt; *i &lt;&lt; " to " &lt;&lt; *j &lt;&lt; " is: ";
-        graph.print_arc_vector(std::cout, graph.shortest_path(i, j));
-        std::cout &lt;&lt; std::endl;
+        std::cout &lt;&lt; "  " &lt;&lt; "paths from " &lt;&lt; *i &lt;&lt; " to " &lt;&lt; *j &lt;&lt; " are: " &lt;&lt; graph.all_paths(i, j) &lt;&lt; std::endl;
+        std::cout &lt;&lt; "  " &lt;&lt; "shortest path from " &lt;&lt; *i &lt;&lt; " to " &lt;&lt; *j &lt;&lt; " is: " &lt;&lt; graph.shortest_path(i, j) &lt;&lt; std::endl;
       }
     }
-    std::cout &lt;&lt; "  " &lt;&lt; "shortest paths for " &lt;&lt; *i &lt;&lt; " less than " &lt;&lt; 4 &lt;&lt; " are: ";
-    graph.print_path_vector(std::cout, graph.shortest_paths(i, select_less_than_4));
-    std::cout &lt;&lt; std::endl;
-    std::cout &lt;&lt; "  " &lt;&lt; "reachable nodes from " &lt;&lt; *i &lt;&lt; " are: ";
-    graph.print_node_vector(std::cout, graph.reachable_nodes(i));
-    std::cout &lt;&lt; std::endl;
-    std::cout &lt;&lt; "  " &lt;&lt; "nodes which can reach " &lt;&lt; *i &lt;&lt; " are: ";
-    graph.print_node_vector(std::cout, graph.reaching_nodes(i));
-    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; "  " &lt;&lt; "shortest paths for " &lt;&lt; *i &lt;&lt; " less than " &lt;&lt; 4 &lt;&lt; " are: " 
+         &lt;&lt; graph.shortest_paths(i, select_less_than_4) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "  " &lt;&lt; "reachable nodes from " &lt;&lt; *i &lt;&lt; " are: " &lt;&lt; graph.reachable_nodes(i) &lt;&lt; std::endl;
+    std::cout &lt;&lt; "  " &lt;&lt; "nodes which can reach " &lt;&lt; *i &lt;&lt; " are: " &lt;&lt; graph.reaching_nodes(i) &lt;&lt; std::endl;
   }
+  std::pair&lt;string_int_graph::node_vector,string_int_graph::arc_vector&gt; sort = graph.sort(select_natural);
+  std::cout &lt;&lt; "  " &lt;&lt; "topographical sort: " &lt;&lt; sort.first;
+  if (!sort.second.empty())
+  {
+    std::cout &lt;&lt; ", errors = " &lt;&lt; sort.second;
+  }
+  std::cout &lt;&lt; std::endl;
+  std::cout &lt;&lt; "  " &lt;&lt; "DAG sort: " &lt;&lt; graph.dag_sort(select_natural) &lt;&lt; std::endl;
 }
 
-void dump(dump_context&amp; context, const digraph&lt;string,int&gt;&amp; graph)
+void dump_string_int_graph(stlplus::dump_context&amp; context, const string_int_graph&amp; graph)
 {
-  dump_digraph(context, graph);
+  stlplus::dump_digraph(context, graph, stlplus::dump_string, stlplus::dump_int);
 }
 
-void restore(restore_context&amp; context, digraph&lt;string,int&gt;&amp; graph)
+void restore_string_int_graph(stlplus::restore_context&amp; context, string_int_graph&amp; graph)
 {
-  restore_digraph(context, graph);
+  stlplus::restore_digraph(context, graph, stlplus::restore_string, stlplus::restore_int);
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+typedef std::vector&lt;string_int_graph::iterator&gt; node_vector;
+
+void dump_string_int_graph_iterator(stlplus::dump_context&amp; context, const string_int_graph::iterator&amp; node)
+{
+  stlplus::dump_digraph_iterator(context, node);
+}
+
+void dump_node_vector(stlplus::dump_context&amp; context, const node_vector&amp; nodes)
+{
+  stlplus::dump_vector(context, nodes, dump_string_int_graph_iterator);
+}
+
+void restore_string_int_graph_iterator(stlplus::restore_context&amp; context, string_int_graph::iterator&amp; node)
+{
+  stlplus::restore_digraph_iterator(context, node);
+}
+
+void restore_node_vector(stlplus::restore_context&amp; context, node_vector&amp; nodes)
+{
+  stlplus::restore_vector(context, nodes, restore_string_int_graph_iterator);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+ 
+typedef std::vector&lt;string_int_graph::arc_iterator&gt; arc_vector;
+
+void dump_string_int_graph_arc_iterator(stlplus::dump_context&amp; context, const string_int_graph::arc_iterator&amp; arc)
+{
+  stlplus::dump_digraph_arc_iterator(context, arc);
+}
+
+void dump_arc_vector(stlplus::dump_context&amp; context, const arc_vector&amp; arcs)
+{
+  stlplus::dump_vector(context, arcs, dump_string_int_graph_arc_iterator);
+}
+
+void restore_string_int_graph_arc_iterator(stlplus::restore_context&amp; context, string_int_graph::arc_iterator&amp; arc)
+{
+  stlplus::restore_digraph_arc_iterator(context, arc);
+}
+
+void restore_arc_vector(stlplus::restore_context&amp; context, arc_vector&amp; arcs)
+{
+  stlplus::restore_vector(context, arcs, restore_string_int_graph_arc_iterator);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class test_graph
+{
+public:
+  string_int_graph m_graph;
+  node_vector m_nodes;
+  arc_vector m_arcs;
+
+  string_int_graph::iterator insert(const std::string&amp; node_data)
+    {
+      string_int_graph::iterator result = m_graph.insert(node_data);
+      m_nodes.push_back(result);
+      return result;
+    }
+  string_int_graph::arc_iterator arc_insert(string_int_graph::iterator from, string_int_graph::iterator to, int arc_data)
+    {
+      string_int_graph::arc_iterator result = m_graph.arc_insert(from,to,arc_data);
+      m_arcs.push_back(result);
+      return result;
+    }
+
+  void dump(stlplus::dump_context&amp; context) const
+    {
+      dump_string_int_graph(context,m_graph);
+      dump_node_vector(context,m_nodes);
+      dump_arc_vector(context,m_arcs);
+    }
+
+  void restore(stlplus::restore_context&amp; context)
+    {
+      restore_string_int_graph(context,m_graph);
+      restore_node_vector(context,m_nodes);
+      restore_arc_vector(context,m_arcs);
+    }
+
+  bool report (void)
+    {
+      bool result = true;
+      std::cout &lt;&lt; "== Graph ====================" &lt;&lt; std::endl;
+      std::cout &lt;&lt; m_graph;
+      std::cout &lt;&lt; "== Nodes ====================" &lt;&lt; std::endl;
+      std::cout &lt;&lt; m_nodes &lt;&lt; std::endl;
+      std::cout &lt;&lt; "== Arcs =====================" &lt;&lt; std::endl;
+      std::cout &lt;&lt; m_arcs &lt;&lt; std::endl;
+      std::cout &lt;&lt; "== Tests ====================" &lt;&lt; std::endl;
+      for (unsigned n = 0; n &lt; m_nodes.size(); n++)
+      {
+        if (m_nodes[n].owner() != &amp;m_graph)
+        {
+          std::cout &lt;&lt; "ERROR: node " &lt;&lt; m_nodes[n] &lt;&lt; " doesn't belong to graph" &lt;&lt; std::endl;
+          result = false;
+        }
+      }
+      for (unsigned a = 0; a &lt; m_arcs.size(); a++)
+      {
+        if (m_arcs[a].owner() != &amp;m_graph)
+        {
+          std::cout &lt;&lt; "ERROR: arc " &lt;&lt; m_arcs[a] &lt;&lt; " doesn't belong to graph" &lt;&lt; std::endl;
+          result = false;
+        }
+      }
+      std::cout &lt;&lt; "=============================" &lt;&lt; std::endl;
+      return result;
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+void dump_test_graph(stlplus::dump_context&amp; context, const test_graph&amp; graph)
+{
+  graph.dump(context);
+}
+
+void restore_test_graph(stlplus::restore_context&amp; context, test_graph&amp; graph)
+{
+  graph.restore(context);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
 {
-  DEBUG_TRACE;
+  std::cerr &lt;&lt; stlplus::build() &lt;&lt; std::endl;
+
   bool result = true;
 
   try
   {
-    digraph&lt;string,int&gt; graph;
+    test_graph graph;
 
-    digraph&lt;string,int&gt;::iterator node1 = graph.insert("node1");
-    digraph&lt;string,int&gt;::iterator node2 = graph.insert("node2");
-    digraph&lt;string,int&gt;::iterator node3 = graph.insert("node3");
-    digraph&lt;string,int&gt;::iterator node4 = graph.insert("node4");
-    digraph&lt;string,int&gt;::iterator node5 = graph.insert("node5");
-    digraph&lt;string,int&gt;::arc_iterator arc1 = graph.arc_insert(node1, node2, 1);
-    digraph&lt;string,int&gt;::arc_iterator arc2 = graph.arc_insert(node2, node4, 2);
-    digraph&lt;string,int&gt;::arc_iterator arc3 = graph.arc_insert(node4, node3, 3);
-    digraph&lt;string,int&gt;::arc_iterator arc4 = graph.arc_insert(node1, node3, 4);
-    digraph&lt;string,int&gt;::arc_iterator arc5 = graph.arc_insert(node3, node5, 5);
-    digraph&lt;string,int&gt;::arc_iterator arc6 = graph.arc_insert(node5, node4, 6);
-    digraph&lt;string,int&gt;::arc_iterator arc7 = graph.arc_insert(node4, node4, 7);
-    std::cout &lt;&lt; "initial graph:" &lt;&lt; std::endl;
-    report(graph);
-    test(graph);
+    // Note: backward arcs are labelled with negative values
+    string_int_graph::iterator node1 = graph.insert("node1");
+    string_int_graph::iterator node2 = graph.insert("node2");
+    string_int_graph::iterator node3 = graph.insert("node3");
+    string_int_graph::iterator node4 = graph.insert("node4");
+    string_int_graph::iterator node5 = graph.insert("node5");
+    graph.arc_insert(node1, node2, 1);
+    graph.arc_insert(node2, node4, 2);
+    graph.arc_insert(node4, node3, 3);
+    string_int_graph::arc_iterator arc4 = graph.arc_insert(node1, node3, 4);
+    graph.arc_insert(node3, node5, 5);
+    graph.arc_insert(node5, node4, -6);
+    graph.arc_insert(node4, node4, -7);
+    std::cout &lt;&lt; "### initial graph:" &lt;&lt; std::endl;
+    result &amp;= graph.report();
+    test(graph.m_graph);
+
+    std::cout &lt;&lt; "dumping to file" &lt;&lt; std::endl;
+    stlplus::dump_to_file(graph, "test.tmp", dump_test_graph, 0);
+
+    test_graph graph2;
+    std::cout &lt;&lt; "restoring from file" &lt;&lt; std::endl;
+    stlplus::restore_from_file("test.tmp", graph2, restore_test_graph, 0);
+    std::cout &lt;&lt; "after restore from file:" &lt;&lt; std::endl;
+    result &amp;= graph2.report();
+    test(graph2.m_graph);
   }
   catch(const std::exception&amp; exception)
   {
@@ -1077,118 +1281,252 @@ int main(int argc, char* argv[])
 <p>And here's the output:</p>
 
 <pre class="terminal">
-initial graph:
+STLplus version 3.2, Windows, gcc v3.4.5 (mingw-vista special r3), debug
+### initial graph:
+== Graph ====================
 nodes:
-node:a040960 inputs: {} outputs: {arc:a040a28,arc:a040bf8}
-node:a040988 inputs: {arc:a040a28} outputs: {arc:a040bc8}
-node:a0409b0 inputs: {arc:a040be0,arc:a040bf8} outputs: {arc:a040c10}
-node:a0409d8 inputs: {arc:a040bc8,arc:a040c28,arc:a040c40} outputs: {arc:a040be0,arc:a040c40}
-node:a040a00 inputs: {arc:a040c10} outputs: {arc:a040c28}
+4079404-&gt;node1 inputs:  outputs: 4073164-&gt;1 : 4073412-&gt;4
+4072772-&gt;node2 inputs: 4073164-&gt;1 outputs: 4073212-&gt;2
+4072860-&gt;node3 inputs: 4073316-&gt;3 : 4073412-&gt;4 outputs: 4073468-&gt;5
+4072988-&gt;node4 inputs: 4073212-&gt;2 : 4073540-&gt;-6 : 4073604-&gt;-7 outputs: 4073316-&gt;3 : 4073604-&gt;-7
+4073092-&gt;node5 inputs: 4073468-&gt;5 outputs: 4073540-&gt;-6
 arcs:
-arc:a040a28 from node:a040960 to node:a040988
-arc:a040bc8 from node:a040988 to node:a0409d8
-arc:a040be0 from node:a0409d8 to node:a0409b0
-arc:a040bf8 from node:a040960 to node:a0409b0
-arc:a040c10 from node:a0409b0 to node:a040a00
-arc:a040c28 from node:a040a00 to node:a0409d8
-arc:a040c40 from node:a0409d8 to node:a0409d8
-node1 is NOT adjacent to node1
-node1 does NOT have a path to node1
-node1 is adjacent to node2
-node1 has a path to node2
-the paths from node1 to node2 are: {arc:a040a28}
-the shortest path from node1 to node2 is: {arc:a040a28}
-node1 is adjacent to node3
-node1 has a path to node3
-the paths from node1 to node3 are: {arc:a040a28,arc:a040bc8,arc:a040be0},{arc:a040a28,arc:a040bc8,arc:a040c40,arc:a040be0},{arc:a040bf8}
-the shortest path from node1 to node3 is: {arc:a040bf8}
-node1 is NOT adjacent to node4
-node1 has a path to node4
-the paths from node1 to node4 are: {arc:a040a28,arc:a040bc8},{arc:a040bf8,arc:a040c10,arc:a040c28}
-the shortest path from node1 to node4 is: {arc:a040a28,arc:a040bc8}
-node1 is NOT adjacent to node5
-node1 has a path to node5
-the paths from node1 to node5 are: {arc:a040a28,arc:a040bc8,arc:a040be0,arc:a040c10},{arc:a040a28,arc:a040bc8,arc:a040c40,arc:a040be0,arc:a040c10},{arc:a040bf8,arc:a040c10}
-the shortest path from node1 to node5 is: {arc:a040bf8,arc:a040c10}
-shortest paths for node1 less than 4 are: {arc:a040a28},{arc:a040a28,arc:a040bc8,arc:a040be0},{arc:a040a28,arc:a040bc8}
-reachable nodes from node1 are: {node:a040988,node:a0409b0,node:a0409d8,node:a040a00}
-nodes which can reach node1 are: {}
-node2 is NOT adjacent to node1
-node2 does NOT have a path to node1
-node2 is NOT adjacent to node2
-node2 does NOT have a path to node2
-node2 is NOT adjacent to node3
-node2 has a path to node3
-the paths from node2 to node3 are: {arc:a040bc8,arc:a040be0},{arc:a040bc8,arc:a040c40,arc:a040be0}
-the shortest path from node2 to node3 is: {arc:a040bc8,arc:a040be0}
-node2 is adjacent to node4
-node2 has a path to node4
-the paths from node2 to node4 are: {arc:a040bc8}
-the shortest path from node2 to node4 is: {arc:a040bc8}
-node2 is NOT adjacent to node5
-node2 has a path to node5
-the paths from node2 to node5 are: {arc:a040bc8,arc:a040be0,arc:a040c10},{arc:a040bc8,arc:a040c40,arc:a040be0,arc:a040c10}
-the shortest path from node2 to node5 is: {arc:a040bc8,arc:a040be0,arc:a040c10}
-shortest paths for node2 less than 4 are: {arc:a040bc8,arc:a040be0},{arc:a040bc8}
-reachable nodes from node2 are: {node:a0409b0,node:a0409d8,node:a040a00}
-nodes which can reach node2 are: {node:a040960}
-node3 is NOT adjacent to node1
-node3 does NOT have a path to node1
-node3 is NOT adjacent to node2
-node3 does NOT have a path to node2
-node3 is NOT adjacent to node3
-node3 has a path to node3
-the paths from node3 to node3 are: {arc:a040c10,arc:a040c28,arc:a040be0},{arc:a040c10,arc:a040c28,arc:a040c40,arc:a040be0}
-the shortest path from node3 to node3 is: {arc:a040c10,arc:a040c28,arc:a040be0}
-node3 is NOT adjacent to node4
-node3 has a path to node4
-the paths from node3 to node4 are: {arc:a040c10,arc:a040c28}
-the shortest path from node3 to node4 is: {arc:a040c10,arc:a040c28}
-node3 is adjacent to node5
-node3 has a path to node5
-the paths from node3 to node5 are: {arc:a040c10}
-the shortest path from node3 to node5 is: {arc:a040c10}
-shortest paths for node3 less than 4 are: 
-reachable nodes from node3 are: {node:a0409d8,node:a040a00}
-nodes which can reach node3 are: {node:a040960,node:a040988,node:a0409d8,node:a040a00}
-node4 is NOT adjacent to node1
-node4 does NOT have a path to node1
-node4 is NOT adjacent to node2
-node4 does NOT have a path to node2
-node4 is adjacent to node3
-node4 has a path to node3
-the paths from node4 to node3 are: {arc:a040be0},{arc:a040c40,arc:a040be0}
-the shortest path from node4 to node3 is: {arc:a040be0}
-node4 is adjacent to node4
-node4 has a path to node4
-the paths from node4 to node4 are: {arc:a040be0,arc:a040c10,arc:a040c28},{arc:a040c40}
-the shortest path from node4 to node4 is: {arc:a040c40}
-node4 is NOT adjacent to node5
-node4 has a path to node5
-the paths from node4 to node5 are: {arc:a040be0,arc:a040c10},{arc:a040c40,arc:a040be0,arc:a040c10}
-the shortest path from node4 to node5 is: {arc:a040be0,arc:a040c10}
-shortest paths for node4 less than 4 are: {arc:a040be0}
-reachable nodes from node4 are: {node:a0409b0,node:a040a00}
-nodes which can reach node4 are: {node:a040960,node:a040988,node:a0409b0,node:a040a00}
-node5 is NOT adjacent to node1
-node5 does NOT have a path to node1
-node5 is NOT adjacent to node2
-node5 does NOT have a path to node2
-node5 is NOT adjacent to node3
-node5 has a path to node3
-the paths from node5 to node3 are: {arc:a040c28,arc:a040be0},{arc:a040c28,arc:a040c40,arc:a040be0}
-the shortest path from node5 to node3 is: {arc:a040c28,arc:a040be0}
-node5 is adjacent to node4
-node5 has a path to node4
-the paths from node5 to node4 are: {arc:a040c28}
-the shortest path from node5 to node4 is: {arc:a040c28}
-node5 is NOT adjacent to node5
-node5 has a path to node5
-the paths from node5 to node5 are: {arc:a040c28,arc:a040be0,arc:a040c10},{arc:a040c28,arc:a040c40,arc:a040be0,arc:a040c10}
-the shortest path from node5 to node5 is: {arc:a040c28,arc:a040be0,arc:a040c10}
-shortest paths for node5 less than 4 are: 
-reachable nodes from node5 are: {node:a0409b0,node:a0409d8}
-nodes which can reach node5 are: {node:a040960,node:a040988,node:a0409b0,node:a0409d8}
+4073164-&gt;1 from 4079404-&gt;node1 to 4072772-&gt;node2
+4073212-&gt;2 from 4072772-&gt;node2 to 4072988-&gt;node4
+4073316-&gt;3 from 4072988-&gt;node4 to 4072860-&gt;node3
+4073412-&gt;4 from 4079404-&gt;node1 to 4072860-&gt;node3
+4073468-&gt;5 from 4072860-&gt;node3 to 4073092-&gt;node5
+4073540-&gt;-6 from 4073092-&gt;node5 to 4072988-&gt;node4
+4073604-&gt;-7 from 4072988-&gt;node4 to 4072988-&gt;node4
+== Nodes ====================
+4079404-&gt;node1 - 4072772-&gt;node2 - 4072860-&gt;node3 - 4072988-&gt;node4 - 4073092-&gt;node5
+== Arcs =====================
+4073164-&gt;1 : 4073212-&gt;2 : 4073316-&gt;3 : 4073412-&gt;4 : 4073468-&gt;5 : 4073540-&gt;-6 : 4073604-&gt;-7
+== Tests ====================
+=============================
+  node1 is NOT adjacent to node1
+  node1 does NOT have a path to node1
+  node1 is adjacent to node2
+  node1 has a path to node2
+  paths from node1 to node2 are: 4073164-&gt;1
+  shortest path from node1 to node2 is: 4073164-&gt;1
+  node1 is adjacent to node3
+  node1 has a path to node3
+  paths from node1 to node3 are: 4073164-&gt;1 : 4073212-&gt;2 : 4073316-&gt;3 - 4073164-&gt;1 : 4073212-&gt;2 : 4073604-&gt;-7 : 4073316-&gt;3 - 4073412-&gt;4
+  shortest path from node1 to node3 is: 4073412-&gt;4
+  node1 is NOT adjacent to node4
+  node1 has a path to node4
+  paths from node1 to node4 are: 4073164-&gt;1 : 4073212-&gt;2 - 4073412-&gt;4 : 4073468-&gt;5 : 4073540-&gt;-6
+  shortest path from node1 to node4 is: 4073164-&gt;1 : 4073212-&gt;2
+  node1 is NOT adjacent to node5
+  node1 has a path to node5
+  paths from node1 to node5 are: 4073164-&gt;1 : 4073212-&gt;2 : 4073316-&gt;3 : 4073468-&gt;5 - 4073164-&gt;1 : 4073212-&gt;2 : 4073604-&gt;-7 : 4073316-&gt;3 : 4073468-&gt;5 - 4073412-&gt;4 : 4073468-&gt;5
+  shortest path from node1 to node5 is: 4073412-&gt;4 : 4073468-&gt;5
+  shortest paths for node1 less than 4 are: 4073164-&gt;1 - 4073164-&gt;1 : 4073212-&gt;2 : 4073316-&gt;3 - 4073164-&gt;1 : 4073212-&gt;2
+  reachable nodes from node1 are: 4072772-&gt;node2 - 4072860-&gt;node3 - 4072988-&gt;node4 - 4073092-&gt;node5
+  nodes which can reach node1 are: 
+  node2 is NOT adjacent to node1
+  node2 does NOT have a path to node1
+  node2 is NOT adjacent to node2
+  node2 does NOT have a path to node2
+  node2 is NOT adjacent to node3
+  node2 has a path to node3
+  paths from node2 to node3 are: 4073212-&gt;2 : 4073316-&gt;3 - 4073212-&gt;2 : 4073604-&gt;-7 : 4073316-&gt;3
+  shortest path from node2 to node3 is: 4073212-&gt;2 : 4073316-&gt;3
+  node2 is adjacent to node4
+  node2 has a path to node4
+  paths from node2 to node4 are: 4073212-&gt;2
+  shortest path from node2 to node4 is: 4073212-&gt;2
+  node2 is NOT adjacent to node5
+  node2 has a path to node5
+  paths from node2 to node5 are: 4073212-&gt;2 : 4073316-&gt;3 : 4073468-&gt;5 - 4073212-&gt;2 : 4073604-&gt;-7 : 4073316-&gt;3 : 4073468-&gt;5
+  shortest path from node2 to node5 is: 4073212-&gt;2 : 4073316-&gt;3 : 4073468-&gt;5
+  shortest paths for node2 less than 4 are: 4073212-&gt;2 : 4073316-&gt;3 - 4073212-&gt;2
+  reachable nodes from node2 are: 4072860-&gt;node3 - 4072988-&gt;node4 - 4073092-&gt;node5
+  nodes which can reach node2 are: 4079404-&gt;node1
+  node3 is NOT adjacent to node1
+  node3 does NOT have a path to node1
+  node3 is NOT adjacent to node2
+  node3 does NOT have a path to node2
+  node3 is NOT adjacent to node3
+  node3 has a path to node3
+  paths from node3 to node3 are: 4073468-&gt;5 : 4073540-&gt;-6 : 4073316-&gt;3 - 4073468-&gt;5 : 4073540-&gt;-6 : 4073604-&gt;-7 : 4073316-&gt;3
+  shortest path from node3 to node3 is: 4073468-&gt;5 : 4073540-&gt;-6 : 4073316-&gt;3
+  node3 is NOT adjacent to node4
+  node3 has a path to node4
+  paths from node3 to node4 are: 4073468-&gt;5 : 4073540-&gt;-6
+  shortest path from node3 to node4 is: 4073468-&gt;5 : 4073540-&gt;-6
+  node3 is adjacent to node5
+  node3 has a path to node5
+  paths from node3 to node5 are: 4073468-&gt;5
+  shortest path from node3 to node5 is: 4073468-&gt;5
+  shortest paths for node3 less than 4 are: 
+  reachable nodes from node3 are: 4072988-&gt;node4 - 4073092-&gt;node5
+  nodes which can reach node3 are: 4072772-&gt;node2 - 4072988-&gt;node4 - 4073092-&gt;node5 - 4079404-&gt;node1
+  node4 is NOT adjacent to node1
+  node4 does NOT have a path to node1
+  node4 is NOT adjacent to node2
+  node4 does NOT have a path to node2
+  node4 is adjacent to node3
+  node4 has a path to node3
+  paths from node4 to node3 are: 4073316-&gt;3 - 4073604-&gt;-7 : 4073316-&gt;3
+  shortest path from node4 to node3 is: 4073316-&gt;3
+  node4 is adjacent to node4
+  node4 has a path to node4
+  paths from node4 to node4 are: 4073316-&gt;3 : 4073468-&gt;5 : 4073540-&gt;-6 - 4073604-&gt;-7
+  shortest path from node4 to node4 is: 4073604-&gt;-7
+  node4 is NOT adjacent to node5
+  node4 has a path to node5
+  paths from node4 to node5 are: 4073316-&gt;3 : 4073468-&gt;5 - 4073604-&gt;-7 : 4073316-&gt;3 : 4073468-&gt;5
+  shortest path from node4 to node5 is: 4073316-&gt;3 : 4073468-&gt;5
+  shortest paths for node4 less than 4 are: 4073316-&gt;3
+  reachable nodes from node4 are: 4072860-&gt;node3 - 4073092-&gt;node5
+  nodes which can reach node4 are: 4072772-&gt;node2 - 4072860-&gt;node3 - 4073092-&gt;node5 - 4079404-&gt;node1
+  node5 is NOT adjacent to node1
+  node5 does NOT have a path to node1
+  node5 is NOT adjacent to node2
+  node5 does NOT have a path to node2
+  node5 is NOT adjacent to node3
+  node5 has a path to node3
+  paths from node5 to node3 are: 4073540-&gt;-6 : 4073316-&gt;3 - 4073540-&gt;-6 : 4073604-&gt;-7 : 4073316-&gt;3
+  shortest path from node5 to node3 is: 4073540-&gt;-6 : 4073316-&gt;3
+  node5 is adjacent to node4
+  node5 has a path to node4
+  paths from node5 to node4 are: 4073540-&gt;-6
+  shortest path from node5 to node4 is: 4073540-&gt;-6
+  node5 is NOT adjacent to node5
+  node5 has a path to node5
+  paths from node5 to node5 are: 4073540-&gt;-6 : 4073316-&gt;3 : 4073468-&gt;5 - 4073540-&gt;-6 : 4073604-&gt;-7 : 4073316-&gt;3 : 4073468-&gt;5
+  shortest path from node5 to node5 is: 4073540-&gt;-6 : 4073316-&gt;3 : 4073468-&gt;5
+  shortest paths for node5 less than 4 are: 
+  reachable nodes from node5 are: 4072860-&gt;node3 - 4072988-&gt;node4
+  nodes which can reach node5 are: 4072772-&gt;node2 - 4072860-&gt;node3 - 4072988-&gt;node4 - 4079404-&gt;node1
+  topographical sort: 4079404-&gt;node1 - 4072772-&gt;node2 - 4072988-&gt;node4 - 4072860-&gt;node3 - 4073092-&gt;node5
+  DAG sort: 4079404-&gt;node1 - 4072772-&gt;node2 - 4072988-&gt;node4 - 4072860-&gt;node3 - 4073092-&gt;node5
+dumping to file
+restoring from file
+after restore from file:
+== Graph ====================
+nodes:
+4073772-&gt;node1 inputs:  outputs: 4089004-&gt;1 : 4089268-&gt;4
+4088500-&gt;node2 inputs: 4089004-&gt;1 outputs: 4089100-&gt;2
+4088612-&gt;node3 inputs: 4089164-&gt;3 : 4089268-&gt;4 outputs: 4089372-&gt;5
+4088820-&gt;node4 inputs: 4089100-&gt;2 : 4089476-&gt;-6 : 4089596-&gt;-7 outputs: 4089164-&gt;3 : 4089596-&gt;-7
+4088932-&gt;node5 inputs: 4089372-&gt;5 outputs: 4089476-&gt;-6
+arcs:
+4089004-&gt;1 from 4073772-&gt;node1 to 4088500-&gt;node2
+4089100-&gt;2 from 4088500-&gt;node2 to 4088820-&gt;node4
+4089164-&gt;3 from 4088820-&gt;node4 to 4088612-&gt;node3
+4089268-&gt;4 from 4073772-&gt;node1 to 4088612-&gt;node3
+4089372-&gt;5 from 4088612-&gt;node3 to 4088932-&gt;node5
+4089476-&gt;-6 from 4088932-&gt;node5 to 4088820-&gt;node4
+4089596-&gt;-7 from 4088820-&gt;node4 to 4088820-&gt;node4
+== Nodes ====================
+4073772-&gt;node1 - 4088500-&gt;node2 - 4088612-&gt;node3 - 4088820-&gt;node4 - 4088932-&gt;node5
+== Arcs =====================
+4089004-&gt;1 : 4089100-&gt;2 : 4089164-&gt;3 : 4089268-&gt;4 : 4089372-&gt;5 : 4089476-&gt;-6 : 4089596-&gt;-7
+== Tests ====================
+=============================
+  node1 is NOT adjacent to node1
+  node1 does NOT have a path to node1
+  node1 is adjacent to node2
+  node1 has a path to node2
+  paths from node1 to node2 are: 4089004-&gt;1
+  shortest path from node1 to node2 is: 4089004-&gt;1
+  node1 is adjacent to node3
+  node1 has a path to node3
+  paths from node1 to node3 are: 4089004-&gt;1 : 4089100-&gt;2 : 4089164-&gt;3 - 4089004-&gt;1 : 4089100-&gt;2 : 4089596-&gt;-7 : 4089164-&gt;3 - 4089268-&gt;4
+  shortest path from node1 to node3 is: 4089268-&gt;4
+  node1 is NOT adjacent to node4
+  node1 has a path to node4
+  paths from node1 to node4 are: 4089004-&gt;1 : 4089100-&gt;2 - 4089268-&gt;4 : 4089372-&gt;5 : 4089476-&gt;-6
+  shortest path from node1 to node4 is: 4089004-&gt;1 : 4089100-&gt;2
+  node1 is NOT adjacent to node5
+  node1 has a path to node5
+  paths from node1 to node5 are: 4089004-&gt;1 : 4089100-&gt;2 : 4089164-&gt;3 : 4089372-&gt;5 - 4089004-&gt;1 : 4089100-&gt;2 : 4089596-&gt;-7 : 4089164-&gt;3 : 4089372-&gt;5 - 4089268-&gt;4 : 4089372-&gt;5
+  shortest path from node1 to node5 is: 4089268-&gt;4 : 4089372-&gt;5
+  shortest paths for node1 less than 4 are: 4089004-&gt;1 - 4089004-&gt;1 : 4089100-&gt;2 : 4089164-&gt;3 - 4089004-&gt;1 : 4089100-&gt;2
+  reachable nodes from node1 are: 4088500-&gt;node2 - 4088612-&gt;node3 - 4088820-&gt;node4 - 4088932-&gt;node5
+  nodes which can reach node1 are: 
+  node2 is NOT adjacent to node1
+  node2 does NOT have a path to node1
+  node2 is NOT adjacent to node2
+  node2 does NOT have a path to node2
+  node2 is NOT adjacent to node3
+  node2 has a path to node3
+  paths from node2 to node3 are: 4089100-&gt;2 : 4089164-&gt;3 - 4089100-&gt;2 : 4089596-&gt;-7 : 4089164-&gt;3
+  shortest path from node2 to node3 is: 4089100-&gt;2 : 4089164-&gt;3
+  node2 is adjacent to node4
+  node2 has a path to node4
+  paths from node2 to node4 are: 4089100-&gt;2
+  shortest path from node2 to node4 is: 4089100-&gt;2
+  node2 is NOT adjacent to node5
+  node2 has a path to node5
+  paths from node2 to node5 are: 4089100-&gt;2 : 4089164-&gt;3 : 4089372-&gt;5 - 4089100-&gt;2 : 4089596-&gt;-7 : 4089164-&gt;3 : 4089372-&gt;5
+  shortest path from node2 to node5 is: 4089100-&gt;2 : 4089164-&gt;3 : 4089372-&gt;5
+  shortest paths for node2 less than 4 are: 4089100-&gt;2 : 4089164-&gt;3 - 4089100-&gt;2
+  reachable nodes from node2 are: 4088612-&gt;node3 - 4088820-&gt;node4 - 4088932-&gt;node5
+  nodes which can reach node2 are: 4073772-&gt;node1
+  node3 is NOT adjacent to node1
+  node3 does NOT have a path to node1
+  node3 is NOT adjacent to node2
+  node3 does NOT have a path to node2
+  node3 is NOT adjacent to node3
+  node3 has a path to node3
+  paths from node3 to node3 are: 4089372-&gt;5 : 4089476-&gt;-6 : 4089164-&gt;3 - 4089372-&gt;5 : 4089476-&gt;-6 : 4089596-&gt;-7 : 4089164-&gt;3
+  shortest path from node3 to node3 is: 4089372-&gt;5 : 4089476-&gt;-6 : 4089164-&gt;3
+  node3 is NOT adjacent to node4
+  node3 has a path to node4
+  paths from node3 to node4 are: 4089372-&gt;5 : 4089476-&gt;-6
+  shortest path from node3 to node4 is: 4089372-&gt;5 : 4089476-&gt;-6
+  node3 is adjacent to node5
+  node3 has a path to node5
+  paths from node3 to node5 are: 4089372-&gt;5
+  shortest path from node3 to node5 is: 4089372-&gt;5
+  shortest paths for node3 less than 4 are: 
+  reachable nodes from node3 are: 4088820-&gt;node4 - 4088932-&gt;node5
+  nodes which can reach node3 are: 4073772-&gt;node1 - 4088500-&gt;node2 - 4088820-&gt;node4 - 4088932-&gt;node5
+  node4 is NOT adjacent to node1
+  node4 does NOT have a path to node1
+  node4 is NOT adjacent to node2
+  node4 does NOT have a path to node2
+  node4 is adjacent to node3
+  node4 has a path to node3
+  paths from node4 to node3 are: 4089164-&gt;3 - 4089596-&gt;-7 : 4089164-&gt;3
+  shortest path from node4 to node3 is: 4089164-&gt;3
+  node4 is adjacent to node4
+  node4 has a path to node4
+  paths from node4 to node4 are: 4089164-&gt;3 : 4089372-&gt;5 : 4089476-&gt;-6 - 4089596-&gt;-7
+  shortest path from node4 to node4 is: 4089596-&gt;-7
+  node4 is NOT adjacent to node5
+  node4 has a path to node5
+  paths from node4 to node5 are: 4089164-&gt;3 : 4089372-&gt;5 - 4089596-&gt;-7 : 4089164-&gt;3 : 4089372-&gt;5
+  shortest path from node4 to node5 is: 4089164-&gt;3 : 4089372-&gt;5
+  shortest paths for node4 less than 4 are: 4089164-&gt;3
+  reachable nodes from node4 are: 4088612-&gt;node3 - 4088932-&gt;node5
+  nodes which can reach node4 are: 4073772-&gt;node1 - 4088500-&gt;node2 - 4088612-&gt;node3 - 4088932-&gt;node5
+  node5 is NOT adjacent to node1
+  node5 does NOT have a path to node1
+  node5 is NOT adjacent to node2
+  node5 does NOT have a path to node2
+  node5 is NOT adjacent to node3
+  node5 has a path to node3
+  paths from node5 to node3 are: 4089476-&gt;-6 : 4089164-&gt;3 - 4089476-&gt;-6 : 4089596-&gt;-7 : 4089164-&gt;3
+  shortest path from node5 to node3 is: 4089476-&gt;-6 : 4089164-&gt;3
+  node5 is adjacent to node4
+  node5 has a path to node4
+  paths from node5 to node4 are: 4089476-&gt;-6
+  shortest path from node5 to node4 is: 4089476-&gt;-6
+  node5 is NOT adjacent to node5
+  node5 has a path to node5
+  paths from node5 to node5 are: 4089476-&gt;-6 : 4089164-&gt;3 : 4089372-&gt;5 - 4089476-&gt;-6 : 4089596-&gt;-7 : 4089164-&gt;3 : 4089372-&gt;5
+  shortest path from node5 to node5 is: 4089476-&gt;-6 : 4089164-&gt;3 : 4089372-&gt;5
+  shortest paths for node5 less than 4 are: 
+  reachable nodes from node5 are: 4088612-&gt;node3 - 4088820-&gt;node4
+  nodes which can reach node5 are: 4073772-&gt;node1 - 4088500-&gt;node2 - 4088612-&gt;node3 - 4088820-&gt;node4
+  topographical sort: 4073772-&gt;node1 - 4088500-&gt;node2 - 4088820-&gt;node4 - 4088612-&gt;node3 - 4088932-&gt;node5
+  DAG sort: 4073772-&gt;node1 - 4088500-&gt;node2 - 4088820-&gt;node4 - 4088612-&gt;node3 - 4088932-&gt;node5
+... test PASSED
 </pre>
 
 
