@@ -26,7 +26,7 @@ namespace stlplus
 
   int vdprintf(std::string& formatted, const char* format, va_list args)
   {
-#if defined(_WIN32) || defined(_WIN32_WCE)
+#ifdef MSWINDOWS
     int length = 0;
     char* buffer = 0;
     for(int buffer_length = 256; ; buffer_length*=2)
