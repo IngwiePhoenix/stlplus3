@@ -47,7 +47,6 @@ C++ Library Collection
 <li><a href="#terminology">Terminology</a></li>
 <li><a href="#classifying">Classifying Functions</a></li>
 <li><a href="#files">File Functions</a></li>
-<li><a href="#access">File Access Mode Functions</a></li>
 <li><a href="#timestamps">File Timestamp Functions</a></li>
 <li><a href="#filespec">File Specification Functions</a></li>
 <li><a href="#folders">Folder Functions</a></li>
@@ -231,80 +230,6 @@ bool stlplus::file_move(const std::string&amp; old_filespec, const std::string&a
 followed by stlplus::file_delete of the old file. If the copy succeeds but the delete
 fails, it deletes the new file to restore the original state. Returns true if
 the old file has gone and the new one is there.</p>
-
-
-<h2 id="access">File Access Mode Functions</h2>
-
-<pre class="cpp">
-// basic modes
-const int stlplus::read__mode;
-const int stlplus::write_mode;
-const int stlplus::execute_mode;
-// combined modes
-const int stlplus::none_mode;
-const int stlplus::read_write_mode;
-const int stlplus::all_mode;
-// basic users
-const int stlplus::owner_mask;
-const int stlplus::group_mask;
-const int stlplus::other_mask;
-// combined users
-const int stlplus::non_owner_mask;
-const int stlplus::all_mask;
-// common settings
-const int stlplus::read_mode_all;
-const int stlplus::read_write_mode_owner_read_mode_all;
-const int stlplus::read_mode_owner_only;
-const int stlplus::read_write_mode_owner_only;
-// the function itself
-bool stlplus::file_set_mode (const std::string&amp; filespec, int mode)
-</pre>
-
-<p>The function stlplus::file_set_mode() changes the access permissions on the file.
-Returns true if the file exists and the mode was changed. Returns false if the
-file did not exist or if the mode change failed.</p>
-
-<p>This is equivalent to chmod() on Unix, but I've insulated the user from
-the low-level routine because of differences in the OSs' interpretation of the
-mode parameter.</p>
-
-<p>This function is really only used for read-only versus read-write control.
-I've defined a new set of constants to control this, to hide potentially
-platform specific features. The idea is to combine the constants as bit-masks
-so as to build up a set of permissions. The modes are ORed together to build
-up a set of permissions and then ANDed with a mask to control which people
-have that permission. Permissions can be ORed together too. So, for example,
-to give the owner read-write access and all others only read access, you would
-use the expression:</p>
-
-<pre class="cpp">
-((read_mode | write_mode) & owner_mask) | (read_mode & (group_mask | other_mask))
-</pre>
-
-<p>This can be simplified by using combined modes and combined masks to:</p>
-
-<pre class="cpp">
-(read_write_mode & owner_mask) | (read_mode & non_owner_mask)
-</pre>
-
-<p>Windows implements a subset of the Unix functionality, so when using this
-function you need to think Unix and not Windows. That way, both versions will
-work correctly. The most common arrangement is for the owner to have
-read-write access and all others to have read-only access. This is captured by
-the constant read_write_mode_owner_read_mode_all. Sorry for the length of the
-name! Another common requirement is to lock out all other users but the owner
-- this is captured by read_write_mode_owner_only. Other combinations that
-occur occasionally is to make a file read-only either for everyone
-(read_mode_all) or for just the owner (read_mode_owner_only).</p>
-
-<p>On Windows, these simplify to either read-only mode or read-write mode.</p>
-
-<p>Windows does have more subtle access control than this, but that
-functionality is buried in the concept of access control lists, which are
-deeply buried in the operating system, very difficult to use and abysmally
-documented. Unless you are writing low-level system tools, there is no need to
-go there. If you are writing low-level system tools, then they will be
-platform-specific and so this package will be of no use to you anyway.</p>
 
 
 <h2 id="timestamps">File Timestamp Functions</h2>
