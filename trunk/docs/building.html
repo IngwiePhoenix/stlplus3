@@ -86,20 +86,19 @@ dependencies:</p>
 </thead>
 <tbody>
 <tr><td>containers</td><td></td></tr>
-<tr><td>persistence</td><td><i>containers</i></td></tr>
+<tr><td>persistence</td><td><i>containers</i>, <i>portability</i></td></tr>
 <tr><td>portability</td><td></td></tr>
-<tr><td>subsystems</td><td>containers, portability</td></tr>
-<tr><td>strings</td><td><i>containers</i>, portability</td></tr>
+<tr><td>subsystems</td><td><b>containers</b>, <b>portability</b></td></tr>
+<tr><td>strings</td><td><i>containers</i>, <i>portability</i></td></tr>
 </tbody>
 </table>
 
 <p>The <i>Italicised</i> dependencies are optional, or <i>soft</i> dependencies. They are on by
 default, but can be switched off if the required library is not installed. For example, if you want
 to use the persistence library as a stand-alone library for making C++ types persistent but are not
-interested in the containers library, then that can be done. How to do this is explained in
-the section on <a href="building.html">building the collection</a>.</p>
+interested in the containers library, then that can be done.</p>
 
-<p>The other dependencies that are not italicised are <i>hard</i> dependencies. If a library has a
+<p>The other dependencies that are in bold are <b>hard</b> dependencies. If a library has a
 hard dependency, then you cannot use it stand-alone - you must incorporate both the library and all
 of its hard dependencies into your project.</p>
 
@@ -109,12 +108,18 @@ using the following compiler directive:</p>
 <dl>
 
 <dt>-D NO_STLPLUS_CONTAINERS</dt>
-<dd>Builds the library without the dependency on the containers library. All features
-provided by the containers library will be disabled.</dd>
+
+<dd>Builds the library without the dependency on the containers library. All features provided by
+the containers library will be disabled.</dd>
+
+<dt>-D NO_STLPLUS_INF</dt>
+
+<dd>Builds the library without the dependency on the portability/inf type which in turn removes the
+dependency on the portability library. All features provided by the inf type will be disabled.</dd>
 
 </dl>
 
-<p>This compiler directives must be used to build the library - for example, to make the
+<p>These compiler directives must be used to build the library - for example, to make the
 portability library stand-alone, build it with these compiler directives. The same directives must
 be used to build any file in your program that includes headers from the portability library. The
 simplest way to do this is to enable the directives for the whole project.</p>

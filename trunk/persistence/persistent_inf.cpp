@@ -1,4 +1,3 @@
-#ifndef NO_STLPLUS_ARITHMETIC
 ////////////////////////////////////////////////////////////////////////////////
 
 //   Author:    Andy Rushton
@@ -6,9 +5,14 @@
 //   License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////
+
+// can be excluded to break the dependency on the portability library
+#ifndef NO_STLPLUS_INF
+
 #include "persistent_int.hpp"
 #include "persistent_string.hpp"
 #include "persistent_inf.hpp"
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void stlplus::dump_inf(stlplus::dump_context& context, const stlplus::inf& data)

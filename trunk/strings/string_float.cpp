@@ -6,12 +6,48 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "string_float.hpp"
-#include "dprintf.hpp"
-#include <ctype.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <stdarg.h>
 
 namespace stlplus
 {
+
+  // added as a local copy to break the dependency on the portability library
+  static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
+  {
+    std::string formatted;
+    va_list args;
+    va_start(args, format);
+#if defined(_WIN32) || defined(_WIN32_WCE)
+    int length = 0;
+    char* buffer = 0;
+    for(int buffer_length = 256; ; buffer_length*=2)
+    {
+      buffer = (char*)malloc(buffer_length);
+      if (!buffer) throw std::invalid_argument("string_float");
+      length = _vsnprintf(buffer, buffer_length-1, format, args);
+      if (length >= 0)
+      {
+        buffer[length] = 0;
+        formatted += std::string(buffer);
+        free(buffer);
+        break;
+      }
+      free(buffer);
+    }
+#else
+    char* buffer = 0;
+    int length = vasprintf(&buffer, format, args);
+    if (!buffer) throw std::invalid_argument("string_float");
+    if (length >= 0)
+      formatted += std::string(buffer);
+    free(buffer);
+#endif
+    va_end(args);
+    if (length < 0) throw std::invalid_argument("string_float");
+    return formatted;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////
   // floating-point types
@@ -34,7 +70,7 @@ namespace stlplus
     default:
       throw std::invalid_argument("invalid radix display value");
     }
-    return dformat(format, width, precision, f);
+    return local_dformat(format, width, precision, f);
   }
 
   std::string double_to_string(double f, real_display_t display, unsigned width, unsigned precision)
@@ -55,7 +91,7 @@ namespace stlplus
     default:
       throw std::invalid_argument("invalid radix display value");
     }
-    return dformat(format, width, precision, f);
+    return local_dformat(format, width, precision, f);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

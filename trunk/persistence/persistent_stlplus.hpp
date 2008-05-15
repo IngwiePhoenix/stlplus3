@@ -10,6 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// can be excluded to break the dependency on the containers library
 #ifndef NO_STLPLUS_CONTAINERS
 #include "persistent_smart_ptr.hpp"
 #include "persistent_triple.hpp"
@@ -20,7 +21,10 @@
 #include "persistent_ntree.hpp"
 #endif
 
+// can be excluded to break the dependency on the portability library
+#ifndef NO_STLPLUS_INF
 #include "persistent_inf.hpp"
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif

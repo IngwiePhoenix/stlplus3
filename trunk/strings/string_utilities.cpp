@@ -7,11 +7,48 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "string_utilities.hpp"
 #include "string_basic.hpp"
-#include "dprintf.hpp"
+#include <stdlib.h>
 #include <ctype.h>
+#include <stdarg.h>
 
 namespace stlplus
 {
+
+  // added as a local copy to break the dependency on the portability library
+  static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
+  {
+    std::string formatted;
+    va_list args;
+    va_start(args, format);
+#if defined(_WIN32) || defined(_WIN32_WCE)
+    int length = 0;
+    char* buffer = 0;
+    for(int buffer_length = 256; ; buffer_length*=2)
+    {
+      buffer = (char*)malloc(buffer_length);
+      if (!buffer) throw std::invalid_argument("string_utilities");
+      length = _vsnprintf(buffer, buffer_length-1, format, args);
+      if (length >= 0)
+      {
+        buffer[length] = 0;
+        formatted += std::string(buffer);
+        free(buffer);
+        break;
+      }
+      free(buffer);
+    }
+#else
+    char* buffer = 0;
+    int length = vasprintf(&buffer, format, args);
+    if (!buffer) throw std::invalid_argument("string_utilities");
+    if (length >= 0)
+      formatted += std::string(buffer);
+    free(buffer);
+#endif
+    va_end(args);
+    if (length < 0) throw std::invalid_argument("string_utilities");
+    return formatted;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -336,21 +373,21 @@ namespace stlplus
     static const long MB = kB * kB;
     static const long GB = MB * kB;
     if (bytes < kB)
-      result += dformat("%i", bytes);
+      result += local_dformat("%i", bytes);
     else if (bytes < (10l * kB))
-      result += dformat("%.2fk", ((float)bytes / (float)kB));
+      result += local_dformat("%.2fk", ((float)bytes / (float)kB));
     else if (bytes < (100l * kB))
-      result += dformat("%.1fk", ((float)bytes / (float)kB));
+      result += local_dformat("%.1fk", ((float)bytes / (float)kB));
     else if (bytes < MB)
-      result += dformat("%.0fk", ((float)bytes / (float)kB));
+      result += local_dformat("%.0fk", ((float)bytes / (float)kB));
     else if (bytes < (10l * MB))
-      result += dformat("%.2fM", ((float)bytes / (float)MB));
+      result += local_dformat("%.2fM", ((float)bytes / (float)MB));
     else if (bytes < (100l * MB))
-      result += dformat("%.1fM", ((float)bytes / (float)MB));
+      result += local_dformat("%.1fM", ((float)bytes / (float)MB));
     else if (bytes < GB)
-      result += dformat("%.0fM", ((float)bytes / (float)MB));
+      result += local_dformat("%.0fM", ((float)bytes / (float)MB));
     else
-      result += dformat("%.2fG", ((float)bytes / (float)GB));
+      result += local_dformat("%.2fG", ((float)bytes / (float)GB));
     return result;
   }
 

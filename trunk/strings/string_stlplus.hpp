@@ -10,6 +10,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// can be excluded to break the dependency on the containers library
 #ifndef NO_STLPLUS_CONTAINERS
 #include "string_triple.hpp"
 #include "string_foursome.hpp"
@@ -20,6 +21,9 @@
 #include "string_ntree.hpp"
 #endif
 
+// can be excluded to break the dependency on the portability library
+#ifndef NO_STLPLUS_INF
 #include "string_inf.hpp"
+#endif
 
 #endif

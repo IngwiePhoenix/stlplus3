@@ -1,4 +1,3 @@
-#ifndef NO_STLPLUS_ARITHMETIC
 ////////////////////////////////////////////////////////////////////////////////
 
 //   Author:    Andy Rushton
@@ -8,8 +7,13 @@
 //   String conversion functions for the infinite precision integer type inf
 
 ////////////////////////////////////////////////////////////////////////////////
+
+// can be excluded from the build to break the dependency on the portability library
+#ifndef NO_STLPLUS_INF
+
 #include "string_inf.hpp"
 #include "string_basic.hpp"
+
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
