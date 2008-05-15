@@ -41,7 +41,8 @@ C++ Library Collection
 <div id="documentNavigation">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#v3.0">Changes from Version 3.0 to 3.1</a></li>
+<li><a href="#v3.2">Changes from Version 3.1 to 3.2</a></li>
+<li><a href="#v3.1">Changes from Version 3.0 to 3.1</a></li>
 <li><a href="#v2">Changes from Version 2 to 3.0</a></li>
 </ul>
 </div>
@@ -52,20 +53,25 @@ C++ Library Collection
 However, the change log has been restarted for version 3 of the library since the changes
 for this version are huge. Therefore only the changes since then have been documented.</p>
 
-<p>The official open-source version of STLplus starts at version 2.0 and you can access the
-change log for all version 2 releases by looking at the version 2 documentation.</p>
+<p>The official open-source version of STLplus starts at version 2.0 and you can access the change
+log for all version 2 releases by looking at the 
+<a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
 
-<p>Only the numbered versions from 2.0 upwards are available as downloads. The very latest
-version is only available through CVS and is subject to change. Pre-version 2.0 are not
-available from SourceForge.</p>
+<h2 id="v3.2">Changes from Version 3.1 to 3.2</h2>
 
-<p><b>Note:</b> STLplus version 3 is <b>not</b> backwards-compatible with STLplus version 2. You should only make
-the changeover if you are prepared to do some porting work or if you are starting a new project.</p>
+<h3>Use ANSI-Specific Functions on Windows</h3>
 
-<p><b>Use at Your Own Risk:</b> STLplus version 3.0 is classified as an <b>alpha</b> release. Although
-it is based on STLplus, which was a stable release, there is enough reworking for all sorts of
-errors to have crept in. Furthermore, I have not yet ported any significant applications to version
-3, so only small test programs have been written so far.</p>
+<p>The STLplus library does not support Unicode (for good reasons - the wide string class is too
+weakly defined to have a common cross-platform interpretation). However, it should be usable in
+a system that does. I have modified the Windows system calls to always call the 'A' variants and use
+narrow strings even when compiled with the UNICODE macro enabled.</p>
+
+<h3>File Mode Function Removed</h3>
+
+<p>The function file_set_mode has been removed because it is non-portable and there's no way to make
+it portable. For the time being, use the platform specific functions for this. In the future I may
+re-introduce a limited functionality interface to the file modes once I can work out the common
+subset.</p>
 
 <h2 id="v3.1">Changes from Version 3.0 to 3.1</h2>
 
