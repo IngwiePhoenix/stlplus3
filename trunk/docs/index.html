@@ -33,8 +33,6 @@
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#general">General Documents</a></li>
-<li><a href="#concepts">Concepts</a></li>
-<li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#containers">Containers Library</a></li>
 <li><a href="#persistence">Persistence Library</a></li>
 <li><a href="#portability">Portability Library</a></li>
@@ -49,6 +47,10 @@ is intended for developers already familiar with the STL. It contains abstract d
 the STL, reusable subsystems, data persistence and portability components. The collection is
 general-purpose and portable between Windows and many different Unix platforms including MacOS X.</p>
 
+<p>One of my aims when writing STLplus was that it <b>must</b> be stand-alone. That means you do not have
+to install any other libraries or products to make it work, except of course the C++ compiler of
+choice.</p>
+
 <p>STLplus contains 5 libraries, most of which can be used independently of the other
 libraries in the collection. For details of dependencies between libraries and how to use
 libraries stand-alone, see the <a href="building.html">Building Guidelines</a>.</p>
@@ -56,10 +58,10 @@ libraries stand-alone, see the <a href="building.html">Building Guidelines</a>.<
 <p><b>Note:</b> STLplus version 3 is <b>not</b> backwards-compatible with STLplus version 2. You should only make
 the changeover if you are prepared to do some porting work or if you are starting a new project.</p>
 
-<p><b>Use at Your Own Risk:</b> STLplus version 3 is currently classified as an <b>alpha</b>
-release. Although it is based on STLplus version 2, which was a stable release, there is enough
-reworking for all sorts of errors to have crept in. Furthermore, I have not yet ported any
-significant applications to version 3, so only small test programs have been written so far.</p>
+<p>STLplus version 3 is currently classified as a <b>beta</b> release. Although it is based on
+STLplus version 2, which was a stable release, there is enough reworking for all sorts of errors to
+have crept in. Furthermore, I have only ported a couple of small applications to version 3, although
+the small number of bug reports suggests that the rework has been mostly bug-free.</p>
 
 <h2 id="general">General Documents</h2>
 
@@ -73,51 +75,11 @@ the versions available and the license terms under which you can use the collect
 <li><a href="versions.html">Version Numbers</a></li>
 <li><a href="changes.html">Change Log</a></li>
 <li><a href="license.html">License</a></li>
-</ul>
-
-<h2 id="concepts">Concepts</h2>
-
-<p>These documents some of the principles that have been used in building the STLplus librray
-collection for those that are interested.</p>
-
-<ul>
 <li><a href="exceptions.html">Exceptions Policy</a></li>
 <li><a href="interfaces.html">Interfaces</a></li>
 <li><a href="safe_iterator.html">Safe Iterators</a></li>
 <li><a href="guidelines.html">Coding Guidelines</a></li>
 </ul>
-
-<h2 id="dependencies">Dependencies</h2>
-
-<p>As far as is reasonable, the STLplus libraries have been designed to be used separately.
-However, some of the libraries use the STLplus containers and portability libraries to
-make them easier to code and to make them portable too. Also, two of the libraries
-(persistence and strings) provide additional functionality for some of the other
-components and therefore are dependent on them. The following table lists the
-dependencies:</p>
-
-<table cellspacing="0">
-<caption>Dependencies between STLplus libraries</caption>
-<thead>
-<tr><th scope="col">Library</th><th scope="col">Required</th></tr>
-</thead>
-<tbody>
-<tr><td>containers</td><td></td></tr>
-<tr><td>persistence</td><td><i>containers</i></td></tr>
-<tr><td>portability</td><td></td></tr>
-<tr><td>subsystems</td><td>containers, portability</td></tr>
-<tr><td>strings</td><td><i>containers</i>, portability</td></tr>
-</tbody>
-</table>
-
-<p>The <i>Italicised</i> dependencies are optional. They are on by default, but can be switched off
-if the required library is not installed. For example, if you want to use the persistence library as
-a stand-alone library for making C++ types persistent but are not interested in the STLplus
-containers library, then that can be done. How to do this is explained in the section on <a
-href="building.html">building the collection</a>.</p>
-
-<p>The other dependencies that are not italicised are hard dependencies - you must have the
-required libraries installed.</p>
 
 <h2 id="containers">Containers Library</h2>
 
