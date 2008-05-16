@@ -60,7 +60,7 @@ namespace stlplus
 
 std::string build(void)
 {
-  return std::string("STLplus version ") + version() + ", " + PLATFORM + ", " + COMPILER + ", " + VARIANT;
+  return std::string("STLplus v") + version() + ", " + PLATFORM + ", " + COMPILER + ", " + VARIANT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
