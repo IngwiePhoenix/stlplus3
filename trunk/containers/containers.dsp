@@ -131,10 +131,6 @@ SOURCE=.\triple.hpp
 # Begin Group "Source Files"
 
 # PROP Default_Filter "c;cpp;cxx"
-# Begin Source File
-
-SOURCE=.\exceptions.cpp
-# End Source File
 # End Group
 # Begin Group "Template Implementations"
 
