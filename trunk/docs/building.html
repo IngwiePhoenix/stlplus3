@@ -72,17 +72,16 @@ a bit more work.</p>
 
 <h2 id="dependencies">Dependencies</h2>
 
-<p>As far as is reasonable, the STLplus libraries have been designed to be used separately.
-However, some of the libraries use the STLplus containers and portability libraries to
-make them easier to code and to make them portable too. Also, two of the libraries
-(persistence and strings) provide additional functionality for the containers library
-and therefore depends on it. The following table lists the
-dependencies:</p>
+<p>As far as is reasonable, the STLplus libraries have been designed to be used separately. However,
+some of the libraries use the STLplus containers and portability libraries to make them easier to
+code and to make them portable too. Also, two of the libraries (persistence and strings) provide
+additional functionality for the containers and portability libraries and therefore depend on them. 
+The following table lists the dependencies:</p>
 
 <table cellspacing="0">
 <caption>Dependencies between STLplus libraries</caption>
 <thead>
-<tr><th scope="col">Library</th><th scope="col">Required</th></tr>
+<tr><th scope="col">Library</th><th scope="col">Depends on</th></tr>
 </thead>
 <tbody>
 <tr><td>containers</td><td></td></tr>
@@ -93,14 +92,14 @@ dependencies:</p>
 </tbody>
 </table>
 
-<p>The <i>Italicised</i> dependencies are optional, or <i>soft</i> dependencies. They are on by
+<p>The <b>bold</b> dependencies are required, or <b>hard</b> dependencies. If a library has a hard
+dependency, then you cannot use it stand-alone - you must incorporate both the library and all of
+its hard dependencies into your project.</p>
+
+<p>The <i>italicised</i> dependencies are optional, or <i>soft</i> dependencies. They are on by
 default, but can be switched off if the required library is not installed. For example, if you want
 to use the persistence library as a stand-alone library for making C++ types persistent but are not
 interested in the containers library, then that can be done.</p>
-
-<p>The other dependencies that are in bold are <b>hard</b> dependencies. If a library has a
-hard dependency, then you cannot use it stand-alone - you must incorporate both the library and all
-of its hard dependencies into your project.</p>
 
 <p>The key to building a library without the soft dependency on the containers library is to build
 using the following compiler directive:</p>
@@ -121,9 +120,8 @@ dependency on the portability library. All features provided by the inf type wil
 
 <p>These compiler directives must be used to build the library - for example, to make the
 portability library stand-alone, build it with these compiler directives. The same directives must
-be used to build any file in your program that includes headers from the portability library. The
+also be used to build any file in your program that includes headers from the library. The
 simplest way to do this is to enable the directives for the whole project.</p>
-
 
 <h2 id="makefiles">Gnu Gcc Using My Makefiles</h2>
 
@@ -578,6 +576,88 @@ compiler of choice.</p>
 <i>release</i> mode, you should link with <i>release</i> builds of the libraries. This is because
 both the application and STLplus itself include the STLplus headers and there can be subtle
 differences in implementation between release and debug builds.</p>
+
+<h3>Platform Directives</h3>
+
+<p>As stated above, different platforms are identified by the -D directive so that differences
+between operating systems can be handled. The following table shows the different platform values
+currently used and which ones are actually used to make a difference.</p>
+
+<table border="1" cellpadding="1" align="center" rules="cols,groups" frame="border">
+<caption>Platform Directives</caption>
+
+<thead valign="top">
+
+<tr>
+<th>Directive</th>
+<th>Used</th>
+<th>Comment</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td align="center">_WIN32</td>
+<td align="center">yes</td>
+<td align="left">All native Windows builds using Visual Studio and MinGW</td>
+</tr>
+
+<tr>
+<td align="center">CYGWIN</td>
+<td align="center">yes</td>
+<td align="left">Near-Posix-compliant Unix-emulation build on Windows using Cygwin version of gcc compiler</td>
+</tr>
+
+<tr>
+<td align="center">MINGW</td>
+<td align="center">no</td>
+<td align="left">Native Windows build using MinGW version of gcc compiler</td>
+</tr>
+
+<tr>
+<td align="center">LINUX</td>
+<td align="center">no</td>
+<td align="left">Posix-compliant Unix build on Gnu/Linux with gcc</td>
+</tr>
+
+<tr>
+<td align="center">SOLARIS</td>
+<td align="center">yes</td>
+<td align="left">Near-Posix-compliant Unix build on Solaris with gcc</td>
+</tr>
+
+<tr>
+<td align="center">FREEBSD</td>
+<td align="center">no</td>
+<td align="left">Posix-compliant Unix build on FreeBSD using gcc</td>
+</tr>
+
+<tr>
+<td align="center">OPENBSD</td>
+<td align="center">no</td>
+<td align="left">Posix-compliant Unix build on OpenBSD using gcc</td>
+</tr>
+
+<tr>
+<td align="center">NETBSD</td>
+<td align="center">no</td>
+<td align="left">Posix-compliant Unix build on NetBSD using gcc</td>
+</tr>
+
+<tr>
+<td align="center">MACOS</td>
+<td align="center">no</td>
+<td align="left">Posix-compliant Unix build on MacOS-X (Darwin) using gcc</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<p>Where it says "yes" in the Used column, the directive must be provided to build correctly. Where
+it says "no", there is no need to provide the directive and you will get a Posix-compliant build.</p>
 
 <h3>Using The Libraries</h3>
 
