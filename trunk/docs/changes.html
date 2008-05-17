@@ -59,19 +59,31 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.2">Changes from Version 3.1 to 3.2</h2>
 
+<h3>Softened dependencies on the portability library</h3>
+
+<p>I have modified the persistence and strings libraries so that the dependency on the portability
+is soft not hard. This means that both libraries can be compiled without the portability library if
+you don't want persistence or printing support for the portability/inf type.</p>
+
+<h3>Made the Containers Library an 'Include-only' Library</h3>
+
+<p>The containers library had only one component that needed compiling - the rest of the library is
+template code that gets included in your code. I have inlined the one component (the exception
+classes) so that the library is entirely headers and does not need compiling.</p>
+
 <h3>Use ANSI-Specific Functions on Windows</h3>
 
 <p>The STLplus library does not support Unicode (for good reasons - the wide string class is too
 weakly defined to have a common cross-platform interpretation). However, it should be usable in
-a system that does. I have modified the Windows system calls to always call the 'A' variants and use
+a system that does. I have modified the Windows system calls to always call the ANSI variants and use
 narrow strings even when compiled with the UNICODE macro enabled.</p>
 
 <h3>File Mode Function Removed</h3>
 
 <p>The function file_set_mode has been removed because it is non-portable and there's no way to make
-it portable. For the time being, use the platform specific functions for this. In the future I may
-re-introduce a limited functionality interface to the file modes once I can work out the common
-subset.</p>
+it portable. It was legacy code from a Unix-only project and was never used on Windows. For the time
+being, use the platform specific functions for this. In the future I may re-introduce a limited
+functionality interface to the file modes once I can work out the common subset.</p>
 
 <h2 id="v3.1">Changes from Version 3.0 to 3.1</h2>
 
