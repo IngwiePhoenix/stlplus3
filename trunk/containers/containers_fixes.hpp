@@ -15,7 +15,7 @@
 // Unnecessary compiler warnings
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 // Microsoft Visual Studio
 // shut up the following irritating warnings
 //   4275 - VC6, exported class was derived from a class that was not exported
@@ -31,7 +31,7 @@
 #pragma warning(disable: 4275 4786 4305 4503 4309 4290 4800 4355 4675 4996)
 #endif
 
-#if defined(__BORLANDC__)
+#ifdef __BORLANDC__
 // Borland
 // Shut up the following irritating warnings
 //   8008 - Condition is always true.
@@ -94,7 +94,7 @@
 // default values, overridden for individual problem cases below
 #define TYPENAME typename
 
-#if defined(__GNUC__)
+#ifdef __GNUC__
 // GCC 
 //   - pre-version 3 didn't handle typename in any of these cases
 //   - version 3 onwards, typename is required for all three cases as per default
@@ -105,7 +105,7 @@
 #endif
 #endif
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 // Visual Studio
 //   - version 6 (compiler v.12) cannot handle typename in any of these cases
 //   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all

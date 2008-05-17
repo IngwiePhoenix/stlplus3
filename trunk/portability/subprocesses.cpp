@@ -125,8 +125,9 @@ namespace stlplus
     {
       switch (arg[i])
       {
-#ifndef MSWINDOWS
         // set of characters requiring escapes
+#ifdef MSWINDOWS
+#else
       case '\\': case '\'': case '\"': case '`': case '(': case ')': 
       case '&': case '|': case '<': case '>': case '*': case '?': case '!':
         result += '\\';

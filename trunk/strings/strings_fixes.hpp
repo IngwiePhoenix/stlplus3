@@ -14,7 +14,7 @@
 // Unnecessary compiler warnings
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 // Microsoft Visual Studio
 // shut up the following irritating warnings
 //   4275 - VC6, exported class was derived from a class that was not exported
@@ -29,7 +29,7 @@
 #pragma warning(disable: 4275 4786 4305 4503 4309 4290 4800 4675 4996)
 #endif
 
-#if defined(__BORLANDC__)
+#ifdef __BORLANDC__
 // Borland
 // Shut up the following irritating warnings
 //   8008 - Condition is always true.

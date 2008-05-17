@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "portability_fixes.hpp"
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 #include "windows.h"
 #endif
 
@@ -15,7 +15,7 @@
 // problems with missing functions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 unsigned sleep(unsigned seconds)
 {
   Sleep(1000*seconds);

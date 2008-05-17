@@ -19,7 +19,7 @@ namespace stlplus
     std::string formatted;
     va_list args;
     va_start(args, format);
-#if defined(_WIN32) || defined(_WIN32_WCE)
+#ifdef MSWINDOWS
     int length = 0;
     char* buffer = 0;
     for(int buffer_length = 256; ; buffer_length*=2)

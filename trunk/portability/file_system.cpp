@@ -145,8 +145,8 @@ namespace stlplus
     m_path.clear();
     m_filename.erase();
     unsigned i = 0;
-#if defined(MSWINDOWS) || defined(CYGWIN)
-    // first split off the drive letter or UNC prefix on Windows - the Cygwin environment supports these too
+#ifdef MSWINDOWS
+    // first split off the drive letter or UNC prefix on Windows
     if (spec.size() >= 2 && isalpha(spec[0]) && spec[1] == ':')
     {
       // found a drive letter
@@ -157,7 +157,6 @@ namespace stlplus
       // path for this drive and prepend it to the path
       if (i == spec.size() || !is_separator(spec[i]))
       {
-#ifdef MSWINDOWS
         // getdcwd requires the drive number (1..26) not the letter (A..Z)
         char path [MAX_PATH+1];
         int drivenum = toupper(m_drive[0]) - 'A' + 1;
@@ -169,11 +168,36 @@ namespace stlplus
           spec.insert(2, path+2);
         }
         else
-#endif
         {
           // non-existent drive - fill in just the root directory
           spec.insert(2, 1, preferred_separator);
         }
+      }
+    }
+    else if (spec.size() >= 2 && is_separator(spec[0]) && is_separator(spec[1]))
+    {
+      // found an UNC prefix
+      i = 2;
+      // find the end of the prefix by scanning for the next seperator or the end of the spec
+      while (i < spec.size() && !is_separator(spec[i])) i++;
+      m_drive = spec.substr(0, i);
+      m_relative = false;
+    }
+#endif
+#ifdef CYGWIN
+    // first split off the drive letter or UNC prefix on Windows - the Cygwin environment supports these too
+    if (spec.size() >= 2 && isalpha(spec[0]) && spec[1] == ':')
+    {
+      // found a drive letter
+      i = 2;
+      m_drive = spec.substr(0, 2);
+      m_relative = false;
+      // if there is a drive but no path or a relative path, get the current
+      // path for this drive and prepend it to the path
+      if (i == spec.size() || !is_separator(spec[i]))
+      {
+        // non-existent drive - fill in just the root directory
+        spec.insert(2, 1, preferred_separator);
       }
     }
     else if (spec.size() >= 2 && is_separator(spec[0]) && is_separator(spec[1]))
