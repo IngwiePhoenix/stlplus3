@@ -1272,6 +1272,11 @@ namespace stlplus
                   0,0);
     std::string result = message;
     LocalFree(message);
+    // the error message is for some perverse reason newline terminated - remove this
+    if (result[result.size()-1] == '\n')
+      result.erase(result.end()-1);
+    if (result[result.size()-1] == '\r')
+      result.erase(result.end()-1);
     return result;
   }
 
@@ -2041,6 +2046,11 @@ namespace stlplus
                   0,0);
     std::string result = message;
     LocalFree(message);
+    // the error message is for some perverse reason newline terminated - remove this
+    if (result[result.size()-1] == '\n')
+      result.erase(result.end()-1);
+    if (result[result.size()-1] == '\r')
+      result.erase(result.end()-1);
     return result;
   }
 

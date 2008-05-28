@@ -67,10 +67,11 @@ namespace stlplus
       result = message;
       LocalFree(message);
     }
-    else
-    {
-      result = "unknown error " + dformat("%d",error);
-    }
+    // the error message is for some perverse reason newline terminated - remove this
+    if (result[result.size()-1] == '\n')
+      result.erase(result.end()-1);
+    if (result[result.size()-1] == '\r')
+      result.erase(result.end()-1);
 #else
     result = strerror(error);
 #endif
