@@ -126,10 +126,11 @@ platforms.</p>
 <li><a href="persistent_examples.html">Examples</a></li>
 </ul>
 
-<p>The persistence library has a soft dependency on the containers library. In stand-alone mode it
-will make all C and C++ types including the STL classes persistent. If it is compiled with the
-dependencies, then it will make the classes of the STLplus containers persistent as well as all the
-other types supported.</p>
+<p>The persistence library has a soft dependency on the containers and portability libraries. In
+stand-alone mode it will make all C and C++ types including the STL classes persistent. If it is
+compiled with the containers library, then it will make the classes of the STLplus containers
+persistent as well as all the other types supported. If it is compiled with the portability library,
+it will make the STLplus infinite-precision integer type inf persistent.</p>
 
 <h2 id="portability">Portability Library</h2>
 
@@ -176,7 +177,7 @@ provide commonly-used functionality. The subsystems provided are:</p>
 </ul>
 
 <p>The subsystems library requires at least the containers and portability libraries to be
-installed. This is a hard dependency.</p>
+installed. These are hard dependencies.</p>
 
 <h2 id="strings">Strings Library</h2>
 
@@ -193,10 +194,10 @@ any data structure.</p>
 <li><a href="string_utilities.html">string_utilities.hpp: String Utilities</a></li>
 </ul>
 
-<p>The strings library requires the portability library to be installed. It also has soft
-dependencies on the containers library. Without the containers library, the library
-provides string representations of all C and C++ types including the STL classes. With the
-containers library it also makes the STLplus classes in the containers library
+<p>The strings library has soft dependencies on the containers and portability libraries. Without
+the containers library, the library provides string representations of all C and C++ types including
+the STL classes. With the containers library it also makes the STLplus classes in the containers
+library printable. With the portability library, it makes the STLplus infinite-precision integer
 printable.</p>
 
 </div>
