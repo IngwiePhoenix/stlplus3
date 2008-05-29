@@ -24,7 +24,7 @@
 <span style="color: #ff0099">   14: </span><span style="color: #000099">// Unnecessary compiler warnings</span>
 <span style="color: #ff0099">   15: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   16: </span>
-<span style="color: #ff0099">   17: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_MSC_VER</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
 <span style="color: #ff0099">   18: </span><span style="color: #000099">// Microsoft Visual Studio</span>
 <span style="color: #ff0099">   19: </span><span style="color: #000099">// shut up the following irritating warnings</span>
 <span style="color: #ff0099">   20: </span><span style="color: #000099">//   4275 - VC6, exported class was derived from a class that was not exported</span>
@@ -39,7 +39,7 @@
 <span style="color: #ff0099">   29: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warning</span><span style="color: #330033">(</span><span style="color: #000000">disable</span><span style="color: #330033">:</span> <span style="color: #993399">4275</span> <span style="color: #993399">4786</span> <span style="color: #993399">4305</span> <span style="color: #993399">4503</span> <span style="color: #993399">4309</span> <span style="color: #993399">4290</span> <span style="color: #993399">4800</span> <span style="color: #993399">4675</span> <span style="color: #993399">4996</span><span style="color: #330033">)</span>
 <span style="color: #ff0099">   30: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">   31: </span>
-<span style="color: #ff0099">   32: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">__BORLANDC__</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   32: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
 <span style="color: #ff0099">   33: </span><span style="color: #000099">// Borland</span>
 <span style="color: #ff0099">   34: </span><span style="color: #000099">// Shut up the following irritating warnings</span>
 <span style="color: #ff0099">   35: </span><span style="color: #000099">//   8008 - Condition is always true.</span>

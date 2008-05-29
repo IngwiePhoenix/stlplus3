@@ -25,7 +25,7 @@
 <span style="color: #ff0099">   15: </span><span style="color: #000099">// Unnecessary compiler warnings</span>
 <span style="color: #ff0099">   16: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   17: </span>
-<span style="color: #ff0099">   18: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_MSC_VER</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
 <span style="color: #ff0099">   19: </span><span style="color: #000099">// Microsoft Visual Studio</span>
 <span style="color: #ff0099">   20: </span><span style="color: #000099">// shut up the following irritating warnings</span>
 <span style="color: #ff0099">   21: </span><span style="color: #000099">//   4275 - VC6, exported class was derived from a class that was not exported</span>
@@ -41,7 +41,7 @@
 <span style="color: #ff0099">   31: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warning</span><span style="color: #330033">(</span><span style="color: #000000">disable</span><span style="color: #330033">:</span> <span style="color: #993399">4275</span> <span style="color: #993399">4786</span> <span style="color: #993399">4305</span> <span style="color: #993399">4503</span> <span style="color: #993399">4309</span> <span style="color: #993399">4290</span> <span style="color: #993399">4800</span> <span style="color: #993399">4355</span> <span style="color: #993399">4675</span> <span style="color: #993399">4996</span><span style="color: #330033">)</span>
 <span style="color: #ff0099">   32: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">   33: </span>
-<span style="color: #ff0099">   34: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">__BORLANDC__</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   34: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
 <span style="color: #ff0099">   35: </span><span style="color: #000099">// Borland</span>
 <span style="color: #ff0099">   36: </span><span style="color: #000099">// Shut up the following irritating warnings</span>
 <span style="color: #ff0099">   37: </span><span style="color: #000099">//   8008 - Condition is always true.</span>
@@ -104,7 +104,7 @@
 <span style="color: #ff0099">   94: </span><span style="color: #000099">// default values, overridden for individual problem cases below</span>
 <span style="color: #ff0099">   95: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span> <span style="color: #990000">typename</span>
 <span style="color: #ff0099">   96: </span>
-<span style="color: #ff0099">   97: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">__GNUC__</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   97: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__GNUC__</span>
 <span style="color: #ff0099">   98: </span><span style="color: #000099">// GCC </span>
 <span style="color: #ff0099">   99: </span><span style="color: #000099">//   - pre-version 3 didn't handle typename in any of these cases</span>
 <span style="color: #ff0099">  100: </span><span style="color: #000099">//   - version 3 onwards, typename is required for all three cases as per default</span>
@@ -115,7 +115,7 @@
 <span style="color: #ff0099">  105: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">  106: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">  107: </span>
-<span style="color: #ff0099">  108: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_MSC_VER</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">  108: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
 <span style="color: #ff0099">  109: </span><span style="color: #000099">// Visual Studio</span>
 <span style="color: #ff0099">  110: </span><span style="color: #000099">//   - version 6 (compiler v.12) cannot handle typename in any of these cases</span>
 <span style="color: #ff0099">  111: </span><span style="color: #000099">//   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all</span>

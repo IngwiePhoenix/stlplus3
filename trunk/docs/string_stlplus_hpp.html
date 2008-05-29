@@ -20,19 +20,23 @@
 <span style="color: #ff0099">   10: </span>
 <span style="color: #ff0099">   11: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">   12: </span>
-<span style="color: #ff0099">   13: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">NO_STLPLUS_CONTAINERS</span>
-<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_triple.hpp"</span>
-<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_foursome.hpp"</span>
-<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_smart_ptr.hpp"</span>
-<span style="color: #ff0099">   17: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_digraph.hpp"</span>
-<span style="color: #ff0099">   18: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_hash.hpp"</span>
-<span style="color: #ff0099">   19: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_matrix.hpp"</span>
-<span style="color: #ff0099">   20: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_ntree.hpp"</span>
-<span style="color: #ff0099">   21: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">   22: </span>
-<span style="color: #ff0099">   23: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_inf.hpp"</span>
-<span style="color: #ff0099">   24: </span>
-<span style="color: #ff0099">   25: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   13: </span><span style="color: #000099">// can be excluded to break the dependency on the containers library</span>
+<span style="color: #ff0099">   14: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">NO_STLPLUS_CONTAINERS</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_triple.hpp"</span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_foursome.hpp"</span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_smart_ptr.hpp"</span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_digraph.hpp"</span>
+<span style="color: #ff0099">   19: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_hash.hpp"</span>
+<span style="color: #ff0099">   20: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_matrix.hpp"</span>
+<span style="color: #ff0099">   21: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_ntree.hpp"</span>
+<span style="color: #ff0099">   22: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   23: </span>
+<span style="color: #ff0099">   24: </span><span style="color: #000099">// can be excluded to break the dependency on the portability library</span>
+<span style="color: #ff0099">   25: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">NO_STLPLUS_INF</span>
+<span style="color: #ff0099">   26: </span><span style="color: #990000">#include</span> <span style="color: #009900">"string_inf.hpp"</span>
+<span style="color: #ff0099">   27: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   28: </span>
+<span style="color: #ff0099">   29: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
