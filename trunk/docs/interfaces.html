@@ -97,7 +97,7 @@ the derived class itself become non-abstract.</p>
 class printable
 {
 public:
-  void print(otext&amp;) const = 0;
+  void print(std::ostream&amp;) const = 0;
 };
 </pre>
 
@@ -115,14 +115,14 @@ calling the abstract methods. This is an impure interface. For example:</p>
 class printable
 {
 public:
-  void print(otext&amp;) const = 0;
-  void print_indented(otext&amp;, unsigned indent);
+  void print(std::ostream&amp;) const = 0;
+  void print_indented(std::ostream&amp;, unsigned indent);
 };
 </pre>
 
 <p>In this case, the interface is saying that you must provide an overload of
 the abstract method <code>print</code>. Having done so, you will be able to
-call <code>print_indented</code> which will has been defined in terms of the
+call <code>print_indented</code> which has been defined in terms of the
 abstract <code>print</code> function. The point is that to implement the
 interface you only need to provide the abstract methods and having done so you
 can then use the non-abstract methods provided by the interface.</p>
@@ -138,76 +138,14 @@ method inherited from the interface class and therefore your class will be
 abstract too. A compiler error will be produced when you try to create an
 object of the class.</p>
 
-
 <h2 id="examples">Examples</h2>
-
-<h3>The Clonable Interface</h3>
 
 <p>The above printable interface is an artificial example and you will not
 find it in the STLplus library.</p>
 
-<p>A real example is the <code>clonable</code> interface. This defines the
-interface of a class that can be used in the 
-<a href="smart_ptr.html"><code>smart_ptr_clone</code></a> container. This variant
-of the smart pointer is designed for use with polymorphic types - see the
-smart pointer documentation for an explanation. This container requires you
-to provide a virtual <code>clone</code> method which makes a copy using
-<code>new</code> and the correct copy constructor, returning the result as a
-pointer to the base class. Each derivative overloads this method with its own
-variant which copies its own type.</p>
-
-<p>This requirement is clearly an example of an interface. The interface not
-only tells the user the name of the function, but the exact type profile:</p>
-
-<pre class="cpp">
-class clonable
-{
-public:
-  virtual clonable* clone(void) const = 0;
-};
-</pre>
-
-<p>This means that the <code>clone</code> method must be a <code>const</code> method, taking no
-arguments and returning a pointer to a <code>clonable</code> object. The comment in the
-header (not shown here) further specifies that the method must return a
-dynamically-allocated copy of the object being cloned.</p>
-
-<p>In use, you make your class clonable by inheriting from the <code>clonable</code>
-interface. Consider the following trivial example class:</p>
-
-<pre class="cpp">
-class base
-{
-  int m_value;
-public:
-  base(int value = 0) : m_value(value) {}
-  virtual ~base(void) {}
-
-  virtual int value (void) const {return m_value;}
-  virtual void set(int value = 0) {m_value = value;}
-};
-</pre>
-
-<p>This can be made clonable by inheriting from the <code>clonable</code> interface:</p>
-
-<pre class="cpp">
-class base <b>: public clonable</b>
-{
-  int m_value;
-public:
-  base(int value = 0) : m_value(value) {}
-  virtual ~base(void) {}
-
-  virtual int value (void) const {return m_value;}
-  virtual void set(int value = 0) {m_value = value;}
-
-  <b>clonable* clone(void) const {return new base(*this);}</b>
-};
-</pre>
-
 <h3>The Persistent Interface</h3>
 
-<p>This is another example taken from the STLplus library. I have defined a
+<p>This is an example taken from the STLplus library. I have defined a
 <code>persistent</code> interface for use with polymorphic types. It is only used for
 polymorphic types for which the best way of proving data persistence is
 through virtual methods.</p>
@@ -215,16 +153,19 @@ through virtual methods.</p>
 <p>The <code>persistent</code> interface is defined by the following class:</p>
 
 <pre class="cpp">
-class persistent : public clonable
+namespace stlplus
 {
-public:
-  virtual void dump(dump_context&amp;) const = 0;
-  virtual void restore(restore_context&amp;) = 0;
-};
-</pre>
 
-<p>Note that this interface inherits the <code>clonable</code> interface - so to use it you
-must implement both interfaces.</p>
+  class persistent
+  {
+  public:
+    virtual void dump(dump_context&amp;) const throw(persistent_dump_failed) = 0;
+    virtual void restore(restore_context&amp;) throw(persistent_restore_failed) = 0;
+    virtual persistent* clone(void) const = 0;
+  };
+
+}
+</pre>
 
 <p>Using the trivial class from the previous section; to make that class
 persistent, you derive it from the <code>persistent</code> interface:</p>
@@ -240,9 +181,9 @@ public:
   virtual int value (void) const {return m_value;}
   virtual void set(int value = 0) {m_value = value;}
 
-  <b>clonable* clone(void) const {return new base(*this);}</b>
-  <b>void dump(dump_context&amp; context) const {::dump(context,m_value);}</b>
-  <b>void restore(restore_context&amp; context) {::restore(context,m_value);}</b>
+  <b>void dump(dump_context&amp; context) const {stlplus::dump_int(context,m_value);}</b>
+  <b>void restore(restore_context&amp; context) {stlplus::restore_int(context,m_value);}</b>
+  <b>persistent* clone(void) const {return new base(*this);}</b>
 };
 </pre>
 
@@ -251,7 +192,6 @@ public:
 details of how this interface is used to provide data persistence - this
 document is only concerned with the meaning of the interface class and the
 requirements that it defines.</p>
-
 
 </div>
 
