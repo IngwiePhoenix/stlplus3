@@ -54,6 +54,7 @@ C++ Library Collection
 <li><a href="#multimap">std::multimap</a></li>
 <li><a href="#complex">std::complex</a></li>
 <li><a href="#bitset">std::bitset</a></li>
+<li><a href="#omitted">Omitted Classes - adaptors and iterators</a></li>
 </ul>
 
 </div>
@@ -224,12 +225,12 @@ pair. For example, if you were using a pair containing a string and an int:</p>
 
 typedef std::pair&lt;std::string,int&gt; string_int_pair;
 
-void dump(stlplus::dump_context&amp; context, const string_int_pair&amp; data)
+void dump_string_int_pair(stlplus::dump_context&amp; context, const string_int_pair&amp; data)
 {
   stlplus::dump_pair(context, data, stlplus::dump_string, stlplus::dump_int);
 }
 
-void restore(stlplus::restore_context&amp; context, string_int_pair&amp; data)
+void restore_string_int_pair(stlplus::restore_context&amp; context, string_int_pair&amp; data)
 {
   stlplus::restore_pair(context, data, stlplus::restore_string, stlplus::restore_int);
 }
@@ -489,6 +490,19 @@ void restore_flags_vector(stlplus::restore_context&amp; context, flags_vector&am
 }
 </pre>
 
+<h2 id="omitted">Omitted Classes - Adaptors and Iterators</h2>
+
+<p><b>Note:</b> I have not done the container adaptors <code>queue</code>,
+<code>priority_queue</code> and <code>stack</code> because their interfaces are too restrictive to
+allow dump and restore routines to be written without burgling the data structure. This means that I
+will never do them because it is impossible!</p>
+
+<p>When designing a data structure to be made persistent, you need to bear this in mind and use
+containers such as <code>vector</code> and <code>list</code> rather than <code>queue</code> or
+<code>stack</code>.</p>
+
+<p>I also haven't implemented any STL iterators. The design of iterators makes it nearly impossible to
+do this without burgling the data structure, which wouldn't be portable.</p>
 
 </div>
 

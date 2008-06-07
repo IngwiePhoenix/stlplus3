@@ -1,5 +1,5 @@
 # comment out the next line to exclude the portability/inf type and un-comment the following line
-LIBRARIES := ../portability
+LIBRARIES += ../portability
 #CPPFLAGS += -DNO_STLPLUS_INF
 
 # comment out the next line to exclude the containers library and un-comment the following line
