@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>containers/containers_fixes.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>containers/containers_fixes.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_CONTAINERS_FIXES</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_CONTAINERS_FIXES</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Andy Rushton, 2007</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    8: </span>
+<span style="color: #ff0099">    9: </span><span style="color: #000099">//   Contains work arounds for OS or Compiler specific problems with container</span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   templates</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">// Unnecessary compiler warnings</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   17: </span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
+<span style="color: #ff0099">   19: </span><span style="color: #000099">// Microsoft Visual Studio</span>
+<span style="color: #ff0099">   20: </span><span style="color: #000099">// shut up the following irritating warnings</span>
+<span style="color: #ff0099">   21: </span><span style="color: #000099">//   4275 - VC6, exported class was derived from a class that was not exported</span>
+<span style="color: #ff0099">   22: </span><span style="color: #000099">//   4786 - VC6, identifier string exceeded maximum allowable length and was truncated (only affects debugger)</span>
+<span style="color: #ff0099">   23: </span><span style="color: #000099">//   4305 - VC6, identifier type was converted to a smaller type</span>
+<span style="color: #ff0099">   24: </span><span style="color: #000099">//   4503 - VC6, decorated name was longer than the maximum the compiler allows (only affects debugger)</span>
+<span style="color: #ff0099">   25: </span><span style="color: #000099">//   4309 - VC6, type conversion operation caused a constant to exceeded the space allocated for it</span>
+<span style="color: #ff0099">   26: </span><span style="color: #000099">//   4290 - VC6, C++ exception specification ignored</span>
+<span style="color: #ff0099">   27: </span><span style="color: #000099">//   4800 - VC6, forcing value to bool 'true' or 'false' (performance warning)</span>
+<span style="color: #ff0099">   28: </span><span style="color: #000099">//   4355 - VC6, 'this' : used in base member initializer list</span>
+<span style="color: #ff0099">   29: </span><span style="color: #000099">//   4675 - VC7.1, "change" in function overload resolution _might_ have altered program</span>
+<span style="color: #ff0099">   30: </span><span style="color: #000099">//   4996 - VC8, 'xxxx' was declared deprecated</span>
+<span style="color: #ff0099">   31: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warning</span><span style="color: #330033">(</span><span style="color: #000000">disable</span><span style="color: #330033">:</span> <span style="color: #993399">4275</span> <span style="color: #993399">4786</span> <span style="color: #993399">4305</span> <span style="color: #993399">4503</span> <span style="color: #993399">4309</span> <span style="color: #993399">4290</span> <span style="color: #993399">4800</span> <span style="color: #993399">4355</span> <span style="color: #993399">4675</span> <span style="color: #993399">4996</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   32: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   33: </span>
+<span style="color: #ff0099">   34: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
+<span style="color: #ff0099">   35: </span><span style="color: #000099">// Borland</span>
+<span style="color: #ff0099">   36: </span><span style="color: #000099">// Shut up the following irritating warnings</span>
+<span style="color: #ff0099">   37: </span><span style="color: #000099">//   8008 - Condition is always true.</span>
+<span style="color: #ff0099">   38: </span><span style="color: #000099">//          Whenever the compiler encounters a constant comparison that (due to</span>
+<span style="color: #ff0099">   39: </span><span style="color: #000099">//          the nature of the value being compared) is always true or false, it</span>
+<span style="color: #ff0099">   40: </span><span style="color: #000099">//          issues this warning and evaluates the condition at compile time.</span>
+<span style="color: #ff0099">   41: </span><span style="color: #000099">//   8060 - Possibly incorrect assignment.</span>
+<span style="color: #ff0099">   42: </span><span style="color: #000099">//          This warning is generated when the compiler encounters an assignment</span>
+<span style="color: #ff0099">   43: </span><span style="color: #000099">//          operator as the main operator of a conditional expression (part of</span>
+<span style="color: #ff0099">   44: </span><span style="color: #000099">//          an if, while, or do-while statement). This is usually a</span>
+<span style="color: #ff0099">   45: </span><span style="color: #000099">//          typographical error for the equality operator.</span>
+<span style="color: #ff0099">   46: </span><span style="color: #000099">//   8066 - Unreachable code.</span>
+<span style="color: #ff0099">   47: </span><span style="color: #000099">//          A break, continue, goto, or return statement was not followed by a</span>
+<span style="color: #ff0099">   48: </span><span style="color: #000099">//          label or the end of a loop or function. The compiler checks while,</span>
+<span style="color: #ff0099">   49: </span><span style="color: #000099">//          do, and for loops with a constant test condition, and attempts to</span>
+<span style="color: #ff0099">   50: </span><span style="color: #000099">//          recognize loops that can't fall through.</span>
+<span style="color: #ff0099">   51: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8008</span>
+<span style="color: #ff0099">   52: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8060</span>
+<span style="color: #ff0099">   53: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8066</span>
+<span style="color: #ff0099">   54: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   55: </span>
+<span style="color: #ff0099">   56: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   57: </span><span style="color: #000099">// Problems with the typename keyword</span>
+<span style="color: #ff0099">   58: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   59: </span>
+<span style="color: #ff0099">   60: </span><span style="color: #000099">// There are problems with using the 'typename' keyword. Technically, if you</span>
+<span style="color: #ff0099">   61: </span><span style="color: #000099">// use a type member of a template class (i.e. a type declared within the</span>
+<span style="color: #ff0099">   62: </span><span style="color: #000099">// template class by a local typedef), you need to tell the compiler that it</span>
+<span style="color: #ff0099">   63: </span><span style="color: #000099">// is a type name. This is because the compiler cannot work out whether a</span>
+<span style="color: #ff0099">   64: </span><span style="color: #000099">// member is a type, a method or a data field at compile time. However,</span>
+<span style="color: #ff0099">   65: </span><span style="color: #000099">// support for the typename keyword has traditionally been incomplete in both</span>
+<span style="color: #ff0099">   66: </span><span style="color: #000099">// gcc and Visual Studio. I have used macros to try to resolve this issue. The</span>
+<span style="color: #ff0099">   67: </span><span style="color: #000099">// macros add the keyword for compiler versions that require it and omit it</span>
+<span style="color: #ff0099">   68: </span><span style="color: #000099">// for compiler versions that do not support it</span>
+<span style="color: #ff0099">   69: </span>
+<span style="color: #ff0099">   70: </span><span style="color: #000099">// There are five places where typename keywords cause problems:</span>
+<span style="color: #ff0099">   71: </span><span style="color: #000099">//</span>
+<span style="color: #ff0099">   72: </span><span style="color: #000099">//   1) in a typedef where a template class's member type is being mapped onto</span>
+<span style="color: #ff0099">   73: </span><span style="color: #000099">//      a type definition within another template class or function </span>
+<span style="color: #ff0099">   74: </span><span style="color: #000099">//      e.g. template&lt;typename T&gt; fn () {</span>
+<span style="color: #ff0099">   75: </span><span style="color: #000099">//             typedef typename someclass&lt;T&gt;::member_type local_type;</span>
+<span style="color: #ff0099">   76: </span><span style="color: #000099">//                     ^^^^^^^^</span>
+<span style="color: #ff0099">   77: </span><span style="color: #000099">//   2) in a function parameter declaration, with similar rules to the above</span>
+<span style="color: #ff0099">   78: </span><span style="color: #000099">//      e.g. template&lt;typename T&gt; fn (typename someclass&lt;T&gt;::member_type)</span>
+<span style="color: #ff0099">   79: </span><span style="color: #000099">//                                    ^^^^^^^^</span>
+<span style="color: #ff0099">   80: </span><span style="color: #000099">//   3) in instantiating a template, the parameter to the template, with similar rules to the above</span>
+<span style="color: #ff0099">   81: </span><span style="color: #000099">//      e.g. template_class&lt;typename someclass&lt;T&gt;::member_type&gt;</span>
+<span style="color: #ff0099">   82: </span><span style="color: #000099">//                          ^^^^^^^^</span>
+<span style="color: #ff0099">   83: </span><span style="color: #000099">//   4) Return expressions</span>
+<span style="color: #ff0099">   84: </span><span style="color: #000099">//      e.g. return typename ntree&lt;T&gt;::const_iterator(this,m_root);</span>
+<span style="color: #ff0099">   85: </span><span style="color: #000099">//                  ^^^^^^^^</span>
+<span style="color: #ff0099">   86: </span><span style="color: #000099">//   5) Creating temporary objects when passing arguments to a function or constructor</span>
+<span style="color: #ff0099">   87: </span><span style="color: #000099">//      e.g. return typename ntree&lt;T&gt;::const_prefix_iterator(typename ntree&lt;T&gt;::const_iterator(this,m_root));</span>
+<span style="color: #ff0099">   88: </span><span style="color: #000099">//                                                           ^^^^^^^^</span>
+<span style="color: #ff0099">   89: </span><span style="color: #000099">// Note that the typename keyword is only required when the type being referred to is a member of a template class</span>
+<span style="color: #ff0099">   90: </span><span style="color: #000099">//</span>
+<span style="color: #ff0099">   91: </span><span style="color: #000099">// So far it *seems* as if all compilers either require all of them or none of</span>
+<span style="color: #ff0099">   92: </span><span style="color: #000099">// them, so this set of situations can be handled by a single macro</span>
+<span style="color: #ff0099">   93: </span>
+<span style="color: #ff0099">   94: </span><span style="color: #000099">// default values, overridden for individual problem cases below</span>
+<span style="color: #ff0099">   95: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span> <span style="color: #990000">typename</span>
+<span style="color: #ff0099">   96: </span>
+<span style="color: #ff0099">   97: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__GNUC__</span>
+<span style="color: #ff0099">   98: </span><span style="color: #000099">// GCC </span>
+<span style="color: #ff0099">   99: </span><span style="color: #000099">//   - pre-version 3 didn't handle typename in any of these cases</span>
+<span style="color: #ff0099">  100: </span><span style="color: #000099">//   - version 3 onwards, typename is required for all three cases as per default</span>
+<span style="color: #ff0099">  101: </span><span style="color: #990000">#if</span> <span style="color: #000000">__GNUC__</span> <span style="color: #330033">&lt;</span> <span style="color: #993399">3</span>
+<span style="color: #ff0099">  102: </span><span style="color: #000099">// gcc prior to v3</span>
+<span style="color: #ff0099">  103: </span><span style="color: #990000">#undef</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  104: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  105: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  106: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  107: </span>
+<span style="color: #ff0099">  108: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
+<span style="color: #ff0099">  109: </span><span style="color: #000099">// Visual Studio</span>
+<span style="color: #ff0099">  110: </span><span style="color: #000099">//   - version 6 (compiler v.12) cannot handle typename in any of these cases</span>
+<span style="color: #ff0099">  111: </span><span style="color: #000099">//   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all</span>
+<span style="color: #ff0099">  112: </span><span style="color: #000099">//   - version 8 (2005) (compiler v.14) requires parameters and templates, supports all</span>
+<span style="color: #ff0099">  113: </span><span style="color: #990000">#if</span> <span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&lt;</span> <span style="color: #993399">1300</span>
+<span style="color: #ff0099">  114: </span><span style="color: #000099">// compiler version 12 and earlier</span>
+<span style="color: #ff0099">  115: </span><span style="color: #990000">#undef</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  116: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  117: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  118: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  119: </span>
+<span style="color: #ff0099">  120: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  121: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>strings/format_types.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>strings/format_types.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_FORMAT_TYPES</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_FORMAT_TYPES</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Andy Rushton, 2007</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    8: </span>
+<span style="color: #ff0099">    9: </span><span style="color: #000099">//   A Set of enumerations controlling the string formatting of numbers.</span>
+<span style="color: #ff0099">   10: </span>
+<span style="color: #ff0099">   11: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   12: </span>
+<span style="color: #ff0099">   13: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">// Integer radix display representations:</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">//   There are three ways in which the radix is represented:</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">//     - none - the number is just printed as a number (e.g. 12345). Can be confusing for non-decimal radix</span>
+<span style="color: #ff0099">   17: </span><span style="color: #000099">//     - C style - for binary, octal and hex, the C-style prefices 0b, 0 and 0x are used</span>
+<span style="color: #ff0099">   18: </span><span style="color: #000099">//       note that this is an unsigned representation</span>
+<span style="color: #ff0099">   19: </span><span style="color: #000099">//     - Hash style - in the form radix#value - the value may be signed, e.g. 10#-9</span>
+<span style="color: #ff0099">   20: </span>
+<span style="color: #ff0099">   21: </span><span style="color: #990000">enum</span> <span style="color: #000000">radix_display_t</span>
+<span style="color: #ff0099">   22: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   23: </span>  <span style="color: #000000">radix_none</span><span style="color: #330033">,</span>               <span style="color: #000099">// just print the number with no radix indicated</span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #000000">radix_hash_style</span><span style="color: #330033">,</span>         <span style="color: #000099">// none for decimal, hash style for all others</span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #000000">radix_hash_style_all</span><span style="color: #330033">,</span>     <span style="color: #000099">// hash style for all radices including decimal</span>
+<span style="color: #ff0099">   26: </span>  <span style="color: #000000">radix_c_style</span><span style="color: #330033">,</span>            <span style="color: #000099">// C style for hex and octal, none for others</span>
+<span style="color: #ff0099">   27: </span>  <span style="color: #000000">radix_c_style_or_hash</span>     <span style="color: #000099">// C style for hex and octal, none for decimal, hash style for others</span>
+<span style="color: #ff0099">   28: </span><span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   29: </span>
+<span style="color: #ff0099">   30: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   31: </span><span style="color: #000099">// Floating-point display representations:</span>
+<span style="color: #ff0099">   32: </span><span style="color: #000099">// There are three formats for the printout:</span>
+<span style="color: #ff0099">   33: </span><span style="color: #000099">//   - fixed - formatted as a fixed-point number, so no mantissa is printed (equivalent to %f in printf)</span>
+<span style="color: #ff0099">   34: </span><span style="color: #000099">//   - floating - formatted as a normalised floating-point number (equivalent to %e in printf)</span>
+<span style="color: #ff0099">   35: </span><span style="color: #000099">//   - mixed - formatted as fixed-point if appropriate, otherwise the floating format (equivalent to %g in printf)</span>
+<span style="color: #ff0099">   36: </span>
+<span style="color: #ff0099">   37: </span><span style="color: #990000">enum</span> <span style="color: #000000">real_display_t</span>
+<span style="color: #ff0099">   38: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #000000">display_fixed</span><span style="color: #330033">,</span>    <span style="color: #000099">// %f</span>
+<span style="color: #ff0099">   40: </span>  <span style="color: #000000">display_floating</span><span style="color: #330033">,</span> <span style="color: #000099">// %e</span>
+<span style="color: #ff0099">   41: </span>  <span style="color: #000000">display_mixed</span>     <span style="color: #000099">// %g</span>
+<span style="color: #ff0099">   42: </span><span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   43: </span>
+<span style="color: #ff0099">   44: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   45: </span><span style="color: #000099">// Alignment:</span>
+<span style="color: #ff0099">   46: </span><span style="color: #000099">//   There are three field alignments:</span>
+<span style="color: #ff0099">   47: </span><span style="color: #000099">//     - left aligned - the value is to the left of the field which is padded to the right with spaces</span>
+<span style="color: #ff0099">   48: </span><span style="color: #000099">//     - right aligned - the value is to the right of the field which is padded to the left with spaces</span>
+<span style="color: #ff0099">   49: </span><span style="color: #000099">//     - centred - the value is in the centre of the field and spaces added to both left and right</span>
+<span style="color: #ff0099">   50: </span>
+<span style="color: #ff0099">   51: </span><span style="color: #990000">enum</span> <span style="color: #000000">alignment_t</span>
+<span style="color: #ff0099">   52: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   53: </span>  <span style="color: #000000">align_left</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   54: </span>  <span style="color: #000000">align_right</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   55: </span>  <span style="color: #000000">align_centre</span>
+<span style="color: #ff0099">   56: </span><span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   57: </span>
+<span style="color: #ff0099">   58: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   59: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
