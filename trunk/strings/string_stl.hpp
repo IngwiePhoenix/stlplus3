@@ -10,13 +10,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "string_string.hpp"
-#include "string_sequence.hpp"
 #include "string_bitset.hpp"
 #include "string_list.hpp"
-#include "string_pair.hpp"
 #include "string_map.hpp"
+#include "string_pair.hpp"
+#include "string_sequence.hpp"
 #include "string_set.hpp"
+#include "string_string.hpp"
 #include "string_vector.hpp"
 
 #endif

@@ -10,13 +10,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "print_string.hpp"
-#include "print_sequence.hpp"
 #include "print_bitset.hpp"
 #include "print_list.hpp"
-#include "print_pair.hpp"
 #include "print_map.hpp"
+#include "print_pair.hpp"
+#include "print_sequence.hpp"
 #include "print_set.hpp"
+#include "print_string.hpp"
 #include "print_vector.hpp"
 
 #endif

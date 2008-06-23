@@ -12,13 +12,13 @@
 
 // can be excluded to break the dependency on the containers library
 #ifndef NO_STLPLUS_CONTAINERS
-#include "string_triple.hpp"
-#include "string_foursome.hpp"
-#include "string_smart_ptr.hpp"
 #include "string_digraph.hpp"
+#include "string_foursome.hpp"
 #include "string_hash.hpp"
 #include "string_matrix.hpp"
 #include "string_ntree.hpp"
+#include "string_smart_ptr.hpp"
+#include "string_triple.hpp"
 #endif
 
 // can be excluded to break the dependency on the portability library

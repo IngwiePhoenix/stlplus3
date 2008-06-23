@@ -10,16 +10,16 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "persistent_string.hpp"
-#include "persistent_pair.hpp"
-#include "persistent_vector.hpp"
-#include "persistent_list.hpp"
+#include "persistent_bitset.hpp"
+#include "persistent_complex.hpp"
 #include "persistent_deque.hpp"
-#include "persistent_set.hpp"
-#include "persistent_multiset.hpp"
+#include "persistent_list.hpp"
 #include "persistent_map.hpp"
 #include "persistent_multimap.hpp"
-#include "persistent_complex.hpp"
-#include "persistent_bitset.hpp"
+#include "persistent_multiset.hpp"
+#include "persistent_pair.hpp"
+#include "persistent_set.hpp"
+#include "persistent_string.hpp"
+#include "persistent_vector.hpp"
 
 #endif

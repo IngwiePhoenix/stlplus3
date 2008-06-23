@@ -11,13 +11,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef NO_STLPLUS_CONTAINERS
-#include "print_triple.hpp"
-#include "print_foursome.hpp"
-#include "print_smart_ptr.hpp"
 #include "print_digraph.hpp"
+#include "print_foursome.hpp"
 #include "print_hash.hpp"
 #include "print_matrix.hpp"
 #include "print_ntree.hpp"
+#include "print_smart_ptr.hpp"
+#include "print_triple.hpp"
 #endif
 
 #include "print_inf.hpp"

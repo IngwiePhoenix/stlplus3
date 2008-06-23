@@ -10,11 +10,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "print_bool.hpp"
-#include "print_int.hpp"
 #include "print_address.hpp"
-#include "print_float.hpp"
+#include "print_bool.hpp"
 #include "print_cstring.hpp"
+#include "print_float.hpp"
+#include "print_int.hpp"
 #include "print_pointer.hpp"
 
 #endif

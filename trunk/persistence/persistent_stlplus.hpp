@@ -12,13 +12,13 @@
 
 // can be excluded to break the dependency on the containers library
 #ifndef NO_STLPLUS_CONTAINERS
-#include "persistent_smart_ptr.hpp"
-#include "persistent_triple.hpp"
-#include "persistent_foursome.hpp"
 #include "persistent_digraph.hpp"
+#include "persistent_foursome.hpp"
 #include "persistent_hash.hpp"
 #include "persistent_matrix.hpp"
 #include "persistent_ntree.hpp"
+#include "persistent_smart_ptr.hpp"
+#include "persistent_triple.hpp"
 #endif
 
 // can be excluded to break the dependency on the portability library
