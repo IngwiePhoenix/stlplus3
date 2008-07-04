@@ -13,47 +13,48 @@
 <span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
 <span style="color: #ff0099">    4: </span>
 <span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
-<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Andy Rushton, 2007</span>
-<span style="color: #ff0099">    7: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
-<span style="color: #ff0099">    8: </span>
-<span style="color: #ff0099">    9: </span><span style="color: #000099">//   Convert a float/double to/from string</span>
-<span style="color: #ff0099">   10: </span>
-<span style="color: #ff0099">   11: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   12: </span><span style="color: #990000">#include</span> <span style="color: #009900">"strings_fixes.hpp"</span>
-<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"format_types.hpp"</span>
-<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
-<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;iostream&gt;</span>
-<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdexcept&gt;</span>
-<span style="color: #ff0099">   17: </span>
-<span style="color: #ff0099">   18: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
-<span style="color: #ff0099">   19: </span><span style="color: #330033">{</span>
-<span style="color: #ff0099">   20: </span>
-<span style="color: #ff0099">   21: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   22: </span>  <span style="color: #000099">// convert a real type to string</span>
-<span style="color: #ff0099">   23: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   24: </span>
-<span style="color: #ff0099">   25: </span>  <span style="color: #000099">// Only decimal radix is supported</span>
-<span style="color: #ff0099">   26: </span>
-<span style="color: #ff0099">   27: </span>  <span style="color: #000099">// The way in which the number is displayed is defined in radix_types.hpp</span>
-<span style="color: #ff0099">   28: </span>  <span style="color: #000099">// Using any other value for the display type causes std::invalid_argument to be thrown</span>
-<span style="color: #ff0099">   29: </span>
-<span style="color: #ff0099">   30: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_float</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">float</span> <span style="color: #000000">f</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   31: </span>                   <span style="color: #000000">real_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">display_mixed</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   32: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   33: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">precision</span> <span style="color: #330033">=</span> <span style="color: #993399">6</span><span style="color: #330033">)</span>
-<span style="color: #ff0099">   34: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   35: </span>
-<span style="color: #ff0099">   36: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_double</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">double</span> <span style="color: #000000">f</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   37: </span>                    <span style="color: #000000">real_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">display_mixed</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   38: </span>                    <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   39: </span>                    <span style="color: #990000">unsigned</span> <span style="color: #000000">precision</span> <span style="color: #330033">=</span> <span style="color: #993399">6</span><span style="color: #330033">)</span>
-<span style="color: #ff0099">   40: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   41: </span>
-<span style="color: #ff0099">   42: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   43: </span>
-<span style="color: #ff0099">   44: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
-<span style="color: #ff0099">   45: </span>
-<span style="color: #ff0099">   46: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004-2008</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Convert a float/double to/from string</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"strings_fixes.hpp"</span>
+<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">"format_types.hpp"</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;iostream&gt;</span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdexcept&gt;</span>
+<span style="color: #ff0099">   18: </span>
+<span style="color: #ff0099">   19: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   20: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   21: </span>
+<span style="color: #ff0099">   22: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   23: </span>  <span style="color: #000099">// convert a real type to string</span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   25: </span>
+<span style="color: #ff0099">   26: </span>  <span style="color: #000099">// Only decimal radix is supported</span>
+<span style="color: #ff0099">   27: </span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #000099">// The way in which the number is displayed is defined in radix_types.hpp</span>
+<span style="color: #ff0099">   29: </span>  <span style="color: #000099">// Using any other value for the display type causes std::invalid_argument to be thrown</span>
+<span style="color: #ff0099">   30: </span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_float</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">float</span> <span style="color: #000000">f</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   32: </span>                   <span style="color: #000000">real_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">display_mixed</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   33: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   34: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">precision</span> <span style="color: #330033">=</span> <span style="color: #993399">6</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   35: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   36: </span>
+<span style="color: #ff0099">   37: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_double</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">double</span> <span style="color: #000000">f</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   38: </span>                    <span style="color: #000000">real_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">display_mixed</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   39: </span>                    <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   40: </span>                    <span style="color: #990000">unsigned</span> <span style="color: #000000">precision</span> <span style="color: #330033">=</span> <span style="color: #993399">6</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   41: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   42: </span>
+<span style="color: #ff0099">   43: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   44: </span>
+<span style="color: #ff0099">   45: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">   46: </span>
+<span style="color: #ff0099">   47: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
