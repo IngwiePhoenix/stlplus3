@@ -3,7 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //   Author:    Andy Rushton, from an original by Dan Milton
-//   Copyright: (c) Andy Rushton, 2007
+//   Copyright: (c) Southampton University 1999-2004
+//              (c) Andy Rushton           2004-2008
 //   License:   BSD License, see ../docs/license.html
 
 //   Similar to the STL pair but with three elements

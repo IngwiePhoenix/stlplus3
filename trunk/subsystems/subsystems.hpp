@@ -3,7 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //   Author:    Andy Rushton
-//   Copyright: (c) Andy Rushton, 2007
+//   Copyright: (c) Southampton University 1999-2004
+//              (c) Andy Rushton           2004-2008
 //   License:   BSD License, see ../docs/license.html
 
 //   Allows all the STLplus subsystems to be included in one go

@@ -3,7 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //   Author:    Andy Rushton
-//   Copyright: (c) Andy Rushton, 2007
+//   Copyright: (c) Southampton University 1999-2004
+//              (c) Andy Rushton           2004-2008
 //   License:   BSD License, see ../docs/license.html
 
 //   A templated n-ary tree data structure. STL-like but the definition of
