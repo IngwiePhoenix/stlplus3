@@ -105,6 +105,9 @@ public:
   friend void dump_point(stlplus::dump_context&amp; context, const point&amp; pt);
   friend void restore_point(stlplus::restore_context&amp; context, point&amp; pt);
 }
+
+void dump_point(stlplus::dump_context&amp; context, const point&amp; pt);
+void restore_point(stlplus::restore_context&amp; context, point&amp; pt);
 </pre>
 
 <p>The dump and restore functions are written using the existing dump and restore functions for int,
@@ -130,7 +133,8 @@ void restore_point(stlplus::restore_context&amp; context, point&amp; pt)
 
 <p>Note that neither the dump nor the restore actually do any file I/O themselves, it is all
 delegated to the pre-written functions provided in <a
-href="persistent_basic.html#integer">persistent_basic.hpp</a> for type int.</p>
+href="persistent_basic.html#integer">persistent_basic.hpp</a> for type int. Note also that to access
+the values directly I have declared the functions as friends.</p>
 
 <h2 id="enums">Persistence of Enumeration Types</h2>
 
@@ -181,24 +185,30 @@ public:
   friend void dump_edge(stlplus::dump_context&amp; context, const edge&amp; pt);
   friend void restore_edge(stlplus::restore_context&amp; context, edge&amp; pt);
 };
+
+void dump_edge(stlplus::dump_context&amp; context, const edge&amp; pt);
+void restore_edge(stlplus::restore_context&amp; context, edge&amp; pt);
 </pre>
 
 <p>Once again the dump/restore functions can be written in terms of the
 dump/restore functions for the data members:</p>
 
 <pre class="cpp">
-void dump_point(stlplus::dump_context&amp; context, const edge&amp; e)
+void dump_edge(stlplus::dump_context&amp; context, const edge&amp; e)
 {
-  dump_edge(context,e.m_begin);
-  dump_edge(context,e.m_end);
+  dump_point(context,e.m_begin);
+  dump_point(context,e.m_end);
 }
 
-void restore_point(stlplus::restore_context&amp; context, edge&amp; e)
+void restore_edge(stlplus::restore_context&amp; context, edge&amp; e)
 {
-  restore_edge(context,e.m_begin);
-  restore_edge(context,e.m_end);
+  restore_point(context,e.m_begin);
+  restore_point(context,e.m_end);
 }
 </pre>
+
+<p>Once again, I have accessed the point elements directly by making the two functions friends of
+the class.</p>
 
 <p>In this case, to dump an edge means dumping two points which uses the dump function for the point
 class written in the last section. This layering can be continued ad infinitum.</p>
