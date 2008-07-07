@@ -37,6 +37,7 @@
 <li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#overview">Overview</a></li>
+<li><a href="#subsystems">Subsystems in the Persistence Library</a></li>
 <li><a href="#includes">Include Files</a></li>
 </ul>
 
@@ -242,8 +243,28 @@ to dump to a file called data.pst:</p>
 stlplus::dump_to_file(data, "data.pst", dump_string_vector_list, 0);
 </pre>
 
+<h2 id="subsystems">Subsystems in the Persistence Library</h2>
+
+<p>The rest of the explanation is split up into separate pages for each of the main subsystems
+within the persistence library:</p>
+
+<ul>
+<li><a href="persistent_contexts.html">persistent_contexts.hpp: Persistence Context Classes</a></li>
+<li><a href="persistent_basic.html">persistent_basic.hpp: Persistence of Basic Types</a></li>
+<li><a href="persistent_stl.html">persistent_stl.hpp: Persistence of STL Containers</a></li>
+<li><a href="persistent_stlplus.html">persistent_stlplus.hpp: Persistence of STLplus Containers</a></li>
+<li><a href="persistent_pointers.html">persistent_pointers.hpp: Persistence of Pointers</a></li>
+<li><a href="persistent_shortcuts.html">persistent_shortcuts.hpp: Shortcut Functions</a></li>
+<li><a href="persistent_examples.html">Examples</a></li>
+</ul>
 
 <h2 id="includes">Include Files</h2>
+
+<p>This section lists the types that are already made persistent by the built-in functions in the
+persistence library. In each case, the table below classifies the type and includes a link to the
+relevant page describing that subset of types. For example, all the basic (c-style) types are
+described on one page, the STL types on another and so on. Click on the "Library" column of the type
+you are interested in to go to the page for that type and others in the same category.</p>
 
 <table cellspacing="0">
 <caption>Persistence Functions</caption>
