@@ -1,13 +1,15 @@
-/*------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
-  thor:    Andy Rushton
-  Copyright: (c) Southampton University 1999-2004
+//   Author:    Andy Rushton
+//   Copyright: (c) Southampton University 1999-2004
 //              (c) Andy Rushton           2004-2008
-  License:   BSD License, see ../docs/license.html
+//   License:   BSD License, see ../docs/license.html
 
-------------------------------------------------------------------------------*/
+////////////////////////////////////////////////////////////////////////////////
+
 #include "debug.hpp"
 #include "dprintf.hpp"
+
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus
