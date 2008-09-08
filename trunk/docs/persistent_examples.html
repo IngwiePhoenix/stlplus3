@@ -268,11 +268,17 @@ include will be explained as the example unfolds:</p>
 #include "persistent_multimap.hpp"
 </pre>
 
-<p>The following definition is used to define two data structures that map an
-int onto a string:</p>
+<p>The following definition is used to define a type that maps an
+int onto a string, allowing multiple mappings for each int:</p>
 
 <pre class="cpp">
-std::multimap&lt;int,string&gt; data, restored;
+typedef std::multimap&lt;int,std::string&gt; int_string_map;
+</pre>
+
+<p>Two variables of this type can then be defined:</p>
+
+<pre class="cpp">
+int_string_map data, restored;
 </pre>
 
 <p>The object called data will be used to store the data to be saved
@@ -350,20 +356,19 @@ stlplus::restore_multimap(restorer,restored,stlplus::restore_int,stlplus::restor
 <p>The rest of the program just compares the two data structures to confirm
 they are identical. I don't need to go into that here.</p>
 
-<p>In practice, it is clearer if you do in fact write a trivial pair of functions
-called dump and restore to hide the use of the
-template functions. This also means that you can always remember the name of
-the persistence functions for any type you have designed - because they are
-always called dump and restore. The functions
-are:</p>
+<p>In practice, it is clearer if you use a typedef to create a named <i>type</i>, as in this case, and then write a
+trivial pair of functions called dump_<i>type</i> and restore_<i>type</i> to hide the use of the
+template functions. This also means that you can always remember the name of the persistence
+functions for any type you have designed - because they are always called dump and restore followed
+by the name of the type. The functions are:</p>
 
 <pre class="cpp">
-void dump(stlplus::dump_context&amp; context, const std::multimap&lt;int,string&gt;&amp; data)
+void dump_int_string_map(stlplus::dump_context&amp; context, const int_string_map&amp; data)
 {
   stlplus::dump_multimap(context, data, stlplus::dump_int, stlplus::dump_string);
 }
 
-void restore(stlplus::restore_context&amp; context, std::multimap&lt;int,string&gt;&amp; data)
+void restore_int_string_map(stlplus::restore_context&amp; context, int_string_map&amp; data)
 {
   stlplus::restore_multimap(context, data, stlplus::restore_int, stlplus::restore_string);
 }
