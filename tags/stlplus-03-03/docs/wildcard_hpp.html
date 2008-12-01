@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>portability/wildcard.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>portability/wildcard.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_WILDCARD</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_WILDCARD</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004-2008</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   This is a portable interface to wildcard matching.</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   The problem:</span>
+<span style="color: #ff0099">   13: </span><span style="color: #000099">//     *  matches any number of characters - this is achieved by matching 1 and seeing if the remainder matches</span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">//        if not, try 2 characters and see if the remainder matches etc.</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">//        this must be recursive, not iterative, so that multiple *s can appear in the same wildcard expression</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">//     ?  matches exactly one character so doesn't need the what-if approach</span>
+<span style="color: #ff0099">   17: </span><span style="color: #000099">//     \  escapes special characters such as *, ? and [</span>
+<span style="color: #ff0099">   18: </span><span style="color: #000099">//     [] matches exactly one character in the set - the difficulty is the set can contain ranges, e.g [a-zA-Z0-9]</span>
+<span style="color: #ff0099">   19: </span><span style="color: #000099">//        a set cannot be empty and the ] character can be included by making it the first character</span>
+<span style="color: #ff0099">   20: </span>
+<span style="color: #ff0099">   21: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   22: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
+<span style="color: #ff0099">   23: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   24: </span>
+<span style="color: #ff0099">   25: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   26: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   27: </span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #000099">// wild = the wildcard expression</span>
+<span style="color: #ff0099">   29: </span>  <span style="color: #000099">// match = the string to test against that expression</span>
+<span style="color: #ff0099">   30: </span>  <span style="color: #000099">// e.g. wildcard("[a-f]*", "fred") returns true</span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #990000">bool</span> <span style="color: #000000">wildcard</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">wild</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">match</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span><span style="color: #330033">}</span>
+<span style="color: #ff0099">   34: </span>
+<span style="color: #ff0099">   35: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
