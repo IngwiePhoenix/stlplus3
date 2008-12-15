@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>STLplus Library Collection - containers/ntree.hpp - Ntree - an N-ary Tree Container</title>
+<title>STLplus Library Collection - containers/ntree.hpp - Ntree - a Rooted Tree Container</title>
 <link rel="icon" href="plus.png" type="image/png">
 <meta name="Author" content="Andy Rushton">
 <meta name="Copyright" content="(c) Southampton University 1999-2004 Andy Rushton 2004-2008">
@@ -35,7 +35,7 @@ C++ Library Collection
 <div id="document">
 
 <div id="documentTitle">
-<h1>containers/ntree.hpp<br/>an N-ary Tree Container</h1>
+<h1>containers/ntree.hpp<br/>a Tree Container</h1>
 </div>
 
 <div id="documentNavigation">
@@ -54,8 +54,10 @@ C++ Library Collection
 
 <h2 id="introduction">Introduction</h2>
 
-<p>This component is an STL-like template class which implements an N-ary tree
-data structure.</p>
+<p>This component is an STL-like template class which implements a tree data structure. I called it
+an ntree (short for n-ary tree) years ago due to a misunderstanding - this is in fact a <a
+href="http://en.wikipedia.org/wiki/Tree_(graph_theory)">rooted ordered tree</a>. However, the name
+has stuck because I don't want to break existing code that uses it.</p>
 
 
 <h2 id="instantiation">Instantiation</h2>
