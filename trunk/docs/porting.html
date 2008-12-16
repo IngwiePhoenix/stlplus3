@@ -113,14 +113,14 @@ beyond the scope of the STLplus library to resolve it.</p>
 
 <h2 id="progress">Porting Progress</h2>
 
-<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a
-Compile Farm so that I could test STLplus on different platforms. This enabled me, for example, to
-fix problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
-withdrawn, so I can only test the library on my Windows machine. However, I can still test
-against both Unix (Cygwin emulation) and Windows, and both Visual Studio (Windows native) and Gcc
-compilers (both Windows native and Unix emulation).</p>
+<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a Compile
+Farm so that I could test STLplus on different platforms. This enabled me, for example, to fix
+problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
+withdrawn, so I can only test the library on my Windows machine. However, I can still test against
+Cygwin Unix emulation on Windows, Windows native builds using Visual Studio and Windows native
+builds using the MinGW version of the Gcc compiler.</p>
 
-<p>In the past, the STLplus library has been compiled with Gcc versions 2.95 to 4.1, with Visual
+<p>In the past, the STLplus library has been compiled with Gcc versions 2.95 to 4.3, with Visual
 Studio versions from 6 (SP5) to 8 (2005 Express Edition) and it reportedly works with the Borland
 compiler. It has been built on both 32-bit and 64-bit architectures (Intel, AMD, IBM OpenPower, Sun
 Sparc) running Windows (NT/2000/XP) Linux (Debian, RedHat, Suse), other Unix (Open BSD, Net BSD,
@@ -139,6 +139,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <colgroup>
 <col>
@@ -152,7 +153,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <thead valign="top">
 
 <tr>
-<th colspan="4">Platform</th>
+<th colspan="5">Platform</th>
 <th colspan="2">Build</th>
 <th colspan="2">State</th>
 </tr>
@@ -162,6 +163,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <th>Bits</th>
 <th>OS</th>
 <th>Compiler</th>
+<th>Version</th>
 <th>Name</th>
 <th>-D<sup>1</sup></th>
 <th>Tested</th>
@@ -176,54 +178,59 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>Intel 686</td>
 <td>32</td>
 <td>Windows XP</td>
-<td>gcc 3.4.4 (Unix emulation)</td>
+<td>gcc</td>
+<td>3.4.4 (Cygwin)</td>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
-<td>21 June 2008</td>
+<td>2008-12-16</td>
 <td>Uses <a href="http://www.cygwin.com">Cygwin</a> to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
 <tr>
-<td>Intel 686</td>
-<td>32</td>
-<td>Windows XP</td>
-<td>gcc 3.4.4 (Windows native)</td>
-<td><code>CYGMING-i686</code></td>
-<td><code>_WIN32</code></td>
-<td>21 June 2008</td>
-<td>Uses <a href="http://www.cygwin.com">Cygwin</a> to build a native Windows program</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>4.3.2 (alpha) (Cygwin)</td>
+<td><code>CYGWIN-i686</code></td>
+<td><code>CYGWIN</code></td>
+<td>2008-12-16</td>
+<td>Uses <a href="http://www.cygwin.com">Cygwin</a> with the alpha-test version of gcc v4 to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
 <tr>
-<td>Intel 686</td>
-<td>32</td>
-<td>Windows XP</td>
-<td>gcc 3.4.5 (MinGW)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>3.4.5 (MinGW)</td>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
-<td>21 June 2008</td>
+<td>2008-12-16</td>
 <td>Uses <a href="http://www.mingw.org">MinGW</a> to build a native Windows program</td>
 </tr>
 
 <tr>
-<td>Intel 686</td>
-<td>32</td>
-<td>Windows XP</td>
-<td>Visual Studio, v6</td>
 <td></td>
+<td></td>
+<td></td>
+<td>Visual Studio</td>
+<td>6 (SP5)</td>
+<td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>21 June 2008</td>
-<td>Visual Studio v6 - requires SP5</td>
+<td>2008-12-16</td>
+<td>Visual Studio v6 - must be patched to Service Pack 5</td>
 </tr>
 
 <tr>
-<td>Intel 686</td>
-<td>32</td>
-<td>Windows XP</td>
-<td>Visual Studio, v8</td>
 <td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>8</td>
+<td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>26 November 2007</td>
+<td>2007-11-26</td>
 <td>Visual Studio v8 (2005 Express Edition)</td>
 </tr>
 

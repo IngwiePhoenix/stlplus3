@@ -28,7 +28,7 @@ static std::string print_bytes (const std::string& val)
   return result;
 }
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   std::cerr << stlplus::build() << std::endl;
 

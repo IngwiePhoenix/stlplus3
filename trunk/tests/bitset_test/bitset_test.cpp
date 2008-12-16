@@ -81,7 +81,7 @@ bool compare (const bitset_vector& left, const bitset_vector& right)
   return result;
 }
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << COUNT << " bitset<" << SIZE << ">" << std::endl;

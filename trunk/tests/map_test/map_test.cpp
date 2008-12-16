@@ -61,7 +61,7 @@ std::ostream& operator<< (std::ostream& str, const int_string_map& data)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << NUMBER << " mappings" << std::endl;

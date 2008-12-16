@@ -67,7 +67,7 @@ bool compare(const string_matrix& left, const string_matrix& right)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << R << "*" << C << " mappings" << std::endl;

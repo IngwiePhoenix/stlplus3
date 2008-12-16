@@ -14,8 +14,8 @@
 #include "string_utilities.hpp"
 ////////////////////////////////////////////////////////////////////////////////
 
-static char* ini_filename = "test.ini";
-static char* ini_subdirs = "";
+static const char* ini_filename = "test.ini";
+static const char* ini_subdirs = "";
 
 ////////////////////////////////////////////////////////////////////////////////
 // utility for printing a vector of strings, used a lot in this program
@@ -149,7 +149,7 @@ bool test_ini_manager(stlplus::ini_manager& manager, const std::string& name)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main (unsigned argc, char* argv[])
+int main (int argc, char* argv[])
 {
   DEBUG_TRACE;
   std::cerr << stlplus::build() << std::endl;

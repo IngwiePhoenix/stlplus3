@@ -30,21 +30,21 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  static char* information_id = "INFORMATION";
-  static char* context_id = "CONTEXT";
-  static char* supplement_id = "SUPPLEMENT";
-  static char* warning_id = "WARNING";
-  static char* error_id = "ERROR";
-  static char* fatal_id = "FATAL";
-  static char* position_id = "POSITION";
+  static const char* information_id = "INFORMATION";
+  static const char* context_id = "CONTEXT";
+  static const char* supplement_id = "SUPPLEMENT";
+  static const char* warning_id = "WARNING";
+  static const char* error_id = "ERROR";
+  static const char* fatal_id = "FATAL";
+  static const char* position_id = "POSITION";
 
-  static char* default_information_format = "@0";
-  static char* default_context_format = "context: @0";
-  static char* default_supplement_format = "supplement: @0";
-  static char* default_warning_format = "warning: @0";
-  static char* default_error_format = "error: @0";
-  static char* default_fatal_format = "FATAL: @0";
-  static char* default_position_format = "\"@1\" (@2,@3) : @0";
+  static const char* default_information_format = "@0";
+  static const char* default_context_format = "context: @0";
+  static const char* default_supplement_format = "supplement: @0";
+  static const char* default_warning_format = "warning: @0";
+  static const char* default_error_format = "error: @0";
+  static const char* default_fatal_format = "FATAL: @0";
+  static const char* default_position_format = "\"@1\" (@2,@3) : @0";
 
   ////////////////////////////////////////////////////////////////////////////////
   // position class
@@ -146,24 +146,24 @@ namespace stlplus
     message_handler_base* m_base;
 
   public:
-    message_context_body::message_context_body(message_handler_base& handler) :
+    message_context_body(message_handler_base& handler) :
       m_depth(0), m_base(0)
       {
         set(handler);
       }
 
-    message_context_body::~message_context_body(void)
+    ~message_context_body(void)
       {
         pop();
       }
 
-    void message_context_body::set(message_handler_base& handler)
+    void set(message_handler_base& handler)
       {
         m_base = &handler;
         m_depth = m_base->context_depth();
       }
 
-    void message_context_body::pop(void)
+    void pop(void)
       {
         if (m_base)
           m_base->pop_context(m_depth);

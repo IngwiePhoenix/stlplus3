@@ -56,43 +56,23 @@ namespace stlplus
   std::string float_to_string(float f, real_display_t display, unsigned width, unsigned precision)
     throw(std::invalid_argument)
   {
-    char* format = 0;
-    switch(display)
-    {
-    case display_fixed:
-      format = "%*.*f";
-      break;
-    case display_floating:
-      format = "%*.*e";
-      break;
-    case display_mixed:
-      format = "%*.*g";
-      break;
-    default:
-      throw std::invalid_argument("invalid radix display value");
-    }
-    return local_dformat(format, width, precision, f);
+    return double_to_string((double)f, display, width, precision);
   }
 
   std::string double_to_string(double f, real_display_t display, unsigned width, unsigned precision)
     throw(std::invalid_argument)
   {
-    char* format = 0;
     switch(display)
     {
     case display_fixed:
-      format = "%*.*f";
-      break;
+      return local_dformat("%*.*f", width, precision, f);
     case display_floating:
-      format = "%*.*e";
-      break;
+      return local_dformat("%*.*e", width, precision, f);
     case display_mixed:
-      format = "%*.*g";
-      break;
+      return local_dformat("%*.*g", width, precision, f);
     default:
       throw std::invalid_argument("invalid radix display value");
     }
-    return local_dformat(format, width, precision, f);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

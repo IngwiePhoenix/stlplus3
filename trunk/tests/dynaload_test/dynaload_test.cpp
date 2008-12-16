@@ -6,7 +6,7 @@
 typedef char* (*sqlite3_libversion_t)(void);
 
 
-int main (unsigned argc, char* argv[])
+int main (int argc, char* argv[])
 {
   DEBUG_TRACE;
   std::cerr << stlplus::build() << std::endl;

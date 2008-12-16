@@ -47,7 +47,7 @@ bool compare(const string_deque& left, string_deque& right)
   return result;
 }
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   std::cerr << stlplus::build() << " testing " << NUMBER << " deque elements of " << SIZE << "-byte strings" << std::endl;
   bool result = true;

@@ -161,32 +161,34 @@ public:
         m_map[*i] = i.simplify();
       }
     }
-  friend void dump_mapped_tree(stlplus::dump_context& context, const mapped_tree& data)
-    {
-      dump_string_tree(context,data.m_tree);
-      dump_tree_map(context,data.m_map);
-    }
-  friend void restore_mapped_tree(stlplus::restore_context& context, mapped_tree& data)
-    {
-      restore_string_tree(context,data.m_tree);
-      restore_tree_map(context,data.m_map);
-    }
-  friend std::ostream& operator << (std::ostream& device, const mapped_tree& data)
-    {
-      device << data.m_tree << std::endl;
-      device << data.m_map << std::endl;
-      return device;
-    }
-  friend bool compare(const mapped_tree& left, const mapped_tree& right)
-    {
-      // TODO - compare maps too
-      return compare(left.m_tree,right.m_tree);
-    }
 };
+
+void dump_mapped_tree(stlplus::dump_context& context, const mapped_tree& data)
+{
+  dump_string_tree(context,data.m_tree);
+  dump_tree_map(context,data.m_map);
+}
+
+void restore_mapped_tree(stlplus::restore_context& context, mapped_tree& data)
+{
+  restore_string_tree(context,data.m_tree);
+  restore_tree_map(context,data.m_map);
+}
+std::ostream& operator << (std::ostream& device, const mapped_tree& data)
+{
+  device << data.m_tree << std::endl;
+  device << data.m_map << std::endl;
+  return device;
+}
+bool compare(const mapped_tree& left, const mapped_tree& right)
+{
+  // TODO - compare maps too
+  return compare(left.m_tree,right.m_tree);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   std::cerr << stlplus::build() << std::endl;
   bool result = true;

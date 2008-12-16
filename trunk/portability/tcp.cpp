@@ -6,8 +6,11 @@
 //   License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////
+
 #include "tcp.hpp"
 #include "dprintf.hpp"
+#include <string.h>
+
 #ifdef MSWINDOWS
 // Windoze-specific includes
 #include <winsock2.h>
@@ -44,6 +47,7 @@
 #include <sys/filio.h>
 #endif
 #endif
+
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus

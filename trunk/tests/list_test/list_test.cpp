@@ -52,7 +52,7 @@ bool compare(const string_list& left, const string_list& right)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << NUMBER << " list elements of " << SIZE << "-byte strings" << std::endl;

@@ -76,7 +76,7 @@ bool compare(const int_string_hash& left, const int_string_hash& right)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << NUMBER << " mappings" << std::endl;

@@ -59,7 +59,7 @@ std::ostream& operator<< (std::ostream& device, const string_set& values)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   bool result = true;
   std::cerr << stlplus::build() << " testing " << NUMBER << " set members" << std::endl;

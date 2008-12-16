@@ -29,7 +29,7 @@ static std::string print_bytes (const std::string& val)
   return result;
 }
 
-int main(unsigned argc, char* argv[])
+int main(int argc, char* argv[])
 {
   std::cerr << stlplus::build() << std::endl;
 
@@ -38,7 +38,7 @@ int main(unsigned argc, char* argv[])
   {
     // just dump some basic types
     std::cerr << "dumping" << std::endl;
-    char* original = "Hello\r\nWorld";
+    const char* original = "Hello\r\nWorld";
     stlplus::dump_to_file(original, DATA, stlplus::dump_cstring, 0);
 
     // now restore a copy and compare it
