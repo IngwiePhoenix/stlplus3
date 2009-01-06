@@ -58,7 +58,33 @@ for this version are huge. Therefore only the changes since then have been docum
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
 
+<h2 id="v3.4">Changes from Version 3.3 to 3.4</h2>
+
+<h3>Change in terminology</h3>
+
+<p>The ntree is a tree data structure where each node can have any number of children. This is
+technically not an n-ary tree as I thought when I wrote it. An n-ary tree has <i>exactly</i> n
+children on each node, whereas my ntree class can have any number of children. Furthermore, trees
+can be classed as rooted or unrooted depending on whether it has a single root node. So the
+documentation now refers to it as a rooted tree. That is, it is an arbitrary-branched tree with a
+single root node.</p>
+
+<p>The code has not changed - in particular the class is still called ntree - because I don't see
+the point in breaking existing code over a slight terminology mix-up.</p>
+
+<h3>Fixes for gcc v4.3</h3>
+
+<p>As has happened several times in the past, a new version of gcc has tighter rules than older
+versions and caused some minor problems in the code to be revealed. There are two types: (1) use of C++
+features that were common practice when STLplus was originally deveoped, but which have been
+deprecated; (2) missing system includes, since some system files used to be implicitly included.</p>
+
+<p>Both STLplus v3.4 and all the tests now compile correctly with gcc v4.3 as well as older versions.</p>
+
 <h2 id="v3.3">Changes from Version 3.2 to 3.3</h2>
+
+<p>The purpose of this release is to change the status from beta to stable. There are no code
+changes and the only difference is a correction in the copyright notice.</p>
 
 <h3>Fixed Copyright statement</h3>
 
