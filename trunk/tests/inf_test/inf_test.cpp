@@ -38,7 +38,7 @@ static bool compare (bigint left, const stlplus::inf& right)
   return true;
 }
 
-static bool report(int a, int b, char* op)
+static bool report(int a, int b, const char* op)
 {
   std::cerr << "operator " << op << " failed with a = " << a << ", b = " << b << std::endl;
   return false;
