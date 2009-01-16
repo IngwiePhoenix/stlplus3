@@ -41,7 +41,7 @@ body
   background: url(header.png) #9d9ca7 repeat-x;
 }
 
-#headerBanner p
+#headerBanner h1, #headerBanner p
 {
   font-size: xx-large;
   font-weight: bold;
