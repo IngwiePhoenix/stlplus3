@@ -379,18 +379,19 @@ CYGWIN-i686-debug for the Cygwin build and LINUX-i686-debug for the Linux build.
 
 <p>The STLplus library collection can alternatively be built on Windows using the native Microsoft
 Visual Studio compiler. The STLplus library includes a Visual Studio workspace for Visual Studio 6 -
-which can be converted automatically into a target file for Visual Studio 7 or 8. Furthermore, each
-library in the collection has its own project file which can be incorporated into any other
-workspace. So individual libraries can be incorporated stand-alone in this way.</p>
+which can be converted automatically into a target file for Visual Studio 7. It also includes a
+solution file for Visual Studio 8 (2005). Furthermore, each library in the collection has its own
+project file which can be incorporated into any other workspace or solution. So individual libraries
+can be incorporated stand-alone in this way.</p>
 
 <p>Beware that there is a terminology problem here - Microsoft call a library a project and a
 project a workspace, and so on. I will try to remember to use Microsoft terminology here.</p>
 
 <h3>Building The Libraries</h3>
 
-<p>The STLplus library collection comes with a Visual Studio workspace file
-(<code>stlplus3.dsw</code>) which is kept in the top-level directory. You can open this by
-double-clicking it.</p>
+<p>The STLplus library collection comes with a Visual Studio 6 workspace file
+(<code>stlplus3.dsw</code>) and a Visual Studio 8 solution file (<code>stlplus3.sln</code>) which
+are kept in the top-level directory. You can open either by double-clicking it.</p>
 
 <p>The workspace can now be built. This will build all of the libraries in the collection. First,
 select the configuration you wish to build - Debug or Release. Then, for each project, make it the
@@ -418,6 +419,9 @@ libraries that you want to use in the new project.</p>
 
 <p>You now need to set up an include path for the C++ compiler and a project dependency for
 the linker.</p>
+
+<p><b>Note:</b> These instructions are for Visual Studio 6. Visual Studio 8 (2005) is similar but
+all the dialogs have been redesigned - the principles however are the same.</p>
 
 <p>To set up the include path, select the project that you wish to have access to the stlplus
 libraries. Then select the menu item Project->Settings. A mind-bogglingly complicated dialog will
