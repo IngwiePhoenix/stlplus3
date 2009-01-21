@@ -2,7 +2,7 @@
 
 //   Author:    Andy Rushton, from an original by Dan Milton
 //   Copyright: (c) Southampton University 1999-2004
-//              (c) Andy Rushton           2004-2008
+//              (c) Andy Rushton           2004-2009
 //   License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////

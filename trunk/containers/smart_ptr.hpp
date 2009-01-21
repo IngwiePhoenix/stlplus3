@@ -4,7 +4,7 @@
 
 //   Author:    Andy Rushton
 //   Copyright: (c) Southampton University 1999-2004
-//              (c) Andy Rushton           2004-2008
+//              (c) Andy Rushton           2004-2009
 //   License:   BSD License, see ../docs/license.html
 
 //   A smart pointer is a memory-managing pointer to an object. If you like, it
