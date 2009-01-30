@@ -118,16 +118,16 @@ message_handler::message_handler(std::ostream&amp; device,
   throw();
 </pre>
 
-<p>The <i>device</i> argument is an IOStream output device which is used as the
+<p>The <em>device</em> argument is an IOStream output device which is used as the
 destination for all messages. For command-line tools it will probably be std::cout
 (standard output) or std::cerr (standard error).</p>
 
-<p>The <i>limit</i> argument is the error limit. If set to zero (the default) there is
+<p>The <em>limit</em> argument is the error limit. If set to zero (the default) there is
 no limit to the number of errors that can be printed. Otherwise, if the stated
 limit of error messages is reached, the message handler will throw an error_limit
 exception which can be caught later to terminate an operation.</p>
 
-<p>The <i>show</i> argument controls whether positional messages will also display the
+<p>The <em>show</em> argument controls whether positional messages will also display the
 original source text with an indicator showing where the error occurred. This
 will typically be true for command-line tools and false for GUI commands. For
 example, a compiler might generate the following error with show set to
@@ -266,7 +266,7 @@ the formatted message. The @0 argument will be replaced by the message from the
 error file with the arguments substituted.</p>
 
 <p>For positional messages, the simple message text created by the rules above
-is <i>further</i> substituted into a positional format string. The positional
+is <em>further</em> substituted into a positional format string. The positional
 format string takes up to 4 arguments:</p>
 
 <ul>
@@ -293,7 +293,7 @@ void message_handler::set_fatal_format(const std::string&amp; format) throw();
 void message_handler::set_position_format(const std::string&amp; format) throw();
 </pre>
 
-<p><b>Note:</b> at present there is no sanity check on the format strings. It is up to you to get
+<p><strong>Note:</strong> at present there is no sanity check on the format strings. It is up to you to get
 them right. Mistakes here could lead to stlplus::message_handler_format_error being thrown when you
 try to write a message.</p>
 
@@ -579,8 +579,8 @@ for (unsigned i = 0; i &lt; candidates.size(); i++)
 errors.error(current_position, "VDK_COMPONENT_AMBIGUOUS");
 </pre>
 
-<p>Although the supplemental messages are <i>loaded</i> before the main message, they are
-<i>printed</i> after it, since this is a more natural order:</p>
+<p>Although the supplemental messages are <em>loaded</em> before the main message, they are
+<em>printed</em> after it, since this is a more natural order:</p>
 
 <pre class="script">
 "test.cpp" (13,6) error: this component is ambiguous

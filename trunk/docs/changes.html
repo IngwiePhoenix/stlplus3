@@ -65,7 +65,7 @@ log for all version 2 releases by looking at the
 <h3>Change in terminology</h3>
 
 <p>The ntree is a tree data structure where each node can have any number of children. This is
-technically not an n-ary tree as I thought when I wrote it. An n-ary tree has <i>exactly</i> n
+technically not an n-ary tree as I thought when I wrote it. An n-ary tree has <em>exactly</em> n
 children on each node, whereas my ntree class can have any number of children. Furthermore, trees
 can be classed as rooted or unrooted depending on whether it has a single root node. So the
 documentation now refers to it as a rooted tree. That is, it is an arbitrary-branched tree with a
@@ -264,10 +264,10 @@ href="strings.html">strings</a> library.</p>
 <p>STLplus 2 relied on overloading the functions dump and restore to implement persistence. However,
 because of the redesign of the functions discussed above, persistence functions are now passed as
 parameters to other persistence functions. To avoid ambiguity, all persistence functions now have
-unique names - dump_<i>type</i> and restore_<i>type</i>. See the <a
+unique names - dump_<em>type</em> and restore_<em>type</em>. See the <a
 href="persistence.html">persistence library</a> for more information.</p>
 
-<p><b>Note:</b> the persistence file format is unchanged by this rewrite, so STLplus version 2 files
+<p><strong>Note:</strong> the persistence file format is unchanged by this rewrite, so STLplus version 2 files
 can be read by version 3 and vice versa.</p>
 
 <h3>Print and String-Conversion Functions Renamed</h3>
@@ -276,7 +276,7 @@ can be read by version 3 and vice versa.</p>
 provide printing and formatting functions for whole data structures. However, because of the
 redesign of the functions discussed above, functions are now passed as parameters to other
 functions. To avoid ambiguity, all print and string-formatting functions now have unique names -
-print_<i>type</i> and <i>type</i>_to_string. See the <a href="strings.html">strings library</a> for
+print_<em>type</em> and <em>type</em>_to_string. See the <a href="strings.html">strings library</a> for
 more information.</p>
 
 </div>

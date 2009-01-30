@@ -155,7 +155,7 @@ pass a string of, say, 1k bytes and only 100 bytes can be sent at once, the
 first 100 bytes of the string will be erased to indicate that they've been
 sent. You should repeat the send until the whole string has been consumed. The
 send function returns false only if an error occurred - failure to send
-because the server is not ready does <i>not</i> class as an error. All that
+because the server is not ready does <em>not</em> class as an error. All that
 will happen there is that the function will return true but the string will
 still contain the same data. You should retry, possibly after a short
 delay.</p>
@@ -167,7 +167,7 @@ ready for you. The send_ready function allows you to specify a time delay to
 wait for the server to become ready if it is not at the time of the call. This
 delay is specified in micro-seconds (so giving the delay the value 1000000
 will cause a delay of 1s). Setting the delay to zero will simply test whether
-the server is ready <i>now</i>. This is a non-blocking test which will be the best choice if you are using
+the server is ready <em>now</em>. This is a non-blocking test which will be the best choice if you are using
 the TCP classes as part of a bigger program such as a GUI where there are
 other things to deal with, or if you are trying to poll multiple connections.
 If the server is not ready after this time delay has expired, the send_ready

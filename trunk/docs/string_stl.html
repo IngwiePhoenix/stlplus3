@@ -58,15 +58,15 @@ similar interfaces.</p>
 <p>There are two separate header files for including these functions:</p>
 
 <ul>
-<li><a href="string_stl_hpp.html">string_stl.hpp</a>: For the <i>type</i>_to_string functions</li>
-<li><a href="print_stl_hpp.html">print_stl.hpp</a>: For the print_<i>type</i> functions</li>
+<li><a href="string_stl_hpp.html">string_stl.hpp</a>: For the <em>type</em>_to_string functions</li>
+<li><a href="print_stl_hpp.html">print_stl.hpp</a>: For the print_<em>type</em> functions</li>
 </ul>
 
 <h2 id="to_string">Conversion of STL Containers to String</h2>
 
-<p>There is a set of functions which are called <i>type</i>_to_string and which are templates. They
+<p>There is a set of functions which are called <em>type</em>_to_string and which are templates. They
 give a convenient way of providing string formatting for the most-commonly uses STL container
-classes. They rely on you writing a <i>type</i>_to_string or print_<i>type</i> function for the type
+classes. They rely on you writing a <em>type</em>_to_string or print_<em>type</em> function for the type
 contained within the container.</p>
 
 <p>The functions for formatting most data types have additional formatting parameters such as
@@ -149,13 +149,13 @@ std::string stlplus::pointer_to_string(const T* value,
 </pre>
 
 <p>To print a template container which contains another template container,
-write a <i>type</i>_to_string function simply calling the containing <i>type</i>_to_string function. For
+write a <em>type</em>_to_string function simply calling the containing <em>type</em>_to_string function. For
 example, to write a string_list_vector_to_string function for a list&lt;vector&lt;string&gt;&gt;
 you go through the following sequence:</p>
 
 <p>First, there is already a string_to_string function for type string (with a pretty
 trivial implementation!), so you have nothing to do there. However, if the
-lowest level type did not already have a <i>type</i>_to_string function you would need to
+lowest level type did not already have a <em>type</em>_to_string function you would need to
 write one.<p>
 
 <p>Now write a string_vector_to_string function for the vector&lt;string&gt; type:</p>
@@ -185,7 +185,7 @@ contain a comma-separated list of colon-separated strings.</p>
 <h2 id="print">Printing Functions</h2>
 
 <p>In parallel with the set of string conversion routines, there is a set of print routines for the
-same set of types. The convention is to have a print_<i>type</i> function that takes an IOStream
+same set of types. The convention is to have a print_<em>type</em> function that takes an IOStream
 output device, followed by the same parameters as the corresponding </i>type</i>_to_string function
 above.</p>
 

@@ -131,7 +131,7 @@ can then use the non-abstract methods provided by the interface.</p>
 <p>When you derive from an interface class, the rules of C++ require you to
 provide non-abstract overloadings of all the abstract methods defined in the
 interface. It is illegal in C++ to create an object of an abstract class and
-your class will only be non-abstract if <i>all</i> of the abstract functions
+your class will only be non-abstract if <em>all</em> of the abstract functions
 have been overloaded correctly. Therefore the compiler can confirm that all
 the methods required by the interface have been provided. If you have missed
 out a method or mis-defined it, there will still be at least one abstract
@@ -172,7 +172,7 @@ namespace stlplus
 persistent, you derive it from the <code>persistent</code> interface:</p>
 
 <pre class="cpp">
-class base<b> : public persistent</b>
+class base<strong> : public persistent</strong>
 {
   int m_value;
 public:
@@ -182,9 +182,9 @@ public:
   virtual int value (void) const {return m_value;}
   virtual void set(int value = 0) {m_value = value;}
 
-  <b>void dump(dump_context&amp; context) const {stlplus::dump_int(context,m_value);}</b>
-  <b>void restore(restore_context&amp; context) {stlplus::restore_int(context,m_value);}</b>
-  <b>persistent* clone(void) const {return new base(*this);}</b>
+  <strong>void dump(dump_context&amp; context) const {stlplus::dump_int(context,m_value);}</strong>
+  <strong>void restore(restore_context&amp; context) {stlplus::restore_int(context,m_value);}</strong>
+  <strong>persistent* clone(void) const {return new base(*this);}</strong>
 };
 </pre>
 

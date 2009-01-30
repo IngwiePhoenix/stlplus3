@@ -63,8 +63,8 @@ C++ Library Collection
 <h2 id="introduction">Introduction</h2>
 
 <p>The template classes provided by the STL have been made persistent using template dump/restore
-functions. To avoid overload problems the functions are actually called dump_<i>class</i> and
-restore_<i>class</i> where <i>class</i> is the name of the template class. For example, the
+functions. To avoid overload problems the functions are actually called dump_<em>class</em> and
+restore_<em>class</em> where <em>class</em> is the name of the template class. For example, the
 persistence functions for the STL map are called dump_map and restore_map.</p>
 
 <p>Also provided here are the persistence functions for the std::string type, which are not
@@ -134,7 +134,7 @@ persistence library. However, I prefer to wrap the function calls into a top-lev
 simple interface and hides the implementation, as in the example above, even though the
 implementation is one line of code.</p>
 
-<p><b>Note:</b>The function name passed as a parameter <i>must</i> have only two parameters - the
+<p><strong>Note:</strong>The function name passed as a parameter <em>must</em> have only two parameters - the
 context and the data. To pass a function that takes extra parameters, wrap those functions in a
 wrapper function, like the dump_string_int_pair and restore_string_int_pair functions above. These functions
 can be used in a higher-level data structure, whereas the stlplus::dump_pair and
@@ -184,7 +184,7 @@ std::basic_string which can be used to represent strings of any character width.
 <p>The second pair of functions are non-templatised functions for the persistence of std::string -
 the specialisation of std::basic_string for 8-bit characters.</p>
 
-<p><b>Note:</b>The 'standard' type std::wstring is not supported because it is too weakly defined. 
+<p><strong>Note:</strong>The 'standard' type std::wstring is not supported because it is too weakly defined. 
 It is ostensibly the Unicode string, which requires a minimum of 21 bits. On Windows wstring is only
 16 bits wide so is actually UTF-16 encoded Unicode. On Linux, wstring is 32 bits wide and therefore
 is unencoded UCS-4. Since UTF-16 and UCS-4 are not compatible and are not easily convertible, it is
@@ -493,7 +493,7 @@ void restore_flags_vector(stlplus::restore_context&amp; context, flags_vector&am
 
 <h2 id="omitted">Omitted Classes - Adaptors and Iterators</h2>
 
-<p><b>Note:</b> I have not done the container adaptors <code>queue</code>,
+<p><strong>Note:</strong> I have not done the container adaptors <code>queue</code>,
 <code>priority_queue</code> and <code>stack</code> because their interfaces are too restrictive to
 allow dump and restore routines to be written without burgling the data structure. This means that I
 will never do them because it is impossible!</p>

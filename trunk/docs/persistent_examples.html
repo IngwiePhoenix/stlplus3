@@ -81,8 +81,8 @@ public:
 <p>The required parameter profile of the dump/restore functions is:</p>
 
 <pre class="cpp">
-void dump_<i>type</i>(stlplus::dump_context&amp;, const <i>type</i>&amp;);
-void restore_<i>type</i>(stlplus::restore_context&amp;, <i>type</i>&amp;);
+void dump_<em>type</em>(stlplus::dump_context&amp;, const <em>type</em>&amp;);
+void restore_<em>type</em>(stlplus::restore_context&amp;, <em>type</em>&amp;);
 </pre>
 
 <p>These functions should be declared as stand-alone functions and not methods. In this case this
@@ -357,8 +357,8 @@ stlplus::restore_multimap(restorer,restored,stlplus::restore_int,stlplus::restor
 <p>The rest of the program just compares the two data structures to confirm
 they are identical. I don't need to go into that here.</p>
 
-<p>In practice, it is clearer if you use a typedef to create a named <i>type</i>, as in this case, and then write a
-trivial pair of functions called dump_<i>type</i> and restore_<i>type</i> to hide the use of the
+<p>In practice, it is clearer if you use a typedef to create a named <em>type</em>, as in this case, and then write a
+trivial pair of functions called dump_<em>type</em> and restore_<em>type</em> to hide the use of the
 template functions. This also means that you can always remember the name of the persistence
 functions for any type you have designed - because they are always called dump and restore followed
 by the name of the type. The functions are:</p>
@@ -528,7 +528,7 @@ public:
 };
 </pre>
 
-<p><b>Note:</b> The clone method is also required by the <a href="smart_ptr.html">smart_ptr_clone</a> container
+<p><strong>Note:</strong> The clone method is also required by the <a href="smart_ptr.html">smart_ptr_clone</a> container
 which is also used to store polymorphic classes, so once you've made a class persistent, you've
 automatically made it suitable for use in this smart pointer.</p>
 
@@ -566,7 +566,7 @@ restore added.</p>
 <p>Here's these classes with the additions:</p>
 
 <pre class="cpp">
-class base<b> : public persistent</b>
+class base<strong> : public persistent</strong>
 {
   int m_value;
 public:
@@ -576,7 +576,7 @@ public:
   virtual int value (void) const {return m_value;}
   virtual void set(int value = 0) {m_value = value;}
 
-  <b>persistent* clone(void) const
+  <strong>persistent* clone(void) const
   {
     return new base(*this);
   }
@@ -587,7 +587,7 @@ public:
   void restore(stlplus::restore_context&amp; context) throw(stlplus::persistent_restore_failed)
   {
     stlplus::restore_int(context,m_value);
-  }</b>
+  }</strong>
 };
 
 class derived : public base
@@ -600,7 +600,7 @@ public:
 
   virtual void set(int value = 0) {m_image = dformat("%d",value); base::set(value);}
 
-  <b>persistent* clone(void) const
+  <strong>persistent* clone(void) const
   {
     return new derived(*this);
   }
@@ -613,7 +613,7 @@ public:
   {
     base::restore(context);
     stlplus::restore_string(context,m_image);
-  }</b>
+  }</strong>
 };
 </pre>
 
@@ -798,7 +798,7 @@ void restore_base_ptr(stlplus::restore_context&amp; context, base_ptr&amp; ptr)
 
 <p>Note how the interface variant of the dump/restore functions have been used. Also, the functions
 for dumping and restoring the smart_ptr_clone do not require parameters naming functions to call for
-the stored element. This is because the dump/restore <i>methods</i> will be used.</p>
+the stored element. This is because the dump/restore <em>methods</em> will be used.</p>
 
 <p>The final stage is to make a vector of these persistent:</p>
 
@@ -856,16 +856,16 @@ if it is not possible to change the class definitions, but
 if possible it is easier to add the functions as friends of the class so that
 they have direct access to the data fields. The three functions are the
 create, dump and restore callbacks. The convention is to call them
-create_<i>class</i>, dump_<i>class</i> and
-restore_<i>class</i>, where <i>class</i> is the name of the
+create_<em>class</em>, dump_<em>class</em> and
+restore_<em>class</em>, where <em>class</em> is the name of the
 class that they act on.</p>
 
 <p>The parameter profiles of the three callbacks is:</p>
 
 <pre class="cpp">
-void dump_<i>class</i>(stlplus::dump_context&amp; context, const void* data)
-void* create_<i>class</i>(void)
-void restore_<i>class</i>(stlplus::restore_context&amp; context, void*&amp; data)
+void dump_<em>class</em>(stlplus::dump_context&amp; context, const void* data)
+void* create_<em>class</em>(void)
+void restore_<em>class</em>(stlplus::restore_context&amp; context, void*&amp; data)
 </pre>
 
 <p>For this example, these functions are added to the classes as
@@ -1042,7 +1042,7 @@ void restore(stlplus::restore_context&amp; context, base*&amp; ptr)
 }
 </pre>
 
-<p><b>Note</b>: since polymorphic types are handled in C++ via pointers, the
+<p><strong>Note</strong>: since polymorphic types are handled in C++ via pointers, the
 same behaviour is implemented for multiple pointers to the same object as was
 implemented for simple pointers. When two pointers to the same object are
 dumped, they will be restored as pointers

@@ -400,10 +400,10 @@ iterators. It seems to me that since there is no such thing as a sort
 ordering on a hash, there's no need for any other iteration order.</p>
 
 <p>STLplus iterators are slightly different to STL iterators in that they know which container they
-belong to. When an iterator is first declared, but not assigned to, it is known as a <i>null</i>
+belong to. When an iterator is first declared, but not assigned to, it is known as a <em>null</em>
 iterator. Then, when it is assigned to so that it points to a node in the tree, it is known as a
-<i>valid</i> iterator. If the iterator is made to point off the end of the hash - for example by
-incrementing to the value returned by the end() method above, then it becomes an <i>end</i> iterator.</p>
+<em>valid</em> iterator. If the iterator is made to point off the end of the hash - for example by
+incrementing to the value returned by the end() method above, then it becomes an <em>end</em> iterator.</p>
 
 <p>This concept is similar to STL iterators like the list iterator, where an iterator that walks off
 the end of the list becomes an end iterator. However, the STL has no concept of a null iterator and
@@ -435,20 +435,20 @@ misuse of the iterators:</p>
 
 <dl>
 
-<dt><b>null_dereference</b> - logic_error</dt>
+<dt><strong>null_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
 be sure that iterators are non-null before using the <code>*</code> or <code>-></code>
 operators.</dd>
 
-<dt><b>end_dereference</b> - logic_error</dt>
+<dt><strong>end_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator that is pointing to an end element has been
 dereferenced. In line with STL conventions, the end iterator points to the element after the last
 element in a container, so dereferencing such an iterator is illegal (the memory pointed to will be
 unconstructed).</dd>
 
-<dt><b>wrong_object</b> - logic_error</dt>
+<dt><strong>wrong_object</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which was created by one container has been used in a
 different container. For example, if you have two hash objects in your program, create an iterator

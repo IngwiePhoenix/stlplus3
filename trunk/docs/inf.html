@@ -80,14 +80,14 @@ library is used; it is seriously fast.</p>
 <p>The inf object looks a bit like an integer type and can be declared and
 initialised in a similar way. However, there is one thing you cannot do, and
 that is simply assign an integer value to it on creation. In other words, the
-following will <b>not</b> work:</p>
+following will <strong>not</strong> work:</p>
 
 <pre class="cpp">
 inf b = 0;  // illegal
 </pre>
 
 <p>The reason for this is that, although the inf type has constructors that take
-integer arguents, I've made them <i>explicit</i> which prevents them being used
+integer arguents, I've made them <em>explicit</em> which prevents them being used
 by C++ to perform implicit type conversions (all 1-parameter constructors are
 normally considered candidates for type conversions). I was concerned that C++
 compilers can be over-keen on such type conversions and create nasty surprises
@@ -157,7 +157,7 @@ inf because, from experience, I know that allowing implicit type conversions
 from integer types can cause the compiler to become
 overly fond of type conversions to inf. You lose a lot of compiler checking as a
 result. Therefore, intermediate values must be explicitly created. For example,
-you <b>cannot</b> do this:</p>
+you <strong>cannot</strong> do this:</p>
 
 <pre class="cpp">
 a += 25;    // illegal
@@ -245,7 +245,7 @@ for (unsigned i = 0; i &lt; a.bits(); i++)
 
 <p>The result of the [] operator is a bool. The one difference with the array
 index operator is that [] cannot be used as the target of an assignment. In
-other words you <b>cannot</b> do this:</p>
+other words you <strong>cannot</strong> do this:</p>
 
 <pre class="cpp">
 a[0] = true;  // illegal

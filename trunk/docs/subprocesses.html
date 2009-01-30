@@ -710,7 +710,7 @@ standard output and standard error by interleaving the calls to the read
 functions.</p>
 
 <p>The main trick when using asynchronous subprocesses is to not give up reading
-the output too soon. Typically the child will finish <i>before</i> the output buffers
+the output too soon. Typically the child will finish <em>before</em> the output buffers
 have been read by the parent. Therefore a good strategy is to read the output
 until end of file is found, then keep calling async_subprocess::tick() until the subprocess
 exits. It is then poossible to test the exit status. Note that you must call

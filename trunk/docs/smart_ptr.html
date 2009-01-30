@@ -80,13 +80,13 @@ when finished. It is, if you like, a memory-managing pointer.</p>
 <p>A smart pointer maintains a pointer to a single object. It also keeps a count of how many smart
 pointers point to the object. When smart pointers are assigned or 'copied', no copying of the object
 pointed to takes place, instead the pointer count is just incremented. This is known as
-<i>aliasing</i>. When a destructor is called, the count is just decremented. This is known as
-<i>dealising</i>. The object itself is destroyed when the count is decremented to zero, indicating
+<em>aliasing</em>. When a destructor is called, the count is just decremented. This is known as
+<em>dealising</em>. The object itself is destroyed when the count is decremented to zero, indicating
 that the last alias has been destroyed.</p>
 
 <p>The existing STL containers already memory manage their contents - for example, when a vector
 goes out of scope, its destructor will deallocate its contents. However, there are some situations
-where you need to store pointers, not objects, in containers. Container classes will <b>not</b>
+where you need to store pointers, not objects, in containers. Container classes will <strong>not</strong>
 deallocate those. These are the situations where a smart
 pointer is needed.</p>
 
@@ -218,13 +218,13 @@ believe is the most general-purpose. I think this is consistent with the STL, wh
 one kind of vector, map, list etc.</p>
 
 <p>The smart pointer contains the address of the object pointed to and a counter which stores the
-<i>alias count</i>. When one smart pointer is assigned to another, the second smart pointer becomes
-an <i>alias</i> of the first, which means that it is pointing to the same object. The alias count of
+<em>alias count</em>. When one smart pointer is assigned to another, the second smart pointer becomes
+an <em>alias</em> of the first, which means that it is pointing to the same object. The alias count of
 the object is incremented to show that there are now two pointers pointing to the same object.</p>
 
 <p>In fact, an extra level of indirection needs to be used. A smart pointer class in fact contains a
-pointer to a <i>sub-object</i> which in turn contains the address of the contained object and an integer
-containing the <i>alias count</i>. This is illustrated in Figure 1:</p>
+pointer to a <em>sub-object</em> which in turn contains the address of the contained object and an integer
+containing the <em>alias count</em>. This is illustrated in Figure 1:</p>
 
 <p class="figure">
 <img src="smart_ptr_fig.gif"><br>
@@ -236,7 +236,7 @@ actually part of the smart_ptr structure hidden from the user), which then point
 which is the user's data. The alias count is stored in the sub-object. There is an alias count of 2
 because there are two smart_ptr objects pointing to the sub-object.</p>
 
-<p>When a smart pointer goes out of scope or is destroyed for any reason, it is <i>dealiased</i>.
+<p>When a smart pointer goes out of scope or is destroyed for any reason, it is <em>dealiased</em>.
 This means that the smart pointer no longer points to the object. It's alias count is decremented to
 show that one less smart pointer is pointing at the object. When the alias count decrements to zero,
 this indicates that the object is no longer being pointed to by any smart pointers and so it is
@@ -329,7 +329,7 @@ passed in this way. It does not manage the original object. This is because the 
 contain an object created dynamically (on the heap) using new, and ensures this by doing the
 allocation itself. To do the allocation yourself, use the second constructor.</p>
 
-<p><b>Note:</b> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown,
+<p><strong>Note:</strong> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown,
 since objects cannot be copied. In this case, only the second constructor can be used.</p>
 
 <p>The final form of constructor is the copy constructor - but it doesn't copy the contents of the
@@ -368,13 +368,13 @@ stlplus::smart_ptr&lt;std::string&gt; s2 = s1;
 
 <p>This example takes advantage of the C++ convention that an initialisation expressed as an
 assignment is in fact a call to the constructor. The first line creates a string initialised with
-the value "testing". The second line creates a smart pointer initialised with a <i>copy</i> of this
+the value "testing". The second line creates a smart pointer initialised with a <em>copy</em> of this
 (remember that the object contained by the smart pointer is copied into it). The third line creates
-another smart pointer which is an <i>alias</i> of the first one. Note that the second smart pointer
+another smart pointer which is an <em>alias</em> of the first one. Note that the second smart pointer
 is initialised from the first smart pointer, meaning they point to the same object.</p>
 
 <p>Since both s1 and s2 point to the same string, modifying the string though s1 will result in the
-string pointed to by s2 apparently changing. However, the string in s1 and s2 is a <i>copy</i> of
+string pointed to by s2 apparently changing. However, the string in s1 and s2 is a <em>copy</em> of
 the original string s, so changing s will not change s1 or s2.</p>
 
 <p>Typically the object is constructed as an anonymous temporary in the call
@@ -407,7 +407,7 @@ smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(T* data);
 s1 = new std::string("Hello World");
 </pre>
 
-<p>Once again you <i>must</i> allocate this with new. If you pass a pointer to
+<p>Once again you <em>must</em> allocate this with new. If you pass a pointer to
 an automatic variable, the smart pointer will later try to delete it.
 Similarly, don't pass the address of an object already contained in another
 data type - both containers will try to delete it.</p>
@@ -421,7 +421,7 @@ copied. In this case it is more efficient to use pointer assignment for this. Ho
 potentially dangerous in that if an invalid address is passed in (for example the address of an
 automatic variable) then all hell will break loose.</p>
 
-<p><b>Note</b>: It is <i>your</i> fault if you get caught out by this. I have warned you to be
+<p><strong>Note</strong>: It is <em>your</em> fault if you get caught out by this. I have warned you to be
 careful! A good guideline is to only ever initialise a smart pointer this way by using the return
 value of the <code>new</code> operator.</p>
 
@@ -514,7 +514,7 @@ else if (s2.null())
 
 <h2 id="dereference">Dereferencing Operators</h2>
 
-<p>The smart pointer classes look <i>quite</i> like pointers in use.</p>
+<p>The smart pointer classes look <em>quite</em> like pointers in use.</p>
 
 <p>To dereference a smart pointer, simply use the * operator just like a
 simple pointer. In fact there are two variants of this:</p>
@@ -577,7 +577,7 @@ T* smart_ptr::pointer(void);
 const T* smart_ptr::pointer(void) const;
 </pre>
 
-<p><b>Hint:</b> The pointer() function does not throw an exception, so it is
+<p><strong>Hint:</strong> The pointer() function does not throw an exception, so it is
 unlike the operator-&gt; form in that way. If the smart pointer is null, then
 it returns a null simple pointer.</p>
 
@@ -642,7 +642,7 @@ s1.copy(s2);
 <p>This is functionally equivalent but saves an assignment - which is
 negligible anyway. However, some people prefer this style.</p>
 
-<p><b>Note:</b> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown
+<p><strong>Note:</strong> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown
 in all these examples.</p>
 
 <h2 id="clear">Clearing</h2>
@@ -662,7 +662,7 @@ deleted right now, simply call the clear method:</p>
 s2.clear();
 </pre>
 
-<p><b>Warning:</b> this deletes the object and makes the pointer null. It does
+<p><strong>Warning:</strong> this deletes the object and makes the pointer null. It does
 not make the pointer unique first! Thus any other smart pointers pointing to the
 same object will become null too.</p>
 
@@ -735,17 +735,17 @@ method to both classes:</p>
 class base
 {
   ...
-  <b>base* clone(void) const {return new base(*this);}</b>
+  <strong>base* clone(void) const {return new base(*this);}</strong>
 };
 
 class derived : public base
 {
   ...
-  <b>base* clone(void) const {return new derived(*this);}</b>
+  <strong>base* clone(void) const {return new derived(*this);}</strong>
 };
 </pre>
 
-<p><b>Note:</b> the clone method must return a pointer to the superclass, not the subclass. This is
+<p><strong>Note:</strong> the clone method must return a pointer to the superclass, not the subclass. This is
 because C++ disallows overloading with different return types. In this case, both clone methods
 return a <code>base*</code>.</p>
 

@@ -59,7 +59,7 @@ C++ Library Collection
 
 <p>The template classes provided by the STLplus Containers Library have been made persistent using
 template dump/restore functions. The functions are actually called
-dump_<i>class</i> and stlplus::restore_<i>class</i> where <i>class</i> is the name of the template class. For
+dump_<em>class</em> and stlplus::restore_<em>class</em> where <em>class</em> is the name of the template class. For
 example, the persistence functions for the STLplus hash are called stlplus::dump_hash and stlplus::restore_hash.</p>
 
 <p>The persistence functions for templates are themselves templates, so are automatically adapted to
@@ -122,7 +122,7 @@ persistence library. However, I prefer to wrap the function calls into a top-lev
 simple interface and hides the implementation, as in the example above, even though the
 implementation is one line of code.</p>
 
-<p><b>Note:</b>The function passed as a parameter <i>must</i> have only two parameters - the context
+<p><strong>Note:</strong>The function passed as a parameter <em>must</em> have only two parameters - the context
 and the data. To pass a function that takes extra parameters, wrap those functions in a wrapper
 function, like the stlplus::dump_string_int_int_triple and stlplus::restore_string_int_int_triple functions above. 
 These functions can be used in a higher-level data structure, whereas the stlplus::dump_pair and
@@ -295,7 +295,7 @@ functions take as their last two parameters the functions for managing the eleme
 For example, if you have another data structure containing iterators to the graph, that other data
 structure can also be made persistent.</p>
 
-<p>The rule is that the graph <i>must</i> be dumped before any of its iterators are dumped. Failure
+<p>The rule is that the graph <em>must</em> be dumped before any of its iterators are dumped. Failure
 to keep to this rule will result in an stlplus::persistent_dump_failed exception being thrown.</p>
 
 <p>The following functions are provided for making iterators persistent:</p>
@@ -400,7 +400,7 @@ managing the element classes.</p>
 For example, if you have another data structure containing iterators to the ntree, that other data
 structure can also be made persistent.</p>
 
-<p>The rule is that the ntree <i>must</i> be dumped before any of its iterators are dumped. Failure
+<p>The rule is that the ntree <em>must</em> be dumped before any of its iterators are dumped. Failure
 to keep to this rule will result in an stlplus::persistent_dump_failed exception being thrown.</p>
 
 <p>The following functions are provided for making iterators persistent:</p>

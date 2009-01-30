@@ -296,7 +296,7 @@ altogether. This is easy when you start from scratch, but with legacy code it
 is not always as simple as it sounds.</p>
 
 <p>Fortunately, basic types such as bool, int and all pointers are not
-affected by this problem. Thus, if you <i>really</i> must have a global class
+affected by this problem. Thus, if you <em>really</em> must have a global class
 object, make it a global pointer to a class object and dynamically allocate
 the object on first use:</p>
 
@@ -313,7 +313,7 @@ bool do_something_now(...)
 
 <h2 id="10">10. Make your code portable</h2>
 
-<p>I believe that <em>everyone</em> is responsible for writing portable code at all times. It is <i>not</i> an SEP
+<p>I believe that <em>everyone</em> is responsible for writing portable code at all times. It is <em>not</em> an SEP
 (someone else's problem). You do not know what will happen to your code in the future - notice for
 example how Linux is faring now against Windows. Ten years ago Unix-type OSs were seen as
 scientific-interest only - now they are mainstream. Do you want to be adaptable in the future? Then
@@ -377,7 +377,7 @@ buffer according to the format string which is the second argument and the argum
 parameters represented by the elipsis (...). What's missing is a parameter that tells
 sprintf how long the buffer is - so it doesn't know the buffer size and assumes that it is
 infinite. So, the function has no way of knowing if an overflow happens and cannot prevent
-it. If the buffer is <i>not</i> long enough, then the function quite happily runs off the end and
+it. If the buffer is <em>not</em> long enough, then the function quite happily runs off the end and
 corrupts other data structures in memory. This kind of memory bug is extremely difficult to
 diagnose and fix. A common bodge (yes, it is a bodge, not a solution) is to simply make the
 buffer very large. However, that just pushes the problem further away, it doesn't fix it.

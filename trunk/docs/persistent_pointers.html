@@ -276,7 +276,7 @@ void stlplus::restore_interface(stlplus::restore_context&amp;, T*&amp; data)
 </pre>
 
 
-<p><b>Note</b>: since polymorphic types are handled in C++ via pointers, the
+<p><strong>Note</strong>: since polymorphic types are handled in C++ via pointers, the
 same behaviour is implemented for multiple pointers to the same object as was
 implemented for simple pointers. When two pointers to the same object are
 dumped, they will be restored as pointers
@@ -293,7 +293,7 @@ persistent in an object-oriented way through inheritance and virtual methods. Ho
 always possible to use this approach. For example, you might want to make a class persistent that
 you cannot change. Therefore an alternative solution is needed that uses a non-intrusive approach to
 persistence. In order to achieve this non-intrusive approach, I have provided the option to use dump
-and restore <i>callbacks</i> to perform the persistence functionality and <i>not</i> virtuals. The
+and restore <em>callbacks</em> to perform the persistence functionality and <em>not</em> virtuals. The
 callbacks are associated with the subclass, which can be determined at run time. The callbacks are
 stored in the stlplus::dump_context object during the dump and in the stlplus::restore_context
 object during a restore.</p>
@@ -314,9 +314,9 @@ href="persistent_examples.html#polymorphic">examples</a>.</p>
 <p>The parameter profiles of the three callbacks is:</p>
 
 <pre class="cpp">
-void dump_<i>class</i>(stlplus::dump_context&amp; context, const void* data)
-void* create_<i>class</i>(void)
-void restore_<i>class</i>(stlplus::restore_context&amp; context, void*&amp; data)
+void dump_<em>class</em>(stlplus::dump_context&amp; context, const void* data)
+void* create_<em>class</em>(void)
+void restore_<em>class</em>(stlplus::restore_context&amp; context, void*&amp; data)
 </pre>
 
 <p>The persistence of Polymorphic classes requires that every polymorphic class be registered with
@@ -367,7 +367,7 @@ void restore_callback(restore_context&amp;, T*&amp; data)
   throw(persistent_restore_failed);
 </pre>
 
-<p><b>Note</b>: since polymorphic types are handled in C++ via pointers, the
+<p><strong>Note</strong>: since polymorphic types are handled in C++ via pointers, the
 same behaviour is implemented for multiple pointers to the same object as was
 implemented for simple pointers. When two pointers to the same object are
 dumped, they will be restored as pointers

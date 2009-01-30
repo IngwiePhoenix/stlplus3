@@ -59,15 +59,15 @@ href="string_stl.html">STL containers</a> and have similar interfaces.</p>
 <p>There are two separate header files for including these functions:</p>
 
 <ul>
-<li><a href="string_stlplus_hpp.html">string_stlplus.hpp</a>: For the <i>type</i>_to_string functions</li>
-<li><a href="print_stlplus_hpp.html">print_stlplus.hpp</a>: For the print_<i>type</i> functions</li>
+<li><a href="string_stlplus_hpp.html">string_stlplus.hpp</a>: For the <em>type</em>_to_string functions</li>
+<li><a href="print_stlplus_hpp.html">print_stlplus.hpp</a>: For the print_<em>type</em> functions</li>
 </ul>
 
 <h2 id="to_string">Conversion of STLplus Containers to String</h2>
 
-<p>There is a set of functions which are called <i>type</i>_to_string and which are templates. They
+<p>There is a set of functions which are called <em>type</em>_to_string and which are templates. They
 give a convenient way of providing string formatting for the most-commonly uses STL container
-classes. They rely on you writing a <i>type</i>_to_string or print_<i>type</i> function for the type
+classes. They rely on you writing a <em>type</em>_to_string or print_<em>type</em> function for the type
 contained within the container.</p>
 
 <p>The functions for formatting most STLplus containers have additional formatting parameters such as
@@ -125,7 +125,7 @@ std::string stlplus::ntree_to_string(const stlplus::ntree&lt;T&gt;&amp; values,
 <h2 id="print">Printing Functions</h2>
 
 <p>In parallel with the set of string conversion routines, there is a set of print routines for the
-same set of types. The convention is to have a print_<i>type</i> function that takes an IOStream
+same set of types. The convention is to have a print_<em>type</em> function that takes an IOStream
 output device, followed by the same parameters as the corresponding </i>type</i>_to_string function
 above.</p>
 

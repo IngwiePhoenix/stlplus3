@@ -43,7 +43,7 @@ C++ Library Collection
 
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#decpendencies">Dependencies</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#makefiles">Gnu Gcc Using Supplied Makefiles</a></li>
 <li><a href="#microsoft">Microsoft Visual Studio Using Supplied Workspace</a></li>
 <li><a href="#general">General Guidelines for Building STLplus</a></li>
@@ -243,7 +243,7 @@ The <code>makefiles</code> module's rules will build the current directory and
 will add the LIBRARIES as extra include paths during compilation. Since this
 Makefile only builds an object library, there is no link step.</p>
 
-<p><b>Note:</b> the LIBRARIES variable should list the libraries in their dependency order (see the <a
+<p><strong>Note:</strong> the LIBRARIES variable should list the libraries in their dependency order (see the <a
 href="#dependencies">section on dependencies</a>) with the higher-level libraries first
 and their required libraries after them. For example, the subsystems library should be listed before
 the portability library.</p>
@@ -404,7 +404,7 @@ it builds all the projects.</p>
 debug information). At this stage, if you wish, you can select other configurations and build them
 too. Each configuration is stored separately so they do not overwrite each other.</p>
 
-<p><b>Note:</b> the supplied project file will build STLplus so that it uses the multi-threaded DLL
+<p><strong>Note:</strong> the supplied project file will build STLplus so that it uses the multi-threaded DLL
 versions of the C runtime library (msvcrt.dll). The default when you create a new project however is
 to use the single-threaded versions. You will need to adjust the project settings, either for
 STLplus or for your application so that all projects use the same settings. The symptom that will
@@ -422,7 +422,7 @@ libraries that you want to use in the new project.</p>
 <p>You now need to set up an include path for the C++ compiler and a project dependency for
 the linker.</p>
 
-<p><b>Note:</b> These instructions are for Visual Studio 6. Visual Studio 8 (2005) is similar but
+<p><strong>Note:</strong> These instructions are for Visual Studio 6. Visual Studio 8 (2005) is similar but
 all the dialogs have been redesigned - the principles however are the same.</p>
 
 <p>To set up the include path, select the project that you wish to have access to the stlplus
@@ -444,7 +444,7 @@ appears. This makes the selected project depend on those libraries and therefore
 any program built with the selected project link with the stlplus archives. Click on OK to
 dismiss the dependencies dialog.</p>
 
-<p><b>Note:</b> you should only set up a dependency on an application project, not on a project that
+<p><strong>Note:</strong> you should only set up a dependency on an application project, not on a project that
 just creates a library. Sadly, Microsoft think a dependency on a library file should be resolved by
 copying the contents of the library into the dependent library, giving you two copies of
 the object code. This will subsequently cause a link error. The symptom is that the functions from
@@ -571,14 +571,14 @@ the code harder to reverse engineer as well as a lot smaller and faster.</dd>
 </dl>
 
 <p>Again let me reiterate that these compiler switches are specific to the gcc
-compiler used in this example. However, the <i>principles</i> explained here
+compiler used in this example. However, the <em>principles</em> explained here
 should be used to build the library for any compiler. You just need to find
 the correct compiler switches that will achieve these principles for your
 compiler of choice.</p>
 
-<p><b>Note:</b> if you are building an application in <i>debug</i> mode, you should link with
-<i>debug</i> builds of the libraries. Similarly, if you are building an application in
-<i>release</i> mode, you should link with <i>release</i> builds of the libraries. This is because
+<p><strong>Note:</strong> if you are building an application in <em>debug</em> mode, you should link with
+<em>debug</em> builds of the libraries. Similarly, if you are building an application in
+<em>release</em> mode, you should link with <em>release</em> builds of the libraries. This is because
 both the application and STLplus itself include the STLplus headers and there can be subtle
 differences in implementation between release and debug builds.</p>
 
@@ -690,7 +690,7 @@ ld ... $STLPLUS3/portability/&lt;target_dir&gt;/libportability.a $STLPLUS3/conta
 <p>In this case, &lt;target_dir&gt; will be something like <code>LINUX-alpha-debug</code> for a
 debug build and <code>LINUX-alpha-release</code> for a release build.</p>
 
-<p><b>Note:</b> when linking, you should list the libraries in their dependency order (see the <a
+<p><strong>Note:</strong> when linking, you should list the libraries in their dependency order (see the <a
 href="#dependencies">section on dependencies</a>) with the higher-level libraries first
 and their required libraries after them. For example, the subsystems library should be listed before
 the portability library.</p>
@@ -711,12 +711,12 @@ simply follow the instructions for building STLplus with Gnu tools.</p>
 
 <h2 id="cygming">Native build on Windows using Cygwin and Gnu gcc</h2>
 
-<p>The Cygwin development environment introduced in the last section also allows <i>native</i>
+<p>The Cygwin development environment introduced in the last section also allows <em>native</em>
 Windows applications to be built using the Gnu compiler. Unlike Unix-emulation builds, this does not
 use the Unix emulation layer and you therefore access operating services through the Windows system
 calls directly. This kind of build is known as a CygMing build.</p>
 
-<p><b>Note:</b> version 3.2 and later of gcc works very well in this mode. Prior
+<p><strong>Note:</strong> version 3.2 and later of gcc works very well in this mode. Prior
 versions were incomplete and I don't support them.</p>
 
 <p>You build native applications with the Cygwin gcc compiler by specifying a
@@ -753,7 +753,7 @@ make
 
 <h2 id="mingw">Native build on Windows using MinGW Gnu gcc</h2>
 
-<p>The <a href="http://www.mingw.org/">MinGW</a> development environment also allows <i>native</i>
+<p>The <a href="http://www.mingw.org/">MinGW</a> development environment also allows <em>native</em>
 Windows applications to be built using the Gnu compiler. This accesses operating services through
 the Windows system calls directly. It is also simpler to install and use than Cygwin.</p>
 
@@ -763,7 +763,7 @@ that use this switch will automatically build correctly.</p>
 <p>The standard Makefile system I supply will compile out of the box with MinGW if it is run in the MSys
 environment.</p>
 
-<p><b>Note:</b>The makefile system will mis-identify the compiler as a Cygwin build if you run the
+<p><strong>Note:</strong>The makefile system will mis-identify the compiler as a Cygwin build if you run the
 MinGW compilers in the Cygwin shell, but it will in fact build correctly as a MinGW build.</p>
 
 <h2 id="unix-other">Other Unix builds using Gnu gcc</h2>

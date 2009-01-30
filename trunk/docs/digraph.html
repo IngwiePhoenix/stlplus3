@@ -145,10 +145,10 @@ have the arc_ prefix. In this case, dereferencing the arc_iterator returns the
 NA type, in this case an int.</p>
 
 <p>STLplus iterators are slightly different to STL iterators in that they know which container they
-belong to. When an iterator is first declared, but not assigned to, it is known as a <i>null</i>
+belong to. When an iterator is first declared, but not assigned to, it is known as a <em>null</em>
 iterator. Then, when it is assigned to so that it points to a node in the tree, it is known as a
-<i>valid</i> iterator. If the iterator is made to point off the edge of the tree - for example the
-parent of the root node, then it becomes an <i>end</i> iterator.</p>
+<em>valid</em> iterator. If the iterator is made to point off the edge of the tree - for example the
+parent of the root node, then it becomes an <em>end</em> iterator.</p>
 
 <p>This concept is similar to STL iterators like the list iterator, where an iterator that walks off
 the end of the list becomes an end iterator. However, the STL has no concept of a null iterator and
@@ -278,11 +278,11 @@ bool select_arc(const digraph&lt;my_node,my_arc&gt;&amp; graph,digraph&lt;my_nod
 
 <p>Sometimes the selection
 information is on the nodes instead. Since the select function has access to the
-graph as well as the iterator, it is possible to access either the <i>to</i> or
-the <i>from</i> nodes of the arc and retrieve the selection information from
+graph as well as the iterator, it is possible to access either the <em>to</em> or
+the <em>from</em> nodes of the arc and retrieve the selection information from
 there. For example, lets say we have a node data structure with a member
 function called select() which simply returns a bool. Lets also say that an arc
-is selected only if it is connected <i>to</i> a selected node. This is how you'd
+is selected only if it is connected <em>to</em> a selected node. This is how you'd
 write the selection function:</p>
 
 <pre class="cpp">
@@ -536,7 +536,7 @@ which serves a similar purpose.</p>
 <p>To avoid name conflicts, arc functions have the arc_ prefix. Arcs, like
 nodes, are referred to by a list iterator which is returned by the arc_insert
 function. They may also be visited from arc_begin() to arc_end(). Each arc has a
-<i>from</i> field and a <i>to</i> field which contain the node iterators of the endpoints of
+<em>from</em> field and a <em>to</em> field which contain the node iterators of the endpoints of
 the arc. Of course, the arc data can be accessed by simply dereferencing the
 iterator.</p>
 
@@ -546,7 +546,7 @@ iterator.</p>
 an unconnected arc in a digraph, the nodes it is connected to must be created
 first. Then the arc is connected at the time of its creation by passing the node
 iterators to the arc_insert function. Since arcs have a direction, the nodes it
-is connected to are referred to as the <i>from</i> node and the <i>to</i> node.
+is connected to are referred to as the <em>from</em> node and the <em>to</em> node.
 The final argument of the arc_insert function is the data to be stored on the
 arc. Since it is common to store data only on the nodes and not on the arcs, the
 arc data field is optional:</p>
@@ -568,7 +568,7 @@ sequence:</p>
 arc_iterator arc_erase(arc_iterator);
 </pre>
 
-<p>Deleting the last arc connected to a node does <b>not</b> cause the node to
+<p>Deleting the last arc connected to a node does <strong>not</strong> cause the node to
 be deleted - it is perfectly legal to have floating nodes in a digraph.</p>
 
 <h3>Deleting all Arcs - arc_clear</h3>
@@ -629,8 +629,8 @@ void print_arcs(const digraph&lt;string,int&gt;&amp; graph)
 <h3>Node Access - arc_from, arc_to</h3>
 
 <p>You can go from an arc to its connected nodes using the arc_from and arc_to
-functions. Remember that an arc is directed and so goes <i>from</i> a node
-<i>to</i> another. The arc_from function, obviously (Doh) gives the <i>from</i>
+functions. Remember that an arc is directed and so goes <em>from</em> a node
+<em>to</em> another. The arc_from function, obviously (Doh) gives the <em>from</em>
 node and so on...</p>
 
 <pre class="cpp">
@@ -896,20 +896,20 @@ misuse of the iterators:</p>
 
 <dl>
 
-<dt><b>null_dereference</b> - logic_error</dt>
+<dt><strong>null_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
 be sure that iterators are non-null before using the <code>*</code> or <code>-></code>
 operators.</dd>
 
-<dt><b>end_dereference</b> - logic_error</dt>
+<dt><strong>end_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator that is pointing to an end element has been
 dereferenced. In line with STL conventions, the end iterator points to the element after the last
 element in a container, so dereferencing such an iterator is illegal (the memory pointed to will be
 unconstructed).</dd>
 
-<dt><b>wrong_object</b> - logic_error</dt>
+<dt><strong>wrong_object</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which was created by one container has been used in a
 different container. For example, if you have two graph objects in your program, create an iterator

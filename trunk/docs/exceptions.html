@@ -128,27 +128,27 @@ header &lt;stdexcept&gt;. The exceptions are all based on the superclass
 std::exception and form a sub-class hierarchy:</p>
 
 <ul>
-<li><b>exception</b> - Superclass of all standard exception, never thrown itself
+<li><strong>exception</strong> - Superclass of all standard exception, never thrown itself
 <ul>
-<li><b>bad_alloc</b> - Thrown when new runs out of memory</li>
-<li><b>bad_exception</b> - Thrown if an exception is thrown which is not listed in a function's exception specification.</li>
-<li><b>bad_cast</b> - Thrown if you attempt an invalid dynamic_cast expression</li>
-<li><b>bad_typeid</b> - Thrown if you use a NULL pointer in a typeid expression</li>
-<li><b>logic_error</b> - Superclass for all logic errors, never thrown itself.
+<li><strong>bad_alloc</strong> - Thrown when new runs out of memory</li>
+<li><strong>bad_exception</strong> - Thrown if an exception is thrown which is not listed in a function's exception specification.</li>
+<li><strong>bad_cast</strong> - Thrown if you attempt an invalid dynamic_cast expression</li>
+<li><strong>bad_typeid</strong> - Thrown if you use a NULL pointer in a typeid expression</li>
+<li><strong>logic_error</strong> - Superclass for all logic errors, never thrown itself.
 <ul>
-<li><b>length_error</b> - Thrown when an object is constructed that would exceed its maximum
+<li><strong>length_error</strong> - Thrown when an object is constructed that would exceed its maximum
 permitted size (e.g., a string instance).</li>
-<li><b>domain_error</b> - Thrown to report domain errors (domain in the mathematical sense).</li>
-<li><b>out_of_range</b> - Thrown if an argument has a value which is not within the expected range
+<li><strong>domain_error</strong> - Thrown to report domain errors (domain in the mathematical sense).</li>
+<li><strong>out_of_range</strong> - Thrown if an argument has a value which is not within the expected range
 (e.g. boundary checks in string).</li>
-<li><b>invalid_argument</b> - Thrown to report invalid arguments to functions.</li>
+<li><strong>invalid_argument</strong> - Thrown to report invalid arguments to functions.</li>
 </ul>
 </li>
-<li><b>runtime_error</b> - Superclass for all runtime errors, never thrown itself.
+<li><strong>runtime_error</strong> - Superclass for all runtime errors, never thrown itself.
 <ul>
-<li><b>range_error</b> - Thrown to indicate range errors in internal computations.</li>
-<li><b>overflow_error</b> - Thrown to indicate arithmetic overflow.</li>
-<li><b>underflow_error</b> - Thrown to indicate arithmetic underflow.</li>
+<li><strong>range_error</strong> - Thrown to indicate range errors in internal computations.</li>
+<li><strong>overflow_error</strong> - Thrown to indicate arithmetic overflow.</li>
+<li><strong>underflow_error</strong> - Thrown to indicate arithmetic underflow.</li>
 </ul>
 </li>
 </ul>

@@ -66,8 +66,8 @@ for printing the same types.</p>
 <p>There are two separate header files for including these functions:</p>
 
 <ul>
-<li><a href="string_basic_hpp.html">string_basic.hpp</a>: For the <i>type</i>_to_string functions</li>
-<li><a href="print_basic_hpp.html">print_basic.hpp</a>: For the print_<i>type</i> functions</li>
+<li><a href="string_basic_hpp.html">string_basic.hpp</a>: For the <em>type</em>_to_string functions</li>
+<li><a href="print_basic_hpp.html">print_basic.hpp</a>: For the print_<em>type</em> functions</li>
 </ul>
 
 <p>The string formatting functions in <a
@@ -156,19 +156,19 @@ equivalent to the C format "%g".</dd>
 
 <h2 id="integer_to_string">Conversion from Integer to String</h2>
 
-<p>There is a whole family of functions called <code><i>type</i>_to_string</code> which take an integer
+<p>There is a whole family of functions called <code><em>type</em>_to_string</code> which take an integer
 type and format it into a std::string. The parameter profile of these functions
 is:</p>
 
 <pre class="cpp">
-std::string stlplus::<i>type</i>_to_string(<i>type</i> i,
+std::string stlplus::<em>type</em>_to_string(<em>type</em> i,
                                     unsigned radix = 10,
                                     stlplus::radix_display_t display = stlplus::radix_c_style_or_hash,
                                     unsigned width = 0)
   throw(std::invalid_argument);
 </pre>
 
-<p>In this case, <i>type</i> is any integer type - namely bool, short, unsigned short, int,
+<p>In this case, <em>type</em> is any integer type - namely bool, short, unsigned short, int,
 unsigned, long and unsigned long. For two-word types such as "unsigned long", the function name uses
 an underscore to make the function name unsigned_long_to_string.</p>
 
@@ -217,11 +217,11 @@ base.</p>
 <p>The integer conversion functions are of the form:</p>
 
 <pre class="cpp">
-<i>type</i> string_to_<i>type</i>(const std::string&amp; value, unsigned radix = 0);
+<em>type</em> string_to_<em>type</em>(const std::string&amp; value, unsigned radix = 0);
   throw(std::invalid_argument);
 </pre>
 
-<p>where <i>type</i> is bool, short, unsigned short, int, unsigned int, long
+<p>where <em>type</em> is bool, short, unsigned short, int, unsigned int, long
 or unsigned long.</p>
 
 <p>A radix of 0 means work out the radix from the string. The default is then
@@ -243,7 +243,7 @@ void* string_to_address(const std::string&amp; value, unsigned radix = 0)
 
 <h2 id="real_to_string">Conversion from Real to String</h2>
 
-<p>There are two <i>type</i>_to_string functions which format the two C++ real types to a
+<p>There are two <em>type</em>_to_string functions which format the two C++ real types to a
 string representation. These are:</p>
 
 <pre class="cpp">
@@ -289,14 +289,14 @@ print to.</p>
 <p>The integer print routines have the following profile:</p>
 
 <pre class="cpp">
-void stlplus::print_<i>type</i>(std::ostream&amp; str, <i>type</i> value,
+void stlplus::print_<em>type</em>(std::ostream&amp; str, <em>type</em> value,
                          unsigned radix = 10,
                          stlplus::radix_display_t display = stlplus::radix_c_style_or_hash,
                          unsigned width = 0)
   throw(std::invalid_argument);
 </pre>
 
-<p>In this case, <i>type</i> is any integer type - namely bool, short, unsigned
+<p>In this case, <em>type</em> is any integer type - namely bool, short, unsigned
 short, int, unsigned, long and unsigned long.</p>
 
 <p>The extra parameters have the same meaning as for the to_string functions.</p>
@@ -304,7 +304,7 @@ short, int, unsigned, long and unsigned long.</p>
 <p>Similarly, floating-point types are handled:</p>
 
 <pre class="cpp">
-void stlplus::print_<i>type</i>(std::ostream&amp; str, <i>type</i> f, 
+void stlplus::print_<em>type</em>(std::ostream&amp; str, <em>type</em> f, 
                          stlplus::real_display_t display = stlplus::display_mixed,
                          unsigned width = 0,
                          unsigned precision = 6)

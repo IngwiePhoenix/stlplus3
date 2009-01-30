@@ -100,7 +100,7 @@ project, rather than spraying data files all over the user's workspace.</p>
 <p>The library manager is presented as a C++ class with a large (and growing)
 number of access functions.</p>
 
-<p>A library manager is made unique to a product by an <i>owner</i> string. This will
+<p>A library manager is made unique to a product by an <em>owner</em> string. This will
 typically be the name of the product in lowercase (e.g. "moods" for the Moods
 product). A library manager can only open and manipulate libraries created by
 the owner product. This allows many products to co-exist on the same computer
@@ -289,9 +289,9 @@ uses that new object's copy constructor to copy the current object (represented 
 returns the result as a superclass pointer (in this case an stlplus::lm_unit*). You don't have to
 understand all this though, just copy this example and modify to match the name of your type.</p>
 
-<p><b>Warning:</b> this clone function calls the copy constructor for string_unit, but I haven't
+<p><strong>Warning:</strong> this clone function calls the copy constructor for string_unit, but I haven't
 written one. This means that the default copy constructor is used which simply copies each field
-using <i>its</i> copy constructor. The baseclass stlplus::lm_unit is designed to be copied this way,
+using <em>its</em> copy constructor. The baseclass stlplus::lm_unit is designed to be copied this way,
 so no problem there. The string_unit data field is of type std::string, which copies correctly, so
 no problem there, so overall this is correct. However, beware if you have a pointer to your data
 type. Pointers do not copy safely because you end up with two pointers to the same object. When the
@@ -347,7 +347,7 @@ stlplus::lm_unit* create_string_unit(const stlplus::lm_unit_name&amp; name,
 }
 </pre>
 
-<p><b>Note:</b> the callback is <i>not</i> a member of the class, it is a
+<p><strong>Note:</strong> the callback is <em>not</em> a member of the class, it is a
 stand-alone C++ function.</p>
 
 <p>The callback takes three arguments, the unit-name, a pointer to a library and a void* hook. The
@@ -522,7 +522,7 @@ from the library manager. It does not remove the directory. Thus it can be
 re-opened later. By contrast, the erase function closes the library, removes it
 from the library manager and deletes the directory.</p>
 
-<p><b>Note:</b> once a library has been opened, either by open or create, it is
+<p><strong>Note:</strong> once a library has been opened, either by open or create, it is
 referred to either by its name or by its handle (the lm_library* type). It is
 possible to convert from a library name to a handle using the find function:</p>
 
@@ -673,7 +673,7 @@ are referred to by the typedef stlplus::lm_unit_ptr, the typedef for which is: <
 typedef stlplus::smart_ptr_clone&lt;stlplus::lm_unit&gt; stlplus::lm_unit_ptr;
 </pre>
 
-<p>Remember that in practice, this will be a pointer to a <i>subclass</i> of lm_unit,
+<p>Remember that in practice, this will be a pointer to a <em>subclass</em> of lm_unit,
 specifically the subclass registered for the unit's type. You can recover the
 lm_unit* type from the lm_unit_ptr by using the smart pointer's pointer()
 function, and then type convert that pointer to the correct subclass. You are
@@ -727,7 +727,7 @@ pointer:</p>
 unit-&gt;mark();
 </pre>
 
-<p><i>or</i></p>
+<p><em>or</em></p>
 
 <pre class="cpp">
 s_unit-&gt;mark();
@@ -835,7 +835,7 @@ of strings representing just the name part, since the type is already known.</p>
 
 <h2 id="dependencies">Dependency Checking</h2>
 
-<i>to be continued...</i>
+<em>to be continued...</em>
 
 
 </div>
