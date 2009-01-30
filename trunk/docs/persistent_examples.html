@@ -1116,7 +1116,7 @@ int main (unsigned argc, char* argv[])
     stlplus::restore_from_file("strings.dat", copy, restore_string_vector, 0);
 
     // now print the strings to the terminal
-    for (unsigned i = 0; i < copy.size(); i++)
+    for (unsigned i = 0; i &lt; copy.size(); i++)
       std::cout &lt;&lt; "[" &lt;&lt; i &lt;&lt; "] " &lt;&lt; copy[i] &lt;&lt; std::endl;
   }
   return 0;

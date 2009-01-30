@@ -37,7 +37,7 @@ C++ Library Collection
 <div id="document">
 
 <div id="documentTitle">
-<h1>subsystems/library_manager.hpp<br/>A General-Purpose Library System</h1>
+<h1>subsystems/library_manager.hpp<br>A General-Purpose Library System</h1>
 </div>
 
 <div id="documentNavigation">
@@ -164,14 +164,14 @@ this would not be able to access the Moods libraries, nor vice-versa.</p>
 <p>The case sensitivity switches determine whether library names and unit
 names are case-sensitive. </p>
 
-<p><em>Note:</em> at present there is a problem if you set <tt>unit_case</tt> to
+<p><em>Note:</em> at present there is a problem if you set <code>unit_case</code> to
 true. On Windows, filenames are case-insensitive, but the library manager uses
 the unit name to create its filenames. Thus setting the library manager to use
 case-sensitive unit names means that more than one unit name maps onto the same filename.
 For the moment, until I come up with a solution for this, you are recommended
 to use the library manager with unit_case set to false and if necessary
 find a way of mapping case-sensitive unit names onto
-case-insensitive strings. There is no such problem with setting <tt>library_case</tt>
+case-insensitive strings. There is no such problem with setting <code>library_case</code>
 to true - library names can be case-sensitive.</p>
 
 

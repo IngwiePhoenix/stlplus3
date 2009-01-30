@@ -37,7 +37,7 @@ C++ Library Collection
 <div id="document">
 
 <div id="documentTitle">
-<h1>subsystems/message_handler.hpp<br/>A General-Purpose Message Handler</h1>
+<h1>subsystems/message_handler.hpp<br>A General-Purpose Message Handler</h1>
 </div>
 
 <div id="documentNavigation">
@@ -546,8 +546,8 @@ stlplus::message_context object. This object will automatically pop the context 
 when it goes out of scope. An example of the auto_push_context method is:</p>
 
 <pre class="cpp">
-stlplus::message_context message_handler::auto_push_context(const std::string& id,
-                                                            const std::vector<std::string>& args)
+stlplus::message_context message_handler::auto_push_context(const std::string&amp; id,
+                                                            const std::vector&lt;std::string&gt;&amp; args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
 </pre>
 

@@ -297,58 +297,58 @@ include ../../makefiles/gcc.mak
 <p>The overall directory structure is now:</p>
 
 <ul>
-<li type="circle">&lt;parent directory&gt;
+<li>&lt;parent directory&gt;
 <ul>
-<li type="circle">bin
+<li>bin
 <ul>
-<li type="square">client.exe</li>
+<li>client.exe</li>
 </ul>
 </li>
-<li type="circle">makefiles
+<li>makefiles
 <ul>
-<li type="square">gcc.mak</li>
-<li type="square">subdirectories.mak</li>
+<li>gcc.mak</li>
+<li>subdirectories.mak</li>
 </ul>
 </li>
-<li type="circle">stlplus3
+<li>stlplus3
 <ul>
-<li type="circle">portability
+<li>portability
 <ul>
-<li type="square">Makefile</li>
-<li type="square">&lt;portability library source files&gt;</li>
-<li type="circle">Linux-alpha-debug
+<li>Makefile</li>
+<li>&lt;portability library source files&gt;</li>
+<li>Linux-alpha-debug
 <ul>
-<li type="square">libportability.a</li>
-</ul>
-</li>
-</ul>
-</li>
-<li type="circle">containers
-<ul>
-<li type="square">Makefile</li>
-<li type="square">&lt;containers library source files&gt;</li>
-<li type="circle">Linux-alpha-debug
-<ul>
-<li type="square">libcontainers.a</li>
+<li>libportability.a</li>
 </ul>
 </li>
 </ul>
 </li>
-<li type="circle">&lt;other stlplus3 libraries&gt;...
-</li>
-<li type="circle">help</li>
-<li type="circle">messages</li>
+<li>containers
+<ul>
+<li>Makefile</li>
+<li>&lt;containers library source files&gt;</li>
+<li>Linux-alpha-debug
+<ul>
+<li>libcontainers.a</li>
 </ul>
 </li>
-<li type="circle">client
+</ul>
+</li>
+<li>&lt;other stlplus3 libraries&gt;...
+</li>
+<li>help</li>
+<li>messages</li>
+</ul>
+</li>
+<li>client
 <ul>
-<li type="circle">source
+<li>source
 <ul>
-<li type="square">Makefile</li>
-<li type="square">&lt;client program source files&gt;</li>
-<li type="circle">Linux-alpha-debug
+<li>Makefile</li>
+<li>&lt;client program source files&gt;</li>
+<li>Linux-alpha-debug
 <ul>
-<li type="square">libclient.a</li>
+<li>libclient.a</li>
 </ul>
 </li>
 </ul>
@@ -396,7 +396,7 @@ are kept in the top-level directory. You can open either by double-clicking it.<
 
 <p>The workspace can now be built. This will build all of the libraries in the collection. First,
 select the configuration you wish to build - Debug or Release. Then, for each project, make it the
-current project by selecting menu item Project->Set&nbsp;Current&nbsp;Project. You can build all of
+current project by selecting menu item Project-&gt;Set&nbsp;Current&nbsp;Project. You can build all of
 them one at a time or use the batch build. In Visual Studio 8 you can simply build the solution and
 it builds all the projects.</p>
 
@@ -426,7 +426,7 @@ the linker.</p>
 all the dialogs have been redesigned - the principles however are the same.</p>
 
 <p>To set up the include path, select the project that you wish to have access to the stlplus
-libraries. Then select the menu item Project->Settings. A mind-bogglingly complicated dialog will
+libraries. Then select the menu item Project-&gt;Settings. A mind-bogglingly complicated dialog will
 pop up. Select the configuration popup menu in the top left and choose All&nbsp;Configurations. Then
 select the C++ tab from the set of tabs at the top of the right-hand pane. Then select the Category
 popup menu just below the tabs and select Preprocessor. This has a text field called
@@ -436,7 +436,7 @@ Microsoft didn't think to give you a directory selection dialog to help you here
 use relative paths such as <code>..\..\stlplus3\portability</code>. Click OK to
 dismiss the mind-boggling dialog.</p>
 
-<p>To set up the linker dependency, select the menu item Project->Dependencies. The
+<p>To set up the linker dependency, select the menu item Project-&gt;Dependencies. The
 project you wish to set up dependencies for will be selected in the popup menu at the top
 and the other projects, including the STLplus libraries, will be listed in the list entry
 below that. Click on each of the STLplus libraries that you will be using so that a tick
@@ -464,7 +464,7 @@ missing symbols. If this happens, repeat the linker dependency step above.</p>
 
 <p>The final common error is to have different projects with different run-time library selections.
 This manifests itself by linker errors whereby standard library functions are multiply defined in
-different libraries. To fix this, select the menu item Project->Settings and select a specific
+different libraries. To fix this, select the menu item Project-&gt;Settings and select a specific
 Configuration (you cannot do this for All&nbsp;Configurations. For example, select the Debug
 configuration. Then select the C++ tab at the top right and then select the popup menu immediately
 below the tag, choosing the Code&nbsp;Generation option. There are four popup menus here and the top

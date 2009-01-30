@@ -37,7 +37,7 @@ C++ Library Collection
 <div id="document">
 
 <div id="documentTitle">
-<h1>containers/digraph.hpp<br/>A Directed Graph Container</h1>
+<h1>containers/digraph.hpp<br>A Directed Graph Container</h1>
 </div>
 
 <div id="documentNavigation">
@@ -327,7 +327,7 @@ name suggests, trashes the entire contents of the graph.</p>
 member function which takes as its argument the NT type of the graph - in this
 example a string. The return value of the insert function is an iterator pointing
 to the newly created node. This can then be used as an argument for the
-arc_insert function - see later.
+arc_insert function - see later.</p>
 
 <pre class="cpp">
 iterator insert(const NT&amp; node_data);
@@ -757,7 +757,7 @@ code that returns false if the arc is to be ignored and true when selected.</p>
 typedef digraph&lt;string,int&gt; sgraph;
 </pre>
 
-You could make forward ards natural and backward arcs negative. The following selection callback
+<p>You could make forward ards natural and backward arcs negative. The following selection callback
 will then select only the forward arcs:</p>
 
 <pre class="cpp">
@@ -899,7 +899,7 @@ misuse of the iterators:</p>
 <dt><strong>null_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
-be sure that iterators are non-null before using the <code>*</code> or <code>-></code>
+be sure that iterators are non-null before using the <code>*</code> or <code>-&gt;</code>
 operators.</dd>
 
 <dt><strong>end_dereference</strong> - logic_error</dt>

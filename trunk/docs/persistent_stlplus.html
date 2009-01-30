@@ -36,7 +36,7 @@ C++ Library Collection
 <div id="document">
 
 <div id="documentTitle">
-<h1>persistence/persistent_stlplus.hpp<br/>Data Persistence for the STLplus Containers</h1>
+<h1>persistence/persistent_stlplus.hpp<br>Data Persistence for the STLplus Containers</h1>
 </div>
 
 <div id="documentNavigation">
@@ -278,12 +278,12 @@ one on the arc. So therefore it is parametrised by two element functions.</p>
 <p>The interface is:</p>
 
 <pre class="cpp">
-template<typename NT, typename AT, typename DN, typename DA>
-void stlplus::dump_digraph(stlplus::dump_context&, const digraph<NT,AT>& data, DN stlplus::dump_node, DA stlplus::dump_arc)
+template&lt;typename NT, typename AT, typename DN, typename DA&gt;
+void stlplus::dump_digraph(stlplus::dump_context&amp;, const digraph&lt;NT,AT&gt;&amp; data, DN stlplus::dump_node, DA stlplus::dump_arc)
   throw(stlplus::persistent_dump_failed);
 
-template<typename NT, typename AT, typename RN, typename RA>
-void stlplus::restore_digraph(stlplus::restore_context&, digraph<NT,AT>& data, RN stlplus::restore_node, RA stlplus::restore_arc)
+template&lt;typename NT, typename AT, typename RN, typename RA&gt;
+void stlplus::restore_digraph(stlplus::restore_context&amp;, digraph&lt;NT,AT&gt;&amp; data, RN stlplus::restore_node, RA stlplus::restore_arc)
   throw(stlplus::persistent_restore_failed);
 </pre>
 
@@ -303,22 +303,22 @@ to keep to this rule will result in an stlplus::persistent_dump_failed exception
 <pre class="cpp">
 // node iterator
 
-template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::dump_digraph_iterator(stlplus::dump_context& str, const digraph_iterator<NT,AT,NRef,NPtr>& data)
+template&lt;typename NT, typename AT, typename NRef, typename NPtr&gt;
+void stlplus::dump_digraph_iterator(stlplus::dump_context&amp; str, const digraph_iterator&lt;NT,AT,NRef,NPtr&gt;&amp; data)
   throw(stlplus::persistent_dump_failed);
 
-template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::restore_digraph_iterator(stlplus::restore_context& str, digraph_iterator<NT,AT,NRef,NPtr>& data)
+template&lt;typename NT, typename AT, typename NRef, typename NPtr&gt;
+void stlplus::restore_digraph_iterator(stlplus::restore_context&amp; str, digraph_iterator&lt;NT,AT,NRef,NPtr&gt;&amp; data)
   throw(stlplus::persistent_restore_failed);
 
 // arc iterator
 
-template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::dump_digraph_arc_iterator(stlplus::dump_context& str, const digraph_arc_iterator<NT,AT,NRef,NPtr>& data)
+template&lt;typename NT, typename AT, typename NRef, typename NPtr&gt;
+void stlplus::dump_digraph_arc_iterator(stlplus::dump_context&amp; str, const digraph_arc_iterator&lt;NT,AT,NRef,NPtr&gt;&amp; data)
   throw(stlplus::persistent_dump_failed);
 
-template<typename NT, typename AT, typename NRef, typename NPtr>
-void stlplus::restore_digraph_arc_iterator(stlplus::restore_context& str, digraph_arc_iterator<NT,AT,NRef,NPtr>& data)
+template&lt;typename NT, typename AT, typename NRef, typename NPtr&gt;
+void stlplus::restore_digraph_arc_iterator(stlplus::restore_context&amp; str, digraph_arc_iterator&lt;NT,AT,NRef,NPtr&gt;&amp; data)
   throw(stlplus::persistent_restore_failed);
 </pre>
 
