@@ -9,6 +9,7 @@
 <meta name="Copyright" content="(c) Southampton University 1999-2004 Andy Rushton 2004-2009">
 <meta name="License" content="BSD license, see license.html">
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css">
+<link rel="stylesheet" media="print" type="text/css" href="print.css">
 </head>
 <body>
 
@@ -42,20 +43,20 @@ C++ Library Collection
 <div id="documentNavigation">
 
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#include">Header persistent_stl.hpp</a></li>
-<li><a href="#string">std::string</a></li>
-<li><a href="#pair">std::pair</a></li>
-<li><a href="#vector">std::vector</a></li>
-<li><a href="#list">std::list</a></li>
-<li><a href="#deque">std::deque</a></li>
-<li><a href="#set">std::set</a></li>
-<li><a href="#multiset">std::multiset</a></li>
-<li><a href="#map">std::map</a></li>
-<li><a href="#multimap">std::multimap</a></li>
-<li><a href="#complex">std::complex</a></li>
-<li><a href="#bitset">std::bitset</a></li>
-<li><a href="#omitted">Omitted Classes - adaptors and iterators</a></li>
+<li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#include">Header persistent_stl.hpp</a></li>
+<li class="internal"><a href="#string">std::string</a></li>
+<li class="internal"><a href="#pair">std::pair</a></li>
+<li class="internal"><a href="#vector">std::vector</a></li>
+<li class="internal"><a href="#list">std::list</a></li>
+<li class="internal"><a href="#deque">std::deque</a></li>
+<li class="internal"><a href="#set">std::set</a></li>
+<li class="internal"><a href="#multiset">std::multiset</a></li>
+<li class="internal"><a href="#map">std::map</a></li>
+<li class="internal"><a href="#multimap">std::multimap</a></li>
+<li class="internal"><a href="#complex">std::complex</a></li>
+<li class="internal"><a href="#bitset">std::bitset</a></li>
+<li class="internal"><a href="#omitted">Omitted Classes - adaptors and iterators</a></li>
 </ul>
 
 </div>
@@ -143,7 +144,7 @@ stlplus:restore_pair cannot because they take more than two parameters.</p>
 <h2 id="include">Header persistent_stl.hpp</h2>
 
 <ul>
-<li><a href="persistent_stl_hpp.html">Browse Header persistent_stl.hpp</a></li>
+<li class="external"><a href="persistent_stl_hpp.html">Browse Header persistent_stl.hpp</a></li>
 </ul>
 
 <p>You can include all of the functions in one go by including persistent_stl.hpp. If you prefer
@@ -153,7 +154,7 @@ minimises the number of STL headers that get included indirectly.</p>
 <h2 id="string">persistent_string.hpp: Persistence of std::string</h2>
 
 <ul>
-<li><a href="persistent_string_hpp.html">Browse Header persistent_string.hpp</a></li>
+<li class="external"><a href="persistent_string_hpp.html">Browse Header persistent_string.hpp</a></li>
 </ul>
 
 <p>This set of functions provides the following interface:</p>
@@ -195,7 +196,7 @@ above.</p>
 <h2 id="pair">Persistence of std::pair</h2>
 
 <ul>
-<li><a href="persistent_pair_hpp.html">Browse Header persistent_pair.hpp</a></li>
+<li class="external"><a href="persistent_pair_hpp.html">Browse Header persistent_pair.hpp</a></li>
 </ul>
 
 <p>This header provides persistence functions for the std::pair collection. This is defined in the
@@ -240,7 +241,7 @@ void restore_string_int_pair(stlplus::restore_context&amp; context, string_int_p
 <h2 id="vector">Persistence of std::vector</h2>
 
 <ul>
-<li><a href="persistent_vector_hpp.html">Browse Header persistent_vector.hpp</a></li>
+<li class="external"><a href="persistent_vector_hpp.html">Browse Header persistent_vector.hpp</a></li>
 </ul>
 
 <p>The vector contains one element type and therefore is parametrised by one element function.</p>
@@ -276,7 +277,7 @@ bool, which has a specialised implementation in the STL and a slightly different
 <h2 id="list">Persistence of std::list</h2>
 
 <ul>
-<li><a href="persistent_list_hpp.html">Browse Header persistent_list.hpp</a></li>
+<li class="external"><a href="persistent_list_hpp.html">Browse Header persistent_list.hpp</a></li>
 </ul>
 
 <p>The list contains one element type and therefore is parametrised by one element function.</p>
@@ -301,7 +302,7 @@ stlplus::restore_string.</p>
 <h2 id="deque">Persistence of std::deque</h2>
 
 <ul>
-<li><a href="persistent_deque_hpp.html">Browse Header persistent_deque.hpp</a></li>
+<li class="external"><a href="persistent_deque_hpp.html">Browse Header persistent_deque.hpp</a></li>
 </ul>
 
 <p>The deque contains one element type and therefore is parametrised by one element function.</p>
@@ -326,7 +327,7 @@ stlplus::restore_string.</p>
 <h2 id="set">Persistence of std::set</h2>
 
 <ul>
-<li><a href="persistent_set_hpp.html">Browse Header persistent_set.hpp</a></li>
+<li class="external"><a href="persistent_set_hpp.html">Browse Header persistent_set.hpp</a></li>
 </ul>
 
 <p>The set contains one element type and therefore is parametrised by one element function.</p>
@@ -351,7 +352,7 @@ stlplus::restore_string.</p>
 <h2 id="multiset">Persistence of std::multiset</h2>
 
 <ul>
-<li><a href="persistent_multiset_hpp.html">Browse Header persistent_multiset.hpp</a></li>
+<li class="external"><a href="persistent_multiset_hpp.html">Browse Header persistent_multiset.hpp</a></li>
 </ul>
 
 <p>The multiset contains one element type and therefore is parametrised by one element function.</p>
@@ -376,7 +377,7 @@ stlplus::restore_string.</p>
 <h2 id="map">Persistence of std::map</h2>
 
 <ul>
-<li><a href="persistent_map_hpp.html">Browse Header persistent_map.hpp</a></li>
+<li class="external"><a href="persistent_map_hpp.html">Browse Header persistent_map.hpp</a></li>
 </ul>
 
 <p>The map contains two element types and therefore is parametrised by two element functions.</p>
@@ -401,7 +402,7 @@ would be stlplus::dump_int/stlplus::dump_string and stlplus::restore_int/stlplus
 <h2 id="multimap">Persistence of std::multimap</h2>
 
 <ul>
-<li><a href="persistent_multimap_hpp.html">Browse Header persistent_multimap.hpp</a></li>
+<li class="external"><a href="persistent_multimap_hpp.html">Browse Header persistent_multimap.hpp</a></li>
 </ul>
 
 <p>The multimap contains two element types and therefore is parametrised by two element functions.</p>
@@ -426,7 +427,7 @@ would be stlplus::dump_int/stlplus::dump_string and stlplus::restore_int/stlplus
 <h2 id="complex">Persistence of std::complex</h2>
 
 <ul>
-<li><a href="persistent_complex_hpp.html">Browse Header persistent_complex.hpp</a></li>
+<li class="external"><a href="persistent_complex_hpp.html">Browse Header persistent_complex.hpp</a></li>
 </ul>
 
 <p>A std::complex is like a pair that contains two elements, except that they must be of the same
@@ -450,7 +451,7 @@ stlplus::restore_int.</p>
 <h2 id="bitset">Persistence of std::bitset</h2>
 
 <ul>
-<li><a href="persistent_bitset_hpp.html">Browse Header persistent_bitset.hpp</a></li>
+<li class="external"><a href="persistent_bitset_hpp.html">Browse Header persistent_bitset.hpp</a></li>
 </ul>
 
 <p>A bitset is an array of bits where the size is set at compile time, unlike vector&lt;bool&gt; where the

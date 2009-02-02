@@ -9,6 +9,7 @@
 <meta name="Copyright" content="(c) Southampton University 1999-2004 Andy Rushton 2004-2009">
 <meta name="License" content="BSD license, see license.html">
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css">
+<link rel="stylesheet" media="print" type="text/css" href="print.css">
 </head>
 
 <body>
@@ -42,11 +43,11 @@ C++ Library Collection
 <div id="documentNavigation">
 
 <ul>
-<li><a href="exceptions_hpp.html">Browse Header exceptions.hpp</a></li>
-<li><a href="#philosophy">Philosophy</a></li>
-<li><a href="#standard">The Standard Exceptions</a></li>
-<li><a href="#common">STLplus Exceptions</a></li>
-<li><a href="#status">Status</a></li>
+<li class="external"><a href="exceptions_hpp.html">Browse Header exceptions.hpp</a></li>
+<li class="internal"><a href="#philosophy">Philosophy</a></li>
+<li class="internal"><a href="#standard">The Standard Exceptions</a></li>
+<li class="internal"><a href="#common">STLplus Exceptions</a></li>
+<li class="internal"><a href="#status">Status</a></li>
 </ul>
 
 </div>
@@ -128,32 +129,39 @@ header &lt;stdexcept&gt;. The exceptions are all based on the superclass
 std::exception and form a sub-class hierarchy:</p>
 
 <ul>
-<li><strong>exception</strong> - Superclass of all standard exception, never thrown itself
+<li class="cross"><strong>exception</strong> - Superclass of all standard exception, never thrown itself
 <ul>
-<li><strong>bad_alloc</strong> - Thrown when new runs out of memory</li>
-<li><strong>bad_exception</strong> - Thrown if an exception is thrown which is not listed in a function's exception specification.</li>
-<li><strong>bad_cast</strong> - Thrown if you attempt an invalid dynamic_cast expression</li>
-<li><strong>bad_typeid</strong> - Thrown if you use a NULL pointer in a typeid expression</li>
-<li><strong>logic_error</strong> - Superclass for all logic errors, never thrown itself.
+<li class="tick"><strong>bad_alloc</strong> - Thrown when new runs out of memory</li>
+<li class="tick"><strong>bad_exception</strong> - Thrown if an exception is thrown which is not listed in a function's exception specification.</li>
+<li class="tick"><strong>bad_cast</strong> - Thrown if you attempt an invalid dynamic_cast expression</li>
+<li class="tick"><strong>bad_typeid</strong> - Thrown if you use a NULL pointer in a typeid expression</li>
+<li class="cross"><strong>logic_error</strong> - Superclass for all logic errors, never thrown itself.
 <ul>
-<li><strong>length_error</strong> - Thrown when an object is constructed that would exceed its maximum
-permitted size (e.g., a string instance).</li>
-<li><strong>domain_error</strong> - Thrown to report domain errors (domain in the mathematical sense).</li>
-<li><strong>out_of_range</strong> - Thrown if an argument has a value which is not within the expected range
-(e.g. boundary checks in string).</li>
-<li><strong>invalid_argument</strong> - Thrown to report invalid arguments to functions.</li>
+<li class="tick"><strong>length_error</strong> - Thrown when an object is constructed that would exceed its maximum permitted size (e.g., a string instance).</li>
+<li class="tick"><strong>domain_error</strong> - Thrown to report domain errors (domain in the mathematical sense).</li>
+<li class="tick"><strong>out_of_range</strong> - Thrown if an argument has a value which is not within the expected range (e.g. boundary checks in string).</li>
+<li class="tick"><strong>invalid_argument</strong> - Thrown to report invalid arguments to functions.</li>
 </ul>
 </li>
-<li><strong>runtime_error</strong> - Superclass for all runtime errors, never thrown itself.
+<li class="cross"><strong>runtime_error</strong> - Superclass for all runtime errors, never thrown itself.
 <ul>
-<li><strong>range_error</strong> - Thrown to indicate range errors in internal computations.</li>
-<li><strong>overflow_error</strong> - Thrown to indicate arithmetic overflow.</li>
-<li><strong>underflow_error</strong> - Thrown to indicate arithmetic underflow.</li>
+<li class="tick"><strong>range_error</strong> - Thrown to indicate range errors in internal computations.</li>
+<li class="tick"><strong>overflow_error</strong> - Thrown to indicate arithmetic overflow.</li>
+<li class="tick"><strong>underflow_error</strong> - Thrown to indicate arithmetic underflow.</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+
+<p>Note: those exceptions marked with a <img alt="tick" src="tick.png"> can be thrown themselves
+whereas those exceptions marked with a <img alt="cross" src="cross.png"> are never thrown
+themselves, but serve as intermediate classes in the hierarchy. You can catch these intermediate
+classes in which case you will catch all subclasses of them. For example, catching a runtime_error
+will catch any of range_error, overflow_error or underflow_error plus any other subclasses that may
+be defined in the future by either the standards committee or by you. It is good practice to catch
+the intermediate classes because your code will work correctly if new
+exceptions are added to the set.</p>
 
 <p>There are two sub-groups of exception: logic_error and runtime_error. These
 represent two different concepts:</p>

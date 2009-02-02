@@ -9,6 +9,7 @@
 <meta name="Copyright" content="(c) Southampton University 1999-2004 Andy Rushton 2004-2009">
 <meta name="License" content="BSD license, see license.html">
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css">
+<link rel="stylesheet" media="print" type="text/css" href="print.css">
 </head>
 <body>
 
@@ -42,15 +43,15 @@ C++ Library Collection
 <div id="documentNavigation">
 
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#include">Header persistent_pointers.hpp</a></li>
-<li><a href="#pointer">Persistent Pointer</a></li>
-<li><a href="#cstring">Persistent char*</a></li>
-<li><a href="#xrefs">Persistent Cross_references</a></li>
-<li><a href="#interfaces">Persistence of Polymorphic Classes using Interfaces</a></li>
-<li><a href="#callback">Persistence of Polymorphic Classes using Callbacks</a></li>
-<li><a href="#installer">Installer Functions</a></li>
-<li><a href="#smart_ptr">Persistence of Smart Pointers</a></li>
+<li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#include">Header persistent_pointers.hpp</a></li>
+<li class="internal"><a href="#pointer">Persistent Pointer</a></li>
+<li class="internal"><a href="#cstring">Persistent char*</a></li>
+<li class="internal"><a href="#xrefs">Persistent Cross_references</a></li>
+<li class="internal"><a href="#interfaces">Persistence of Polymorphic Classes using Interfaces</a></li>
+<li class="internal"><a href="#callback">Persistence of Polymorphic Classes using Callbacks</a></li>
+<li class="internal"><a href="#installer">Installer Functions</a></li>
+<li class="internal"><a href="#smart_ptr">Persistence of Smart Pointers</a></li>
 </ul>
 
 </div>
@@ -73,7 +74,7 @@ the already-restored object.</p>
 <h2 id="include">Header persistent_pointers.hpp</h2>
 
 <ul>
-<li><a href="persistent_pointers_hpp.html">Browse Header persistent_pointers.hpp</a></li>
+<li class="external"><a href="persistent_pointers_hpp.html">Browse Header persistent_pointers.hpp</a></li>
 </ul>
 
 <p>You can include all of the pointer-handling functions in one go by including persistent_pointers.hpp. If you prefer
@@ -82,7 +83,7 @@ however, you can include the separate headers for each class being used.</p>
 <h2 id="pointer">Persistent Pointer</h2>
 
 <ul>
-<li><a href="persistent_pointer_hpp.html">Browse Header persistent_pointer.hpp</a></li>
+<li class="external"><a href="persistent_pointer_hpp.html">Browse Header persistent_pointer.hpp</a></li>
 </ul>
 
 <p>There is a template function pair dump_pointer/restore_pointer which implements the algorithm
@@ -118,7 +119,7 @@ pointers to other types.</p>
 <h2 id="xrefs">Persistent Cross-References</h2>
 
 <ul>
-<li><a href="persistent_xref_hpp.html">Browse Header persistent_xref.hpp</a></li>
+<li class="external"><a href="persistent_xref_hpp.html">Browse Header persistent_xref.hpp</a></li>
 </ul>
 
 <p>In principle, the approach described should cope with data structures of any complexity. However, there
@@ -158,7 +159,7 @@ are pointing to have already been dumped so only magic keys get dumped.</p>
 <h2 id="interfaces">Persistence of Polymorphic Classes using Interfaces</h2>
 
 <ul>
-<li><a href="persistent_interface_hpp.html">Browse Header persistent_interface.hpp</a></li>
+<li class="external"><a href="persistent_interface_hpp.html">Browse Header persistent_interface.hpp</a></li>
 </ul>
 
 <p>In C++ you can define a superclass and then derive subclasses from it (some
@@ -285,7 +286,7 @@ to the same object.</p>
 <h2 id="callback">Persistence of Polymorphic Classes using Callbacks</h2>
 
 <ul>
-<li><a href="persistent_callback_hpp.html">Browse Header persistent_callback.hpp</a></li>
+<li class="external"><a href="persistent_callback_hpp.html">Browse Header persistent_callback.hpp</a></li>
 </ul>
 
 <p>The <a href="#interfaces">previous section</a> described how polymorphic types could be made
@@ -439,7 +440,7 @@ void make_base_persistent(stlplus::restore_context&amp; context)
 <h2 id="smart_ptr">Persistence of Smart Pointers</h2>
 
 <ul>
-<li><a href="persistent_smart_ptr_hpp.html">Browse Header persistent_smart_ptr.hpp</a></li>
+<li class="external"><a href="persistent_smart_ptr_hpp.html">Browse Header persistent_smart_ptr.hpp</a></li>
 </ul>
 
 <p>The STLplus <a href="smart_ptr.html">smart pointer classes</a> are a

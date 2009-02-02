@@ -145,6 +145,38 @@ h3
 {
 }
 
+li.file
+{
+  list-style-type: disc;
+  list-style-image: url("file.png");
+}
+
+li.folder
+{
+  list-style-type: square;
+  list-style-image: url("folder.png");
+}
+
+li.cross
+{
+  list-style-image: url("cross.png");
+}
+
+li.tick
+{
+  list-style-image: url("tick.png");
+}
+
+li.internal
+{
+  list-style-image: url("down.png");
+}
+
+li.external
+{
+  list-style-image: url("file.png");
+}
+
 /* Links */
 
 a:link, a:visited
