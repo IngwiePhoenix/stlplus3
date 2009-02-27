@@ -303,6 +303,11 @@ int main(int argc, char* argv[])
     std::cout << "caught exception: " << exception.what() << std::endl;
     result = false;
   }
+  catch(...)
+  {
+    std::cout << "caught unknown exception" << std::endl;
+    result = false;
+  }
   if (result)
     std::cout << "... test PASSED" << std::endl;
   else
