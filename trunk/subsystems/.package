@@ -1,3 +1,5 @@
 Makefile
-*.dsp
-*.?pp
+subsystems.dsp
+subsystems.vcproj
+*.hpp
+*.cpp

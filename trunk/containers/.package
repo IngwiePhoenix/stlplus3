@@ -1,2 +1,4 @@
-*.dsp
-*.?pp
+containers.dsp
+containers.vcproj
+*.hpp
+*.tpp
