@@ -11,6 +11,8 @@
 //   NDEBUG compiler directive
 
 ////////////////////////////////////////////////////////////////////////////////
+
+#include "portability_fixes.hpp"
 #include <stdexcept>
 #include <string>
 
