@@ -50,10 +50,16 @@ C++ Library Collection
 
 <h2 id="introduction">Introduction</h2>
 
-<p>My intention is to port the screen library to as many platforms as I can reasonably support.
-SourceForge help here by allowing access to a wide range of different platforms that I can run
-tests on.</p>
+<p>My intention is to port the screen library to as many platforms as I can reasonably support.</p>
 
+
+<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a Compile
+Farm so that I could test STLplus on different platforms. This enabled me, for example, to fix
+problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
+withdrawn, so I can only test the library on my Windows machine. However, I can still test against
+Cygwin Unix emulation on Windows, and Windows native builds using Visual Studio, the MinGW version
+of the Gcc compiler and the Cygwin gcc compiler running in native mode (up to
+v3.x only).</p>
 
 <h2 id="issues">Porting Status</h2>
 
@@ -206,14 +212,6 @@ systems. There are other libraries that deal with this issue better than I can a
 beyond the scope of the STLplus library to resolve it.</p>
 
 <h2 id="progress">Porting Testing</h2>
-
-<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a Compile
-Farm so that I could test STLplus on different platforms. This enabled me, for example, to fix
-problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
-withdrawn, so I can only test the library on my Windows machine. However, I can still test against
-Cygwin Unix emulation on Windows, and Windows native builds using Visual Studio, the MinGW version
-of the Gcc compiler and the Cygwin gcc compiler running in native mode (up to
-v3.x only).</p>
 
 <p>If you can confirm the library works on any other platform or compiler combination, please let me
 know the details - Compiler, Compiler version, OS, CPU etc.</p>
