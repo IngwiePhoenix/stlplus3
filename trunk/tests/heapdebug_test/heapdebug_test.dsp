@@ -28,7 +28,7 @@ CFG=heapdebug_test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF "$(CFG)" == "heapdebug_test - Win32 Release"
+!IF  "$(CFG)" == "heapdebug_test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -39,19 +39,20 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
-# ADD CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c /I "..\heapdebug"
-# ADD BASE RSC /l 0x809 /d "NDEBUG" 
-# ADD RSC /l 0x809 /d "NDEBUG" 
+# ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\heapdebug" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD BASE RSC /l 0x809 /d "NDEBUG"
+# ADD RSC /l 0x809 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386
-# ADD LINK32  "..\heapdebug\Release\heapdebug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /out:"heapdebug_test.exe"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 "..\..\heapdebug\Release\heapdebug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /out:"heapdebug_test.exe"
 
-!ELSEIF "$(CFG)" == "heapdebug_test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "heapdebug_test - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -62,17 +63,18 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GR /GX /Zi /MDd /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
-# ADD CPP /nologo /W3 /GR /GX /Zi /MDd /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c /I "..\heapdebug"
-# ADD BASE RSC /l 0x809 /d "_DEBUG" 
-# ADD RSC /l 0x809 /d "_DEBUG" 
+# ADD BASE CPP /nologo /MDd /W3 /GR /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD CPP /nologo /MDd /W3 /GR /GX /Zi /Od /I "..\..\heapdebug" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /c
+# ADD BASE RSC /l 0x809 /d "_DEBUG"
+# ADD RSC /l 0x809 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug
-# ADD LINK32  "..\heapdebug\Debug\heapdebug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /incremental:no /subsystem:console /machine:I386 /debug /out:"heapdebug_test.exe"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386
+# ADD LINK32 "..\..\heapdebug\Debug\heapdebug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"heapdebug_test.exe"
 
 !ENDIF 
 
@@ -86,6 +88,9 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\heapdebug_test.cpp
+NODEP_CPP_HEAPD=\
+	".\heapdebug.hpp"\
+	
 # End Source File
 # End Group
 # End Target
