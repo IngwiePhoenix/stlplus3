@@ -120,9 +120,10 @@ Farm so that I could test STLplus on different platforms. This enabled me, for e
 problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
 withdrawn, so I can only test the library on my Windows machine. However, I can still test against
 Cygwin Unix emulation on Windows, and Windows native builds using Visual Studio, the MinGW version
-of the Gcc compiler and the Cygwin gcc compiler running in native mode (gcc v3 only).</p>
+of the Gcc compiler and the Cygwin gcc compiler running in native mode (up to
+v3.x only).</p>
 
-<p>In the past, the STLplus library has been compiled with gcc versions 2.95 to 4.3, with Visual
+<p>At some time in its history, the STLplus library has been compiled with gcc versions 2.95 to 4.3, with Visual
 Studio versions from 6 (SP5) to 9 (2008 Express Edition) and it reportedly works with the Borland
 compiler. It has been built on both 32-bit and 64-bit architectures (Intel, AMD, IBM OpenPower, Sun
 Sparc) running Windows (NT/2000/XP) Linux (Debian, RedHat, Suse), other Unix (Open BSD, Net BSD,
@@ -261,19 +262,33 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>Visual Studio v8 (2005 Express Edition) - needs Platform SDK</td>
 </tr>
 
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>9</td>
+<td>N/A</td>
+<td><code>_WIN32</code></td>
+<td>2009-05-19</td>
+<td><a href="http://www.microsoft.com/express/">Visual Studio v9 (2008 Express Edition)</a></td>
+</tr>
+
 </tbody>
 
 </table>
 
-<p><strong>Note 1</strong>: The -D directive is a C macro that selects between different implementations of
-code for different platforms. For example, a Windows application will use different system calls to
-a Unix application. The correct directive for the platform must be defined for the STLplus library
-to build on the target platform. Typically this is set as an option to the compiler - for example
-with the gcc compiler you would specify "<code>gcc -DSOLARIS</code>" when building on Solaris. The
-_WIN32 value that selects the Windows native build is set automatically by the compilers so you
-don't have to do this. If no -D directive is shown, then the default build is a generic Unix build
-and needs no special rules. See the documentation on <a href="building.html">building the
-library</a> for more on this.</p>
+<p><strong>Note 1</strong>: The -D directive is a C macro that selects between
+different implementations of code for different platforms. For example, a
+Windows application will use different system calls to a Unix application. The
+correct directive for the platform must be defined for the STLplus library to
+build on the target platform. Typically this is set as an option to the
+compiler - for example with the gcc compiler you would specify "<code>gcc
+-DSOLARIS</code>" when building on Solaris. The _WIN32 value that selects the
+Windows native build is set automatically by the compilers so you don't have
+to do this. If no -D directive is shown, then the default build is a generic
+Unix build and needs no special rules. See the documentation on <a
+href="building.html">building the library</a> for more on this.</p>
 
 
 </div>
