@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bitset_test", "bitset_test\bitset_test.vcproj", "{3C96721E-A1D0-4F49-AAB2-B755A030C17F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bool_vector_test", "bool_vector_test\bool_vector_test.vcproj", "{D96D7CC6-6DCB-4F98-B651-73DA14F26FB6}"

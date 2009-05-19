@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "containers", "containers\containers.vcproj", "{929B0B65-0649-46EA-8FC2-856277DDA05D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "persistence", "persistence\persistence.vcproj", "{6C82E76C-92B3-4EA8-932B-D6A39959AD7D}"

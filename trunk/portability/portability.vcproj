@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="portability"
 	ProjectGUID="{393AC1A7-20F9-4B83-A4EC-BC590034068A}"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
