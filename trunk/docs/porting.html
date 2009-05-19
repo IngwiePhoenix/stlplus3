@@ -69,6 +69,37 @@ access to operating system services that differ between platforms. The idea is
 to hide the implementation behind a common interface. By writing software to
 that interface, you automatically get portable software. At least, that is the
 theory.</p>
+<p>STLplus has been built on the following Operating Systems:</p>
+<ul>
+  <li>Windows
+    <ul>
+      <li>NT</li>
+      <li>2000</li>
+      <li>XP</li>
+    </ul>
+  </li>
+  <li>Linux
+    <ul>
+      <li>Debian</li>
+      <li>RedHat</li>
+      <li>Suse</li>
+    </ul>
+  </li>
+  <li>other Unix
+    <ul>
+      <li>Open BSD</li>
+      <li>Net BSD</li>
+      <li>Free BSD</li>
+      <li>Solaris</li>
+    </ul>
+  </li>
+  <li>MacOS
+    <ul>
+      <li>X (Darwin)</li>
+    </ul>
+  </li>
+</ul>
+
 </dd>
 
 <dt>Different CPU Architectures</dt>
@@ -76,26 +107,87 @@ theory.</p>
 <p>Different CPUs have different word lengths, different byte ordering and different integer type
 definitions. The intention is that STLplus will work with all variations of these characteristics
 that I come across.</p>
+
+<p>STLplus has been built on the following CPUs:</p>
+<ul>
+  <li>Intel Pentium 686 (32-bit)</li>
+  <li>AMD Opteron (64-bit)</li>
+  <li>IBM OpenPower (32-bit)</li>
+  <li>DEC Alpha (64-bit)</li>
+  <li>Sun Sparc (32-bit)</li>
+  <li>Power PC (32-bit)</li>
+  <li>Power PC (64-bit)</li>
+</ul>
 </dd>
 
 <dt>Different Compilers</dt>
 
 <dd>
+
 <p>The concept of portability means portability between operating systems, not necessarily
-portability between compilers. However, to cater for different tastes in compilers, under Windows
-the library will work for either the Gnu gcc compiler or the Microsoft Visual C++ compiler.</p>
-</dd>
+portability between compilers. However, to cater for different tastes in
+compilers, I have supported as many as I have access to.</p>
 
-<dt>Different Compiler Versions</dt>
-
-<dd>
 <p>It is also important that software will build with different versions of each compiler, because I
 have no control over which compiler you are using and there's a good chance that you don't either.
 The STLplus library should ideally work in whatever development environment you have chosen (within
-reason). So, STLplus works with different releases of these compilers, not just the latest one. At
-the time of writing STLplus builds with all versions of gcc from version 2.95 up to 3.4 and has been
-reported as working with version 4. It also works with Visual Studio versions 6, 7 and 8 although I
-only supply project files for v6.</p>
+reason). So, STLplus works with different releases of these compilers, not
+just the latest one.</p>
+
+<p>STLplus has been built on the following compilers:</p>
+
+<ul>
+  <li>Visual Studio
+    <ul>
+      <li>v6 - if patched to SP5</li>
+      <li>v7 (.NET)</li>
+      <li>v8 (2005)</li>
+      <li>v9 (2008)</li>
+    </ul>
+  </li>
+  <li>Gnu gcc
+    <ul>
+      <li>v2, v2.95 onwards - tried on v2.95</li>
+      <li>v3 - tried in v3.3 and v3.4</li>
+      <li>v4 - tried on v4.3</li>
+    </ul>
+  </li>
+  <li>Borland
+    <ul>
+      <li>unknown - reported to work by user</li>
+    </ul>
+  </li>
+</ul>
+
+<p>On each operating system there are a number of different development
+environments available:</p>
+
+<ul>
+
+  <li>Windows
+    <ul>
+      <li>Visual Studio</li>
+      <li>Borland</li>
+      <li>native Windows using gnu gcc on <a href="http://www.mingw.org/">MinGW</a></li>
+      <li>Unix-emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin</a></li>
+    </ul>
+  </li>
+
+  <li>all Linux / Unix
+    <ul>
+      <li>gnu gcc</li>
+    </ul>
+  </li>
+
+  <li>MacOS X
+    <ul>
+      <li>gnu gcc</li>
+    </ul>
+  </li>
+
+</ul>
+
+
 </dd>
 
 </dl>
@@ -123,16 +215,10 @@ Cygwin Unix emulation on Windows, and Windows native builds using Visual Studio,
 of the Gcc compiler and the Cygwin gcc compiler running in native mode (up to
 v3.x only).</p>
 
-<p>At some time in its history, the STLplus library has been compiled with gcc versions 2.95 to 4.3, with Visual
-Studio versions from 6 (SP5) to 9 (2008 Express Edition) and it reportedly works with the Borland
-compiler. It has been built on both 32-bit and 64-bit architectures (Intel, AMD, IBM OpenPower, Sun
-Sparc) running Windows (NT/2000/XP) Linux (Debian, RedHat, Suse), other Unix (Open BSD, Net BSD,
-Free BSD, Solaris) and MacOS X (Darwin).
-
 <p>If you can confirm the library works on any other platform or compiler combination, please let me
 know the details - Compiler, Compiler version, OS, CPU etc.</p>
 
-<p>The following table shows the platforms that STLplus3 has been tested on recently.</p>
+<p>The following table shows the platforms that STLplus3 has been tested on <em>recently</em>.</p>
 
 <table border="1" cellpadding="1" align="center" rules="cols,groups" frame="border">
 <caption>Porting State</caption>
@@ -186,7 +272,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
 <td>2008-12-16</td>
-<td>Uses <a href="http://www.mingw.org">MinGW</a> to build a native Windows program</td>
+<td>Uses <a href="http://www.mingw.org/">MinGW</a> to build a native Windows program</td>
 </tr>
 
 <tr>
@@ -198,7 +284,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
 <td>2009-01-16</td>
-<td>Uses <a href="http://www.mingw.org">MinGW</a> with alpha test gcc v4.3 to build a native Windows program</td>
+<td>Uses <a href="http://www.mingw.org/">MinGW</a> with alpha test gcc v4.3 to build a native Windows program</td>
 </tr>
 
 <tr>
@@ -210,7 +296,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
 <td>2008-12-16</td>
-<td>Uses <a href="http://www.cygwin.com">Cygwin</a> to build a Unix-emulation program that runs on Windows</td>
+<td>Uses <a href="http://www.cygwin.com/">Cygwin</a> to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
 <tr>
@@ -222,7 +308,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
 <td>2008-12-16</td>
-<td>Uses <a href="http://www.cygwin.com">Cygwin</a> with the alpha-test version of gcc v4 to build a Unix-emulation program that runs on Windows</td>
+<td>Uses <a href="http://www.cygwin.com/">Cygwin</a> with the alpha-test version of gcc v4 to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
 <tr>
@@ -234,7 +320,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>CYGMING-i686</code></td>
 <td><code>CYGMING</code></td>
 <td>2008-12-16</td>
-<td>Uses <a href="http://www.cygwin.com">Cygwin</a> with the -mno-cygwin option to build a native
+<td>Uses <a href="http://www.cygwin.com/">Cygwin</a> with the -mno-cygwin option to build a native
 Windows program. This option only works on some v3 gcc compilers and has been removed from v4.</td>
 </tr>
 
