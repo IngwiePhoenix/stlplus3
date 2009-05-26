@@ -37,6 +37,8 @@
 //          Whenever the compiler encounters a constant comparison that (due to
 //          the nature of the value being compared) is always true or false, it
 //          issues this warning and evaluates the condition at compile time.
+//   8026 - Functions with exception specifications are not expanded inline
+//   8027 - Functions with xxx are not expanded inline
 //   8060 - Possibly incorrect assignment.
 //          This warning is generated when the compiler encounters an assignment
 //          operator as the main operator of a conditional expression (part of
@@ -48,6 +50,8 @@
 //          do, and for loops with a constant test condition, and attempts to
 //          recognize loops that can't fall through.
 #pragma warn -8008
+#pragma warn -8026
+#pragma warn -8027
 #pragma warn -8060
 #pragma warn -8066
 #endif
