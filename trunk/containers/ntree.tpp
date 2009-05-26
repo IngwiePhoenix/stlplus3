@@ -118,13 +118,13 @@ namespace stlplus
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_iterator<T,TRef,TPtr>::const_iterator ntree_iterator<T,TRef,TPtr>::constify(void) const
   {
-    return TYPENAME ntree_iterator<T,TRef,TPtr>::const_iterator(*this);
+    return ntree_iterator<T,const T&,const T*>(*this);
   }
 
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_iterator<T,TRef,TPtr>::iterator ntree_iterator<T,TRef,TPtr>::deconstify(void) const
   {
-    return TYPENAME ntree_iterator<T,TRef,TPtr>::iterator(*this);
+    return ntree_iterator<T,T&,T*>(*this);
   }
 
   template<typename T, typename TRef, typename TPtr>
@@ -202,13 +202,13 @@ namespace stlplus
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_prefix_iterator<T,TRef,TPtr>::const_iterator ntree_prefix_iterator<T,TRef,TPtr>::constify(void) const
   {
-    return TYPENAME ntree_prefix_iterator<T,TRef,TPtr>::const_iterator(m_iterator);
+    return ntree_prefix_iterator<T,const T&,const T*>(m_iterator);
   }
 
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_prefix_iterator<T,TRef,TPtr>::iterator ntree_prefix_iterator<T,TRef,TPtr>::deconstify(void) const
   {
-    return TYPENAME ntree_prefix_iterator<T,TRef,TPtr>::iterator(m_iterator);
+    return ntree_prefix_iterator<T,T&,T*>(m_iterator);
   }
 
   template<typename T, typename TRef, typename TPtr>
@@ -296,7 +296,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    TYPENAME ntree_prefix_iterator<T,TRef,TPtr>::this_iterator result = *this;
+    ntree_prefix_iterator<T,TRef,TPtr> result = *this;
     ++(*this);
     return result;
   }
@@ -376,13 +376,13 @@ namespace stlplus
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_postfix_iterator<T,TRef,TPtr>::const_iterator ntree_postfix_iterator<T,TRef,TPtr>::constify(void) const
   {
-    return TYPENAME ntree_postfix_iterator<T,TRef,TPtr>::const_iterator(m_iterator);
+    return ntree_postfix_iterator<T,const T&,const T*>(m_iterator);
   }
 
   template<typename T, typename TRef, typename TPtr>
   TYPENAME ntree_postfix_iterator<T,TRef,TPtr>::iterator ntree_postfix_iterator<T,TRef,TPtr>::deconstify(void) const
   {
-    return TYPENAME ntree_postfix_iterator<T,TRef,TPtr>::iterator(m_iterator);
+    return ntree_postfix_iterator<T,T&,T*>(m_iterator);
   }
 
   template<typename T, typename TRef, typename TPtr>
@@ -458,7 +458,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    TYPENAME ntree_postfix_iterator<T,TRef,TPtr>::this_iterator result = *this;
+    ntree_postfix_iterator<T,TRef,TPtr> result = *this;
     ++(*this);
     return result;
   }
@@ -567,15 +567,15 @@ namespace stlplus
   template<typename T>
   TYPENAME ntree<T>::const_iterator ntree<T>::root(void) const
   {
-    if (!m_root) return TYPENAME ntree<T>::const_iterator(this);
-    return TYPENAME ntree<T>::const_iterator(m_root);
+    if (!m_root) return ntree_iterator<T,const T&,const T*>(this);
+    return ntree_iterator<T,const T&,const T*>(m_root);
   }
 
   template<typename T>
   TYPENAME ntree<T>::iterator ntree<T>::root(void)
   {
-    if (!m_root) return TYPENAME ntree<T>::iterator(this);
-    return TYPENAME ntree<T>::iterator(m_root);
+    if (!m_root) return ntree_iterator<T,T&,T*>(this);
+    return ntree_iterator<T,T&,T*>(m_root);
   }
 
   template<typename T>
@@ -587,7 +587,7 @@ namespace stlplus
   }
 
   template<typename T>
-  unsigned ntree<T>::children(const TYPENAME ntree<T>::iterator& i)
+  unsigned ntree<T>::children(const ntree_iterator<T,T&,T*>& i)
     throw(wrong_object,null_dereference,end_dereference)
   {
     i.assert_valid(this);
@@ -600,7 +600,7 @@ namespace stlplus
   {
     i.assert_valid(this);
     if (child >= children(i)) throw std::out_of_range("stlplus::ntree");
-    return TYPENAME ntree<T>::const_iterator(i.node()->m_children[child]);
+    return ntree_iterator<T,const T&,const T*>(i.node()->m_children[child]);
   }
 
   template<typename T>
@@ -609,7 +609,7 @@ namespace stlplus
   {
     i.assert_valid(this);
     if (child >= children(i)) throw std::out_of_range("stlplus::ntree");
-    return TYPENAME ntree<T>::iterator(i.node()->m_children[child]);
+    return ntree_iterator<T,T&,T*>(i.node()->m_children[child]);
   }
 
   template<typename T>
@@ -618,8 +618,8 @@ namespace stlplus
   {
     i.assert_valid(this);
     ntree_node<T>* parent = i.node()->m_parent;
-    if (!parent) return TYPENAME ntree<T>::const_iterator(this);
-    return TYPENAME ntree<T>::const_iterator(parent);
+    if (!parent) return ntree_iterator<T,const T&,const T*>(this);
+    return ntree_iterator<T,const T&,const T*>(parent);
   }
 
   template<typename T>
@@ -628,63 +628,63 @@ namespace stlplus
   {
     i.assert_valid(this);
     ntree_node<T>* parent = i.node()->m_parent;
-    if (!parent) return TYPENAME ntree<T>::iterator(this);
-    return TYPENAME ntree<T>::iterator(parent);
+    if (!parent) return ntree_iterator<T,T&,T*>(this);
+    return ntree_iterator<T,T&,T*>(parent);
   }
 
   template<typename T>
   TYPENAME ntree<T>::const_prefix_iterator ntree<T>::prefix_begin(void) const
   {
-    return TYPENAME ntree<T>::const_prefix_iterator(root());
+    return ntree_prefix_iterator<T,const T&,const T*>(root());
   }
 
   template<typename T>
   TYPENAME ntree<T>::prefix_iterator ntree<T>::prefix_begin(void)
   {
-    return TYPENAME ntree<T>::prefix_iterator(root());
+    return ntree_prefix_iterator<T,T&,T*>(root());
   }
 
   template<typename T>
   TYPENAME ntree<T>::const_prefix_iterator ntree<T>::prefix_end(void) const
   {
-    return TYPENAME ntree<T>::const_prefix_iterator(TYPENAME ntree<T>::const_iterator(this));
+    return ntree_prefix_iterator<T,const T&,const T*>(ntree_iterator<T,const T&,const T*>(this));
   }
 
   template<typename T>
   TYPENAME ntree<T>::prefix_iterator ntree<T>::prefix_end(void)
   {
-    return TYPENAME ntree<T>::prefix_iterator(TYPENAME ntree<T>::iterator(this));
+    return ntree_prefix_iterator<T,T&,T*>(ntree_iterator<T,T&,T*>(this));
   }
 
   template<typename T>
   TYPENAME ntree<T>::const_postfix_iterator ntree<T>::postfix_begin(void) const
   {
-    return TYPENAME ntree<T>::const_postfix_iterator(root());
+    return ntree_postfix_iterator<T,const T&,const T*>(root());
   }
 
   template<typename T>
   TYPENAME ntree<T>::postfix_iterator ntree<T>::postfix_begin(void)
   {
-    return TYPENAME ntree<T>::postfix_iterator(root());
+    return ntree_postfix_iterator<T,T&,T*>(root());
   }
 
   template<typename T>
   TYPENAME ntree<T>::const_postfix_iterator ntree<T>::postfix_end(void) const
   {
-    return TYPENAME ntree<T>::const_postfix_iterator(TYPENAME ntree<T>::const_iterator(this));
+    return ntree_postfix_iterator<T,const T&,const T*>(ntree_iterator<T,const T&,const T*>(this));
   }
 
   template<typename T>
   TYPENAME ntree<T>::postfix_iterator ntree<T>::postfix_end(void)
   {
-    return TYPENAME ntree<T>::postfix_iterator(TYPENAME ntree<T>::iterator(this));
+    return ntree_postfix_iterator<T,T&,T*>(ntree_iterator<T,T&,T*>(this));
   }
 
   template<typename T>
   TYPENAME ntree<T>::iterator ntree<T>::insert(const T& data)
   {
     // insert a new node as the root
-    return insert(TYPENAME ntree<T>::iterator(this), 0, data);
+    return insert(ntree_iterator<T,T&,T*>(this), 0, data);
   }
 
   template<typename T>
@@ -709,7 +709,7 @@ namespace stlplus
       i.node()->m_children.insert(i.node()->m_children.begin()+offset,new_node);
       new_node->m_parent = i.node();
     }
-    return TYPENAME ntree<T>::iterator(new_node);
+    return ntree_iterator<T,T&,T*>(new_node);
   }
 
   template<typename T>
@@ -729,7 +729,7 @@ namespace stlplus
     ntree_node<T>* new_node = ntree_copy(this, tree.m_root);
     i.node()->m_children.insert(i.node()->m_children.begin()+offset,new_node);
     new_node->m_parent = i.node();
-    return TYPENAME ntree<T>::iterator(new_node);
+    return ntree_iterator<T,T&,T*>(new_node);
   }
 
   template<typename T>
@@ -765,7 +765,7 @@ namespace stlplus
     // link up the old node as the child of the new node
     new_node->m_children.insert(new_node->m_children.begin(),node.node());
     node.node()->m_parent = new_node;
-    return TYPENAME ntree<T>::iterator(new_node);
+    return ntree_iterator<T,T&,T*>(new_node);
   }
 
   template<typename T>

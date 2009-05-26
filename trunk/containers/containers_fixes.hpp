@@ -39,6 +39,8 @@
 //          Whenever the compiler encounters a constant comparison that (due to
 //          the nature of the value being compared) is always true or false, it
 //          issues this warning and evaluates the condition at compile time.
+//   8026 - Functions with exception specifications are not expanded inline
+//   8027 - Functions with xxx are not expanded inline
 //   8060 - Possibly incorrect assignment.
 //          This warning is generated when the compiler encounters an assignment
 //          operator as the main operator of a conditional expression (part of
@@ -50,6 +52,8 @@
 //          do, and for loops with a constant test condition, and attempts to
 //          recognize loops that can't fall through.
 #pragma warn -8008
+#pragma warn -8026
+#pragma warn -8027
 #pragma warn -8060
 #pragma warn -8066
 #endif
@@ -95,27 +99,32 @@
 // default values, overridden for individual problem cases below
 #define TYPENAME typename
 
-#ifdef __GNUC__
 // GCC 
 //   - pre-version 3 didn't handle typename in any of these cases
 //   - version 3 onwards, typename is required for all three cases as per default
+#ifdef __GNUC__
 #if __GNUC__ < 3
-// gcc prior to v3
 #undef TYPENAME
 #define TYPENAME
 #endif
 #endif
 
-#ifdef _MSC_VER
 // Visual Studio
 //   - version 6 (compiler v.12) cannot handle typename in any of these cases
 //   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all
 //   - version 8 (2005) (compiler v.14) requires parameters and templates, supports all
+#ifdef _MSC_VER
 #if _MSC_VER < 1300
-// compiler version 12 and earlier
 #undef TYPENAME
 #define TYPENAME
 #endif
+#endif
+
+// Borland 
+//   - doesn't handle typename in any of these cases
+#ifdef __BORLANDC__
+#undef TYPENAME
+#define TYPENAME
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -91,13 +91,13 @@ namespace stlplus
   template<typename K, typename T, class H, class E, typename V>
   TYPENAME hash_iterator<K,T,H,E,V>::const_iterator hash_iterator<K,T,H,E,V>::constify(void) const
   {
-    return TYPENAME hash_iterator<K,T,H,E,V>::const_iterator(*this);
+    return hash_iterator<K,T,H,E,const std::pair<const K,T> >(*this);
   }
 
   template<typename K, typename T, class H, class E, typename V>
   TYPENAME hash_iterator<K,T,H,E,V>::iterator hash_iterator<K,T,H,E,V>::deconstify(void) const
   {
-    return TYPENAME hash_iterator<K,T,H,E,V>::iterator(*this);
+    return hash_iterator<K,T,H,E,std::pair<const K,T> >(*this);
   }
 
   // increment operator looks for the next element in the table
@@ -130,7 +130,7 @@ namespace stlplus
   TYPENAME hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
     throw(null_dereference,end_dereference)
   {
-    TYPENAME hash_iterator<K,T,H,E,V>::this_iterator old = *this;
+    hash_iterator<K,T,H,E,V> old = *this;
     ++(*this);
     return old;
   }
@@ -229,7 +229,7 @@ namespace stlplus
     // copy the elements across - remember that this is rehashing because the two
     // tables can be different sizes so there is no quick way of doing this by
     // copying the lists
-    for (TYPENAME hash<K,T,H,E>::const_iterator i = r.begin(); i != r.end(); ++i)
+    for (hash_iterator<K,T,H,E,const std::pair<const K,T> > i = r.begin(); i != r.end(); ++i)
       insert(i->first, i->second);
     return *this;
   }
@@ -256,9 +256,9 @@ namespace stlplus
     // they must be the same size to be equal
     if (m_size != right.m_size) return false;
     // now every key in this must be in right and have the same data
-    for (TYPENAME hash<K,T,H,E>::const_iterator i = begin(); i != end(); i++)
+    for (hash_iterator<K,T,H,E,const std::pair<const K,T> > i = begin(); i != end(); i++)
     {
-      TYPENAME hash<K,T,H,E>::const_iterator found = right.find(i->first);
+      hash_iterator<K,T,H,E,const std::pair<const K,T> > found = right.find(i->first);
       if (found == right.end()) return false;
       if (!(i->second == found->second)) return false;
     }
@@ -427,7 +427,7 @@ namespace stlplus
     // increment the size count
     m_size++;
     // construct an iterator from the list node, and return whether inserted
-    return std::make_pair(TYPENAME hash<K,T,H,E>::iterator(new_item), inserted);
+    return std::make_pair(hash_iterator<K,T,H,E,std::pair<const K,T> >(new_item), inserted);
   }
 
   // insert a key with an empty data field ready to be filled in later
@@ -488,7 +488,7 @@ namespace stlplus
     for (hash_element<K,T,H,E>* current = m_values[bin]; current; current = current->m_next)
     {
       if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-        return TYPENAME hash<K,T,H,E>::const_iterator(current);
+        return hash_iterator<K,T,H,E,const std::pair<const K,T> >(current);
     }
     return end();
   }
@@ -502,7 +502,7 @@ namespace stlplus
     for (hash_element<K,T,H,E>* current = m_values[bin]; current; current = current->m_next)
     {
       if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-        return TYPENAME hash<K,T,H,E>::iterator(current);
+        return hash_iterator<K,T,H,E,std::pair<const K,T> >(current);
     }
     return end();
   }
@@ -517,7 +517,7 @@ namespace stlplus
   const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
   {
     // this const version cannot change the hash, so has to raise an exception if the key is missing
-    TYPENAME hash<K,T,H,E>::const_iterator found = find(key);
+    hash_iterator<K,T,H,E,const std::pair<const K,T> > found = find(key);
     if (found == end())
       throw std::out_of_range("key not found in stlplus::hash::operator[]");
     return found->second;
@@ -527,7 +527,7 @@ namespace stlplus
   T& hash<K,T,H,E>::operator[] (const K& key)
   {
     // this non-const version can change the hash, so creates a new element if the key is missing
-    TYPENAME hash<K,T,H,E>::iterator found = find(key);
+    hash_iterator<K,T,H,E,std::pair<const K,T> > found = find(key);
     if (found == end())
       found = insert(key);
     return found->second;
@@ -541,7 +541,7 @@ namespace stlplus
     // find the first element
     for (unsigned bin = 0; bin < m_bins; bin++)
       if (m_values[bin])
-        return TYPENAME hash<K,T,H,E>::const_iterator(m_values[bin]);
+        return hash_iterator<K,T,H,E,const std::pair<const K,T> >(m_values[bin]);
     // if the hash is empty, return the end iterator
     return end();
   }
@@ -552,7 +552,7 @@ namespace stlplus
     // find the first element
     for (unsigned bin = 0; bin < m_bins; bin++)
       if (m_values[bin])
-        return TYPENAME hash<K,T,H,E>::iterator(m_values[bin]);
+        return hash_iterator<K,T,H,E,std::pair<const K,T> >(m_values[bin]);
     // if the hash is empty, return the end iterator
     return end();
   }
@@ -560,13 +560,13 @@ namespace stlplus
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::end(void) const
   {
-    return TYPENAME hash<K,T,H,E>::const_iterator(this);
+    return hash_iterator<K,T,H,E,const std::pair<const K,T> >(this);
   }
 
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
   {
-    return TYPENAME hash<K,T,H,E>::iterator(this);
+    return hash_iterator<K,T,H,E,std::pair<const K,T> >(this);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -177,7 +177,7 @@ namespace stlplus
     typedef digraph_iterator<NT,AT,NT&,NT*> iterator;
     typedef digraph_iterator<NT,AT,const NT&,const NT*> const_iterator;
     typedef digraph_arc_iterator<NT,AT,AT&,AT*> arc_iterator;
-    typedef digraph_arc_iterator<NT,AT,const AT&, const AT*> const_arc_iterator;
+    typedef digraph_arc_iterator<NT,AT,const AT&,const AT*> const_arc_iterator;
 
     // supplementary types used throughout
 
