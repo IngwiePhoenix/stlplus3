@@ -352,9 +352,10 @@ namespace stlplus
       bool negative = local_i.negative();
       local_i.abs();
       // create a representation of the magnitude by successive division
+      inf inf_radix(radix);
       do
       {
-        std::pair<inf,inf> divided = local_i.divide(inf(radix));
+        std::pair<inf,inf> divided = local_i.divide(inf_radix);
         unsigned remainder = divided.second.to_unsigned();
         char digit = to_char[remainder];
         result.insert((std::string::size_type)0, 1, digit);
@@ -606,7 +607,14 @@ namespace stlplus
 
   inf::inf(const inf& r)
   {
+#ifdef __BORLANDC__
+    // work round bug in Borland compiler - copy constructor fails if string
+    // contains null characters, so do my own copy
+    for (unsigned i = 0; i < r.m_data.size(); i++)
+      m_data += r.m_data[i];
+#else
     m_data = r.m_data;
+#endif
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -893,7 +901,7 @@ namespace stlplus
 
   bool inf::operator != (const inf& r) const
   {
-    return !(*this == r);
+    return !operator==(r);
   }
 
   bool inf::operator < (const inf& r) const
@@ -974,7 +982,7 @@ namespace stlplus
 
   inf inf::operator ~ (void) const
   {
-    inf result = *this;
+    inf result(*this);
     result.invert();
     return result;
   }
@@ -1002,7 +1010,7 @@ namespace stlplus
 
   inf inf::operator & (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result &= r;
     return result;
   }
@@ -1030,7 +1038,7 @@ namespace stlplus
 
   inf inf::operator | (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result |= r;
     return result;
   }
@@ -1058,7 +1066,7 @@ namespace stlplus
 
   inf inf::operator ^ (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result ^= r;
     return result;
   }
@@ -1101,7 +1109,7 @@ namespace stlplus
 
   inf inf::operator << (unsigned shift) const
   {
-    inf result = *this;
+    inf result(*this);
     result <<= shift;
     return result;
   }
@@ -1139,7 +1147,7 @@ namespace stlplus
 
   inf inf::operator >> (unsigned shift) const
   {
-    inf result = *this;
+    inf result(*this);
     result >>= shift;
     return result;
   }
@@ -1158,7 +1166,7 @@ namespace stlplus
 
   inf inf::operator - (void) const
   {
-    inf result = *this;
+    inf result(*this);
     result.negate();
     return result;
   }
@@ -1212,7 +1220,7 @@ namespace stlplus
 
   inf inf::operator + (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result += r;
     return result;
   }
@@ -1223,13 +1231,14 @@ namespace stlplus
   inf& inf::operator -= (const inf& r)
   {
     // subtraction is defined in terms of negation and addition
-    operator += (-r);
+    inf negated = -r;
+    operator += (negated);
     return *this;
   }
 
   inf inf::operator - (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result -= r;
     return result;
   }
@@ -1241,7 +1250,7 @@ namespace stlplus
   {
     // 2's complement multiplication
     // one day I'll do a more efficient version than this based on the underlying representation
-    inf left = *this;
+    inf left(*this);
     inf right = r;
     // make the right value natural but preserve its sign for later
     bool right_negative = right.negative();
@@ -1265,7 +1274,7 @@ namespace stlplus
 
   inf inf::operator * (const inf& r) const
   {
-    inf result = *this;
+    inf result(*this);
     result *= r;
     return result;
   }
@@ -1277,7 +1286,7 @@ namespace stlplus
   {
     if (right.zero())
       throw divide_by_zero("stlplus::inf::divide");
-    inf numerator = *this;
+    inf numerator(*this);
     inf denominator = right;
     // make the numerator natural but preserve the sign for later
     bool numerator_negative = numerator.negative();
@@ -1359,7 +1368,7 @@ namespace stlplus
 
   inf inf::operator ++ (int)
   {
-    inf old = *this;
+    inf old(*this);
     operator += (inf(1));
     return old;
   }
@@ -1372,7 +1381,7 @@ namespace stlplus
 
   inf inf::operator -- (int)
   {
-    inf old = *this;
+    inf old(*this);
     operator -= (inf(1));
     return old;
   }
@@ -1450,7 +1459,7 @@ namespace stlplus
     for (std::string::size_type i = m_data.size(); i--; )
     {
       byte current = m_data[i];
-      byte msB = (current & byte(0xf0)) >> 8;
+      byte msB = (current & byte(0xf0)) >> 4;
       result += to_char[msB];
       byte lsB = (current & byte(0x0f));
       result += to_char[lsB];
