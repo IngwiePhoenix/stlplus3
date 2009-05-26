@@ -15,6 +15,11 @@
 #pragma warning(disable: 4290)
 #endif
 
+#ifdef __BORLANDC__
+#define HEAPDEBUG_NO_PLACEMENT_DELETE
+#define HEAPDEBUG_BROKEN_NOTHROW
+#endif
+
 #include <new>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,10 +32,12 @@ void operator delete (void*) throw();
 void operator delete[] (void*) throw();
 
 // nothrow variants will never throw an exception - so new(nothrow) will return null if out of memory
+#ifndef HEAPDEBUG_BROKEN_NOTHROW
 void* operator new (size_t, const std::nothrow_t&) throw();
 void* operator new[] (size_t, const std::nothrow_t&) throw();
 void operator delete (void* memory, const std::nothrow_t&) throw();
 void operator delete[] (void* memory, const std::nothrow_t&) throw();
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // exported diagnostic functions

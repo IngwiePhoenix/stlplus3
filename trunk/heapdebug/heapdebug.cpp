@@ -315,6 +315,8 @@ unsigned stlplus::heapdebug_outstanding(void)
 ////////////////////////////////////////////////////////////////////////////////
 // exported new/delete operators
 
+#ifndef HEAPDEBUG_BROKEN_NOTHROW
+
 // nothrow version of new returns null on error
 // use in concert with the place function to get file/line information
 void* operator new (size_t size, const nothrow_t& nothrow) throw()
@@ -330,6 +332,8 @@ void* operator new[] (size_t size, const nothrow_t& nothrow) throw()
   void* result = heapdebug_new(size, true);
   return result;
 }
+
+#endif
 
 // conventional new throws exception on error
 // use in concert with the place function to get file/line information
@@ -351,6 +355,8 @@ void* operator new[] (size_t size) throw(bad_alloc)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#ifndef HEAPDEBUG_BROKEN_NOTHROW
+
 // nothrow version of delete
 // use in concert with the place function to get file/line information
 void operator delete (void* memory, const nothrow_t&) throw()
@@ -364,6 +370,8 @@ void operator delete[] (void* memory, const nothrow_t&) throw()
 {
   heaphash_deallocate((word*)memory, true);
 }
+
+#endif
 
 // conventional version of delete
 // use in concert with the place function to get file/line information
@@ -396,6 +404,8 @@ void* operator new[] (size_t size, const char* file, int line) throw(bad_alloc)
   return result;
 }
 
+#ifndef HEAPDEBUG_NO_PLACEMENT_DELETE
+
 void operator delete (void*, const char*, int) throw()
 {
 }
@@ -403,6 +413,8 @@ void operator delete (void*, const char*, int) throw()
 void operator delete[] (void*, const char*, int) throw()
 {
 }
+
+#endif
 
 #else
 
