@@ -154,13 +154,13 @@ std::ostream& operator<< (std::ostream& device, const base_vector& data)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void make_base_persistent(stlplus::dump_context& context)
+void make_base_dump_persistent(stlplus::dump_context& context)
 {
   context.register_callback(typeid(base),dump_base);
   context.register_callback(typeid(derived),dump_derived);
 }
 
-void make_base_persistent(stlplus::restore_context& context)
+void make_base_restore_persistent(stlplus::restore_context& context)
 {
   context.register_callback(create_base,restore_base);
   context.register_callback(create_derived,restore_derived);
@@ -226,12 +226,12 @@ int main (int argc, char* argv[])
       }
     }
     std::cerr << "dumping" << std::endl;
-    stlplus::dump_to_file(data,DATA,dump_base_vector,make_base_persistent);
+    stlplus::dump_to_file(data,DATA,dump_base_vector,make_base_dump_persistent);
 
     // now restore the same file and compare it
     std::cerr << "restoring" << std::endl;
     base_vector restored;
-    stlplus::restore_from_file(DATA,restored,restore_base_vector,make_base_persistent);
+    stlplus::restore_from_file(DATA,restored,restore_base_vector,make_base_restore_persistent);
     result &= compare(data,restored);
 
     // compare with the master dump if present
@@ -241,7 +241,7 @@ int main (int argc, char* argv[])
     {
       std::cerr << "restoring master" << std::endl;
       base_vector master;
-      stlplus:: restore_from_file(MASTER,master,restore_base_vector,make_base_persistent);
+      stlplus:: restore_from_file(MASTER,master,restore_base_vector,make_base_restore_persistent);
       result &= compare(data,master);
     }
   }

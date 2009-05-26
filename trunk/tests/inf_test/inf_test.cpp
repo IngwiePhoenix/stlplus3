@@ -5,11 +5,12 @@
 #include "persistent_inf.hpp"
 #include "persistent_shortcuts.hpp"
 #include "strings.hpp"
+#include <stdio.h>
 
 #define DATA "inf_test.tmp"
 #define MASTER "inf_test.dump"
 
-#ifdef WIN32
+#ifdef _WIN32
 typedef __int64 bigint;
 #else
 typedef long long bigint;
@@ -20,16 +21,29 @@ typedef long long bigint;
 static std::string hex_image (bigint value)
 {
   char str[1000];
+#ifdef _WIN32
+  sprintf(str, "0x%I64x", value);
+#else
   sprintf(str, "%llx", value);
+#endif
+  return std::string(str);
+}
+
+static std::string dec_image (bigint value)
+{
+  char str[1000];
+#ifdef _WIN32
+  sprintf(str, "%I64d", value);
+#else
+  sprintf(str, "%lld", value);
+#endif
   return std::string(str);
 }
 
 static bool compare (bigint left, const stlplus::inf& right)
 {
-  char left_str[1000];
-  sprintf(left_str, "%lld", left);
-  std::string left_image = left_str;
-  std::string right_image = right.to_string();
+  std::string left_image = dec_image(left);
+  std::string right_image = right.to_string(10);
   if (left_image != right_image)
   {
     std::cerr << "failed comparing integer " << left_image << " with inf " << right << std::endl;
@@ -46,32 +60,36 @@ static bool report(int a, int b, const char* op)
 
 static bool test (int a, int b)
 {
-  //std::cerr << "testing [" << a << "," << b << "]" << std::endl;
   bool okay = true;
-  if (!compare((bigint(a) + bigint(b)), (stlplus::inf(a) + stlplus::inf(b))))
+  bigint int_a(a);
+  stlplus::inf inf_a(a);
+  bigint int_b(b);
+  stlplus::inf inf_b(b);
+
+  if (!compare((int_a + int_b), (inf_a + inf_b)))
     okay &= report(a, b, "+");
-  if (!compare((bigint(a) - bigint(b)), (stlplus::inf(a) - stlplus::inf(b))))
+  if (!compare((int_a - int_b), (inf_a - inf_b)))
     okay &= report(a, b, "-");
-  if (!compare((bigint(a) * bigint(b)), (stlplus::inf(a) * stlplus::inf(b))))
+  if (!compare((int_a * int_b), (inf_a * inf_b)))
     okay &= report(a, b, "*");
   if (b != 0)
   {
-    if (!compare((bigint(a) / bigint(b)), (stlplus::inf(a) / stlplus::inf(b))))
+    if (!compare((int_a / int_b), (inf_a / inf_b)))
       okay &= report(a, b, "/");
-    if (!compare((bigint(a) % bigint(b)), (stlplus::inf(a) % stlplus::inf(b))))
+    if (!compare((int_a % int_b), (inf_a % inf_b)))
       okay &= report(a, b, "%");
   }
-  if (!compare((bigint(a) | bigint(b)), (stlplus::inf(a) | stlplus::inf(b))))
+  if (!compare((int_a | int_b), (inf_a | inf_b)))
     okay &= report(a, b, "|");
-  if (!compare((bigint(a) & bigint(b)), (stlplus::inf(a) & stlplus::inf(b))))
+  if (!compare((int_a & int_b), (inf_a & inf_b)))
     okay &= report(a, b, "&");
-  if (!compare((bigint(a) ^ bigint(b)), (stlplus::inf(a) ^ stlplus::inf(b))))
+  if (!compare((int_a ^ int_b), (inf_a ^ inf_b)))
     okay &= report(a, b, "^");
   for (unsigned shift = 1; shift < 16; shift*=2)
   {
-    if (!compare((bigint(a) << shift), (stlplus::inf(a) << shift)))
+    if (!compare((int_a << shift), (inf_a << shift)))
       okay &= report(a, shift, "<<");
-    if (!compare((bigint(a) >> shift), (stlplus::inf(a) >> shift)))
+    if (!compare((int_a >> shift), (inf_a >> shift)))
       okay &= report(a, shift, ">>");
   }
   for (unsigned high = 1; high < 16; high*=2)
@@ -82,7 +100,7 @@ static bool test (int a, int b)
       if (high < inf_a.size())
       {
         // discard the lsbs by simply shifting right
-        bigint bigint_slice = bigint(a) >> low;
+        bigint bigint_slice = int_a >> low;
         // mask the msbs and sign extend the result
         int length = int(high)-int(low)+1;
         if (bigint_slice & (bigint(1) << (length-1)))
@@ -92,7 +110,7 @@ static bool test (int a, int b)
         stlplus::inf slice = inf_a.slice(low,high);
         if (!compare(bigint_slice, slice))
         {
-          std::cerr << "slice failed with hex integer = " << hex_image(bigint(a)) << ", high = " << high << ", low = " << low << std::endl;
+          std::cerr << "slice failed with hex integer = " << hex_image(int_a) << ", high = " << high << ", low = " << low << std::endl;
           std::cerr << "  inf slice = " << slice.image_debug() << ", integer slice = " << hex_image(bigint_slice) << std::endl;
           okay &= false;
         }

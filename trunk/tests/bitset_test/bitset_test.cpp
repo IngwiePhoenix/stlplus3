@@ -19,40 +19,50 @@
 
 typedef std::bitset<SIZE> bitset_N;
 
-std::ostream& operator<<(std::ostream& str, const bitset_N& values)
+void print_bitset_N(std::ostream& device, const bitset_N& values)
 {
-  stlplus::print_bitset(str, values);
-  return str;
+  stlplus::print_bitset(device, values);
 }
 
-void dump_bitset_N(stlplus::dump_context& str, const bitset_N& data)
+std::ostream& operator<<(std::ostream& device, const bitset_N& values)
 {
-  stlplus::dump_bitset(str, data);
+  print_bitset_N(device, values);
+  return device;
 }
 
-void restore_bitset_N(stlplus::restore_context& str, bitset_N& data)
+void dump_bitset_N(stlplus::dump_context& device, const bitset_N& values)
 {
-  stlplus::restore_bitset(str, data);
+  stlplus::dump_bitset(device, values);
+}
+
+void restore_bitset_N(stlplus::restore_context& device, bitset_N& values)
+{
+  stlplus::restore_bitset(device, values);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef std::vector<bitset_N> bitset_vector;
 
-std::ostream& operator<<(std::ostream& str, const bitset_vector& values)
+void print_bitset_vector(std::ostream& device, const bitset_vector& values)
 {
-  stlplus::print_vector(str, values, stlplus::print_bitset<SIZE>, ",");
-  return str;
+  stlplus::print_vector(device, values, print_bitset_N, ",");
 }
 
-void dump_bitset_vector(stlplus::dump_context& str, const bitset_vector& data)
+std::ostream& operator<<(std::ostream& device, const bitset_vector& values)
 {
-  stlplus::dump_vector(str, data, stlplus::dump_bitset<SIZE>);
+  print_bitset_vector(device, values);
+  return device;
 }
 
-void restore_bitset_vector(stlplus::restore_context& str, bitset_vector& data)
+void dump_bitset_vector(stlplus::dump_context& device, const bitset_vector& values)
 {
-  stlplus::restore_vector(str, data, restore_bitset_N);
+  stlplus::dump_vector(device, values, stlplus::dump_bitset<SIZE>);
+}
+
+void restore_bitset_vector(stlplus::restore_context& device, bitset_vector& values)
+{
+  stlplus::restore_vector(device, values, restore_bitset_N);
 }
 
 bool compare (const bitset_vector& left, const bitset_vector& right)

@@ -3,6 +3,7 @@
 #include "build.hpp"
 #include <fstream>
 #include <string.h>
+#include <stdio.h>
 
 #define DATA "string_test.tmp"
 #define MASTER "string_test.dump"

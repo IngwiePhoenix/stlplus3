@@ -9,6 +9,7 @@
 #include "persistent_smart_ptr.hpp"
 #include "file_system.hpp"
 #include "build.hpp"
+#include <stdio.h>
 
 #define NUMBER 1000
 #define DATA "interface_test.tmp"
@@ -138,13 +139,13 @@ std::ostream& operator<< (std::ostream& device, const base_vector& data)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void make_base_persistent(stlplus::dump_context& context)
+void make_base_dump_persistent(stlplus::dump_context& context)
 {
   context.register_interface(typeid(base));
   context.register_interface(typeid(derived));
 }
 
-void make_base_persistent(stlplus::restore_context& context)
+void make_base_restore_persistent(stlplus::restore_context& context)
 {
   context.register_interface(new base);
   context.register_interface(new derived);
@@ -210,12 +211,12 @@ int main (int argc, char* argv[])
       }
     }
     std::cerr << "dumping" << std::endl;
-    stlplus::dump_to_file(data,DATA,dump_base_vector,make_base_persistent);
+    stlplus::dump_to_file(data,DATA,dump_base_vector,make_base_dump_persistent);
 
     // now restore the same file and compare it
     std::cerr << "restoring" << std::endl;
     base_vector restored;
-    stlplus::restore_from_file(DATA,restored,restore_base_vector,make_base_persistent);
+    stlplus::restore_from_file(DATA,restored,restore_base_vector,make_base_restore_persistent);
     result &= compare(data,restored);
 
     // compare with the master dump if present
@@ -225,7 +226,7 @@ int main (int argc, char* argv[])
     {
       std::cerr << "restoring master" << std::endl;
       base_vector master;
-      stlplus:: restore_from_file(MASTER,master,restore_base_vector,make_base_persistent);
+      stlplus:: restore_from_file(MASTER,master,restore_base_vector,make_base_restore_persistent);
       result &= compare(data,master);
     }
   }

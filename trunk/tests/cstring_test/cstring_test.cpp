@@ -4,6 +4,7 @@
 #include "build.hpp"
 #include <fstream>
 #include <string.h>
+#include <stdio.h>
 
 #define DATA "cstring_test.tmp"
 #define MASTER "cstring_test.dump"
