@@ -20,13 +20,29 @@
 namespace stlplus
 {
 
-  template<typename T, typename C, typename S>
+  template<typename T, typename S>
   void print_smart_ptr(std::ostream& device,
-                       const smart_ptr_base<T,C>& value,
+                       const smart_ptr<T>& value,
                        S print_fn,
                        const std::string& null_string = "<null>",
                        const std::string& prefix = "(",
                        const std::string& suffix = ")");
+
+  template<typename T, typename S>
+  void print_smart_ptr_clone(std::ostream& device,
+                             const smart_ptr_clone<T>& value,
+                             S print_fn,
+                             const std::string& null_string = "<null>",
+                             const std::string& prefix = "(",
+                             const std::string& suffix = ")");
+
+  template<typename T, typename S>
+  void print_smart_ptr_nocopy(std::ostream& device,
+                              const smart_ptr_nocopy<T>& value,
+                              S print_fn,
+                              const std::string& null_string = "<null>",
+                              const std::string& prefix = "(",
+                              const std::string& suffix = ")");
 
 
 } // end namespace stlplus

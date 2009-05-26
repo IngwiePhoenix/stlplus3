@@ -19,12 +19,26 @@
 namespace stlplus
 {
 
-  template<typename T, typename C, typename S>
-  std::string smart_ptr_to_string(const smart_ptr_base<T,C>& value,
+  template<typename T, typename S>
+  std::string smart_ptr_to_string(const smart_ptr<T>& value,
                                   S to_string_fn,
                                   const std::string& null_string = "<null>",
                                   const std::string& prefix = "(",
                                   const std::string& suffix = ")");
+
+  template<typename T, typename S>
+  std::string smart_ptr_clone_to_string(const smart_ptr_clone<T>& value,
+                                        S to_string_fn,
+                                        const std::string& null_string = "<null>",
+                                        const std::string& prefix = "(",
+                                        const std::string& suffix = ")");
+
+  template<typename T, typename S>
+  std::string smart_ptr__nocopy_to_string(const smart_ptr_nocopy<T>& value,
+                                          S to_string_fn,
+                                          const std::string& null_string = "<null>",
+                                          const std::string& prefix = "(",
+                                          const std::string& suffix = ")");
 
 
 } // end namespace stlplus
