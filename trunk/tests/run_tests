@@ -6,6 +6,7 @@ echo "##################################################"
 
 passed="0"
 failed="0"
+failed_names=""
 root=`pwd`
 for dir in *; do
   if [ -d "$dir" ]; then
@@ -16,6 +17,7 @@ for dir in *; do
       if [ $? -ne 0 ] ; then
         echo "### test of $dir failed"
         failed=`expr $failed + 1`
+        failed_names="$failed_names $dir"
       else
         passed=`expr $passed + 1`
       fi
@@ -26,6 +28,6 @@ for dir in *; do
 done
 
 echo "Passed : $passed"
-echo "Failed : $failed"
+echo "Failed : $failed ($failed_names)"
 echo "##################################################"
 exit $failed
