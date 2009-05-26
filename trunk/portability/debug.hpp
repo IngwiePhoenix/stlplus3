@@ -26,7 +26,7 @@
 #define __FUNCTION__ 0
 #endif
 
-#if defined(__BORLANDC__)
+#ifdef __BORLANDC__
 #define __FUNCTION__ __FUNC__
 #endif
 
