@@ -91,9 +91,9 @@ namespace stlplus
       restore_xref(context,from);
       restore_xref(context,to);
       // create an arc with these from/to pointers
-      TYPENAME digraph<NT,AT>::arc_iterator arc = 
-        data.arc_insert(TYPENAME digraph<NT,AT>::iterator(from), 
-                        TYPENAME digraph<NT,AT>::iterator(to));
+      digraph_arc_iterator<NT,AT,AT&,AT*> arc = 
+        data.arc_insert(digraph_iterator<NT,AT,NT&,NT*>(from), 
+                        digraph_iterator<NT,AT,NT&,NT*>(to));
       context.pointer_add(arc_magic,arc.node());
       // restore the user data
       restore_arc(context,*arc);
