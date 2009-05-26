@@ -10,6 +10,7 @@
 #include "persistent.hpp"
 #include <map>
 #include <string>
+#include <stdio.h>
 
 namespace stlplus
 {
