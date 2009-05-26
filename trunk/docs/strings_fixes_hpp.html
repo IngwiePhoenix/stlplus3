@@ -56,23 +56,27 @@
 <span style="color: #ff0099">   45: </span><span style="color: #000099">//          Whenever the compiler encounters a constant comparison that (due to</span>
 <span style="color: #ff0099">   46: </span><span style="color: #000099">//          the nature of the value being compared) is always true or false, it</span>
 <span style="color: #ff0099">   47: </span><span style="color: #000099">//          issues this warning and evaluates the condition at compile time.</span>
-<span style="color: #ff0099">   48: </span><span style="color: #000099">//   8060 - Possibly incorrect assignment.</span>
-<span style="color: #ff0099">   49: </span><span style="color: #000099">//          This warning is generated when the compiler encounters an assignment</span>
-<span style="color: #ff0099">   50: </span><span style="color: #000099">//          operator as the main operator of a conditional expression (part of</span>
-<span style="color: #ff0099">   51: </span><span style="color: #000099">//          an if, while, or do-while statement). This is usually a</span>
-<span style="color: #ff0099">   52: </span><span style="color: #000099">//          typographical error for the equality operator.</span>
-<span style="color: #ff0099">   53: </span><span style="color: #000099">//   8066 - Unreachable code.</span>
-<span style="color: #ff0099">   54: </span><span style="color: #000099">//          A break, continue, goto, or return statement was not followed by a</span>
-<span style="color: #ff0099">   55: </span><span style="color: #000099">//          label or the end of a loop or function. The compiler checks while,</span>
-<span style="color: #ff0099">   56: </span><span style="color: #000099">//          do, and for loops with a constant test condition, and attempts to</span>
-<span style="color: #ff0099">   57: </span><span style="color: #000099">//          recognize loops that can't fall through.</span>
-<span style="color: #ff0099">   58: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8008</span>
-<span style="color: #ff0099">   59: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8060</span>
-<span style="color: #ff0099">   60: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8066</span>
-<span style="color: #ff0099">   61: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">   62: </span>
-<span style="color: #ff0099">   63: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   64: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   48: </span><span style="color: #000099">//   8026 - Functions with exception specifications are not expanded inline</span>
+<span style="color: #ff0099">   49: </span><span style="color: #000099">//   8027 - Functions with xxx are not expanded inline</span>
+<span style="color: #ff0099">   50: </span><span style="color: #000099">//   8060 - Possibly incorrect assignment.</span>
+<span style="color: #ff0099">   51: </span><span style="color: #000099">//          This warning is generated when the compiler encounters an assignment</span>
+<span style="color: #ff0099">   52: </span><span style="color: #000099">//          operator as the main operator of a conditional expression (part of</span>
+<span style="color: #ff0099">   53: </span><span style="color: #000099">//          an if, while, or do-while statement). This is usually a</span>
+<span style="color: #ff0099">   54: </span><span style="color: #000099">//          typographical error for the equality operator.</span>
+<span style="color: #ff0099">   55: </span><span style="color: #000099">//   8066 - Unreachable code.</span>
+<span style="color: #ff0099">   56: </span><span style="color: #000099">//          A break, continue, goto, or return statement was not followed by a</span>
+<span style="color: #ff0099">   57: </span><span style="color: #000099">//          label or the end of a loop or function. The compiler checks while,</span>
+<span style="color: #ff0099">   58: </span><span style="color: #000099">//          do, and for loops with a constant test condition, and attempts to</span>
+<span style="color: #ff0099">   59: </span><span style="color: #000099">//          recognize loops that can't fall through.</span>
+<span style="color: #ff0099">   60: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8008</span>
+<span style="color: #ff0099">   61: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8026</span>
+<span style="color: #ff0099">   62: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8027</span>
+<span style="color: #ff0099">   63: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8060</span>
+<span style="color: #ff0099">   64: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8066</span>
+<span style="color: #ff0099">   65: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   66: </span>
+<span style="color: #ff0099">   67: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   68: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
