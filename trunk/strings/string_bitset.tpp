@@ -15,7 +15,7 @@ namespace stlplus
   {
     std::string result;
     for (unsigned i = data.size(); i--; )
-      result += data[i] ? '1' : '0';
+      result += data.test(i) ? '1' : '0';
     return result;
   }
 

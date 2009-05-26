@@ -30,7 +30,7 @@ namespace stlplus
       for (size_t b = 0; b < 8; b++)
       {
         size_t bit = B*8+b;
-        if (bit < bits && data[bit])
+        if (bit < bits && data.test(bit))
           ch |= (0x01 << b);
       }
       dump_unsigned_char(context,ch);
