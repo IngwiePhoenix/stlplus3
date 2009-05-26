@@ -238,18 +238,18 @@ bool stlplus::lm_unit_name::print(std::ostream& str) const
   return !str.fail();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_unit_name& name)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_unit_name& name)
 {
   name.print(str);
   return str;
 }
 
-bool operator == (const stlplus::lm_unit_name& l, const stlplus::lm_unit_name& r)
+bool stlplus::operator == (const stlplus::lm_unit_name& l, const stlplus::lm_unit_name& r)
 {
   return l.name() == r.name() && l.type() == r.type();
 }
 
-bool operator < (const stlplus::lm_unit_name& l, const stlplus::lm_unit_name& r)
+bool stlplus::operator < (const stlplus::lm_unit_name& l, const stlplus::lm_unit_name& r)
 {
   // sort by name then type
   return (l.name() != r.name()) ? l.name() < r.name() : l.type() < r.type();
@@ -330,7 +330,7 @@ bool stlplus::lm_file_dependency::print(std::ostream& str) const
   return !str.fail();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_file_dependency& dependency)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_file_dependency& dependency)
 {
   dependency.print(str);
   return str;
@@ -411,7 +411,7 @@ bool stlplus::lm_unit_dependency::print(std::ostream& str) const
   return !str.fail();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_unit_dependency& dependency)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_unit_dependency& dependency)
 {
   dependency.print(str);
   return str;
@@ -577,7 +577,7 @@ bool stlplus::lm_dependencies::print(std::ostream& str) const
   return !str.fail();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_dependencies& dependencies)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_dependencies& dependencies)
 {
   dependencies.print(str);
   return str;
@@ -942,7 +942,7 @@ bool stlplus::lm_unit::write_header(void)
 
 // print diagnostics
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_unit& u)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_unit& u)
 {
   u.print(str);
   return str;
@@ -1461,7 +1461,7 @@ bool stlplus::lm_library::print_long(std::ostream& str) const
   return !str.fail();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::lm_library& lib)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::lm_library& lib)
 {
   lib.print(str);
   return str;
@@ -2323,7 +2323,7 @@ std::list<stlplus::lm_library>::const_iterator stlplus::library_manager::local_f
   return m_libraries.end();
 }
 
-std::ostream& operator << (std::ostream& str, const stlplus::library_manager& manager)
+std::ostream& stlplus::operator << (std::ostream& str, const stlplus::library_manager& manager)
 {
   manager.print(str);
   return str;
