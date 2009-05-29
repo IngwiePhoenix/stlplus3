@@ -1,0 +1,10 @@
+Makefile
+stlplus3.dsw
+stlplus3.sln
+docs
+messages
+containers
+persistence
+portability
+strings
+subsystems

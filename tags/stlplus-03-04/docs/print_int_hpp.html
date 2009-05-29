@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>strings/print_int.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>strings/print_int.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_PRINT_INT</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_PRINT_INT</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004-2009</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Print integer types</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   This extends the formatting available from iostream</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"strings_fixes.hpp"</span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">"format_types.hpp"</span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;iostream&gt;</span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;stdexcept&gt;</span>
+<span style="color: #ff0099">   19: </span>
+<span style="color: #ff0099">   20: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   21: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   22: </span>
+<span style="color: #ff0099">   23: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #000099">// Conversions of Integer types to string</span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   26: </span>
+<span style="color: #ff0099">   27: </span>  <span style="color: #000099">// The radix (i.e. base) for these conversions can be any value from base 2 to base 36</span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #000099">// specifying any other radix causes std::invalid_argument to be thrown</span>
+<span style="color: #ff0099">   29: </span>
+<span style="color: #ff0099">   30: </span>  <span style="color: #000099">// The way in which the radix is displayed is defined in radix_types.hpp</span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #000099">// If any other value is used, std::invalid_argument is thrown</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span>  <span style="color: #000099">// The width argument specifies the number of numerical digits to use in the result</span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #000099">// This is a minimum - if the value requires more digits then it will be wider than the width argument</span>
+<span style="color: #ff0099">   35: </span>  <span style="color: #000099">// However, if it is smaller, then it will be extended to the specified width</span>
+<span style="color: #ff0099">   36: </span>  <span style="color: #000099">// Then, the radix display prefix is added to this width</span>
+<span style="color: #ff0099">   37: </span>
+<span style="color: #ff0099">   38: </span>  <span style="color: #000099">// For example, using the hash representation of 0 in hex with width=4 gives:</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #000099">// 16#0000 - so there's 4 digits in the number part</span>
+<span style="color: #ff0099">   40: </span>
+<span style="color: #ff0099">   41: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_short</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">short</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   42: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   43: </span>                   <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   44: </span>                   <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   45: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   46: </span>
+<span style="color: #ff0099">   47: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_unsigned_short</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   48: </span>                            <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   49: </span>                            <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   50: </span>                            <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   51: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   52: </span>
+<span style="color: #ff0099">   53: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_int</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">int</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   54: </span>                 <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   55: </span>                 <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   56: </span>                 <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   57: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   58: </span>
+<span style="color: #ff0099">   59: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_unsigned</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   60: </span>                      <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   61: </span>                      <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   62: </span>                      <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   63: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   64: </span>
+<span style="color: #ff0099">   65: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_long</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">long</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   66: </span>                  <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   67: </span>                  <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   68: </span>                  <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   69: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   70: </span>
+<span style="color: #ff0099">   71: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_unsigned_long</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">i</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   72: </span>                           <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   73: </span>                           <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   74: </span>                           <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   75: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   76: </span>
+<span style="color: #ff0099">   77: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   78: </span>
+<span style="color: #ff0099">   79: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">   80: </span>
+<span style="color: #ff0099">   81: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

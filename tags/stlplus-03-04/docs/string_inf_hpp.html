@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>strings/string_inf.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>strings/string_inf.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_STRING_INF</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_STRING_INF</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004-2009</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   String conversion functions for the infinite precision integer type inf</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   The conversion supports all the formatting modes defined on format_types</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"strings_fixes.hpp"</span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">"inf.hpp"</span>
+<span style="color: #ff0099">   17: </span><span style="color: #990000">#include</span> <span style="color: #009900">"format_types.hpp"</span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   19: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   20: </span>
+<span style="color: #ff0099">   21: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   22: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   23: </span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   25: </span>
+<span style="color: #ff0099">   26: </span>  <span style="color: #000099">// conversion TO string</span>
+<span style="color: #ff0099">   27: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">inf_to_string</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">inf</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   28: </span>                            <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">10</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   29: </span>                            <span style="color: #000000">radix_display_t</span> <span style="color: #000000">display</span> <span style="color: #330033">=</span> <span style="color: #000000">radix_c_style_or_hash</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   30: </span>                            <span style="color: #990000">unsigned</span> <span style="color: #000000">width</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   31: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span>  <span style="color: #000099">// conversion FROM string</span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #000000">inf</span> <span style="color: #000000">string_to_inf</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span>
+<span style="color: #ff0099">   35: </span>                    <span style="color: #990000">unsigned</span> <span style="color: #000000">radix</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   36: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">invalid_argument</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   37: </span>
+<span style="color: #ff0099">   38: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   39: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">   40: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

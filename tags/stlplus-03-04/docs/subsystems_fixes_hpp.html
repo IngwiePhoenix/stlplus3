@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>subsystems/subsystems_fixes.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>subsystems/subsystems_fixes.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_SUBSYSTEMS_FIXES</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_SUBSYSTEMS_FIXES</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004-2009</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Contains work arounds for OS or Compiler specific problems</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">// Unnecessary compiler warnings</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   17: </span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
+<span style="color: #ff0099">   19: </span><span style="color: #000099">// Microsoft Visual Studio</span>
+<span style="color: #ff0099">   20: </span><span style="color: #000099">// shut up the following irritating warnings</span>
+<span style="color: #ff0099">   21: </span><span style="color: #000099">//   4275 - VC6, exported class was derived from a class that was not exported</span>
+<span style="color: #ff0099">   22: </span><span style="color: #000099">//   4786 - VC6, identifier string exceeded maximum allowable length and was truncated (only affects debugger)</span>
+<span style="color: #ff0099">   23: </span><span style="color: #000099">//   4305 - VC6, identifier type was converted to a smaller type</span>
+<span style="color: #ff0099">   24: </span><span style="color: #000099">//   4503 - VC6, decorated name was longer than the maximum the compiler allows (only affects debugger)</span>
+<span style="color: #ff0099">   25: </span><span style="color: #000099">//   4309 - VC6, type conversion operation caused a constant to exceeded the space allocated for it</span>
+<span style="color: #ff0099">   26: </span><span style="color: #000099">//   4290 - VC6, C++ exception specification ignored</span>
+<span style="color: #ff0099">   27: </span><span style="color: #000099">//   4800 - VC6, forcing value to bool 'true' or 'false' (performance warning)</span>
+<span style="color: #ff0099">   28: </span><span style="color: #000099">//   4675 - VC7.1, "change" in function overload resolution _might_ have altered program</span>
+<span style="color: #ff0099">   29: </span><span style="color: #000099">//   4996 - VC8, 'xxxx' was declared deprecated</span>
+<span style="color: #ff0099">   30: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warning</span><span style="color: #330033">(</span><span style="color: #000000">disable</span><span style="color: #330033">:</span> <span style="color: #993399">4275</span> <span style="color: #993399">4786</span> <span style="color: #993399">4305</span> <span style="color: #993399">4503</span> <span style="color: #993399">4309</span> <span style="color: #993399">4290</span> <span style="color: #993399">4800</span> <span style="color: #993399">4675</span> <span style="color: #993399">4996</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   31: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
+<span style="color: #ff0099">   34: </span><span style="color: #000099">// Borland</span>
+<span style="color: #ff0099">   35: </span><span style="color: #000099">// Shut up the following irritating warnings</span>
+<span style="color: #ff0099">   36: </span><span style="color: #000099">//   8008 - Condition is always true.</span>
+<span style="color: #ff0099">   37: </span><span style="color: #000099">//          Whenever the compiler encounters a constant comparison that (due to</span>
+<span style="color: #ff0099">   38: </span><span style="color: #000099">//          the nature of the value being compared) is always true or false, it</span>
+<span style="color: #ff0099">   39: </span><span style="color: #000099">//          issues this warning and evaluates the condition at compile time.</span>
+<span style="color: #ff0099">   40: </span><span style="color: #000099">//   8026 - Functions with exception specifications are not expanded inline</span>
+<span style="color: #ff0099">   41: </span><span style="color: #000099">//   8027 - Functions with xxx are not expanded inline</span>
+<span style="color: #ff0099">   42: </span><span style="color: #000099">//   8060 - Possibly incorrect assignment.</span>
+<span style="color: #ff0099">   43: </span><span style="color: #000099">//          This warning is generated when the compiler encounters an assignment</span>
+<span style="color: #ff0099">   44: </span><span style="color: #000099">//          operator as the main operator of a conditional expression (part of</span>
+<span style="color: #ff0099">   45: </span><span style="color: #000099">//          an if, while, or do-while statement). This is usually a</span>
+<span style="color: #ff0099">   46: </span><span style="color: #000099">//          typographical error for the equality operator.</span>
+<span style="color: #ff0099">   47: </span><span style="color: #000099">//   8066 - Unreachable code.</span>
+<span style="color: #ff0099">   48: </span><span style="color: #000099">//          A break, continue, goto, or return statement was not followed by a</span>
+<span style="color: #ff0099">   49: </span><span style="color: #000099">//          label or the end of a loop or function. The compiler checks while,</span>
+<span style="color: #ff0099">   50: </span><span style="color: #000099">//          do, and for loops with a constant test condition, and attempts to</span>
+<span style="color: #ff0099">   51: </span><span style="color: #000099">//          recognize loops that can't fall through.</span>
+<span style="color: #ff0099">   52: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8008</span>
+<span style="color: #ff0099">   53: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8026</span>
+<span style="color: #ff0099">   54: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8027</span>
+<span style="color: #ff0099">   55: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8060</span>
+<span style="color: #ff0099">   56: </span><span style="color: #990000">#pragma</span> <span style="color: #000000">warn</span> <span style="color: #330033">-</span><span style="color: #993399">8066</span>
+<span style="color: #ff0099">   57: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   58: </span>
+<span style="color: #ff0099">   59: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   60: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
