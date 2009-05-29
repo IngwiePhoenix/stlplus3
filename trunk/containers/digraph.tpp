@@ -137,7 +137,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    digraph_iterator<NT,AT,NRef,NPtr> result = *this;
+    digraph_iterator<NT,AT,NRef,NPtr> result(*this);
     ++(*this);
     return result;
   }
@@ -159,7 +159,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-decrement is defined in terms of the pre-decrement
-    digraph_iterator<NT,AT,NRef,NPtr> result = *this;
+    digraph_iterator<NT,AT,NRef,NPtr> result(*this);
     --(*this);
     return result;
   }
@@ -260,7 +260,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    digraph_arc_iterator<NT,AT,ARef,APtr> result = *this;
+    digraph_arc_iterator<NT,AT,ARef,APtr> result(*this);
     ++(*this);
     return result;
   }
@@ -282,7 +282,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-decrement is defined in terms of the pre-decrement
-    digraph_arc_iterator<NT,AT,ARef,APtr> result = *this;
+    digraph_arc_iterator<NT,AT,ARef,APtr> result(*this);
     --(*this);
     return result;
   }

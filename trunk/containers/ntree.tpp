@@ -296,7 +296,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    ntree_prefix_iterator<T,TRef,TPtr> result = *this;
+    ntree_prefix_iterator<T,TRef,TPtr> result(*this);
     ++(*this);
     return result;
   }
@@ -458,7 +458,7 @@ namespace stlplus
     throw(null_dereference,end_dereference)
   {
     // post-increment is defined in terms of the pre-increment
-    ntree_postfix_iterator<T,TRef,TPtr> result = *this;
+    ntree_postfix_iterator<T,TRef,TPtr> result(*this);
     ++(*this);
     return result;
   }

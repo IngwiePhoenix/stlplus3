@@ -130,7 +130,7 @@ namespace stlplus
   TYPENAME hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
     throw(null_dereference,end_dereference)
   {
-    hash_iterator<K,T,H,E,V> old = *this;
+    hash_iterator<K,T,H,E,V> old(*this);
     ++(*this);
     return old;
   }
