@@ -70,7 +70,9 @@ std::ostream& operator<<(std::ostream& output, string_int_graph& graph)
 
 bool select_less_than_4 (const string_int_graph& graph, string_int_graph::const_arc_iterator arc)
 {
-  return abs(*arc) < 4;
+  int value = *arc;
+  if (value < 0) value = -value;
+  return value < 4;
 }
 
 bool select_natural (const string_int_graph& graph, string_int_graph::const_arc_iterator arc)
