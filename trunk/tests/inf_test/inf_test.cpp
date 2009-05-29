@@ -6,6 +6,7 @@
 #include "persistent_shortcuts.hpp"
 #include "strings.hpp"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define DATA "inf_test.tmp"
 #define MASTER "inf_test.dump"
