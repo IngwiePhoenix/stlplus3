@@ -121,10 +121,12 @@
 #endif
 
 // Borland 
-//   - doesn't handle typename in any of these cases
+//   - doesn't handle typename in 5.5, does in 5.82, not sure about other cases
 #ifdef __BORLANDC__
+#if __BORLANDC__ <= 0x550
 #undef TYPENAME
 #define TYPENAME
+#endif
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
