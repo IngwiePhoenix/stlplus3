@@ -397,40 +397,38 @@ stlplus::restore_context&amp; and returns void. For the interface approach they 
 like this:</p>
 
 <pre class="cpp">
-void make_base_persistent(stlplus::dump_context&amp; context)
+void register_dumpers(stlplus::dump_context&amp; context)
 {
   context.register_interface(typeid(base));
   context.register_interface(typeid(derived));
 }
 
-void make_base_persistent(stlplus::restore_context&amp; context)
+void register_restorers(stlplus::restore_context&amp; context)
 {
   context.register_interface(base());
   context.register_interface(derived());
 }
 </pre>
 
-<p>The functions can be called whatever you like, but I prefer to give them
-the same name and use overload resolution to pick the right one according to
-the type profile. In use, after creating a dump or restore context, call the
-method register_all with the above installer as the argument. For example,
+<p>The functions can be called whatever you like. In use, after creating a dump or restore context, call the
+method register_all with the above installer function's name as the argument. For example,
 using the earlier example again, rewritten to use an installer:</p>
 
 <pre class="cpp">
 stlplus::dump_context context(output);
-context.register_all(make_base_persistent);
+context.register_all(register_dumpers);
 </pre>
 
 <p>Alternatively, an installer function can be used with the callback approach:</p>
 
 <pre class="cpp">
-void make_base_persistent(stlplus::dump_context&amp; context)
+void register_dumpers(stlplus::dump_context&amp; context)
 {
   context.register_type(typeid(base),dump_base);
   context.register_type(typeid(derived),dump_derived);
 }
 
-void make_base_persistent(stlplus::restore_context&amp; context)
+void register_restorers(stlplus::restore_context&amp; context)
 {
   context.register_type(create_base,restore_base);
   context.register_type(create_derived,restore_derived);
