@@ -58,14 +58,14 @@ C++ Library Collection
 
 <h2 id="introduction">Introduction</h2>
 
-<p>The STLplus library collection is intended to be portable between operating systems and
-compilers. At present, this means Windows/Unix/MacOSX systems and gcc or Microsoft compilers,
-although the Borland compiler also apparently works too. Whether this will be extended to
-other operating systems and compilers is a moot point, since the library requires a good
-implementation of C++ templates.</p>
+<p>The STLplus library collection is intended to be portable between operating
+systems and compilers. At present, this means Windows/Unix/MacOSX systems and
+Gnu gcc/Microsoft/Borland compilers. Whether this will be extended to other
+operating systems and compilers is a moot point, since the library requires a
+good implementation of C++ templates.</p>
 
 <p>In all cases you need to unpack the software into a directory which from
-now on will be referred to as "the STLplus directory". This directory contains
+now on will be referred to as "the STLplus3 directory". This directory contains
 a subdirectory for each of the libraries (e.g. "containers") and a subdirectory for the
 documentation in "docs" and error messages in "messages".</p>
 
@@ -157,8 +157,6 @@ include ../../makefiles/subdirectories.mak
 <p>The <code>subdirectories.mak</code> rules simply call make recursively on each
 subdirectory which contains a <code>Makefile</code>.</p>
 
-<h3>Building with my Make System</h3>
-
 <p>The <code>makefiles</code> module is a generic build system which provides a standard set of make
 rules for compiling and linking virtually any libraries and applications. It is not specific to
 STLplus. You are free to use it as the build system for your own projects if you prefer. It is
@@ -167,8 +165,10 @@ build configurations - it currently supports a Debug build, a Release build and 
 profiling) build. You do not have to use it of course - you can write your own Makefile. However,
 you are recommended to use these makefiles to build STLplus.</p>
 
+<h3>Building with my Make System</h3>
+
 <p>To build the STLplus library collection, first start a command-line shell. Then change
-directory to the STLplus directory. Then simply run one of the following
+directory to the STLplus3 directory. Then simply run one of the following
 commands:</p>
 
 <dl>
@@ -406,12 +406,14 @@ it builds all the projects.</p>
 debug information). At this stage, if you wish, you can select other configurations and build them
 too. Each configuration is stored separately so they do not overwrite each other.</p>
 
-<p><strong>Note:</strong> the supplied project file will build STLplus so that it uses the multi-threaded DLL
-versions of the C runtime library (msvcrt.dll). The default when you create a new project however is
-to use the single-threaded versions. You will need to adjust the project settings, either for
-STLplus or for your application so that all projects use the same settings. The symptom that will
-tell you that you have this problem is that, when you link your application, every symbol in the C
-runtime library will result in an error message from the linker saying that it is multiply
+<p><strong>Note:</strong> the supplied project file will build STLplus so that
+it uses the multi-threaded DLL versions of the C runtime library (msvcrt.dll). 
+The default when you create a new project in Visual Studio 6 however is to use
+the single-threaded versions. You will need to adjust the project settings,
+either for STLplus or for your application so that all projects use the same
+settings. The symptom that will tell you that you have this problem is that,
+when you link your application, every symbol in the C runtime library will
+result in an error message from the linker saying that it is multiply
 defined.</p>
 
 <h3>Using The Libraries</h3>
@@ -719,7 +721,8 @@ use the Unix emulation layer and you therefore access operating services through
 calls directly. This kind of build is known as a CygMing build.</p>
 
 <p><strong>Note:</strong> version 3.2 and later of gcc works very well in this mode. Prior
-versions were incomplete and I don't support them.</p>
+versions were incomplete and I don't support them. Version 4 no longer
+supports this mode as far as I can tell, so use the MinGW compiler instead.</p>
 
 <p>You build native applications with the Cygwin gcc compiler by specifying a
 special compiler switch (-mno-cygwin) for both compilation and linking. </p>

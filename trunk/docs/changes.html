@@ -79,10 +79,41 @@ the point in breaking existing code over a slight terminology mix-up.</p>
 
 <p>As has happened several times in the past, a new version of gcc has tighter rules than older
 versions and caused some minor problems in the code to be revealed. There are two types: (1) use of C++
-features that were common practice when STLplus was originally deveoped, but which have been
+features that were common practice when STLplus was originally developed, but which have been
 deprecated; (2) missing system includes, since some system files used to be implicitly included.</p>
 
 <p>Both STLplus v3.4 and all the tests now compile correctly with gcc v4.3 as well as older versions.</p>
+
+<h3>Porting to Borland Compilers</h3>
+
+<p>The old STLplus v2 was ported to Borland v5.5 by a user. However, STLplus
+v3 has never been ported.</p>
+
+<p>The libraries have been modified to support both the v5.5 compiler (the
+Free Command-line Tools) and the v5.8 compiler (Turbo C++ 2006 Explorer).</p>
+
+<p>This has required the folowing changes:</p>
+
+<ul>
+<li>Elimination of the use of 'typename' temporaries (i.e. names of types
+declared in template classes) in expressions - v5.5 only supports
+typenames in declarations</li>
+<li>Support for the typename keyword in v5.8 but not v5.5</li>
+<li>Suppression of more warnings</li>
+<li>Rewriting 'ttt xxx = *this' as 'ttt xxx(*this) because old compilers such
+as v5.5 interpret assignment of *this to mean overriding of memory management</li>
+<li>Reworked element access of bitset - use xxx.test(i) not xxx[i] which is broken in v5.5</li>
+<li>Expanded print_smart_ptr and smart_ptr_to_string into three template
+functions each because v5.5 could not resolve the function when the function
+parameter was a basetype of the actual parameter</li>
+<li>Extra #includes to system headers which other compilers resolve implicitly</li>
+<li>Work-around bug in v5.5's implementation of std::string which stops a copy
+at a null termination (incorrect) rather than using the size parameter
+(correct). This broke stlplus::inf which uses std::string as a binary byte
+store which therefore must be able to contain zeros</li>
+<li>Fixed bug in library manager where operator&lt;&lt;'s body was in global scope.
+It would appear that other compilers fix this problem implicitly</li>
+</ul>
 
 <h2 id="v3.3">Changes from Version 3.2 to 3.3</h2>
 
