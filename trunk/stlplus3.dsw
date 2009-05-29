@@ -15,18 +15,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "heapdebug"=.\heapdebug\heapdebug.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "persistence"=.\persistence\persistence.dsp - Package Owner=<4>
 
 Package=<5>

@@ -117,18 +117,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "heapdebug_test"=.\heapdebug_test\heapdebug_test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "inf_test"=.\inf_test\inf_test.dsp - Package Owner=<4>
 
 Package=<5>

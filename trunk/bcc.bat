@@ -1,7 +1,3 @@
-cd heapdebug
-call bcc.bat
-cd ..
-
 cd persistence
 call bcc.bat
 cd ..
