@@ -132,14 +132,16 @@
 <span style="color: #ff0099">  121: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">  122: </span>
 <span style="color: #ff0099">  123: </span><span style="color: #000099">// Borland </span>
-<span style="color: #ff0099">  124: </span><span style="color: #000099">//   - doesn't handle typename in any of these cases</span>
+<span style="color: #ff0099">  124: </span><span style="color: #000099">//   - doesn't handle typename in 5.5, does in 5.82, not sure about other cases</span>
 <span style="color: #ff0099">  125: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
-<span style="color: #ff0099">  126: </span><span style="color: #990000">#undef</span> <span style="color: #000000">TYPENAME</span>
-<span style="color: #ff0099">  127: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span>
-<span style="color: #ff0099">  128: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">  129: </span>
-<span style="color: #ff0099">  130: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">  131: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  126: </span><span style="color: #990000">#if</span> <span style="color: #000000">__BORLANDC__</span> <span style="color: #330033">&lt;</span><span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #000000">x550</span>
+<span style="color: #ff0099">  127: </span><span style="color: #990000">#undef</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  128: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span>
+<span style="color: #ff0099">  129: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  130: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  131: </span>
+<span style="color: #ff0099">  132: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  133: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
