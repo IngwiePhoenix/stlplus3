@@ -14,55 +14,47 @@
 namespace stlplus
 {
 
-////////////////////////////////////////////////////////////////////////////////
-// work out the platform
-// at present there are no variations between different Unix platforms so they all map onto the generic Unix platform
+  ////////////////////////////////////////////////////////////////////////////////
+  // report the platform-specific details of this build
 
-#undef PLATFORM
-#ifdef MSWINDOWS
-#define PLATFORM std::string("Windows")
-#endif
+  std::string build(void)
+  {
+    ////////////////////////////////////////////////////////////////////////////////
+    // work out the platform
 
-#ifndef PLATFORM
-#define PLATFORM std::string("Generic Unix")
-#endif
-
-////////////////////////////////////////////////////////////////////////////////
-// work out the compiler
-
-#undef COMPILER
-#ifdef __GNUC__
-#define COMPILER (std::string("gcc v")+std::string(__VERSION__))
-#endif
-#ifdef _MSC_VER
-#define COMPILER (std::string("MSVC v")+dformat("%0.2f",((float)_MSC_VER)/100.0))
-#endif
-#ifdef __BORLANDC__
-#define COMPILER (std::string("Borland v")+dformat("%d",__BORLANDC__/256)+std::string(".")+dformat("%d",__BORLANDC__/16%16))
-#endif
-
-#ifndef COMPILER
-#define COMPILER std::string("unknown compiler")
-#endif
-
-////////////////////////////////////////////////////////////////////////////////
-// work out the kind of build
-// there are two variants - debug and release
-
-#undef VARIANT
-#ifndef NDEBUG
-#define VARIANT std::string("debug")
+#ifdef _WIN32
+    std::string platform("Windows");
 #else
-#define VARIANT std::string("release")
+    // at present there are no variations between different Unix platforms so
+    // they all map onto the generic Unix platform
+    std::string platform("Generic Unix");
 #endif
 
-////////////////////////////////////////////////////////////////////////////////
-// report the platform-specific details of this build
+    ////////////////////////////////////////////////////////////////////////////////
+    // work out the compiler
 
-std::string build(void)
-{
-  return std::string("STLplus v") + version() + ", " + PLATFORM + ", " + COMPILER + ", " + VARIANT;
-}
+#if defined __GNUC__
+    std::string compiler(dformat("gcc v%s",__VERSION__));
+#elif defined _MSC_VER
+    std::string compiler(dformat("MSVC v%0.2f",((float)_MSC_VER)/100.0));
+#elif defined __BORLANDC__
+    std::string compiler(dformat("Borland v%d.%d",__BORLANDC__/256,__BORLANDC__/16%16));
+#else
+    std::string compiler("unknown compiler");
+#endif
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // work out the kind of build
+    // there are two variants - debug and release
+
+#ifndef NDEBUG
+    std::string variant("debug");
+#else
+    std::string variant("release");
+#endif
+
+    return std::string("STLplus v") + version() + ", " + platform + ", " + compiler + ", " + variant;
+  }
 
 ////////////////////////////////////////////////////////////////////////////////
 } // end namespace stlplus
