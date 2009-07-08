@@ -30,10 +30,6 @@ cd hash_test
 call bcc
 cd ..
 
-cd heapdebug_test
-call bcc
-cd ..
-
 cd inf_test
 call bcc
 cd ..
