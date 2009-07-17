@@ -305,14 +305,14 @@ for (unsigned i = 0; i &lt; number; i++)
   int key = rand();
   // select random characters to add to the data string
   const unsigned size = (unsigned)rand() % MAX_SIZE;
-  string value;
+  std::string value;
   for  (unsigned j = 0; j &lt; size; j++)
   {
     char ch = (char)rand();
     value += ch;
   }
   // finally, add the key/data pair to the multimap
-  data.insert(make_pair(key,value));
+  data.insert(std::make_pair(key,value));
 }
 </pre>
 
@@ -709,28 +709,28 @@ restore_context&amp; and returns void. For the above example they might look
 like this:</p>
 
 <pre class="cpp">
-void make_base_persistent(stlplus::dump_context&amp; context)
+void register_base_dump(stlplus::dump_context&amp; context)
 {
   context.register_interface(typeid(base));
   context.register_interface(typeid(derived));
 }
 
-void make_base_persistent(stlplus::restore_context&amp; context)
+void register_base_restore(stlplus::restore_context&amp; context)
 {
   context.register_interface(stlplus::persistent_ptr(base()));
   context.register_interface(stlplus::persistent_ptr(derived()));
 }
 </pre>
 
-<p>The functions can be called whatever you like, but I prefer to give them
-the same name and use overload resolution to pick the right one according to
-the type profile. In use, after creating a dump or restore context, call the
+<p>The functions can be called whatever you like, but I prefer to give them a
+name that starts with register, reflects the base class name and ends in
+dump/restore. In use, after creating a dump or restore context, call the
 method register_all with the above installer as the argument. For example,
 using the earlier example again, rewritten to use an installer:</p>
 
 <pre class="cpp">
 stlplus::dump_context context(output);
-context.register_all(make_base_persistent);
+context.register_all(register_base_dump);
 </pre>
 
 <p>Now that the classes are registered, the actual dump and restore of a
@@ -990,28 +990,28 @@ restore_context&amp; and returns void. For the above example they might look
 like this:</p>
 
 <pre class="cpp">
-void make_base_persistent(stlplus::dump_context&amp; context)
+void register_base_dump(stlplus::dump_context&amp; context)
 {
   context.register_type(typeid(base),dump_base);
   context.register_type(typeid(derived),dump_derived);
 }
 
-void make_base_persistent(stlplus::restore_context&amp; context)
+void register_base_restore(stlplus::restore_context&amp; context)
 {
   context.register_type(create_base,restore_base);
   context.register_type(create_derived,restore_derived);
 }
 </pre>
 
-<p>The functions can be called whatever you like, but I prefer to give them
-the same name and use overload resolution to pick the right one according to
-the type profile. In use, after creating a dump or restore context, call the
+<p>The functions can be called whatever you like, but I prefer to give them a
+name that starts with register, reflects the base class name and ends in
+dump/restore. In use, after creating a dump or restore context, call the
 method register_all with the above installer as the argument. For example,
 using the earlier example again, rewritten to use an installer:</p>
 
 <pre class="cpp">
 stlplus::dump_context context(output);
-context.register_all(make_base_persistent);
+context.register_all(register_base_dump);
 </pre>
 
 <p>Now that the callbacks are registered, the actual dump and restore of a
@@ -1032,12 +1032,12 @@ written that simply call the above template functions:</p>
 <pre class="cpp">
 #include "persistent_polymorph.hpp"
 
-void dump(stlplus::dump_context&amp; context, const base*&amp; ptr)
+void dump_base_ptr(stlplus::dump_context&amp; context, const base*&amp; ptr)
 {
   stlplus::dump_polymorph(context,ptr);
 }
 
-void restore(stlplus::restore_context&amp; context, base*&amp; ptr)
+void restore_base_ptr(stlplus::restore_context&amp; context, base*&amp; ptr)
 {
   stlplus::restore_polymorph(context,ptr);
 }
