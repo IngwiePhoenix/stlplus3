@@ -76,7 +76,10 @@ with how to use the hash class.</p>
 <p>The hash template takes four types:</p>
 
 <pre class="cpp">
-template&lt;typename K, typename T, class H, class E = equal_to&lt;K&gt; &gt; class hash
+namespace stlplus
+{
+  template&lt;typename K, typename T, class H, class E = equal_to&lt;K&gt; &gt; class hash
+}
 </pre>
 
 <p>The first type K is the key type which is used to access elements of the hash
@@ -93,7 +96,7 @@ example of a hash function object for a string key is:</p>
 <pre class="cpp">
 struct hash_string
 {
-  unsigned operator()(const string&amp; s) const
+  unsigned operator()(const std::string&amp; s) const
   {
     ... 
   }
@@ -114,7 +117,7 @@ creates problems you can create a new function object for equality:</p>
 <pre class="cpp">
 struct equal_string
 {
-  bool operator()(const string&amp; l, const string&amp; r) const
+  bool operator()(const std::string&amp; l, const std::string&amp; r) const
   {
     ...
   }
@@ -125,12 +128,19 @@ struct equal_string
 you would declare a variable like this:</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt; table;
+stlplus::hash&lt;std::string,int,hash_string&gt; table;
 </pre>
 
 <p>This creates a variable called table which is a hash from string to int,
 using your hash_string function object for hashing the key, but using the
 default equal_to function object for comparisons.</p>
+
+<p>It is clearer using typedefs to define the template types:</p>
+
+<pre class="cpp">
+typedef stlplus::hash&lt;std::string,int,hash_string&gt; string_int_hash;
+string_int_hash table;
+</pre>
 
 <p>The constructor for hash takes an optional argument which defines the number
 of bins to create in the hash table. If not specified, the hash chooses the
@@ -138,7 +148,7 @@ number of bins. However, to override it, just give an argument to the
 constructor:</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt; table(50);
+string_int_hash table(50);
 </pre>
 
 <p>This creates a table with 50 bins.</p>
@@ -176,13 +186,13 @@ auto_rehash() function.</p>
 don't give an argument to the constructor:</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt; table;
+string_int_hash table;
 </pre>
 
 <p>To choose the initial size yourself, but enable auto-rehashing:</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt; table(50);
+string_int_hash table(50);
 table.auto_rehash();
 </pre>
 
@@ -202,7 +212,7 @@ decision yourself.</p>
 switches the hash to manual-rehashing mode.</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt; table(50);
+string_int_hash table(50);
 </pre>
 
 <p>If you want to do your own rehashing, then a useful function is the loading()
@@ -215,7 +225,7 @@ if (table.loading() &gt; 0.9)
   table.rehash();
 </pre>
 
-<p>The rehash() function takes an optional integer argument. If it is missing or
+<p>The rehash() method takes an optional integer argument. If it is missing or
 zero, this means implement the built-in calculation for the number of bins. This
 simply doubles the number of bins. If it is called with a non-zero argument,
 then the hash will be rehashed to that number of bins.</p>
@@ -302,7 +312,7 @@ const key type and a data type. Dereferencing of iterators will be dealt with in
 the section on iterators.</p>
 
 <pre class="cpp">
-const T&amp; operator[] (const K&amp; key) const;
+const T&amp; operator[] (const K&amp; key) const throw(std::out_of_range);
 T&amp; operator[] (const K&amp; key);
 </pre>
 
@@ -310,8 +320,8 @@ T&amp; operator[] (const K&amp; key);
 Thus for our example, they take a string as an argument and return an int.</p>
 
 <p>The first form is for use on const hashes and is a read-only indexing
-operator. If you try to access a key that is not present, an assertion failure
-will happen. If the key is present, then the data associated with it is
+operator. If you try to access a key that is not present, the out_of_range
+exception is thrown. If the key is present, then the data associated with it is
 returned as a const so that it cannot be modified.</p>
 
 <p>The second form is for use on non-const hashes and can be used to read from
@@ -349,7 +359,9 @@ typedef std::pair&lt;const K, T&gt;    value_type;
 the second. For example:</p>
 
 <pre class="cpp">
-hash&lt;string,int,hash_string&gt;::iterator six = table.find("six");
+string_int_hash table(50);
+...
+string_int_hash::iterator six = table.find("six");
 if (six == table.end())
   std::cout &lt;&lt; "key \"six\" not found in table" &lt;&lt; std::endl;
 else
@@ -383,7 +395,8 @@ to match the type of iterator to the const-ness of the hash.</p>
 <p>In use the iterators are much the same as the map iterators:</p>
 
 <pre class="cpp">
-for (hash&lt;string,int,hash_string&gt;::iterator i = table.begin(); i != table.end(); i++)
+
+for (string_int_hash::iterator i = table.begin(); i != table.end(); i++)
 {
   std::cout &lt;&lt; "Key: " &lt;&lt; i-&gt;first &lt;&lt; ", data = " &lt;&lt; i-&gt;second &lt;&lt; std::endl;
 }
@@ -431,33 +444,38 @@ section below on <a href="#exceptions">Exceptions</a> to see which.</p>
 
 <h2 id="exceptions">Exceptions</h2>
 
-<p>There are three exceptions that can be thrown by hash, all indicating a
-misuse of the iterators:</p>
+<p>There are 4 exceptions that can be thrown by hash:</p>
 
 <dl>
 
-<dt><strong>null_dereference</strong> - logic_error</dt>
+<dt><strong>stlplus::null_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
 be sure that iterators are non-null before using the <code>*</code> or <code>-&gt;</code>
 operators.</dd>
 
-<dt><strong>end_dereference</strong> - logic_error</dt>
+<dt><strong>stlplus::end_dereference</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator that is pointing to an end element has been
 dereferenced. In line with STL conventions, the end iterator points to the element after the last
 element in a container, so dereferencing such an iterator is illegal (the memory pointed to will be
 unconstructed).</dd>
 
-<dt><strong>wrong_object</strong> - logic_error</dt>
+<dt><strong>stlplus::wrong_object</strong> - logic_error</dt>
 
 <dd>This is used to indicate that an iterator which was created by one container has been used in a
 different container. For example, if you have two hash objects in your program, create an iterator
 from one hash and then use it in another, then this will throw the wrong_object exception.</dd>
 
+<dt><strong>std::out_of_range</strong> - logic_error</dt>
+
+<dd>This is used to indicate that the const version of the index operator[]
+has been used to try to access a value using a key that was not found in the
+hash.</dd>
+
 </dl>
 
-<p>These exceptions are common to all STLplus iterators and are explained in
+<p>The first three exceptions are common to all STLplus iterators and are explained in
 the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
 
 
