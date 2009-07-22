@@ -2,6 +2,9 @@
 # Regression test suite
 # Runs a set of tests on the STLplus components
 
+# make the current directory part of the link library search path
+export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
+
 echo "##################################################"
 
 passed="0"

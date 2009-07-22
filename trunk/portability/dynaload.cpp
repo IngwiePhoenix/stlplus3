@@ -81,7 +81,8 @@ namespace stlplus
 #ifdef MSWINDOWS
     m_handle = (void*)LoadLibrary(library.c_str());
 #else
-    m_handle = dlopen(library.c_str(),RTLD_NOW);
+    std::string full_library = std::string("lib") + library + std::string(".so");
+    m_handle = dlopen(full_library.c_str(),RTLD_NOW);
 #endif
     if (!m_handle)
     {
@@ -94,6 +95,7 @@ namespace stlplus
   // unload the library if loaded
   bool dynaload::unload(void)
   {
+    if (!loaded()) return false;
 #ifdef MSWINDOWS
     int status = FreeLibrary((HINSTANCE)m_handle) ? 0 : 1;
 #else
