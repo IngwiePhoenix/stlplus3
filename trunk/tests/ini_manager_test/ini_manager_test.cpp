@@ -12,10 +12,6 @@
 #include "print_vector.hpp"
 #include "print_string.hpp"
 #include "string_utilities.hpp"
-////////////////////////////////////////////////////////////////////////////////
-
-static const char* ini_filename = "test.ini";
-static const char* ini_subdirs = "";
 
 ////////////////////////////////////////////////////////////////////////////////
 // utility for printing a vector of strings, used a lot in this program
@@ -24,98 +20,6 @@ std::ostream& operator<<(std::ostream& device, const std::vector<std::string>& s
 {
   stlplus::print_vector(device, strings, stlplus::print_string, ":");
   return device;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// create a lookup path for message files - later used to perform path lookup for the actual files
-
-std::vector<std::string> generate_all_paths(const std::vector<std::string>& main_paths,
-                                            const std::vector<std::string>& subdirs)
-{
-  DEBUG_TRACE;
-  std::vector<std::string> result;
-  // simply generate all permutations
-  // including with no subdir and in the subdirs
-  for (unsigned i = 0; i < main_paths.size(); i++)
-  {
-    std::string path = main_paths[i];
-    IF_DEBUG(std::cerr << "adding path: " << path << std::endl);
-    result.push_back(path);
-    for (unsigned j = 0; j < subdirs.size(); j++)
-    {
-      std::string subpath = stlplus::folder_down(path,subdirs[j]);
-      IF_DEBUG(std::cerr << "adding subpath: " << subpath << std::endl);
-      result.push_back(subpath);
-    }
-  }
-  IF_DEBUG(std::cerr << "paths: " << result << std::endl);
-  return result;
-}
-
-std::vector<std::string> generate_basic_path(const std::string& installation_folder)
-{
-  DEBUG_TRACE;
-  std::vector<std::string> paths;
-  paths.push_back(stlplus::folder_current());
-  paths.push_back(stlplus::folder_home());
-  paths.push_back(stlplus::folder_up(installation_folder));
-  paths.push_back(installation_folder);
-  IF_DEBUG(std::cerr << "basic path: " << paths << std::endl);
-  return paths;
-}
-
-std::string generate_lookup_path(const std::vector<std::string>& path)
-{
-  DEBUG_TRACE;
-  std::string result = stlplus::join(path, ":");
-  IF_DEBUG(std::cerr << "lookup path: " << result << std::endl);
-  return result;
-}
-
-std::vector<std::string> standard_paths(const std::string& installation_folder, const std::string& subdirs)
-{
-  DEBUG_TRACE;
-  IF_DEBUG(std::cerr << "installation folder: " << installation_folder << std::endl);
-  std::vector<std::string> basic_path = generate_basic_path(installation_folder);
-  IF_DEBUG(std::cerr << "basic path: " << basic_path << std::endl);
-  std::vector<std::string> subdir_split = stlplus::split(subdirs,":");
-  IF_DEBUG(std::cerr << "subdirs: " << subdir_split << std::endl);
-  return generate_all_paths(basic_path, subdir_split);
-}
-
-std::string standard_lookup_path(const std::string& installation_folder, const std::string& subdirs)
-{
-  DEBUG_TRACE;
-  std::vector<std::string> paths = standard_paths(installation_folder, subdirs);
-  IF_DEBUG(std::cerr << "paths: " << paths << std::endl);
-  return generate_lookup_path(paths);
-}
-
-std::string lookup_message_file(const std::string& name, const std::string& path)
-{
-  DEBUG_TRACE;
-  // TODO - handle multiple languages by mofifying the message file name with the locale
-  std::string result = stlplus::lookup(name, path, ":");
-  IF_DEBUG(std::cerr << "lookup: " << name << " in: " << path << " = " << result << std::endl);
-  return result;
-}
-
-std::vector<std::string> standard_ini_files(const std::string& name, 
-                                            const std::string& installation_folder,
-                                            const std::string& subfolders)
-{
-  DEBUG_TRACE;
-  std::vector<std::string> path = standard_paths(installation_folder, subfolders);
-  IF_DEBUG(std::cerr << "standard paths: " << path << std::endl);
-  std::vector<std::string> result;
-  for (unsigned i = 0; i < path.size(); i++)
-  {
-    std::string filespec = stlplus::create_filespec(path[i],name);
-    IF_DEBUG(std::cerr << "adding filespec: " << filespec << std::endl);
-    result.push_back(filespec);
-  }
-  IF_DEBUG(std::cerr << "standard ini files: " << result << std::endl);
-  return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,6 +34,19 @@ bool test_ini_manager(stlplus::ini_manager& manager, const std::string& name)
     std::cerr << (manager.writable(i) ? " writable" : " not writable");
     std::cerr << (manager.empty(i) ? " empty" : " not empty");
     std::cerr << std::endl;
+    // print sections for each file
+    for (unsigned i = 0; i < manager.size(); i++)
+    {
+      std::cerr << "section names for level " << i << " = " << manager.filename(i) << std::endl;
+      std::vector<std::string> sections = manager.section_names(i);
+      for (unsigned j = 0; j < sections.size(); j++)
+        std::cerr << "  " << j << ": \"" << sections[j] << "\"" << std::endl;
+    }
+    // print list of sections in all files
+    std::cerr << "section names for all levels" << std::endl;
+    std::vector<std::string> sections = manager.section_names();
+    for (unsigned j = 0; j < sections.size(); j++)
+      std::cerr << "  " << j << ": \"" << sections[j] << "\"" << std::endl;
   }
 
   if (manager.variable_exists("section","test"))
@@ -158,17 +75,20 @@ int main (int argc, char* argv[])
   {
     unsigned errors = 0;
 
-    std::string install = stlplus::install_path(argv[0]);
-    std::cerr << "install = " << install << std::endl;
+    std::vector<std::string> ini_files;
+    ini_files.push_back("test.ini");
+    ini_files.push_back("test2.ini");
+    ini_files.push_back("test3.ini");
+    std::cerr << "ini_files = " << ini_files << std::endl;
 
     // set up an Ini file manager
-    stlplus::ini_manager ini_files(standard_ini_files(ini_filename, install, ini_subdirs));
-    std::cerr << "ini_files = " << ini_files << std::endl;
-    if (!test_ini_manager(ini_files, "original"))
+    stlplus::ini_manager manager(ini_files);
+    std::cerr << "manager = " << manager << std::endl;
+    if (!test_ini_manager(manager, "original"))
       errors++;
 
-    stlplus::ini_manager ini_files2 = ini_files;
-    if (!test_ini_manager(ini_files2, "alias"))
+    stlplus::ini_manager manager2(manager);
+    if (!test_ini_manager(manager2, "alias"))
       errors++;
 
     return errors;

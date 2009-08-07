@@ -415,6 +415,7 @@ namespace stlplus
       {
         if (!m_writable) return false;
         m_sections.push_back(ini_section(section));
+        m_changed = true;
         return true;
       }
 
@@ -431,6 +432,7 @@ namespace stlplus
         std::list<ini_section>::iterator found = find_section(section);
         if (found == m_sections.end()) return false;
         m_sections.erase(found);
+        m_changed = true;
         return true;
       }
 
@@ -440,6 +442,7 @@ namespace stlplus
         std::list<ini_section>::iterator found = find_section(section);
         if (found == m_sections.end()) return false;
         found->clear();
+        m_changed = true;
         return true;
       }
 
