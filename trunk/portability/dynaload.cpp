@@ -80,6 +80,8 @@ namespace stlplus
   {
 #ifdef MSWINDOWS
     m_handle = (void*)LoadLibrary(library.c_str());
+#elif defined(CYGWIN)
+    m_handle = dlopen(library.c_str(),RTLD_NOW);
 #else
     std::string full_library = std::string("lib") + library + std::string(".so");
     m_handle = dlopen(full_library.c_str(),RTLD_NOW);
