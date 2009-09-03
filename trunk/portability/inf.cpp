@@ -374,6 +374,7 @@ namespace stlplus
 
   void convert_from_string(const std::string& str, inf& result, unsigned radix = 10) throw(std::invalid_argument)
   {
+    result = 0;
     // only support the C-style radixes plus 0b for binary
     // a radix of 0 means deduce the radix from the input - assume 10
     if (radix != 0 && radix != 2 && radix != 8 && radix != 10 && radix != 16)
@@ -551,7 +552,8 @@ namespace stlplus
       for (; i < str.size(); i++)
       {
         result *= inf(radix);
-        int ch = from_char[(unsigned char)str[i]] ;
+        unsigned char ascii = (unsigned char)str[i];
+        int ch = from_char[ascii] ;
         if (ch == -1)
           throw std::invalid_argument("invalid decimal character in string " + str);
         result += inf(ch);
