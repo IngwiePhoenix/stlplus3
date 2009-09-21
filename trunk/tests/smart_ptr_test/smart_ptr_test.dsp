@@ -87,10 +87,6 @@ LINK32=link.exe
 
 SOURCE=.\smart_ptr_test.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\smart_ptr_test.cpp~
-# End Source File
 # End Group
 # End Target
 # End Project

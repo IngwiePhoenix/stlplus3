@@ -225,10 +225,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="smart_ptr_test.cpp~"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
