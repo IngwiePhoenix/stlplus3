@@ -27,7 +27,7 @@ namespace stlplus
     // but that would not have differentiated between different null smart pointers
     // so I use the address of the substructure to differentiate between different objects.
     // get a magic key for the substructure - this also returns a flag saying whether its been seen before
-    std::pair<bool,unsigned> mapping = context.pointer_map(data.handle());
+    std::pair<bool,unsigned> mapping = context.pointer_map(data._handle());
     // dump the magic key
     dump_unsigned(context,mapping.second);
     // dump the contents but only if this is the first time this object has been seen
@@ -50,7 +50,7 @@ namespace stlplus
     {
       // this holder has already been restored
       // dealias the existing holder and replace it with the seen-before holder to make this object an alias of it
-      data.make_alias(mapping.second);
+      data._make_alias((smart_ptr_holder<T>*)mapping.second);
     }
     else
     {
@@ -59,7 +59,7 @@ namespace stlplus
       data.clear_unique();
       // map the magic key onto this structure's holder
       // do this before restoring the object so that self-referential structures restore correctly
-      context.pointer_add(magic,data.handle());
+      context.pointer_add(magic,data._handle());
       // now restore the object
       T* value = 0;
       restore_pointer(context,value,restore_element);
@@ -80,7 +80,7 @@ namespace stlplus
     // but that would not have differentiated between different null smart pointers
     // so I use the address of the substructure to differentiate between different objects.
     // get a magic key for the substructure - this also returns a flag saying whether its been seen before
-    std::pair<bool,unsigned> mapping = context.pointer_map(data.handle());
+    std::pair<bool,unsigned> mapping = context.pointer_map(data._handle());
     // dump the magic key
     dump_unsigned(context,mapping.second);
     // dump the contents but only if this is the first time this object has been seen
@@ -102,7 +102,7 @@ namespace stlplus
     {
       // this holder has already been restored
       // dealias the existing holder and replace it with the seen-before holder to make this object an alias of it
-      data.make_alias(mapping.second);
+      data._make_alias((smart_ptr_holder<T>*)mapping.second);
     }
     else
     {
@@ -111,7 +111,7 @@ namespace stlplus
       data.clear_unique();
       // map the magic key onto this structure's holder
       // do this before restoring the object so that self-referential structures restore correctly
-      context.pointer_add(magic,data.handle());
+      context.pointer_add(magic,data._handle());
       // now restore the object
       T* value = 0;
       restore_callback(context,value);
@@ -132,7 +132,7 @@ namespace stlplus
     // but that would not have differentiated between different null smart pointers
     // so I use the address of the substructure to differentiate between different objects.
     // get a magic key for the substructure - this also returns a flag saying whether its been seen before
-    std::pair<bool,unsigned> mapping = context.pointer_map(data.handle());
+    std::pair<bool,unsigned> mapping = context.pointer_map(data._handle());
     // dump the magic key
     dump_unsigned(context,mapping.second);
     // dump the contents but only if this is the first time this object has been seen
@@ -154,7 +154,7 @@ namespace stlplus
     {
       // this holder has already been restored
       // dealias the existing holder and replace it with the seen-before holder to make this object an alias of it
-      data.make_alias(mapping.second);
+      data._make_alias((smart_ptr_holder<T>*)mapping.second);
     }
     else
     {
@@ -163,7 +163,7 @@ namespace stlplus
       data.clear_unique();
       // map the magic key onto this structure's holder
       // do this before restoring the object so that self-referential structures restore correctly
-      context.pointer_add(magic,data.handle());
+      context.pointer_add(magic,data._handle());
       // now restore the object
       T* value = 0;
       restore_interface(context,value);
