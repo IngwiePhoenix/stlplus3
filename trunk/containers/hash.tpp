@@ -6,6 +6,7 @@
 //   License:   BSD License, see ../docs/license.html
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <iomanip>
 
 namespace stlplus
 {
@@ -22,13 +23,13 @@ namespace stlplus
     hash_element<K,T,H,E>* m_next;
     unsigned m_hash;
 
-    hash_element(const hash<K,T,H,E>* owner, const K& key, const T& data, unsigned hash) : 
-      m_master(owner,this), m_value(key,data), m_next(0), m_hash(hash) 
+    hash_element(const hash<K,T,H,E>* owner, const K& key, const T& data, unsigned hash) :
+      m_master(owner,this), m_value(key,data), m_next(0), m_hash(hash)
       {
       }
 
-    hash_element(const hash<K,T,H,E>* owner, const std::pair<const K,T>& value, unsigned hash) : 
-      m_master(owner,this), m_value(value), m_next(0), m_hash(hash) 
+    hash_element(const hash<K,T,H,E>* owner, const std::pair<const K,T>& value, unsigned hash) :
+      m_master(owner,this), m_value(value), m_next(0), m_hash(hash)
       {
       }
 
@@ -441,7 +442,7 @@ namespace stlplus
   // remove a key from the table - return true if the key was found and removed, false if it wasn't present
 
   template<typename K, typename T, class H, class E>
-  bool hash<K,T,H,E>::erase(const K& key)
+  unsigned hash<K,T,H,E>::erase(const K& key)
   {
     unsigned hash_value_full = H()(key);
     unsigned bin = hash_value_full % m_bins;
@@ -465,9 +466,43 @@ namespace stlplus
       delete current;
       // remember to maintain the size count
       m_size--;
-      return true;
+      return 1;
     }
-    return false;
+    return 0;
+  }
+
+  // remove an element from the hash table using an iterator (std::map equivalent)
+  template<typename K, typename T, class H, class E>
+  TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::erase(TYPENAME hash<K,T,H,E>::iterator it)
+  {
+    // work out what the next iterator is in order to return it later
+    TYPENAME hash<K,T,H,E>::iterator next(it);
+    ++next;
+    // we now need to find where this item is - made difficult by the use of
+    // single-linked lists which means I have to search through the bin from
+    // the top in order to unlink from the list.
+    unsigned hash_value_full = it.node()->m_hash;
+    unsigned bin = hash_value_full % m_bins;
+    // scan the list for this element
+    // need to keep a previous pointer because the lists are single-linked
+    hash_element<K,T,H,E>* previous = 0;
+    for (hash_element<K,T,H,E>* current = m_values[bin]; current; previous = current, current = current->m_next)
+    {
+      // direct test on the address of the element
+      if (current != it.node()) continue;
+      // found this iterator, so unhook the element from the list
+      if (previous)
+        previous->m_next = current->m_next;
+      else
+        m_values[bin] = current->m_next;
+      // destroy it
+      delete current;
+      current = 0;
+      // remember to maintain the size count
+      m_size--;
+      break;
+    }
+    return next;
   }
 
   template<typename K, typename T, class H, class E>
@@ -567,6 +602,54 @@ namespace stlplus
   TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::end(void)
   {
     return hash_iterator<K,T,H,E,std::pair<const K,T> >(this);
+  }
+
+  template<typename K, typename T, class H, class E>
+  void hash<K,T,H,E>::debug_report(std::ostream& str) const
+  {
+    // calculate some stats first
+    unsigned occupied = 0;
+    unsigned min_in_bin = m_size;
+    unsigned max_in_bin = 0;
+    for (unsigned i = 0; i < m_bins; i++)
+    {
+      if (m_values[i]) occupied++;
+      unsigned count = 0;
+      for (hash_element<K,T,H,E>* item = m_values[i]; item; item = item->m_next) count++;
+      if (count > max_in_bin) max_in_bin = count;
+      if (count < min_in_bin) min_in_bin = count;
+    }
+    // now print the table
+    str << "------------------------------------------------------------------------" << std::endl;
+    str << "| size:     " << m_size << std::endl;
+    str << "| bins:     " << m_bins << std::endl;
+    str << "| loading:  " << loading() << " ";
+    if (m_rehash)
+      str << "auto-rehash at " << m_rehash << std::endl;
+    else
+      str << "manual rehash" << std::endl;
+    str << "| occupied: " << occupied 
+        << std::fixed << " (" << (100.0*(float)occupied/(float)m_bins) << "%)" << std::scientific
+        << ", min = " << min_in_bin << ", max = " << max_in_bin << std::endl;
+    str << "|-----------------------------------------------------------------------" << std::endl;
+    str << "|  bin         0     1     2     3     4     5     6     7     8     9" << std::endl;
+    str << "|        ---------------------------------------------------------------";
+    for (unsigned j = 0; j < m_bins; j++)
+    {
+      if (j % 10 == 0)
+      {
+        str << std::endl;
+        str << "| " << std::setw(6) << std::right << (j/10*10) << std::left << " |";
+      }
+      unsigned count = 0;
+      for (hash_element<K,T,H,E>* item = m_values[j]; item; item = item->m_next) count++;
+      if (!count)
+        str << "     .";
+      else
+        str << std::setw(6) << std::right << count << std::left;
+    }
+    str << std::endl;
+    str << "------------------------------------------------------------------------" << std::endl;
   }
 
   ////////////////////////////////////////////////////////////////////////////////

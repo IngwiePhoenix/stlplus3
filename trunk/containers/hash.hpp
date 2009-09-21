@@ -14,6 +14,7 @@
 #include "exceptions.hpp"
 #include "safe_iterator.hpp"
 #include <map>
+#include <iostream>
 
 namespace stlplus
 {
@@ -151,10 +152,14 @@ namespace stlplus
     iterator insert(const K& key);
 
     // remove a key/data pair from the hash table
-    bool erase(const K& key);
+    // as in map, this returns the number of elements erased
+    size_type erase(const K& key);
+    // remove an element from the hash table using an iterator
+    // as in map, returns an iterator to the next element
+    iterator erase(iterator it);
     // remove all elements from the hash table
     void erase(void);
-    // provide the std::map equivalent clear function
+    // map equivalent of above
     void clear(void);
 
     // find a key and return an iterator to it
@@ -175,6 +180,10 @@ namespace stlplus
     iterator begin(void);
     const_iterator end(void) const;
     iterator end(void);
+
+    // diagnostic report shows the number of items in each bin so can be used
+    // to diagnose effectiveness of hash functions
+    void debug_report(std::ostream&) const;
 
     // internals
   private:
