@@ -97,6 +97,13 @@ std::string stlplus::smart_ptr_to_string(const stlplus::smart_ptr_base&lt;T,C&gt
                                          const std::string&amp; prefix,
                                          const std::string&amp; suffix);
 
+template&lt;typename T, typename C, typename S&gt;
+std::string stlplus::simple_ptr_to_string(const stlplus::simple_ptr_base&lt;T,C&gt;&amp; value,
+                                         S to_string_fn,
+                                         const std::string&amp; null_string,
+                                         const std::string&amp; prefix,
+                                         const std::string&amp; suffix);
+
 template&lt;typename NT, typename AT, typename NS, typename AS&gt;
 std::string stlplus::digraph_to_string(const stlplus::digraph&lt;NT,AT&gt;&amp; values,
                                        NS node_to_string_fn,
@@ -150,6 +157,13 @@ void stlplus::print_foursome(std::ostream&amp;, const stlplus::foursome&lt;T1,T2
 
 template&lt;typename T, typename C, typename S&gt;
 void stlplus::print_smart_ptr(std::ostream&amp;, const stlplus::smart_ptr_base&lt;T,C&gt;&amp; value,
+                              S print_fn,
+                              const std::string&amp; null_string,
+                              const std::string&amp; prefix,
+                              const std::string&amp; suffix);
+
+template&lt;typename T, typename C, typename S&gt;
+void stlplus::print_simple_ptr(std::ostream&amp;, const stlplus::simple_ptr_base&lt;T,C&gt;&amp; value,
                               S print_fn,
                               const std::string&amp; null_string,
                               const std::string&amp; prefix,

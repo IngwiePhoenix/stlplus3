@@ -46,6 +46,7 @@ C++ Library Collection
 <li class="internal"><a href="#introduction">Introduction</a></li>
 <li class="internal"><a href="#include">Header persistent_stlplus.hpp</a></li>
 <li class="internal"><a href="#smart_ptr">stlplus::smart_ptr</a></li>
+<li class="internal"><a href="#simple_ptr">stlplus::simple_ptr</a></li>
 <li class="internal"><a href="#triple">stlplus::triple</a></li>
 <li class="internal"><a href="#foursome">stlplus::foursome</a></li>
 <li class="internal"><a href="#digraph">stlplus::digraph</a></li>
@@ -195,6 +196,63 @@ href="persistent_pointers.html">persistence of polymorphic classes</a> for more 
 
 <p>See also the discussion of the <a href="persistent_pointers.html">persistence of pointers</a> and
 its impact on the persistence of smart pointers.</p>
+
+<h2 id="simple_ptr">Persistence of stlplus::simple_ptr</h2>
+
+<ul>
+<li class="external"><a href="persistent_simple_ptr_hpp.html">Browse Header persistent_simple_ptr.hpp</a></li>
+</ul>
+
+<p>This header provides persistence functions for the <a href="simple_ptr.html">stlplus::simple_ptr and
+stlplus::simple_ptr_clone</a> classes. This set of functions provides the following interface:</p>
+
+<pre class="cpp">
+// simple_ptr
+
+template&lt;typename T, typename DE&gt;
+void stlplus::dump_simple_ptr(stlplus::dump_context&amp;, const simple_ptr&lt;T&gt;&amp; data, DE stlplus::dump_element)
+  throw(stlplus::persistent_dump_failed);
+
+template&lt;typename T, typename RE&gt;
+void stlplus::restore_simple_ptr(stlplus::restore_context&amp;, simple_ptr&lt;T&gt;&amp; data, RE stlplus::restore_element)
+  throw(stlplus::persistent_restore_failed);
+
+// simple_ptr_clone using callback approach
+
+template&lt;typename T&gt;
+void stlplus::dump_simple_ptr_clone_callback(stlplus::dump_context&amp;, const simple_ptr_clone&lt;T&gt;&amp; data)
+  throw(stlplus::persistent_dump_failed);
+
+template&lt;typename T&gt;
+void stlplus::restore_simple_ptr_clone_callback(stlplus::restore_context&amp;, simple_ptr_clone&lt;T&gt;&amp; data)
+  throw(stlplus::persistent_restore_failed);
+
+// simple_ptr_clone using interface approach
+
+template&lt;typename T&gt;
+void stlplus::dump_simple_ptr_clone_interface(stlplus::dump_context&amp;, const simple_ptr_clone&lt;T&gt;&amp; data)
+  throw(stlplus::persistent_dump_failed);
+
+template&lt;typename T&gt;
+void stlplus::restore_simple_ptr_clone_interface(stlplus::restore_context&amp;, simple_ptr_clone&lt;T&gt;&amp; data)
+  throw(stlplus::persistent_restore_failed);
+</pre>
+
+<p>There are three dump/restore pairs of functions here. The first pair act on simple_ptr, which is
+the variant that uses copy constructors to perform copying. This pair of functions are templatised
+functions for the persistence of a simple_ptr containing an element of any class and takes as its
+third parameter the function for managing the elements. For example, for a simple_ptr pointing to
+std::string, the element functions would be stlplus::dump_string and stlplus::restore_string.</p>
+
+<p>The second and third pairs of functions are for simple_ptr_clone. This variant of the smart
+pointer (see the page on <a href="simple_ptr.html">simple pointers</a>) is for polymorphic class
+hierarchies. There are two approaches to making such class hierarchies persistent - known as the
+interface approach and the callback appraoch. These last two pairs of functions implement
+persistence using one or other of those two approaches. See the page on <a
+href="persistent_pointers.html">persistence of polymorphic classes</a> for more explanation.</p>
+
+<p>See also the discussion of the <a href="persistent_pointers.html">persistence of pointers</a> and
+its impact on the persistence of simple pointers.</p>
 
 <h2 id="triple">Persistence of stlplus::triple</h2>
 
