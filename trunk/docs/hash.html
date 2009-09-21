@@ -50,6 +50,7 @@ C++ Library Collection
 <li class="internal"><a href="#hash">Whole Hash Operations</a></li>
 <li class="internal"><a href="#elements">Adding, Removing, Changing and Accessing Hash Elements</a></li>
 <li class="internal"><a href="#iterators">Iterators</a></li>
+<li class="internal"><a href="#print">Diagnostic Print Routines</a></li>
 <li class="internal"><a href="#exceptions">Exceptions</a></li>
 </ul>
 
@@ -241,7 +242,7 @@ really hit performance.</p>
 <pre class="cpp">
 hash(const hash&amp;);
 hash&amp; operator=(const hash&amp;);
-void erase(void);
+void clear(void);
 bool empty(void) const;
 unsigned size(void) const;
 </pre>
@@ -249,14 +250,13 @@ unsigned size(void) const;
 <p>The hash class supports copying via the copy constructor and the assignment
 operator.</p>
 
-<p>The erase() function deletes all elements in the hash, leaving it empty, but
+<p>The clear() function deletes all elements in the hash, leaving it empty, but
 still with the same number of bins as when it was created.</p>
 
 <p>The size() function gives the number of elements in the hash. This is very
 efficient since the hash keeps track of its size, so it is not necessary for it
 to count the number of elements. The empty() function tests for the special case
 of an empty hash, i.e. a hash with a size() == 0.</p>
-
 
 <h2 id="elements">Adding, Removing, Changing and Accessing Hash Elements</h2>
 
@@ -274,23 +274,60 @@ hash. It is also possible to test for the presence of a key using find() - see
 later.</p>
 
 <pre class="cpp">
+size_type count(const K&amp; key) const;
+</pre>
+
+<p>Counts the number of instances of the key in the hash. This can only return 0 or 1 since the hash
+only allows one instance of a key. This method is included for compatibility with std::map which has a
+count method.</p>
+
+<pre class="cpp">
 iterator insert(const K&amp; key, const T&amp; data);
 </pre>
 
-<p>The insert() function adds a new key/data pair to the hash. If the key is
-already present in the hash, then the new value replaces the old value. It is
-also possible to insert a new element with the [] operator - see later. The
-insert() function returns an iterator to the new element so that it can be
-inspected or its data field modified. See later for details of iterator usage.</p>
+<p>This insert method adds a new key/data pair to the hash. If the key is
+already present in the hash, then the new value replaces the old value. The
+insert method returns an iterator to the new element so that it can be
+inspected or its data field modified.</p>
 
 <pre class="cpp">
-bool erase(const K&amp; key);
+std::pair&lt;iterator, bool&gt; insert(const value_type&amp; value);
 </pre>
 
-<p>The erase() function removes the key and its associated data from the hash.
-If the key was removed, the function returns true. However, if the key wasn't
-present and couldn't therefore be removed, it returns false. This return value
-is rarely useful but can have its uses.</p>
+<p>This insert method adds a new value (a key and data stored in a std::pair) to the hash. If the
+key is already present in the hash, then the new value replaces the old value. This insert method
+returns a pair containing a bool indicating success/failure and an iterator to the new element in
+the case of success so that it can be inspected or its data field modified. This insert method has
+been included for compatibility with std::map.</p>
+
+<pre class="cpp">
+iterator insert(const K&amp; key);
+</pre>
+
+<p>This insert method adds a new key/data pair to the hash, but this time with a default-contructed
+data field. If the key is already present in the hash, then the new value replaces the old value. 
+The insert method returns an iterator to the new element so that it can be inspected or its data
+field modified.</p>
+
+<pre class="cpp">
+unsigned erase(const K&amp; key);
+</pre>
+
+<p>The erase() function removes the key and its associated data from the hash. The return value is
+the number of elements erased. If the key was removed, the function returns 1. However, if the key
+wasn't present and couldn't therefore be removed, it returns 0. This return value is rarely useful
+but can also be interpreted as a boolean success/fail flag.</p>
+
+<pre class="cpp">
+iterator erase(iterator);
+</pre>
+
+<p>The alternative erase() method removes the value pointed to by the iterator. The return value is
+the iterator to the next element. This method is consistent with the std::map::erase method.</p>
+
+<p>Note: std::map also has an erase for a range denoted by two iterators. This doesn't make sense
+for hashes because they are unsorted and therefore there is no meaningful interpretation of a range
+of keys.So there is no equivalent erase method in the hash.</p>
 
 <pre class="cpp">
 const_iterator find(const K&amp; key) const;
@@ -441,6 +478,40 @@ or valid.</p>
 <p>Only a valid iterator can be dereferenced to access the element pair pointed to by the iterator.
 Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
 section below on <a href="#exceptions">Exceptions</a> to see which.</p>
+
+<h2 id="print">Diagnostic Print Routines</h2>
+
+<p>A hash table is very sensitive to the hashing function and the number of bins
+in the hash. To help diagnose performance problems with the hash class, there
+is a diagnostic print routine with three forms: a member function and two
+friend functions:</p>
+
+<pre class="cpp">
+void debug_report(std::ostream&amp;) const;
+</pre>
+
+<p>This method prints out a table showing the number of elements in each bin
+and some summary statistics. The table looks like this:</p>
+
+<pre class="terminal">
+------------------------------------------------------------------------
+| size:     7
+| bins:     20
+| loading:  0.35 auto-rehash
+| occupied: 7 (35.0%), min = 0, max = 1
+|-----------------------------------------------------------------------
+|  bin         0     1     2     3     4     5     6     7     8     9
+|        ---------------------------------------------------------------
+|      0 |     1     .     1     1     .     1     .     .     .     .
+|     10 |     .     .     .     1     .     .     .     1     1     .
+------------------------------------------------------------------------
+</pre>
+
+<p>The size field is the number of elements in the hash. The bins is the number of bins. Loading
+represents the ratio of elements to bins and indicates whether the hash is configured for auto or
+manual rehashing. The occupied field gives stats on the number of bins occupied as a number and as a
+percentage, followed by the minimum and maximum occupancy of any bin in the hash. Finally, the table
+reports the number if elements in each bin so that the distribution can be seen.</p>
 
 <h2 id="exceptions">Exceptions</h2>
 
