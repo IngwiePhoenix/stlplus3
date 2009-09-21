@@ -33,7 +33,7 @@ namespace stlplus
       }
 
   public:
-    smart_ptr_holder(T* p = 0) : 
+    smart_ptr_holder(T* p = 0) :
       m_count(1), m_data(p)
       {
       }
@@ -137,6 +137,14 @@ namespace stlplus
   {
     m_holder = r.m_holder;
     m_holder->increment();
+  }
+
+	// assignment operator - required, else the output of GCC suffers segmentation faults
+  template <typename T, typename C>
+  smart_ptr_base<T,C>& smart_ptr_base<T,C>::operator=(const smart_ptr_base<T,C>& r) 
+  {
+    alias(r);
+    return *this;
   }
 
   // destructor decrements the reference count and delete only when the last reference is destroyed
@@ -253,14 +261,7 @@ namespace stlplus
   template <typename T, typename C>
   void smart_ptr_base<T,C>::alias(const smart_ptr_base<T,C>& r)
   {
-    // make it alias-copy safe - this means that I don't try to do the
-    // assignment if r is either the same object or an alias of it
-    //   if (m_holder == r.m_holder) return;
-    //   if (m_holder->decrement())
-    //     delete m_holder;
-    //   m_holder = r.m_holder;
-    //   m_holder->increment();
-    make_alias(r.m_holder);
+    _make_alias(r.m_holder);
   }
 
   template <typename T, typename C>
@@ -319,15 +320,16 @@ namespace stlplus
   // used for example in persistence routines
 
   template <typename T, typename C>
-  void* smart_ptr_base<T,C>::handle(void) const
+  smart_ptr_holder<T>* smart_ptr_base<T,C>::_handle(void) const
   {
     return m_holder;
   }
 
   template <typename T, typename C>
-  void smart_ptr_base<T,C>::make_alias(void* handle)
+  void smart_ptr_base<T,C>::_make_alias(smart_ptr_holder<T>* r_holder)
   {
-    smart_ptr_holder<T>* r_holder = (smart_ptr_holder<T>*)handle;
+    // make it alias-copy safe - this means that I don't try to do the
+    // assignment if r is either the same object or an alias of it
     if (m_holder != r_holder)
     {
       if (m_holder->decrement())

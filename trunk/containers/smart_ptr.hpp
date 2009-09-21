@@ -8,7 +8,7 @@
 //   License:   BSD License, see ../docs/license.html
 
 //   A smart pointer is a memory-managing pointer to an object. If you like, it
-//   is a zero-dimensional container. 
+//   is a zero-dimensional container.
 
 //   Assignment of smart pointers result in multiple aliases of the same object.
 //   The term alias is used to differentiate from conventional pointers because
@@ -27,6 +27,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "containers_fixes.hpp"
 #include "exceptions.hpp"
+#include "copy_functors.hpp"
 #include <map>
 #include <string>
 
@@ -61,7 +62,7 @@ namespace stlplus
     smart_ptr_base(void);
 
     // create a pointer containing a *copy* of the object using the template parameter C
-    // this copy is taken because the pointer class maintains a dynamically allocated object 
+    // this copy is taken because the pointer class maintains a dynamically allocated object
     // and the T& may not be (usually is not) dynamically allocated
     explicit smart_ptr_base(const T& data) throw(illegal_copy);
 
@@ -71,7 +72,12 @@ namespace stlplus
     explicit smart_ptr_base(T* data);
 
     // copy constructor implements aliasing so no copy is made
-    explicit smart_ptr_base(const smart_ptr_base<T,C>& r);
+    // note that the copy constructor should NOT be explicit, as this breaks
+    // the returning of pointer objects from functions (at least within GCC 4.4)
+    smart_ptr_base(const smart_ptr_base<T,C>& r);
+
+    // assignment operator - required, else the output of GCC suffers segmentation faults
+    smart_ptr_base<T,C>& operator=(const smart_ptr_base<T,C>& r);
 
     // destructor decrements the reference count and delete only when the last reference is destroyed
     ~smart_ptr_base(void);
@@ -159,48 +165,8 @@ namespace stlplus
   public:
     // internal use only - had to make them public because they need to be
     // accessed by routines that could not be made friends
-    void* handle(void) const;
-    void make_alias(void* handle);
-  };
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // copy functors implementing the three possible copy semantics
-
-  // constructor_copy uses the copy constructor of the object - used for simple types
-
-  template <typename T>
-  class constructor_copy
-  {
-  public:
-    T* operator() (const T& from) throw()
-      {
-        return new T(from);
-      }
-  };
-
-  // clone_copy uses the clone method of the object - used for polymorphic types
-
-  template <typename T>
-  class clone_copy
-  {
-  public:
-    T* operator() (const T& from) throw()
-      {
-        return from.clone();
-      }
-  };
-
-  // no_copy throws an exception - used for types that cannot be copied
-
-  template <typename T>
-  class no_copy
-  {
-  public:
-    T* operator() (const T& from) throw(illegal_copy)
-      {
-        throw illegal_copy("no_copy functor called");
-        return 0;
-      }
+    smart_ptr_holder<T>* _handle(void) const;
+    void _make_alias(smart_ptr_holder<T>* handle);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +180,7 @@ namespace stlplus
     explicit smart_ptr(const T& data) : smart_ptr_base<T, constructor_copy<T> >(data) {}
     explicit smart_ptr(T* data) : smart_ptr_base<T, constructor_copy<T> >(data) {}
     smart_ptr<T>& operator=(const T& data) {set_value(data); return *this;}
-    smart_ptr<T>& operator=(const smart_ptr<T>& r) {alias(r); return *this;}
+    smart_ptr<T>& operator=(T* data) {set(data); return *this;}
     ~smart_ptr(void) {}
   };
 
@@ -229,7 +195,7 @@ namespace stlplus
     explicit smart_ptr_clone(const T& data) : smart_ptr_base<T, clone_copy<T> >(data) {}
     explicit smart_ptr_clone(T* data) : smart_ptr_base<T, clone_copy<T> >(data) {}
     smart_ptr_clone<T>& operator=(const T& data) {set_value(data); return *this;}
-    smart_ptr_clone<T>& operator=(const smart_ptr_clone<T>& r) {alias(r); return *this;}
+    smart_ptr_clone<T>& operator=(T* data) {set(data); return *this;}
     ~smart_ptr_clone(void) {}
   };
 
@@ -244,7 +210,7 @@ namespace stlplus
     explicit smart_ptr_nocopy(const T& data) : smart_ptr_base<T, no_copy<T> >(data) {}
     explicit smart_ptr_nocopy(T* data) : smart_ptr_base<T, no_copy<T> >(data) {}
     smart_ptr_nocopy<T>& operator=(const T& data) {set_value(data); return *this;}
-    smart_ptr_nocopy<T>& operator=(const smart_ptr_nocopy<T>& r) {alias(r); return *this;}
+    smart_ptr_nocopy<T>& operator=(T* data) {set(data); return *this;}
     ~smart_ptr_nocopy(void) {}
   };
 
