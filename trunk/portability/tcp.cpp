@@ -83,6 +83,36 @@ namespace stlplus
     return result;
   }
 
+  // convert address:port into a sockaddr
+  static void convert_address(unsigned long address, unsigned short port, sockaddr& sa)
+  {
+    unsigned short network_port = htons(port);
+    unsigned long network_address = htonl(address);
+    sa.sa_family = AF_INET;
+    memcpy(&sa.sa_data[0], &network_port, sizeof(network_port));
+    memcpy(&sa.sa_data[2], &network_address, sizeof(network_address));
+  }
+
+  // convert host:port into a sockaddr
+  static void convert_host(hostent& host, unsigned short port, sockaddr& sa)
+  {
+    sa.sa_family = host.h_addrtype;
+    unsigned short network_port = htons(port);
+    memcpy(&sa.sa_data[0], &network_port, sizeof(network_port));
+    memcpy(&sa.sa_data[2], host.h_addr, host.h_length);
+  }
+
+  // convert sockaddr to address:port
+  static void convert_sockaddr(const sockaddr& sa, unsigned long& address, unsigned short& port)
+  {
+    unsigned short network_port = 0;
+    memcpy(&network_port, &sa.sa_data[0], sizeof(network_port));
+    unsigned long network_address = 0;
+    memcpy(&network_address, &sa.sa_data[2], sizeof(network_address));
+    address = ntohl(network_address);
+    port = ntohs(network_port);
+  }
+
 ////////////////////////////////////////////////////////////////////////////////
 // Initialisation
 // Windows requires that Winsock is initialised before use and closed after
@@ -125,16 +155,19 @@ namespace stlplus
   {
   private:
     SOCKET m_socket;
-    int m_error;
+    mutable int m_error;
+    mutable std::string m_message;
 
     TCP_socket(const TCP_socket&);
 
   public:
 
-    TCP_socket(SOCKET socket = INVALID_SOCKET) : m_socket(INVALID_SOCKET), m_error(0)
+    ////////////////////////////////////////////////////////////////////////////
+    // constructors/destructors
+
+    TCP_socket(void) : m_socket(INVALID_SOCKET), m_error(0)
       {
         set_error(sockets_init());
-        m_socket = socket;
       }
 
     ~TCP_socket(void)
@@ -143,16 +176,56 @@ namespace stlplus
         set_error(sockets_close());
       }
 
-    bool set(SOCKET socket = INVALID_SOCKET)
+    ////////////////////////////////////////////////////////////////////////////
+    // error handling
+
+    void set_error (int error) const
+      {
+        if (m_error == 0 && error != 0)
+        {
+          m_error = error;
+          m_message = error_string(error);
+        }
+      }
+
+    int error(void) const
+      {
+        return m_error;
+      }
+
+    void clear_error (void)
+      {
+        m_error = 0;
+        m_message.erase();
+      }
+
+    std::string message(void) const
+      {
+        return error_string(m_error);
+      }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // initialisation, connection
+
+    bool initialised(void) const
+      {
+        return m_socket != INVALID_SOCKET;
+      }
+
+    // attach this object to a pre-opened socket
+    bool set(SOCKET socket)
       {
         if (!close()) return false;
+        clear_error();
         m_socket = socket;
         return true;
       }
 
+    // create a raw socket attached to this object
     bool initialise(void)
       {
         if (!close()) return false;
+        clear_error();
         // create an anonymous socket
         m_socket = ::socket(AF_INET, SOCK_STREAM, 0);
         if (m_socket == INVALID_SOCKET)
@@ -171,35 +244,140 @@ namespace stlplus
         return true;
       }
 
-    SOCKET socket(void) const
+    // initialise a socket and set this socket up to be a listening port
+    // - port: port to listen on
+    // - length of backlog queue to manage - may be zero
+    // - returns success status
+    bool listen(unsigned short port, unsigned short queue = 0)
       {
-        return m_socket;
-      }
-
-    void set_error (int error)
-      {
-        if (m_error == 0 && error != 0)
+        if (!initialise())
+          return false;
+        // name the socket and bind it to a port - this is a requirement for a server
+        sockaddr server;
+        convert_address(INADDR_ANY, port, server);
+        if (bind(m_socket, &server, sizeof(server)) == SOCKET_ERROR)
         {
-          m_error = error;
+          set_error(ERRNO);
+          close();
+          return false;
         }
+        // now set the port to listen for incoming connections
+        if (::listen(m_socket, (int)queue) == SOCKET_ERROR)
+        {
+          set_error(ERRNO);
+          close();
+          return false;
+        }
+        return true;
       }
 
-    int error(void) const
+    // accept a connection on the object's socket - only applicable if it has been set up as a listening port
+    // - socket - filled in with the accepted connection's socket
+    // - remote_address - filled in with accepted connection's IP address
+    // - remote_port - filled in with accepted connection's port
+    bool accept(SOCKET& socket, unsigned long& remote_address, unsigned short& remote_port)
       {
-        return m_error;
+        // accept the connection, at the same time getting the address of the connecting client
+        sockaddr saddress;
+        SOCKLEN_T saddress_length = sizeof(saddress);
+        SOCKET connection_socket = ::accept(m_socket, &saddress, &saddress_length);
+        if (connection_socket == INVALID_SOCKET)
+        {
+          set_error(ERRNO);
+          return false;
+        }
+        // extract the contents of the address
+        convert_sockaddr(saddress, remote_address, remote_port);
+        return true;
       }
 
-    std::string message(void) const
+    // client connect to a server
+    // - address: IP name or number
+    // - port: port to connect to
+    bool connect(const std::string& address, unsigned short port,
+                 unsigned long& remote_address, unsigned short& remote_port)
       {
-        return error_string(m_error);
+        if (!initialise())
+          return false;
+        bool result = true;
+        // Lookup the IP address to convert it into a host record
+        // this DOES lookup IP address names as well (not according to MS help !!)
+        hostent* host_info = ::gethostbyname(address.c_str());
+        if (!host_info)
+        {
+          set_error(HERRNO);
+          result = false;
+        }
+        else
+        {
+          /// fill in the connection data structure
+          sockaddr connect_data;
+          convert_host(*host_info, port, connect_data);
+          // try connecting
+          if (::connect(m_socket, &connect_data, sizeof(connect_data)) == SOCKET_ERROR)
+          {
+            // extract the remote connection details for local storage
+            convert_sockaddr(connect_data, remote_address, remote_port);
+            // the socket is non-blocking, so connect will almost certainly fail with EINPROGRESS which is not an error
+            int error = ERRNO;
+            if (error != EINPROGRESS && error != EWOULDBLOCK)
+            {
+              set_error(error);
+              result = false;
+            }
+          }
+        }
+        return result;
       }
 
-    bool initialised(void) const
+    // test whether a socket is connected and ready to communicate
+    bool connected(unsigned timeout = 0)
       {
-        return m_socket != INVALID_SOCKET;
+        // Linux and Windows docs say test with select for whether socket is
+        // writable - this is already done by send_ready. However, a problem
+        // has been reported with Linux whereby the OS will report a socket as
+        // writable when it isn't
+#ifdef MSWINDOWS
+        return send_ready(timeout);
+#else
+        if (!send_ready(timeout)) return false;
+        // DJDM: socket has returned EINPROGRESS on the first attempt at connection
+        // it has also returned that it can be written to
+        // we must now ask it if it has actually connected - using getsockopt
+        int error;
+        socklen_t serror = sizeof(int);
+        if (getsockopt(m_socket, SOL_SOCKET, SO_ERROR, &error, &serror)==0)
+          // handle the error value - one of them means that the socket has connected
+          if (!error || error == EISCONN)
+            return true;
+        return false;
+#endif
       }
 
-    bool send_ready(unsigned wait)
+    bool close(void)
+      {
+        bool result = true;
+        if (initialised())
+        {
+          if (shutdown(m_socket,SHUT_RDWR) == SOCKET_ERROR)
+          {
+            set_error(ERRNO);
+            result = false;
+          }
+          if (CLOSE(m_socket) == SOCKET_ERROR)
+          {
+            set_error(ERRNO);
+            result = false;
+          }
+        }
+        m_socket = INVALID_SOCKET;
+        return result;
+      }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // sending/receiving
+
+    bool send_ready(unsigned wait = 0)
       {
         if (!initialised()) return false;
         // determines whether the socket is ready to send
@@ -241,7 +419,7 @@ namespace stlplus
         return true;
       }
 
-    bool receive_ready(unsigned wait)
+    bool receive_ready(unsigned wait = 0)
       {
         if (!initialised()) return false;
         // determines whether the socket is ready to receive
@@ -292,6 +470,7 @@ namespace stlplus
           }
           else if (read == 0)
           {
+            // TODO - check whether this is an appropriate conditon to close the socket
             close();
           }
           else
@@ -304,25 +483,29 @@ namespace stlplus
         return result;
       }
 
-    bool close(void)
+    ////////////////////////////////////////////////////////////////////////////
+    // informational
+
+    SOCKET socket(void) const
       {
-        bool result = true;
-        if (initialised())
-        {
-          if (shutdown(m_socket,SHUT_RDWR) == SOCKET_ERROR)
-          {
-            set_error(ERRNO);
-            result = false;
-          }
-          if (CLOSE(m_socket) == SOCKET_ERROR)
-          {
-            set_error(ERRNO);
-            result = false;
-          }
-        }
-        m_socket = INVALID_SOCKET;
-        return result;
+        return m_socket;
       }
+
+    unsigned short local_port() const
+      {
+        sockaddr sa;
+        SOCKLEN_T address_length = sizeof(sa);
+        if (getsockname(m_socket, &sa, &address_length) != 0)
+        {
+          set_error(ERRNO);
+          return 0;
+        }
+        unsigned long address = 0;
+        unsigned short port = 0;
+        convert_sockaddr(sa, address, port);
+        return port;
+      }
+
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -390,14 +573,19 @@ namespace stlplus
         return m_socket.initialised();
       }
 
-    unsigned long address(void) const
+    unsigned long remote_address(void) const
       {
         return m_address;
       }
 
-    unsigned short port(void) const
+    unsigned short remote_port(void) const
       {
         return m_port;
+      }
+
+    unsigned short local_port(void) const
+      {
+        return m_socket.local_port();
       }
 
     bool send_ready(unsigned wait)
@@ -474,12 +662,22 @@ namespace stlplus
 
   unsigned long TCP_connection::address(void) const
   {
-    return m_data->address();
+    return m_data->remote_address();
   }
 
   unsigned short TCP_connection::port(void) const
   {
-    return m_data->port();
+    return remote_port();
+  }
+
+  unsigned short TCP_connection::remote_port(void) const
+  {
+    return m_data->remote_port();
+  }
+
+  unsigned short TCP_connection::local_port(void) const
+  {
+    return m_data->remote_port();
   }
 
   bool TCP_connection::send_ready(unsigned wait)
@@ -557,30 +755,7 @@ namespace stlplus
 
     bool initialise(unsigned short port, unsigned short queue)
       {
-        close();
-        if (!m_socket.initialise())
-          return false;
-        // name the socket and bind it to a port - this is a requirement for a server
-        unsigned short network_port = htons((unsigned short)port);
-        unsigned long network_address = htonl(INADDR_ANY);
-        sockaddr server;
-        server.sa_family = AF_INET;
-        memcpy(&server.sa_data[0], &network_port, sizeof(network_port));
-        memcpy(&server.sa_data[2], &network_address, sizeof(network_address));
-        if (bind(m_socket.socket(), &server, sizeof(server)) == SOCKET_ERROR)
-        {
-          set_error(ERRNO);
-          close();
-          return false;
-        }
-        // now set the port to listen for incoming connections
-        if (listen(m_socket.socket(), (int)queue) == SOCKET_ERROR)
-        {
-          set_error(ERRNO);
-          close();
-          return false;
-        }
-        return true;
+        return m_socket.listen(port, queue);
       }
 
     bool initialised(void) const
@@ -601,21 +776,11 @@ namespace stlplus
     TCP_connection connection(void)
       {
         TCP_connection connection;
-        // accept a connection: the return value is the socket and the address is filled in with the connection details in network order
-        sockaddr address;
-        SOCKLEN_T address_length = sizeof(address);
-        SOCKET connection_socket = accept(m_socket.socket(), &address, &address_length);
-        if (connection_socket == INVALID_SOCKET)
-          set_error(ERRNO);
-        else
-        {
-          // extract the contents of the address the hard way
-          unsigned short network_port = 0;
-          memcpy(&network_port, &address.sa_data[0], sizeof(network_port));
-          unsigned long network_address = 0;
-          memcpy(&network_address, &address.sa_data[2], sizeof(network_address));
-          connection.m_data->initialise(connection_socket, ntohl(network_address), ntohs(network_port));
-        }
+        SOCKET socket = INVALID_SOCKET;
+        unsigned long address = 0;
+        unsigned short port = 0;
+        if (m_socket.accept(socket, address, port))
+          connection.m_data->initialise(socket, address, port);
         return connection;
       }
   };
@@ -740,67 +905,19 @@ namespace stlplus
       }
 
     // initialise - with 0 timeout this does a non-blocking connect, otherwise it blocks with the specified timeout
-    bool initialise(const std::string& address, unsigned short port, unsigned int timeout=0)
+    bool initialise(const std::string& address, unsigned short port, unsigned timeout=0)
       {
-        close();
-        bool result = true;
-        if (!m_socket.initialise())
+        if (!m_socket.connect(address, port, m_address, m_port))
         {
-          result = false;
+          close();
+          return false;
         }
-        else
+        if (timeout && !m_socket.connected(timeout))
         {
-          // this DOES lookup IP address names as well (not according to MS help !!)
-          hostent* host_info = gethostbyname(address.c_str());
-          if (!host_info)
-          {
-            set_error(HERRNO);
-            result = false;
-          }
-          else
-          {
-            sockaddr connect_data;
-            connect_data.sa_family = host_info->h_addrtype;
-            unsigned short network_port = htons((unsigned short)port);
-            memcpy(&connect_data.sa_data[0], &network_port, sizeof(network_port));
-            memcpy(&connect_data.sa_data[2], host_info->h_addr, host_info->h_length);
-
-            // fill in our copy of the server address and port too
-            memcpy(&m_port, &connect_data.sa_data[0], sizeof(m_port));
-            m_port = ntohs(m_port);
-            memcpy(&m_address, &connect_data.sa_data[2], sizeof(m_address));
-            m_address = ntohl(m_address);
-
-            // the socket is non-blocking, so connect will almost certainly fail with EINPROGRESS
-            if (connect(m_socket.socket(), &connect_data, sizeof(connect_data)) == SOCKET_ERROR)
-            {
-              int error = ERRNO;
-              if (error == EINPROGRESS || error == EWOULDBLOCK)
-              {
-                // the Linux docs say detect completion by selecting the socket for writing
-                // TODO - do something more sensible with the timeout
-                if (!timeout)
-                {
-                  // the connection has been initialised correctly, but not connected yet.
-                  // do NOT wait for the connection in this non-blocking initialise
-                }
-                else if (!m_socket.send_ready(timeout))
-                {
-                  // TODO - how do I get the real error?
-                  set_error(error);
-                  result = false;
-                }
-              }
-              else
-              {
-                set_error(error);
-                result = false;
-              }
-            }
-          }
+          close();
+          return false;
         }
-        if (!result) close();
-        return result;
+        return true;
       }
 
     bool initialised(void) const
@@ -813,14 +930,19 @@ namespace stlplus
         return m_address;
       }
 
-    unsigned short port(void) const
+    unsigned short local_port(void) const
+      {
+        return m_socket.local_port();
+      }
+
+    unsigned short remote_port(void) const
       {
         return m_port;
       }
 
     bool connected(void)
       {
-        return m_socket.send_ready(0);
+        return m_socket.connected();
       }
 
     bool send_ready(unsigned wait)
@@ -919,7 +1041,17 @@ namespace stlplus
 
   unsigned short TCP_client::port(void) const
   {
-    return m_data->port();
+    return remote_port();
+  }
+
+  unsigned short TCP_client::remote_port(void) const
+  {
+    return m_data->remote_port();
+  }
+
+  unsigned short TCP_client::local_port(void) const
+  {
+    return m_data->local_port();
   }
 
   bool TCP_client::send_ready(unsigned wait)

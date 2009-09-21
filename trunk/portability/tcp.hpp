@@ -48,14 +48,26 @@ namespace stlplus
 
     int error(void) const;
     std::string message(void) const;
+
     bool initialised(void) const;
-    unsigned long address(void) const;
-    unsigned short port(void) const;
-    bool send_ready(unsigned wait);
-    bool send (std::string& data);
-    bool receive_ready(unsigned wait);
-    bool receive (std::string& data);
     bool close(void);
+
+    // remote address connected to
+    unsigned long address(void) const;
+    // remote port connected to
+    unsigned short remote_port(void) const;
+    // deprecated version of above
+    unsigned short port(void) const;
+    // local port making the connection
+    unsigned short local_port(void) const;
+    
+    // routines for sending data
+    bool send_ready(unsigned wait = 0);
+    bool send (std::string& data);
+
+    // routines for receiving data
+    bool receive_ready(unsigned wait = 0);
+    bool receive (std::string& data);
 
   protected:
     friend class TCP_connection_data;
@@ -121,16 +133,28 @@ namespace stlplus
 
     int error(void) const;
     std::string message(void) const;
+
     bool initialise(const std::string& address, unsigned short port, unsigned int timeout=0);
     bool initialised(void) const;
     bool connected(void);
+    bool close(void);
+
+    // remote address connected to
     unsigned long address(void) const;
+    // remote port connected to
+    unsigned short remote_port(void) const;
+    // deprecated version of above
     unsigned short port(void) const;
+    // local port making the connection
+    unsigned short local_port(void) const;
+
+    // routines for sending data
     bool send_ready(unsigned wait = 0);
     bool send (std::string& data);
+
+    // routines for receiving data
     bool receive_ready(unsigned wait = 0);
     bool receive (std::string& data);
-    bool close(void);
 
   private:
     friend class TCP_client_data;
