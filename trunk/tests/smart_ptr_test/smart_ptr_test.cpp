@@ -110,6 +110,16 @@ int main (int argc, char* argv[])
         std::cerr << "error: s3 not an alias of s2" << std::endl;
         errors++;
       }
+      // operator=(T*)
+      s3 = new std::string(value);
+      print("s3 = value", s3);
+      print("s2", s2);
+      print("s1", s1);
+      if (!s3.aliases(s2))
+      {
+        std::cerr << "error: s3 not an alias of s2" << std::endl;
+        errors++;
+      }
       // create a pair containing two aliases
       string_ptr_pair p1 = std::make_pair(s1,s1);
       print("make_pair(s1,s1)",p1);
@@ -142,6 +152,10 @@ int main (int argc, char* argv[])
         errors++;
       }
     }
+    if (errors == 0)
+      std::cerr << "No errors were found - test SUCCEEDED" << std::endl;
+    else
+      std::cerr << "ERRORS were found - test FAILED" << std::endl;
     return errors;
   }
   catch(std::exception& exception)
