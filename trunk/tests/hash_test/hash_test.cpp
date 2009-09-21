@@ -32,7 +32,12 @@ typedef stlplus::hash<int,std::string,hash_int> int_string_hash;
 
 std::string int_to_string(int data)
 {
-	return stlplus::int_to_string(data);
+  return stlplus::int_to_string(data);
+}
+
+std::ostream& operator<< (std::ostream& str, const int_string_hash::value_type& data)
+{
+  return str << stlplus::pair_to_string(data, int_to_string, stlplus::string_to_string);
 }
 
 std::ostream& operator<< (std::ostream& str, const int_string_hash& data)
@@ -89,6 +94,7 @@ int main(int argc, char* argv[])
     for (unsigned i = 0; i < NUMBER; i++)
       data[i] = stlplus::dformat("%d",i);
     std::cerr << data << std::endl;
+    data.debug_report(std::cerr);
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_int_string_hash,0);
@@ -109,6 +115,29 @@ int main(int argc, char* argv[])
       stlplus::restore_from_file(MASTER,master,restore_int_string_hash,0);
       result &= compare(data,master);
     }
+
+    // try erasing an element by iterator
+    unsigned size = data.size();
+    std::cerr << "erasing " << *data.begin() << std::endl;
+    int_string_hash::iterator next = data.erase(data.begin());
+    if (data.size() == size)
+    {
+      std::cerr << "error: erase failed" << std::endl;
+      result = false;
+    }
+    std::cerr << data << std::endl;
+    data.debug_report(std::cerr);
+    std::cerr << "next = " << *next << std::endl;
+
+    // try erasing an element by key
+    std::cerr << "erasing 1:1" << std::endl;
+    if (!data.erase(1))
+    {
+      std::cerr << "error: erase failed" << std::endl;
+      result = false;
+    }
+    std::cerr << data << std::endl;
+    data.debug_report(std::cerr);
   }
   catch(std::exception& except)
   {
