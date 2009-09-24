@@ -178,6 +178,8 @@ namespace stlplus
     //////////////////////////////////////////////////////////////////////////////
     // functions that involve casting
 
+#ifdef STLPLUS_MEMBER_TEMPLATES
+
     // dynamic cast of underlying pointer to a derived/parent
     template<typename T2> simple_ptr_base<T2,C> dyn_cast(void) const;
 
@@ -186,6 +188,8 @@ namespace stlplus
 
     // cast of underlying pointer to a base - while keeping the same ref-counted object
     template<typename T2> simple_ptr_base<T2,C> cast(void) const;
+
+#endif
 
     //////////////////////////////////////////////////////////////////////////////
 

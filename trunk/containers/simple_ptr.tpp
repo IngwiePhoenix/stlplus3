@@ -250,6 +250,8 @@ namespace stlplus
     make_unique();
   }
 
+#ifdef STLPLUS_MEMBER_TEMPLATES
+
   // dynamic cast of underlying pointer to a derived/parent
   template <typename T, typename C>
   template <typename T2>
@@ -294,6 +296,8 @@ namespace stlplus
     }
     return rtn;
   }
+
+#endif
 
   // internal function for distinguishing unique simple_ptr objects
   // used for example in persistence routines

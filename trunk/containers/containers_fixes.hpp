@@ -114,7 +114,7 @@
 //   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all
 //   - version 8 (2005) (compiler v.14) requires parameters and templates, supports all
 #ifdef _MSC_VER
-#if _MSC_VER < 1300
+#if _MSC_VER <= 1200
 #undef TYPENAME
 #define TYPENAME
 #endif
@@ -126,6 +126,23 @@
 #if __BORLANDC__ <= 0x550
 #undef TYPENAME
 #define TYPENAME
+#endif
+#endif
+
+////////////////////////////////////////////////////////////////////////////////
+// Member templates
+// e.g. a template function in a template class
+
+// Not all compilers support them - this fix can be used to disable member
+// templates for compilers that don't. Unfortunately that means that some
+// functionality will be missing for those compilers.
+
+#define STLPLUS_MEMBER_TEMPLATES
+
+// Visual Studio v6 (compiler version 12) does not support them
+#ifdef _MSC_VER
+#if _MSC_VER <= 1200
+#undef STLPLUS_MEMBER_TEMPLATES
 #endif
 #endif
 
