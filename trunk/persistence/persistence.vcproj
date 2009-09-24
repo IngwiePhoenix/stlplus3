@@ -296,6 +296,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\persistent_simple_ptr.hpp"
+				>
+			</File>
+			<File
 				RelativePath="persistent_smart_ptr.hpp"
 				>
 			</File>
@@ -605,6 +609,10 @@
 			</File>
 			<File
 				RelativePath="persistent_shortcuts.tpp"
+				>
+			</File>
+			<File
+				RelativePath=".\persistent_simple_ptr.tpp"
 				>
 			</File>
 			<File

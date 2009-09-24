@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\copy_functors.hpp"
+				>
+			</File>
+			<File
 				RelativePath="digraph.hpp"
 				>
 			</File>
@@ -203,6 +207,10 @@
 			</File>
 			<File
 				RelativePath="safe_iterator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\simple_ptr.hpp"
 				>
 			</File>
 			<File
@@ -240,6 +248,10 @@
 			</File>
 			<File
 				RelativePath="safe_iterator.tpp"
+				>
+			</File>
+			<File
+				RelativePath=".\simple_ptr.tpp"
 				>
 			</File>
 			<File

@@ -28,7 +28,7 @@ CFG=persistence - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF "$(CFG)" == "persistence - Win32 Release"
+!IF  "$(CFG)" == "persistence - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -40,10 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
-# ADD CPP /nologo /W3 /GR /GX /MD /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c /I "..\portability" /I "..\containers"
-# ADD BASE RSC /l 0x409 /d "NDEBUG" 
-# ADD RSC /l 0x409 /d "NDEBUG" 
+# ADD BASE CPP /nologo /MD /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\portability" /I "..\containers" /D "WIN32" /D "NDEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -51,7 +51,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo
 
-!ELSEIF "$(CFG)" == "persistence - Win32 Debug"
+!ELSEIF  "$(CFG)" == "persistence - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -63,10 +63,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
-# ADD CPP /nologo /W3 /GR /GX /MDd /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c /I "..\portability" /I "..\containers"
-# ADD BASE RSC /l 0x409 /d "_DEBUG" 
-# ADD RSC /l 0x409 /d "_DEBUG" 
+# ADD BASE CPP /nologo /MDd /W3 /GR /GX /Od /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD CPP /nologo /MDd /W3 /GR /GX /Od /I "..\portability" /I "..\containers" /D "WIN32" /D "_DEBUG" /D "_LIB" /D "_MBCS" /c
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -206,6 +206,10 @@ SOURCE=.\persistent_set.hpp
 # Begin Source File
 
 SOURCE=.\persistent_shortcuts.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\persistent_simple_ptr.hpp
 # End Source File
 # Begin Source File
 
@@ -354,6 +358,10 @@ SOURCE=.\persistent_set.tpp
 # Begin Source File
 
 SOURCE=.\persistent_shortcuts.tpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\persistent_simple_ptr.tpp
 # End Source File
 # Begin Source File
 

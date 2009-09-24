@@ -252,6 +252,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\print_simple_ptr.hpp"
+				>
+			</File>
+			<File
 				RelativePath="print_smart_ptr.hpp"
 				>
 			</File>
@@ -349,6 +353,10 @@
 			</File>
 			<File
 				RelativePath="string_set.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\string_simple_ptr.hpp"
 				>
 			</File>
 			<File
@@ -820,6 +828,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\print_simple_ptr.tpp"
+				>
+			</File>
+			<File
 				RelativePath="print_smart_ptr.tpp"
 				>
 			</File>
@@ -877,6 +889,10 @@
 			</File>
 			<File
 				RelativePath="string_set.tpp"
+				>
+			</File>
+			<File
+				RelativePath=".\string_simple_ptr.tpp"
 				>
 			</File>
 			<File
