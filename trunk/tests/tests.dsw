@@ -246,7 +246,37 @@ Package=<4>
 
 ###############################################################################
 
+Project: "simple_ptr_test"=.\simple_ptr_test\simple_ptr_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name debugging
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "string_test"=.\string_test\string_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name debugging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tcp_test"=.\tcp_test\tcp_test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

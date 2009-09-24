@@ -66,6 +66,14 @@ cd smart_ptr_test
 call bcc
 cd ..
 
+cd simple_ptr_test
+call bcc
+cd ..
+
 cd string_test
+call bcc
+cd ..
+
+cd tcp_test
 call bcc
 cd ..
