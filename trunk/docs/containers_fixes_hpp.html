@@ -125,7 +125,7 @@
 <span style="color: #ff0099">  114: </span><span style="color: #000099">//   - version 7 (.NET) (compiler v.13) requires a typename in a parameter specification but supports all</span>
 <span style="color: #ff0099">  115: </span><span style="color: #000099">//   - version 8 (2005) (compiler v.14) requires parameters and templates, supports all</span>
 <span style="color: #ff0099">  116: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
-<span style="color: #ff0099">  117: </span><span style="color: #990000">#if</span> <span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&lt;</span> <span style="color: #993399">1300</span>
+<span style="color: #ff0099">  117: </span><span style="color: #990000">#if</span> <span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&lt;</span><span style="color: #330033">=</span> <span style="color: #993399">1200</span>
 <span style="color: #ff0099">  118: </span><span style="color: #990000">#undef</span> <span style="color: #000000">TYPENAME</span>
 <span style="color: #ff0099">  119: </span><span style="color: #990000">#define</span> <span style="color: #000000">TYPENAME</span>
 <span style="color: #ff0099">  120: </span><span style="color: #990000">#endif</span>
@@ -141,7 +141,24 @@
 <span style="color: #ff0099">  130: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">  131: </span>
 <span style="color: #ff0099">  132: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">  133: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  133: </span><span style="color: #000099">// Member templates</span>
+<span style="color: #ff0099">  134: </span><span style="color: #000099">// e.g. a template function in a template class</span>
+<span style="color: #ff0099">  135: </span>
+<span style="color: #ff0099">  136: </span><span style="color: #000099">// Not all compilers support them - this fix can be used to disable member</span>
+<span style="color: #ff0099">  137: </span><span style="color: #000099">// templates for compilers that don't. Unfortunately that means that some</span>
+<span style="color: #ff0099">  138: </span><span style="color: #000099">// functionality will be missing for those compilers.</span>
+<span style="color: #ff0099">  139: </span>
+<span style="color: #ff0099">  140: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_MEMBER_TEMPLATES</span>
+<span style="color: #ff0099">  141: </span>
+<span style="color: #ff0099">  142: </span><span style="color: #000099">// Visual Studio v6 (compiler version 12) does not support them</span>
+<span style="color: #ff0099">  143: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
+<span style="color: #ff0099">  144: </span><span style="color: #990000">#if</span> <span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&lt;</span><span style="color: #330033">=</span> <span style="color: #993399">1200</span>
+<span style="color: #ff0099">  145: </span><span style="color: #990000">#undef</span> <span style="color: #000000">STLPLUS_MEMBER_TEMPLATES</span>
+<span style="color: #ff0099">  146: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  147: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">  148: </span>
+<span style="color: #ff0099">  149: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  150: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
