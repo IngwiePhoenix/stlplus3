@@ -403,9 +403,9 @@ public:
   bool remove_variable(const std::string&amp; name);
 
   bool spawn(const std::string&amp; path, const stlplus::arg_vector&amp; argv,
-  bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
+             bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
   bool spawn(const std::string&amp; command_line,
-  bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
+             bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
 
   virtual bool callback(void);
   bool kill(void);
@@ -630,9 +630,9 @@ public:
   bool remove_variable(const std::string&amp; name);
 
   bool spawn(const std::string&amp; path, const stlplus::arg_vector&amp; argv,
-  bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
+             bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
   bool spawn(const std::string&amp; command_line,
-  bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
+             bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
 
   virtual bool callback(void);
   bool tick(void);
@@ -707,7 +707,7 @@ bytes, so the string will become longer with each successive read unless you
 explicitly erase it between reads.</p>
 
 <p>The non-blocking nature of the read operations allows you to read both
-standard output and standard error by interleaving the calls to the read
+C:\Andy\Writing\vfls3\Word files from Wiley\standard output and standard error by interleaving the calls to the read
 functions.</p>
 
 <p>The main trick when using asynchronous subprocesses is to not give up reading
