@@ -5,6 +5,7 @@
 #include "persistent_shortcuts.hpp"
 #include "string_int.hpp"
 #include "string_string.hpp"
+#include "string_pair.hpp"
 #include "string_hash.hpp"
 #include "dprintf.hpp"
 #include "file_system.hpp"
@@ -30,19 +31,19 @@ public:
 
 typedef stlplus::hash<int,std::string,hash_int> int_string_hash;
 
-std::string int_to_string(int data)
+std::string local_int_to_string(int data)
 {
   return stlplus::int_to_string(data);
 }
 
 std::ostream& operator<< (std::ostream& str, const int_string_hash::value_type& data)
 {
-  return str << stlplus::pair_to_string(data, int_to_string, stlplus::string_to_string);
+  return str << stlplus::pair_to_string(data, local_int_to_string, stlplus::string_to_string, ":");
 }
 
 std::ostream& operator<< (std::ostream& str, const int_string_hash& data)
 {
-  return str << stlplus::hash_to_string(data, int_to_string, stlplus::string_to_string, ":", ",");
+  return str << stlplus::hash_to_string(data, local_int_to_string, stlplus::string_to_string, ":", ",");
 }
 
 void dump_int_string_hash(stlplus::dump_context& context, const int_string_hash& data)
