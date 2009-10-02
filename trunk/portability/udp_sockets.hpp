@@ -169,7 +169,8 @@ namespace stlplus
     // i.e. if this fails, the sockets error code will be set - clear it to use the socket again
     // - remote_address: IP name (stlplus.sourceforge.net) or dotted number (216.34.181.96)
     // - returns the IP address as a long integer - zero if there's an error
-    unsigned long ip_lookup(const std::string& remote_address);
+    // unsigned long ip_lookup(const std::string& remote_address);
+    using IP_socket::ip_lookup;
 
     // Initialise socket.
     // Receive datagram packets from any address on provided local receiving port.
