@@ -210,7 +210,15 @@
 				>
 			</File>
 			<File
-				RelativePath="tcp.hpp"
+				RelativePath="ip_sockets.hpp"
+				>
+			</File>
+			<File
+				RelativePath="tcp_sockets.hpp"
+				>
+			</File>
+			<File
+				RelativePath="udp_sockets.hpp"
 				>
 			</File>
 			<File
@@ -391,7 +399,47 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="tcp.cpp"
+				RelativePath="ip_sockets.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="tcp_sockets.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="udp_sockets.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

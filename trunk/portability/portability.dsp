@@ -85,59 +85,71 @@ LIB32=link.exe -lib
 # PROP Default_Filter "h;hpp;hxx"
 # Begin Source File
 
-SOURCE=.\build.hpp
+SOURCE=build.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\debug.hpp
+SOURCE=debug.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\dprintf.hpp
+SOURCE=dprintf.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\dynaload.hpp
+SOURCE=dynaload.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\file_system.hpp
+SOURCE=file_system.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\inf.hpp
+SOURCE=inf.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\portability.hpp
+SOURCE=ip_sockets.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\portability_exceptions.hpp
+SOURCE=portability.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\portability_fixes.hpp
+SOURCE=portability_exceptions.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\subprocesses.hpp
+SOURCE=portability_fixes.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tcp.hpp
+SOURCE=subprocesses.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\time.hpp
+SOURCE=tcp.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\version.hpp
+SOURCE=tcp_sockets.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\wildcard.hpp
+SOURCE=time.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=udp_sockets.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=version.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=wildcard.hpp
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -145,106 +157,72 @@ SOURCE=.\wildcard.hpp
 # PROP Default_Filter "c;cpp;cxx"
 # Begin Source File
 
-SOURCE=.\build.cpp
-DEP_CPP_BUILD=\
-	".\build.hpp"\
-	".\dprintf.hpp"\
-	".\portability_fixes.hpp"\
-	".\version.hpp"\
+SOURCE=build.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\debug.cpp
-DEP_CPP_DEBUG=\
-	".\debug.hpp"\
-	".\dprintf.hpp"\
-	".\portability_fixes.hpp"\
+SOURCE=debug.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\dprintf.cpp
-DEP_CPP_DPRIN=\
-	".\dprintf.hpp"\
-	".\portability_fixes.hpp"\
+SOURCE=dprintf.cpp
+
+# End Source File
+# Begin Source File
+
+SOURCE=dynaload.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\dynaload.cpp
-DEP_CPP_DYNAL=\
-	".\dynaload.hpp"\
-	".\portability_fixes.hpp"\
+SOURCE=file_system.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\file_system.cpp
-DEP_CPP_FILE_=\
-	".\file_system.hpp"\
-	".\portability_fixes.hpp"\
-	".\wildcard.hpp"\
+SOURCE=inf.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\inf.cpp
-DEP_CPP_INF_C=\
-	".\inf.hpp"\
-	".\portability_exceptions.hpp"\
-	".\portability_fixes.hpp"\
+SOURCE=ip_sockets.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\portability_fixes.cpp
-DEP_CPP_PORTA=\
-	".\portability_fixes.hpp"\
+SOURCE=portability_fixes.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\subprocesses.cpp
-DEP_CPP_SUBPR=\
-	".\dprintf.hpp"\
-	".\file_system.hpp"\
-	".\portability_fixes.hpp"\
-	".\subprocesses.hpp"\
+SOURCE=subprocesses.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\tcp.cpp
-DEP_CPP_TCP_C=\
-	".\dprintf.hpp"\
-	".\portability_fixes.hpp"\
-	".\tcp.hpp"\
+SOURCE=tcp_sockets.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\time.cpp
-DEP_CPP_TIME_=\
-	".\dprintf.hpp"\
-	".\portability_fixes.hpp"\
-	".\time.hpp"\
+SOURCE=time.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\version.cpp
-DEP_CPP_VERSI=\
-	".\portability_fixes.hpp"\
-	".\version.hpp"\
+SOURCE=udp_sockets.cpp
 	
 # End Source File
 # Begin Source File
 
-SOURCE=.\wildcard.cpp
-DEP_CPP_WILDC=\
-	".\portability_fixes.hpp"\
-	".\wildcard.hpp"\
+SOURCE=version.cpp
+	
+# End Source File
+# Begin Source File
+
+SOURCE=wildcard.cpp
 	
 # End Source File
 # End Group

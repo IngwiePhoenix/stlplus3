@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>portability/ip_sockets.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>portability/ip_sockets.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_IP_SOCKET</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_IP_SOCKET</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">// Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">// Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//            (c) Andy Rushton           2004-2009</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">// License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">// A platform-independent (Unix and Windows anyway) interface to Internet-Protocol sockets</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
+<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   15: </span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   17: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   18: </span>
+<span style="color: #ff0099">   19: </span>  <span style="color: #000099">//////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   20: </span>  <span style="color: #000099">// internals</span>
+<span style="color: #ff0099">   21: </span>  <span style="color: #000099">// use a PIMPL interface to hide the platform-specifics in the implementation</span>
+<span style="color: #ff0099">   22: </span>
+<span style="color: #ff0099">   23: </span>  <span style="color: #990000">class</span> <span style="color: #000000">IP_socket_internals</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   24: </span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   26: </span>  <span style="color: #000099">// Types of socket supported</span>
+<span style="color: #ff0099">   27: </span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #990000">enum</span> <span style="color: #000000">IP_socket_type</span> <span style="color: #330033">{</span><span style="color: #000000">undefined_socket_type</span> <span style="color: #330033">=</span> <span style="color: #330033">-</span><span style="color: #993399">1</span><span style="color: #330033">,</span> <span style="color: #000000">TCP</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">,</span> <span style="color: #000000">UDP</span> <span style="color: #330033">=</span> <span style="color: #993399">1</span><span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   29: </span>
+<span style="color: #ff0099">   30: </span>  <span style="color: #000099">//////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #000099">// Socket class</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span>  <span style="color: #990000">class</span> <span style="color: #000000">IP_socket</span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #330033">{</span>
+<span style="color: #ff0099">   35: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   36: </span>
+<span style="color: #ff0099">   37: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   38: </span>    <span style="color: #000099">// constructors/destructors</span>
+<span style="color: #ff0099">   39: </span>
+<span style="color: #ff0099">   40: </span>    <span style="color: #000099">// create an uninitialised socket</span>
+<span style="color: #ff0099">   41: </span>    <span style="color: #000000">IP_socket</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   42: </span>
+<span style="color: #ff0099">   43: </span>    <span style="color: #000099">// create an initialised socket</span>
+<span style="color: #ff0099">   44: </span>    <span style="color: #000099">// - type: create either a TCP or UDP socket</span>
+<span style="color: #ff0099">   45: </span>    <span style="color: #000000">IP_socket</span><span style="color: #330033">(</span><span style="color: #000000">IP_socket_type</span> <span style="color: #000000">type</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   46: </span>
+<span style="color: #ff0099">   47: </span>    <span style="color: #000099">// destroy the socket, closing it if open</span>
+<span style="color: #ff0099">   48: </span>    <span style="color: #330033">~</span><span style="color: #000000">IP_socket</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   49: </span>
+<span style="color: #ff0099">   50: </span>    <span style="color: #000099">// copying is implemented as aliasing</span>
+<span style="color: #ff0099">   51: </span>    <span style="color: #000000">IP_socket</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">IP_socket</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   52: </span>    <span style="color: #000000">IP_socket</span><span style="color: #330033">&amp;</span> <span style="color: #990000">operator</span><span style="color: #330033">=</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">IP_socket</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   53: </span>
+<span style="color: #ff0099">   54: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   55: </span>    <span style="color: #000099">// initialisation</span>
+<span style="color: #ff0099">   56: </span>
+<span style="color: #ff0099">   57: </span>    <span style="color: #000099">// initialise the socket</span>
+<span style="color: #ff0099">   58: </span>    <span style="color: #000099">// - type: create either a TCP or UDP socket</span>
+<span style="color: #ff0099">   59: </span>    <span style="color: #000099">// - returns success status</span>
+<span style="color: #ff0099">   60: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">initialise</span><span style="color: #330033">(</span><span style="color: #000000">IP_socket_type</span> <span style="color: #000000">type</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   61: </span>
+<span style="color: #ff0099">   62: </span>    <span style="color: #000099">// test whether this is an initialised socket</span>
+<span style="color: #ff0099">   63: </span>    <span style="color: #000099">// - returns whether this is initialised</span>
+<span style="color: #ff0099">   64: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">initialised</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   65: </span>
+<span style="color: #ff0099">   66: </span>    <span style="color: #000099">// close, i.e. disconnect the socket</span>
+<span style="color: #ff0099">   67: </span>    <span style="color: #000099">// - returns a success flag</span>
+<span style="color: #ff0099">   68: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">close</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   69: </span>
+<span style="color: #ff0099">   70: </span>    <span style="color: #000099">//////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   71: </span>    <span style="color: #000099">// Socket configuration</span>
+<span style="color: #ff0099">   72: </span>
+<span style="color: #ff0099">   73: </span>    <span style="color: #000099">// function for performing IP lookup (i.e. gethostbyname)</span>
+<span style="color: #ff0099">   74: </span>    <span style="color: #000099">// could be standalone but making it a member means that it can use the socket's error handler</span>
+<span style="color: #ff0099">   75: </span>    <span style="color: #000099">// i.e. if this fails, the sockets error code will be set - clear it to use the socket again</span>
+<span style="color: #ff0099">   76: </span>    <span style="color: #000099">// - remote_address: IP name (stlplus.sourceforge.net) or dotted number (216.34.181.96)</span>
+<span style="color: #ff0099">   77: </span>    <span style="color: #000099">// - returns the IP address as a long integer - zero if there's an error</span>
+<span style="color: #ff0099">   78: </span>    <span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">ip_lookup</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">remote_address</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   79: </span>
+<span style="color: #ff0099">   80: </span>    <span style="color: #000099">// test whether a socket is ready to communicate</span>
+<span style="color: #ff0099">   81: </span>    <span style="color: #000099">// - readable: test whether socket is ready to read</span>
+<span style="color: #ff0099">   82: </span>    <span style="color: #000099">// - writeable: test whether a socket is ready to write</span>
+<span style="color: #ff0099">   83: </span>    <span style="color: #000099">// - timeout: if socket is not ready, time to wait before giving up - in micro-seconds - 0 means don't wait</span>
+<span style="color: #ff0099">   84: </span>    <span style="color: #000099">// returns false if not ready or error - use error() method to tell - true if ready</span>
+<span style="color: #ff0099">   85: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">select</span><span style="color: #330033">(</span><span style="color: #990000">bool</span> <span style="color: #000000">readable</span><span style="color: #330033">,</span> <span style="color: #990000">bool</span> <span style="color: #000000">writeable</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #000000">timeout</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   86: </span>
+<span style="color: #ff0099">   87: </span>    <span style="color: #000099">// bind the socket to a port so that it can receive from specific address - typically used by a client</span>
+<span style="color: #ff0099">   88: </span>    <span style="color: #000099">// - remote_address: IP number of remote server to send/receive to/from</span>
+<span style="color: #ff0099">   89: </span>    <span style="color: #000099">// - local_port: port on local machine to bind to the address</span>
+<span style="color: #ff0099">   90: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">   91: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">bind</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">remote_address</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">local_port</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   92: </span>
+<span style="color: #ff0099">   93: </span>    <span style="color: #000099">// bind the socket to a port so that it can receive from any address - typically used by a server</span>
+<span style="color: #ff0099">   94: </span>    <span style="color: #000099">// - local_port: port on local machine to bind to the address</span>
+<span style="color: #ff0099">   95: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">   96: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">bind_any</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">local_port</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   97: </span>
+<span style="color: #ff0099">   98: </span>    <span style="color: #000099">// set this socket up to be a listening port</span>
+<span style="color: #ff0099">   99: </span>    <span style="color: #000099">// socket must be bound to a port already</span>
+<span style="color: #ff0099">  100: </span>    <span style="color: #000099">// - queue: length of backlog queue to manage - may be zero meaning no queue</span>
+<span style="color: #ff0099">  101: </span>    <span style="color: #000099">// - returns success status</span>
+<span style="color: #ff0099">  102: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">listen</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">queue</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  103: </span>
+<span style="color: #ff0099">  104: </span>    <span style="color: #000099">// test for a connection on the socket</span>
+<span style="color: #ff0099">  105: </span>    <span style="color: #000099">// only applicable if it has been set up as a listening port</span>
+<span style="color: #ff0099">  106: </span>    <span style="color: #000099">// - timeout: how long to wait in microseconds if not connected yet</span>
+<span style="color: #ff0099">  107: </span>    <span style="color: #000099">// - returns true if a connection is ready to be accepted</span>
+<span style="color: #ff0099">  108: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">accept_ready</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #000000">timeout</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  109: </span>
+<span style="color: #ff0099">  110: </span>    <span style="color: #000099">// accept a connection on the socket</span>
+<span style="color: #ff0099">  111: </span>    <span style="color: #000099">// only applicable if it has been set up as a listening port</span>
+<span style="color: #ff0099">  112: </span>    <span style="color: #000099">// - returns the connection as a new socket</span>
+<span style="color: #ff0099">  113: </span>    <span style="color: #000000">IP_socket</span> <span style="color: #000000">accept</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  114: </span>
+<span style="color: #ff0099">  115: </span>    <span style="color: #000099">// create a connection - usually used by a client</span>
+<span style="color: #ff0099">  116: </span>    <span style="color: #000099">// TCP: client connect to a remote server</span>
+<span style="color: #ff0099">  117: </span>    <span style="color: #000099">// UDP: setup remote address and port for sends</span>
+<span style="color: #ff0099">  118: </span>    <span style="color: #000099">// - remote_address: IP number already looked up using ip_lookup</span>
+<span style="color: #ff0099">  119: </span>    <span style="color: #000099">// - remote_port: port to connect to</span>
+<span style="color: #ff0099">  120: </span>    <span style="color: #000099">// - returns a success flag</span>
+<span style="color: #ff0099">  121: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">connect</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">remote_address</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">remote_port</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  122: </span>
+<span style="color: #ff0099">  123: </span>    <span style="color: #000099">// test whether a socket is connected and ready to communicate, returns on successful connect or timeout</span>
+<span style="color: #ff0099">  124: </span>    <span style="color: #000099">// - timeout: how long to wait in microseconds if not connected yet</span>
+<span style="color: #ff0099">  125: </span>    <span style="color: #000099">// - returns true if connected and ready to communicate, false if not ready or error</span>
+<span style="color: #ff0099">  126: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">connected</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #000000">timeout</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  127: </span>
+<span style="color: #ff0099">  128: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  129: </span>    <span style="color: #000099">// sending/receiving</span>
+<span style="color: #ff0099">  130: </span>
+<span style="color: #ff0099">  131: </span>    <span style="color: #000099">// test whether a socket is connected and ready to send data, returns if ready or on timeout</span>
+<span style="color: #ff0099">  132: </span>    <span style="color: #000099">// - timeout: how long to wait in microseconds if not connected yet (blocking)</span>
+<span style="color: #ff0099">  133: </span>    <span style="color: #000099">// - returns status</span>
+<span style="color: #ff0099">  134: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">send_ready</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #000000">timeout</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  135: </span>
+<span style="color: #ff0099">  136: </span>    <span style="color: #000099">// send data through a connection-based (TCP) socket</span>
+<span style="color: #ff0099">  137: </span>    <span style="color: #000099">// if the data is long only part of it may be sent. The sent part is</span>
+<span style="color: #ff0099">  138: </span>    <span style="color: #000099">// removed from the data, so the same string can be sent again and again</span>
+<span style="color: #ff0099">  139: </span>    <span style="color: #000099">// until it is empty.</span>
+<span style="color: #ff0099">  140: </span>    <span style="color: #000099">// - data: string containing data to be sent - any data successfully sent is removed</span>
+<span style="color: #ff0099">  141: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  142: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">send</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  143: </span>
+<span style="color: #ff0099">  144: </span>    <span style="color: #000099">// send data through a connectionless (UDP) socket</span>
+<span style="color: #ff0099">  145: </span>    <span style="color: #000099">// the data will be sent as a single packet</span>
+<span style="color: #ff0099">  146: </span>    <span style="color: #000099">// - packet: string containing data to be sent - any data successfully sent is removed</span>
+<span style="color: #ff0099">  147: </span>    <span style="color: #000099">// - remote_address: address of the remote host to send to - optional if the socket has been connected to remote</span>
+<span style="color: #ff0099">  148: </span>    <span style="color: #000099">// - remote_port: port of the remote host to send to - optional if the socket has been connected to remote</span>
+<span style="color: #ff0099">  149: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  150: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">send_packet</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">packet</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">remote_address</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">remote_port</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  151: </span>
+<span style="color: #ff0099">  152: </span>    <span style="color: #000099">// send data through a connectionless (UDP) socket</span>
+<span style="color: #ff0099">  153: </span>    <span style="color: #000099">// the data will be sent as a single packet</span>
+<span style="color: #ff0099">  154: </span>    <span style="color: #000099">// only works if the socket has been connected to remote</span>
+<span style="color: #ff0099">  155: </span>    <span style="color: #000099">// - packet: string containing data to be sent - any data successfully sent is removed</span>
+<span style="color: #ff0099">  156: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  157: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">send_packet</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">packet</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  158: </span>
+<span style="color: #ff0099">  159: </span>    <span style="color: #000099">// test whether a socket is connected and ready to receive data, returns if ready or on timeout</span>
+<span style="color: #ff0099">  160: </span>    <span style="color: #000099">// - timeout: how long to wait in microseconds if not connected yet (blocking)</span>
+<span style="color: #ff0099">  161: </span>    <span style="color: #000099">// - returns status</span>
+<span style="color: #ff0099">  162: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">receive_ready</span><span style="color: #330033">(</span><span style="color: #990000">unsigned</span> <span style="color: #000000">wait</span> <span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  163: </span>
+<span style="color: #ff0099">  164: </span>    <span style="color: #000099">// receive data through a connection-based (TCP) socket</span>
+<span style="color: #ff0099">  165: </span>    <span style="color: #000099">// if the data is long only part of it may be received. The received data</span>
+<span style="color: #ff0099">  166: </span>    <span style="color: #000099">// is appended to the string, building it up in stages, so the same string</span>
+<span style="color: #ff0099">  167: </span>    <span style="color: #000099">// can be received again and again until all information has been</span>
+<span style="color: #ff0099">  168: </span>    <span style="color: #000099">// received.</span>
+<span style="color: #ff0099">  169: </span>    <span style="color: #000099">// - data: string receiving data from socket - any data successfully received is appended</span>
+<span style="color: #ff0099">  170: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  171: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">receive</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  172: </span>
+<span style="color: #ff0099">  173: </span>    <span style="color: #000099">// receive data through a connectionless (UDP) socket</span>
+<span style="color: #ff0099">  174: </span>    <span style="color: #000099">// - packet: string receiving data from socket - any data successfully received is appended</span>
+<span style="color: #ff0099">  175: </span>    <span style="color: #000099">// - remote_address: returns the address of the remote host received from</span>
+<span style="color: #ff0099">  176: </span>    <span style="color: #000099">// - remote_port: returns the port of the remote host received from</span>
+<span style="color: #ff0099">  177: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  178: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">receive_packet</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">packet</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">long</span><span style="color: #330033">&amp;</span> <span style="color: #000000">remote_address</span><span style="color: #330033">,</span> <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span><span style="color: #330033">&amp;</span> <span style="color: #000000">remote_port</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  179: </span>
+<span style="color: #ff0099">  180: </span>    <span style="color: #000099">// variant of above which does not give back the address and port of the sender</span>
+<span style="color: #ff0099">  181: </span>    <span style="color: #000099">// receive data through a connectionless (UDP) socket</span>
+<span style="color: #ff0099">  182: </span>    <span style="color: #000099">// - packet: string receiving data from socket - any data successfully received is appended</span>
+<span style="color: #ff0099">  183: </span>    <span style="color: #000099">// - returns success flag</span>
+<span style="color: #ff0099">  184: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">receive_packet</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">packet</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  185: </span>
+<span style="color: #ff0099">  186: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  187: </span>    <span style="color: #000099">// informational</span>
+<span style="color: #ff0099">  188: </span>
+<span style="color: #ff0099">  189: </span>    <span style="color: #000099">// gets the type of socket</span>
+<span style="color: #ff0099">  190: </span>    <span style="color: #000099">// - returns undefined_socket_type, TCP or UDP</span>
+<span style="color: #ff0099">  191: </span>    <span style="color: #000000">IP_socket_type</span> <span style="color: #000000">type</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  192: </span>
+<span style="color: #ff0099">  193: </span>    <span style="color: #000099">// the local port number of the connection</span>
+<span style="color: #ff0099">  194: </span>    <span style="color: #000099">// returns the port number, 0 if not bound to a port</span>
+<span style="color: #ff0099">  195: </span>    <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">local_port</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  196: </span>
+<span style="color: #ff0099">  197: </span>    <span style="color: #000099">// the remote address of the connection</span>
+<span style="color: #ff0099">  198: </span>    <span style="color: #000099">// returns the address, 0 if not connected</span>
+<span style="color: #ff0099">  199: </span>    <span style="color: #990000">unsigned</span> <span style="color: #990000">long</span> <span style="color: #000000">remote_address</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  200: </span>
+<span style="color: #ff0099">  201: </span>    <span style="color: #000099">// the remote port number of the connection</span>
+<span style="color: #ff0099">  202: </span>    <span style="color: #000099">// returns the port number, 0 if not connected to a port</span>
+<span style="color: #ff0099">  203: </span>    <span style="color: #990000">unsigned</span> <span style="color: #990000">short</span> <span style="color: #000000">remote_port</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  204: </span>
+<span style="color: #ff0099">  205: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  206: </span>    <span style="color: #000099">// error handling</span>
+<span style="color: #ff0099">  207: </span>    <span style="color: #000099">// errors are set internally</span>
+<span style="color: #ff0099">  208: </span>    <span style="color: #000099">// an error code of 0 is the test for no error, don't rely on the message being an empty string</span>
+<span style="color: #ff0099">  209: </span>    <span style="color: #000099">// an error code != 0 means an error, then there will be a message explaining the error</span>
+<span style="color: #ff0099">  210: </span>
+<span style="color: #ff0099">  211: </span>    <span style="color: #000099">// indicate an error - mostly used internally, you can set your own errors - use a negative code</span>
+<span style="color: #ff0099">  212: </span>    <span style="color: #990000">void</span> <span style="color: #000000">set_error</span> <span style="color: #330033">(</span><span style="color: #990000">int</span> <span style="color: #000000">error</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">message</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  213: </span>
+<span style="color: #ff0099">  214: </span>    <span style="color: #000099">// if an error is set it stays set - so you must clear it before further operations</span>
+<span style="color: #ff0099">  215: </span>    <span style="color: #990000">void</span> <span style="color: #000000">clear_error</span> <span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  216: </span>
+<span style="color: #ff0099">  217: </span>    <span style="color: #000099">// get the error code of the last error</span>
+<span style="color: #ff0099">  218: </span>    <span style="color: #990000">int</span> <span style="color: #000000">error</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  219: </span>
+<span style="color: #ff0099">  220: </span>    <span style="color: #000099">// get the explanatory message of the last error</span>
+<span style="color: #ff0099">  221: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">message</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  222: </span>
+<span style="color: #ff0099">  223: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">  224: </span>
+<span style="color: #ff0099">  225: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">  226: </span>    <span style="color: #990000">friend</span> <span style="color: #990000">class</span> <span style="color: #000000">IP_socket_internals</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  227: </span>    <span style="color: #000000">IP_socket_internals</span><span style="color: #330033">*</span> <span style="color: #000000">m_impl</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  228: </span>  <span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  229: </span>
+<span style="color: #ff0099">  230: </span>
+<span style="color: #ff0099">  231: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">  232: </span>
+<span style="color: #ff0099">  233: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
