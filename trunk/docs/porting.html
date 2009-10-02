@@ -89,6 +89,8 @@ theory.</p>
       <li>Debian</li>
       <li>RedHat</li>
       <li>Suse</li>
+      <li>Ubuntu</li>
+      <li>Cygwin (linux emulation on Windows)</li>
     </ul>
   </li>
   <li>other Unix
@@ -236,6 +238,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <colgroup>
 <col>
 <col>
+<col>
 </colgroup>
 
 <thead valign="top">
@@ -243,7 +246,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <tr>
 <th colspan="5">Platform</th>
 <th colspan="2">Build</th>
-<th colspan="2">State</th>
+<th colspan="3">State</th>
 </tr>
 
 <tr>
@@ -255,6 +258,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <th>Name</th>
 <th>-D<sup>1</sup></th>
 <th>Tested</th>
+<th>Passed</th>
 <th>Notes</th>
 </tr>
 
@@ -271,6 +275,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>LINUX-i686</code></td>
 <td><code></code></td>
 <td>2008-10-02</td>
+<td>21/21</td>
 <td>Uses pre-installed gcc to build a native Linux program</td>
 </tr>
 
@@ -283,6 +288,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
 <td>2008-12-16</td>
+<td></td>
 <td>Uses <a href="http://www.mingw.org/">MinGW</a> to build a native Windows program</td>
 </tr>
 
@@ -294,7 +300,8 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>4.4.0 (MinGW)</td>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
-<td>2009-05-26</td>
+<td>2009-10-02</td>
+<td>21/21</td>
 <td>Uses <a href="http://www.mingw.org/">MinGW</a> with gcc v4.4 to build a native Windows program</td>
 </tr>
 
@@ -306,7 +313,8 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>3.4.4 (Cygwin)</td>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
-<td>2009-05-26</td>
+<td>2009-10-02</td>
+<td>21/21</td>
 <td>Uses <a href="http://www.cygwin.com/">Cygwin</a> to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
@@ -319,6 +327,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
 <td>2009-05-26</td>
+<td></td>
 <td>Uses <a href="http://www.cygwin.com/">Cygwin</a> with the alpha-test version of gcc v4 to build a Unix-emulation program that runs on Windows</td>
 </tr>
 
@@ -331,6 +340,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code>CYGMING-i686</code></td>
 <td><code>CYGMING</code></td>
 <td>2009-05-26</td>
+<td></td>
 <td>Uses <a href="http://www.cygwin.com/">Cygwin</a> with the -mno-cygwin option to build a native
 Windows program. This option only works on some v3 gcc compilers and has been removed from v4.</td>
 </tr>
@@ -343,7 +353,8 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>6 (SP5)</td>
 <td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>2009-05-26</td>
+<td>2009-10-02</td>
+<td>21/21</td>
 <td>Visual Studio v6 (compiler v12) - must be patched to Service Pack 5</td>
 </tr>
 
@@ -356,6 +367,7 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>N/A</td>
 <td><code>_WIN32</code></td>
 <td>2009-01-15</td>
+<td></td>
 <td>Visual Studio v8 (compiler v14) (2005 Express Edition) - needs Platform SDK</td>
 </tr>
 
@@ -367,7 +379,8 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>9</td>
 <td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>2009-05-26</td>
+<td>2009-10-02</td>
+<td>21/21</td>
 <td><a href="http://www.microsoft.com/express/">Visual Studio v9 (compiler v15) (2008 Express Edition)</a></td>
 </tr>
 
@@ -380,6 +393,7 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>N/A</td>
 <td><code>_WIN32</code></td>
 <td>2009-05-26</td>
+<td></td>
 <td><a href="http://www.codegear.com/downloads/free/cppbuilder">Free C++ Builder version 5.5</a></td>
 </tr>
 
@@ -391,7 +405,8 @@ Windows program. This option only works on some v3 gcc compilers and has been re
 <td>5.8.2</td>
 <td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>2009-05-28</td>
+<td>2009-10-02</td>
+<td>21/21</td>
 <td><a href="http://www.turboexplorer.com/">Turbo C++ 2006 Explorer</a></td>
 </tr>
 
