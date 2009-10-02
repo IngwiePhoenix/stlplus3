@@ -77,3 +77,7 @@ cd ..
 cd tcp_test
 call bcc
 cd ..
+
+cd udp_test
+call bcc
+cd ..

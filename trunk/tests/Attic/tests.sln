@@ -41,6 +41,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple_ptr_test", "simple_p
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tcp_test", "tcp_test\tcp_test.vcproj", "{48C72171-2531-445C-AD3B-B2B60E55E161}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "udp_test", "udp_test\udp_test.vcproj", "{34546611-AC78-49FC-98B3-B0E7E831057C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -127,6 +129,10 @@ Global
 		{48C72171-2531-445C-AD3B-B2B60E55E161}.Debug|Win32.Build.0 = Debug|Win32
 		{48C72171-2531-445C-AD3B-B2B60E55E161}.Release|Win32.ActiveCfg = Release|Win32
 		{48C72171-2531-445C-AD3B-B2B60E55E161}.Release|Win32.Build.0 = Release|Win32
+		{34546611-AC78-49FC-98B3-B0E7E831057C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34546611-AC78-49FC-98B3-B0E7E831057C}.Debug|Win32.Build.0 = Debug|Win32
+		{34546611-AC78-49FC-98B3-B0E7E831057C}.Release|Win32.ActiveCfg = Release|Win32
+		{34546611-AC78-49FC-98B3-B0E7E831057C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

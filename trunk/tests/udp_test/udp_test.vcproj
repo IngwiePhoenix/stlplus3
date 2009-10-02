@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="udp_test"
-	ProjectGUID="{48C72171-2531-445C-AD3B-B2B60E55E161}"
+	ProjectGUID="{34546611-AC78-49FC-98B3-B0E7E831057C}"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>
