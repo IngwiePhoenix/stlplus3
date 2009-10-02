@@ -1,4 +1,4 @@
-IMAGE     := tcp_test
+IMAGE     := udp_test
 LIBRARIES := ../../strings ../../portability
 include ../../../makefiles/gcc.mak
 
