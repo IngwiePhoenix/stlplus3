@@ -1,5 +1,5 @@
 IMAGE     := dynaload_test
-LIBRARIES := ../../portability
+LIBRARIES := ../../source ../../portability
 include ../../../makefiles/gcc.mak
 ifeq ($(PLATFORM),LINUX)
 LDFLAGS += -ldl

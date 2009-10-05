@@ -1,5 +1,5 @@
 IMAGE     := tcp_test
-LIBRARIES := ../../strings ../../portability
+LIBRARIES := ../../source ../../strings ../../portability
 include ../../../makefiles/gcc.mak
 
 
