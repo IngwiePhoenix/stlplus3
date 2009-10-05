@@ -18,8 +18,7 @@ goto :EOF
 :: Execute a test.
 :: %1 is the name of the test folder.
 :: The test executable and the folder must
-:: have the same name.  Pause if the test
-:: failed.
+:: have the same name.
 ::
 :test_case
 set original=%cd%
