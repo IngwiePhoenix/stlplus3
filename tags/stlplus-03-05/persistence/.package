@@ -1,0 +1,6 @@
+Makefile
+persistence.dsp
+persistence.vcproj
+*.hpp
+*.tpp
+*.cpp

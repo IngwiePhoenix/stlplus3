@@ -1,0 +1,11 @@
+README.txt
+make_monolithic
+make_monolithic.bat
+unmake_monolithic
+unmake_monolithic.bat
+Makefile
+stlplus3.sln
+stlplus3.vcproj
+stlplus3.dsw
+stlplus3.dsp
+stlplus3.header
