@@ -1,83 +1,35 @@
-cd bitset_test
-call bcc
-cd ..
+@echo off
+setlocal
 
-cd bool_vector_test
-call bcc
-cd ..
+set bcc_pass=0
+set bcc_fail=0
+set fail_names=
 
-cd callback_test
-call bcc
-cd ..
+echo ##################################################
 
-cd cstring_test
-call bcc
-cd ..
+for /d %%a in (*) do (
+  if /i %%a neq CVS call :bcc_folder %%a
+)
 
-cd deque_test
-call bcc
-cd ..
+echo Compilations completed: %bcc_pass%
+echo Compilations failed: %bcc_fail% (%fail_names% )
+echo ##################################################
+goto :EOF
 
-cd digraph_test
+:: Execute a bcc compilation script in a subfolder
+:: %1 is the name of the folder.
+::
+:bcc_folder
+set original=%cd%
+cd %1
 call bcc
-cd ..
-
-cd dynaload_test
-call bcc
-cd ..
-
-cd hash_test
-call bcc
-cd ..
-
-cd inf_test
-call bcc
-cd ..
-
-cd ini_manager_test
-call bcc
-cd ..
-
-cd interface_test
-call bcc
-cd ..
-
-cd list_test
-call bcc
-cd ..
-
-cd map_test
-call bcc
-cd ..
-
-cd matrix_test
-call bcc
-cd ..
-
-cd ntree_test
-call bcc
-cd ..
-
-cd set_test
-call bcc
-cd ..
-
-cd smart_ptr_test
-call bcc
-cd ..
-
-cd simple_ptr_test
-call bcc
-cd ..
-
-cd string_test
-call bcc
-cd ..
-
-cd tcp_test
-call bcc
-cd ..
-
-cd udp_test
-call bcc
-cd ..
+if ERRORLEVEL 1 (
+  echo ERROR in %1.exe
+  set /a bcc_fail=bcc_fail+1
+  set fail_names=%fail_names% %1
+) else (
+  set /a bcc_pass=bcc_pass+1
+)
+echo ##################################################
+cd /d %original%
+goto :EOF
