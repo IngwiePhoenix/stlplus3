@@ -43,6 +43,7 @@ C++ Library Collection
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.5">Changes from Version 3.4 to 3.5</a></li>
 <li class="internal"><a href="#v3.4">Changes from Version 3.3 to 3.4</a></li>
 <li class="internal"><a href="#v3.3">Changes from Version 3.2 to 3.3</a></li>
 <li class="internal"><a href="#v3.2">Changes from Version 3.1 to 3.2</a></li>
@@ -60,6 +61,81 @@ for this version are huge. Therefore only the changes since then have been docum
 <p>The official open-source version of STLplus starts at version 2.0 and you can access the change
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+
+<h2 id="v3.5">Changes from Version 3.4 to 3.5</h2>
+
+<h3>Added monolithic build option</h3>
+
+<p>You can now merge the libraries together into one large library - known as a monolithic build of
+STLplus. The simplest way of doing this is to use a shell - DOS shell on Windows, bash shell on
+Linux or other Unix - and cd to the <code>stlplus3/source</code> directory. There, run the script
+<code>make_monolithic</code>. This copies all of the source code into the directory. Then you will
+find there are alternative project files and build scripts in the source directory to allow you to
+use STLplus as a monolithic library.</p>
+
+<h3>Re-added simple_ptr</h3>
+
+<p>The simple_ptr variants of the smart_ptr classes were originally in v2 of STLplus but were not
+added to v3 because I was unsure whether to have two different ways of doing the same thing
+(something I do not generally agree with). However, the author (Dan Milton) has convinced me that
+they should be in the library because they are sufficiently different from smart_ptr.</p>
+
+<p>The simple_ptr classes have been rewritten in the same style as smart_ptr and share the same set
+of copy functors to implement the copy/clone/nocopy semantics. To achieve this, the copy functors
+have been factored out into the header copy_functors.hpp.</p>
+
+<p>Support functions for simple_ptr classes have been added to the persistence and strings libraries.</p>
+
+<h3>Reduced the number of disabled warnings for the Borland compiler</h3>
+
+<p>It has been reported that some of the pragmas in, for example containers_fixes.hpp which disable
+warnings in Borland compilers are now unnecessary. I have reduced this to a set of two:</p>
+
+<dl>
+<dt>8026</dt><dd>Functions with exception specifications are not expanded inline</dd>
+<dt>8027</dt><dd>Functions with xxx are not expanded inline</dd>
+</dl>
+
+<p>These fit into the category of warnings you cannot get rid of which erroneously suggest there is
+a problem in STLplus when the problem is in the compiler. I dislike such warnings which raise false
+alarms, so they will remain disabled.</p>
+
+<h3>Added hash::erase(iterator)</h3>
+
+<p>This method, which allows a hash element to be erased via its iterator, has been added for
+compatibility with std::map.</p>
+
+<h3>Re-added hash::debug_report()</h3>
+
+<p>This function was present in STLplus v2, but was removed temporarily due to the removal of TextIO
+from STLplus. The intention was to re-add it soon after by porting the function to use IOStreams,
+but it got fogotten in the changeover. It has now been re-added, ported to IOStreams.</p>
+
+<h3>Fixed bug in smart_ptr</h3>
+
+<p>There was a bug reported in smart_ptr whereby a gcc-compiled application would crash due to a
+missing assignment operator in the baseclass smart_ptr_base. This bug was introduced in smart_ptr's
+redesign for STLplus v3.0 when the common base class was introduced.</p>
+
+<h3>Rework of Internet Sockets</h3>
+
+<p>Previous versions of STLplus had an object-oriented interface to TCP sockets, that is sockets
+which have been configured for TCP communications. This subsystem (part of portability) has been
+redesigned to provide three subsystems:</p>
+
+<dl>
+<dt>ip_sockets.hpp</dt>
+<dd>This is a low-level subsystem that provides an object-orientated and platform independent
+interface to IP (Internet Protocol) sockets. It hides the ugly C interface of sockets and the
+platform-specifics. However, it is not really intended to be used directly (though it can), so it is
+not documented separately. Instead it is the base class for the TCP and UDP interfaces.</dd>
+<dt>tcp_sockets.hpp</dt>
+<dd>This is the TCP sockets interface that used to be part of STLplus, completely rewritten to use
+the ip_sockets layer but providing the same interface as before.</dd>
+<dt>udp_sockets.hpp</dt>
+<dd>This is a new interface to UDP sockets. UDP is a simpler, faster protocol to TCP and is used for
+many streaming applications. It is implemented using the ip_sockets layer.</dd>
+</dl>
 
 <h2 id="v3.4">Changes from Version 3.3 to 3.4</h2>
 
