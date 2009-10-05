@@ -45,6 +45,7 @@ C++ Library Collection
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
 <li class="internal"><a href="#dependencies">Dependencies</a></li>
+<li class="internel"><a href="#monolithic">Monolithic Build</a></li>
 <li class="internal"><a href="#makefiles">Gnu Gcc Using Supplied Makefiles</a></li>
 <li class="internal"><a href="#microsoft">Microsoft Visual Studio Using Supplied Workspace</a></li>
 <li class="internal"><a href="#general">General Guidelines for Building STLplus</a></li>
@@ -124,6 +125,18 @@ dependency on the portability library. All features provided by the inf type wil
 portability library stand-alone, build it with these compiler directives. The same directives must
 also be used to build any file in your program that includes headers from the library. The
 simplest way to do this is to enable the directives for the whole project.</p>
+
+<h2 id="monolithic">Monolithic Build</h2>
+
+<p>You can merge the libraries together into one large library - known as a monolithic build of
+STLplus. The simplest way of doing this is to use a shell - DOS shell on Windows, bash shell on
+Linux or other Unix - and cd to the <code>stlplus3/source</code> directory. There, run the script
+<code>make_monolithic</code>. This copies all of the source code into the directory. Then you will
+find there are alternative project files and build scripts in the source directory to allow you to
+use STLplus as a monolithic library.</p>
+
+<p>The rest of the documentation is based on the assumption that you are using STLplus as a library
+collection, but should be easy to relate to the us of the monolithic build instead.</p>
 
 <h2 id="makefiles">Gnu Gcc Using My Makefiles</h2>
 
