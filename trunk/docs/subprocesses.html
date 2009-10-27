@@ -401,6 +401,7 @@ public:
 
   void add_variable(const std::string&amp; name, const std::string&amp; value);
   bool remove_variable(const std::string&amp; name);
+  const env_vector&amp; get_variables(void) const;
 
   bool spawn(const std::string&amp; path, const stlplus::arg_vector&amp; argv,
              bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
@@ -628,6 +629,7 @@ public:
 
   void add_variable(const std::string&amp; name, const std::string&amp; value);
   bool remove_variable(const std::string&amp; name);
+  const env_vector&amp; get_variables(void) const;
 
   bool spawn(const std::string&amp; path, const stlplus::arg_vector&amp; argv,
              bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
