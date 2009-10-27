@@ -6,7 +6,7 @@
 //   Copyright: (c) Southampton University 1999-2004
 //              (c) Andy Rushton           2004-2009
 //   License:   BSD License, see ../docs/license.html
-  
+
 //   Platform-independent wrapper around the very platform-specific handling of
 //   subprocesses. Uses the C++ convention that all resources must be contained in
 //   an object so that when a subprocess object goes out of scope the subprocess
@@ -174,6 +174,7 @@ namespace stlplus
 
     void add_variable(const std::string& name, const std::string& value);
     bool remove_variable(const std::string& name);
+    const env_vector& get_variables(void) const;
 
     bool spawn(const std::string& path, const arg_vector& argv,
                bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
@@ -245,6 +246,7 @@ namespace stlplus
 
     void add_variable(const std::string& name, const std::string& value);
     bool remove_variable(const std::string& name);
+    const env_vector& get_variables(void) const;
 
     bool spawn(const std::string& path, const arg_vector& argv,
                bool connect_stdin = false, bool connect_stdout = false, bool connect_stderr = false);
