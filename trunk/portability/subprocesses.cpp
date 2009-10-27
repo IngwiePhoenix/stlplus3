@@ -129,7 +129,7 @@ namespace stlplus
         // set of characters requiring escapes
 #ifdef MSWINDOWS
 #else
-      case '\\': case '\'': case '\"': case '`': case '(': case ')': 
+      case '\\': case '\'': case '\"': case '`': case '(': case ')':
       case '&': case '|': case '<': case '>': case '*': case '?': case '!':
         result += '\\';
         result += arg[i];
@@ -749,6 +749,11 @@ namespace stlplus
     return m_env.remove(name);
   }
 
+  const env_vector& subprocess::get_variables(void) const
+  {
+  	return m_env;
+  }
+
 #ifdef MSWINDOWS
 
   bool subprocess::spawn(const std::string& path, const arg_vector& argv,
@@ -1332,6 +1337,7 @@ namespace stlplus
     std::vector<std::string> result;
     // convert the raw text into a vector of strings, each corresponding to a line
     // in the process, strip out platform-specific line-endings
+    result.push_back(std::string());
     for (unsigned i = 0; i < m_text.size(); i++)
     {
       // handle any kind of line-ending - Dos, Unix or MacOS
@@ -1460,6 +1466,11 @@ namespace stlplus
   bool async_subprocess::remove_variable(const std::string& name)
   {
     return m_env.remove(name);
+  }
+
+  const env_vector& async_subprocess::get_variables(void) const
+  {
+  	return m_env;
   }
 
 #ifdef MSWINDOWS
