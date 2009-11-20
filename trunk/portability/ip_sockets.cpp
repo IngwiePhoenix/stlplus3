@@ -27,6 +27,7 @@
 #define EWOULDBLOCK WSAEWOULDBLOCK
 #define ECONNRESET WSAECONNRESET
 #define SOCKLEN_T int
+#define SEND_FLAGS 0
 #else
 // Generic Unix includes
 // fix for older versions of Darwin?
@@ -47,6 +48,7 @@
 #define IOCTL ::ioctl
 #define CLOSE ::close
 #define SOCKLEN_T socklen_t
+#define SEND_FLAGS MSG_NOSIGNAL
 #ifdef SOLARIS
 // Sun put some definitions in a different place
 #include <sys/filio.h>
@@ -495,7 +497,7 @@ namespace stlplus
       {
         if (!initialised()) return false;
         // send the data - this will never block but may not send all the data
-        int bytes = ::send(m_socket, data.c_str(), data.size(), 0);
+        int bytes = ::send(m_socket, data.c_str(), data.size(), SEND_FLAGS);
         if (bytes == SOCKET_ERROR)
         {
           set_error(ERRNO);
@@ -514,13 +516,13 @@ namespace stlplus
         int bytes = 0;
         if (!address)
         {
-          bytes = ::send(m_socket, data.c_str(), data.size(), 0);
+          bytes = ::send(m_socket, data.c_str(), data.size(), SEND_FLAGS);
         }
         else
         {
           sockaddr saddress;
           convert_address(address, port, saddress);
-          bytes = ::sendto(m_socket, data.c_str(), data.size(), 0, &saddress, sizeof(saddress));
+          bytes = ::sendto(m_socket, data.c_str(), data.size(), SEND_FLAGS, &saddress, sizeof(saddress));
         }
         if (bytes == SOCKET_ERROR)
         {
