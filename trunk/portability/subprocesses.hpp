@@ -167,6 +167,7 @@ namespace stlplus
     env_vector m_env;
     int m_err;
     int m_status;
+    void set_error(int);
 
   public:
     subprocess(void);
