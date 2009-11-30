@@ -739,6 +739,11 @@ namespace stlplus
 
 #endif
 
+  void subprocess::set_error(int e)
+  {
+    m_err = e;
+  }
+
   void subprocess::add_variable(const std::string& name, const std::string& value)
   {
     m_env.add(name, value);
@@ -810,7 +815,7 @@ namespace stlplus
     if (connect_stderr) CloseHandle(parent_stderr);
     if (!created)
     {
-      m_err = GetLastError();
+      set_error(GetLastError());
       close_stdin();
       close_stdout();
       close_stderr();
@@ -838,7 +843,7 @@ namespace stlplus
       DWORD exit_status = 0;
       if (!GetExitCodeProcess(m_pid.hProcess, &exit_status))
       {
-        m_err = GetLastError();
+        set_error(GetLastError());
         result = false;
       }
       else if (exit_status != 0)
@@ -862,15 +867,18 @@ namespace stlplus
 
     int stdin_pipe [2] = {-1, -1};
     if (connect_stdin)
-      pipe(stdin_pipe);
+      if (::pipe(stdin_pipe) != 0)
+        set_error(errno);
 
     int stdout_pipe [2] = {-1, -1};
     if (connect_stdout)
-      pipe(stdout_pipe);
+      if (::pipe(stdout_pipe) != 0)
+        set_error(errno);
 
     int stderr_pipe [2] = {-1, -1};
     if (connect_stderr)
-      pipe(stderr_pipe);
+      if (::pipe(stderr_pipe) != 0)
+        set_error(errno);
 
     // now create the subprocess
     // In Unix, this is done by forking (creating two copies of the parent), then overwriting the child copy using exec
@@ -878,7 +886,7 @@ namespace stlplus
     switch(m_pid)
     {
     case -1:   // failed to fork
-      m_err = errno;
+      set_error(errno);
       if (connect_stdin)
       {
         ::close(stdin_pipe[0]);
@@ -903,17 +911,17 @@ namespace stlplus
       if (connect_stdin)
       {
         ::close(stdin_pipe[1]);
-        dup2(stdin_pipe[0],STDIN_FILENO);
+        ::dup2(stdin_pipe[0],STDIN_FILENO);
       }
       if (connect_stdout)
       {
         ::close(stdout_pipe[0]);
-        dup2(stdout_pipe[1],STDOUT_FILENO);
+        ::dup2(stdout_pipe[1],STDOUT_FILENO);
       }
       if (connect_stderr)
       {
         ::close(stderr_pipe[0]);
-        dup2(stderr_pipe[1],STDERR_FILENO);
+        ::dup2(stderr_pipe[1],STDERR_FILENO);
       }
       execve(path.c_str(), argv.argv(), m_env.envp());
       // will only ever get here if the exec() failed completely - *must* now exit the child process
@@ -1004,7 +1012,7 @@ namespace stlplus
     close_stderr();
     if (!TerminateJobObject(m_job, (UINT)-1))
     {
-      m_err = GetLastError();
+      set_error(GetLastError());
       return false;
     }
     return true;
@@ -1020,7 +1028,7 @@ namespace stlplus
     close_stderr();
     if (::kill(m_pid, SIGINT) == -1)
     {
-      m_err = errno;
+      set_error(errno);
       return false;
     }
     return true;
@@ -1037,7 +1045,7 @@ namespace stlplus
     DWORD bytes = 0;
     if (!WriteFile(m_child_in, buffer.c_str(), (DWORD)buffer.size(), &bytes, 0))
     {
-      m_err = GetLastError();
+      set_error(GetLastError());
       close_stdin();
       return -1;
     }
@@ -1056,7 +1064,7 @@ namespace stlplus
     int bytes = write(m_child_in, buffer.c_str(), buffer.size());
     if (bytes == -1)
     {
-      m_err = errno;
+      set_error(errno);
       close_stdin();
       return -1;
     }
@@ -1079,7 +1087,7 @@ namespace stlplus
     if (!ReadFile(m_child_out, tmp, buffer_size, &bytes, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
-        m_err = GetLastError();
+        set_error(GetLastError());
       close_stdout();
       delete[] tmp;
       return -1;
@@ -1106,7 +1114,7 @@ namespace stlplus
     int bytes = read(m_child_out, tmp, buffer_size);
     if (bytes == -1)
     {
-      m_err = errno;
+      set_error(errno);
       close_stdout();
       delete[] tmp;
       return -1;
@@ -1136,7 +1144,7 @@ namespace stlplus
     if (!ReadFile(m_child_err, tmp, buffer_size, &bytes, 0))
     {
       if (GetLastError() != ERROR_BROKEN_PIPE)
-        m_err = GetLastError();
+        set_error(GetLastError());
       close_stderr();
       delete[] tmp;
       return -1;
@@ -1163,7 +1171,7 @@ namespace stlplus
     int bytes = read(m_child_err, tmp, buffer_size);
     if (bytes == -1)
     {
-      m_err = errno;
+      set_error(errno);
       close_stderr();
       delete[] tmp;
       return -1;
@@ -1268,7 +1276,7 @@ namespace stlplus
 
   std::string subprocess::error_text(void) const
   {
-    if (m_err == 0) return std::string();
+    if (!error()) return std::string();
     char* message;
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
                   0,
@@ -1290,7 +1298,7 @@ namespace stlplus
 
   std::string subprocess::error_text(void) const
   {
-    if (m_err == 0) return std::string();
+    if (!error()) return std::string();
     char* text = strerror(m_err);
     if (text) return std::string(text);
     return "error number " + dformat("%d",m_err);
@@ -1554,15 +1562,18 @@ namespace stlplus
 
     int stdin_pipe [2] = {-1, -1};
     if (connect_stdin)
-      pipe(stdin_pipe);
+      if (::pipe(stdin_pipe) != 0)
+        set_error(errno);
 
     int stdout_pipe [2] = {-1, -1};
     if (connect_stdout)
-      pipe(stdout_pipe);
+      if (::pipe(stdout_pipe) != 0)
+        set_error(errno);
 
     int stderr_pipe [2] = {-1, -1};
     if (connect_stderr)
-      pipe(stderr_pipe);
+      if (::pipe(stderr_pipe) != 0)
+        set_error(errno);
 
     // now create the subprocess
     // In Unix, this is done by forking (creating two copies of the parent), then overwriting the child copy using exec
@@ -1595,22 +1606,22 @@ namespace stlplus
       if (connect_stdin)
       {
         ::close(stdin_pipe[1]);
-        dup2(stdin_pipe[0],STDIN_FILENO);
+        ::dup2(stdin_pipe[0],STDIN_FILENO);
       }
       if (connect_stdout)
       {
         ::close(stdout_pipe[0]);
-        dup2(stdout_pipe[1],STDOUT_FILENO);
+        ::dup2(stdout_pipe[1],STDOUT_FILENO);
       }
       if (connect_stderr)
       {
         ::close(stderr_pipe[0]);
-        dup2(stderr_pipe[1],STDERR_FILENO);
+        ::dup2(stderr_pipe[1],STDERR_FILENO);
       }
-      execve(path.c_str(), argv.argv(), m_env.envp());
+      ::execve(path.c_str(), argv.argv(), m_env.envp());
       // will only ever get here if the exec() failed completely - *must* now exit the child process
       // by using errno, the parent has some chance of diagnosing the cause of the problem
-      exit(errno);
+      ::exit(errno);
     }
     break;
     default:  // in parent
@@ -2048,7 +2059,7 @@ namespace stlplus
 
   std::string async_subprocess::error_text(void) const
   {
-    if (m_err == 0) return std::string();
+    if (!error()) return std::string();
     char* message;
     FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
                   0,
@@ -2070,7 +2081,7 @@ namespace stlplus
 
   std::string async_subprocess::error_text(void) const
   {
-    if (m_err == 0) return std::string();
+    if (!error()) return std::string();
     char* text = strerror(m_err);
     if (text) return std::string(text);
     return "error number " + dformat("%d",m_err);
