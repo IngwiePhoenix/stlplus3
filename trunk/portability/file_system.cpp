@@ -707,8 +707,13 @@ namespace stlplus
     return std::string(_fullpath(abspath, ".", MAX_PATH+1));
 #else
     char pathname [MAXPATHLEN+1];
-    getcwd(pathname,MAXPATHLEN+1);
-    return std::string(pathname);
+    char* result = getcwd(pathname,MAXPATHLEN+1);
+    if (!result)
+    {
+      // should really report the error from errno
+      return std::string();
+    }
+    return std::string(result);
 #endif
   }
 
