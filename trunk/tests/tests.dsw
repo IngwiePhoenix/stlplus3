@@ -276,6 +276,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "subprocess_test"=.\subprocess_test\subprocess_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name debugging
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "tcp_test"=.\tcp_test\tcp_test.dsp - Package Owner=<4>
 
 Package=<5>
