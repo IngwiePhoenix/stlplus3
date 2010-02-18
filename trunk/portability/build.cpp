@@ -5,6 +5,8 @@
 //              (c) Andy Rushton           2004-2009
 //   License:   BSD License, see ../docs/license.html
 
+// report the platform-specific details of this build
+
 ////////////////////////////////////////////////////////////////////////////////
 #include "build.hpp"
 #include "version.hpp"
@@ -14,46 +16,72 @@
 namespace stlplus
 {
 
-  ////////////////////////////////////////////////////////////////////////////////
-  // report the platform-specific details of this build
-
-  std::string build(void)
+  // STLplus version in the form "STLplus v3.0" - see version.hpp for a way of getting just the version number
+  std::string stlplus_version(void)
   {
-    ////////////////////////////////////////////////////////////////////////////////
-    // work out the platform
+    return std::string("STLplus v") + version();
+  }
 
-#ifdef _WIN32
-    std::string platform("Windows");
+  // platform is the target operating system in the form "Windows" or "Generic Unix"
+  std::string platform(void)
+  {
+#if defined _WIN32
+    return std::string("Windows");
 #else
     // at present there are no variations between different Unix platforms so
     // they all map onto the generic Unix platform
-    std::string platform("Generic Unix");
+    return std::string("Generic Unix");
 #endif
+  }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // work out the compiler
-
+  // compiler_name is the short name of the compiler, e.g. "gcc" or "MSVC"
+  std::string compiler_name(void)
+  {
 #if defined __GNUC__
-    std::string compiler(dformat("gcc v%s",__VERSION__));
+    return std::string("gcc");
 #elif defined _MSC_VER
-    std::string compiler(dformat("MSVC v%0.2f",((float)_MSC_VER)/100.0));
+    return std::string("MSVC");
 #elif defined __BORLANDC__
-    std::string compiler(dformat("Borland v%d.%d",__BORLANDC__/256,__BORLANDC__/16%16));
+    return std::string("Borland");
 #else
-    std::string compiler("unknown compiler");
+    return std::string("unknown compiler");
 #endif
+  }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // work out the kind of build
-    // there are two variants - debug and release
+  // compiler_version is the version string of the compiler e.g. "3.4" for gcc or "15.00" for MSVC
+  std::string compiler_version(void)
+  {
+#if defined __GNUC__
+    return dformat("%d.%d.%d",__GNUC__,__GNUC_MINOR__,__GNUC_PATCHLEVEL__);
+#elif defined _MSC_VER
+    return dformat("%0.2f",((float)_MSC_VER)/100.0);
+#elif defined __BORLANDC__
+    return dformat("%d.%d.%d",__BORLANDC__/256,__BORLANDC__/16%16,__BORLANDC__%16);
+#else
+    return std::string();
+#endif
+  }
 
+  // compiler is the compilation system and version above combined into a human- readable form e.g. "gcc v3.4"
+  std::string compiler(void)
+  {
+    return compiler_name() + std::string(" v") + compiler_version();
+  }
+
+  // variant is the kind of build - "debug" or "release"
+  std::string variant(void)
+  {
 #ifndef NDEBUG
-    std::string variant("debug");
+    return std::string("debug");
 #else
-    std::string variant("release");
+    return std::string("release");
 #endif
 
-    return std::string("STLplus v") + version() + ", " + platform + ", " + compiler + ", " + variant;
+  }
+
+  std::string build(void)
+  {
+    return stlplus_version() + ", " + platform() + ", " + compiler() + ", " + variant();
   }
 
 ////////////////////////////////////////////////////////////////////////////////
