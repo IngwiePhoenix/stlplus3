@@ -215,6 +215,21 @@ int main(int argc, char* argv[])
     data.add_mappings();
     std::cerr << "tree = " << std::endl << data;
 
+    // copy the tree
+    mapped_tree copied;
+    copied.m_tree = data.m_tree;
+    copied.add_mappings();
+    std::cerr << "copied tree = " << std::endl << copied;
+    result &= compare(copied,data);
+    // move the tree by cutting
+    mapped_tree moved;
+    moved.m_tree = copied.m_tree.cut();
+    moved.add_mappings();
+    copied.add_mappings();
+    std::cerr << "moved tree = " << std::endl << moved;
+    std::cerr << "source of move = " << std::endl << copied;
+    result &= compare(moved,data);
+
     // test relationships
     if (data.m_tree.parent(left) == root)
       std::cerr << "Success: root is parent of left" << std::endl;
