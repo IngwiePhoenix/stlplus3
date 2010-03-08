@@ -50,6 +50,8 @@ namespace stlplus
 
   template<typename T1, typename T2, typename T3, typename T4>
   bool operator == (const foursome<T1,T2,T3,T4>& left, const foursome<T1,T2,T3,T4>& right);
+  template<typename T1, typename T2, typename T3, typename T4>
+  bool operator < (const foursome<T1,T2,T3,T4>& left, const foursome<T1,T2,T3,T4>& right);
 
   ////////////////////////////////////////////////////////////////////////////////
 

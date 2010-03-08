@@ -50,6 +50,17 @@ namespace stlplus
     return left.first == right.first && left.second == right.second && left.third == right.third;
   }
 
+  template<typename T1, typename T2, typename T3>
+  bool operator < (const triple<T1,T2,T3>& left, const triple<T1,T2,T3>& right)
+  {
+    // use the < operator on each element
+  	return left.first < right.first ? true :
+  	       right.first < left.first ? false :
+  	       left.second < right.second ? true :
+  	       right.second < left.second ? false :
+  	       left.third < right.third;
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus

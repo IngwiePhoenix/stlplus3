@@ -47,11 +47,24 @@ namespace stlplus
   bool operator == (const foursome<T1,T2,T3,T4>& left, const foursome<T1,T2,T3,T4>& right)
   {
     // foursomes are equal if all elements are equal
-    return 
-      left.first == right.first && 
-      left.second == right.second && 
+    return
+      left.first == right.first &&
+      left.second == right.second &&
       left.third == right.third &&
       left.fourth == right.fourth;
+  }
+
+  template<typename T1, typename T2, typename T3, typename T4>
+  bool operator < (const foursome<T1,T2,T3,T4>& left, const foursome<T1,T2,T3,T4>& right)
+  {
+    // use the < operator on each element
+  	return left.first < right.first ? true :
+  	       right.first < left.first ? false :
+  	       left.second < right.second ? true :
+  	       right.second < left.second ? false :
+  	       left.third < right.third ? true :
+  	       right.third < left.third ? false :
+  	       left.fourth < right.fourth;
   }
 
   ////////////////////////////////////////////////////////////////////////////////

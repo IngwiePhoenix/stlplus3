@@ -45,6 +45,8 @@ namespace stlplus
 
   template<typename T1, typename T2, typename T3>
   bool operator == (const triple<T1,T2,T3>& left, const triple<T1,T2,T3>& right);
+  template<typename T1, typename T2, typename T3>
+  bool operator < (const triple<T1,T2,T3>& left, const triple<T1,T2,T3>& right);
 
   ////////////////////////////////////////////////////////////////////////////////
 
