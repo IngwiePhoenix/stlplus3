@@ -299,7 +299,7 @@ namespace stlplus
         if (found == m_pointers.end())
         {
           // this magic number has never been seen before
-          return std::pair<bool,void*>(false,0);
+          return std::pair<bool,void*>(false,(void*)0);
         }
         return std::pair<bool,void*>(true,found->second);
       }
