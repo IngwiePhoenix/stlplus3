@@ -75,7 +75,7 @@ namespace stlplus
     friend class ntree_postfix_iterator<T,TRef,TPtr>;
 
   public:
-    // Note: I had to make this public to get round a compiler problem - it should be private
+    // Note: I had to make this public to get round a problem implementing persistence - it should be private
     // you cannot create a valid iterator except by calling an ntree method that returns one
     // constructor used by ntree to create a non-null iterator
     explicit ntree_iterator(ntree_node<T>* node);
