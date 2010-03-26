@@ -2,9 +2,8 @@
 #define STLPLUS_SIMPLE_PTR
 ////////////////////////////////////////////////////////////////////////////////
 
-//   Author:    Daniel Milton, Andy Rushton
-//   Copyright: (c) Southampton University 1999-2004
-//              (c) Daniel Milton, Andy Rushton 2004-2009
+//   Author:    Daniel Milton
+//   Copyright: (c) Daniel Milton           2002 onwards
 //   License:   BSD License, see ../docs/license.html
 
 //   A smart pointer is a memory-managing pointer to an object. If you like, it

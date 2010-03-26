@@ -4,7 +4,7 @@
 
 //   Author:    Andy Rushton
 //   Copyright: (c) Southampton University 1999-2004
-//              (c) Andy Rushton           2004-2009
+//              (c) Andy Rushton           2004 onwards
 //   License:   BSD License, see ../docs/license.html
 
 //   Persistence of C-style char* strings
