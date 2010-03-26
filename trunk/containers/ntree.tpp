@@ -684,7 +684,9 @@ namespace stlplus
   TYPENAME ntree<T>::iterator ntree<T>::insert(const T& data)
   {
     // insert a new node as the root
-    return insert(ntree_iterator<T,T&,T*>(this), 0, data);
+    erase();
+    m_root = new ntree_node<T>(this,data);
+    return ntree_iterator<T,T&,T*>(m_root);
   }
 
   template<typename T>
@@ -692,31 +694,38 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
   {
     // if i is the end iterator, this means insert a new root
-    if (i.end())
-      erase();
-    else
-    {
-      i.assert_valid(this);
-      if (offset > children(i)) throw std::out_of_range("stlplus::ntree");
-    }
+    // if (i.end())
+    //   return insert(data);
+    // otherwise, insert a new child
+    i.assert_valid(this);
+    if (offset > children(i)) throw std::out_of_range("stlplus::ntree");
     ntree_node<T>* new_node = new ntree_node<T>(this,data);
-    if (i.end())
-    {
-      m_root = new_node;
-    }
-    else
-    {
-      i.node()->m_children.insert(i.node()->m_children.begin()+offset,new_node);
-      new_node->m_parent = i.node();
-    }
+    i.node()->m_children.insert(i.node()->m_children.begin()+offset,new_node);
+    new_node->m_parent = i.node();
     return ntree_iterator<T,T&,T*>(new_node);
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::insert(const TYPENAME ntree<T>::iterator& i, const T& data)
+    throw(wrong_object,null_dereference,end_dereference)
+  {
+    return insert(i, children(i), data);
   }
 
   template<typename T>
   TYPENAME ntree<T>::iterator ntree<T>::append(const TYPENAME ntree<T>::iterator& i, const T& data)
     throw(wrong_object,null_dereference,end_dereference)
   {
-    return insert(i, i.node()->m_children.size(), data);
+    return insert(i, children(i), data);
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::insert(const ntree<T>& tree)
+  {
+    // insert a whole tree as root
+    erase();
+    m_root = ntree_copy(this, tree.m_root);
+    return ntree_iterator<T,T&,T*>(m_root);
   }
 
   template<typename T>
@@ -733,10 +742,50 @@ namespace stlplus
   }
 
   template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::insert(const TYPENAME ntree<T>::iterator& i, const ntree<T>& tree)
+    throw(wrong_object,null_dereference,end_dereference)
+  {
+    return insert(i, children(i), tree);
+  }
+
+  template<typename T>
   TYPENAME ntree<T>::iterator ntree<T>::append(const TYPENAME ntree<T>::iterator& i, const ntree<T>& tree)
     throw(wrong_object,null_dereference,end_dereference)
   {
     return insert(i, children(i), tree);
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::move(ntree<T>& tree)
+  {
+    // insert a whole tree as root, removing it from source
+    erase();
+    m_root = tree.m_root;
+    tree.m_root = 0;
+    if (m_root) m_root->change_owner(this);
+    return ntree_iterator<T,T&,T*>(m_root);
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::move(const TYPENAME ntree<T>::iterator& i, unsigned offset, ntree<T>& tree)
+    throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
+  {
+    // insert a whole tree as a child of i
+    i.assert_valid(this);
+    if (offset > children(i)) throw std::out_of_range("stlplus::ntree");
+    ntree_node<T>* new_node = tree.m_root;
+    tree.m_root = 0;
+    if (new_node) new_node->change_owner(this);
+    i.node()->m_children.insert(i.node()->m_children.begin()+offset,new_node);
+    new_node->m_parent = i.node();
+    return ntree_iterator<T,T&,T*>(new_node);
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::iterator ntree<T>::move(const TYPENAME ntree<T>::iterator& i, ntree<T>& tree)
+    throw(wrong_object,null_dereference,end_dereference)
+  {
+    return move(i, children(i), tree);
   }
 
   template<typename T>
@@ -894,7 +943,7 @@ namespace stlplus
       if (result.m_root)
       {
         result.m_root->m_parent = 0;
-        result.m_root->change_owner(&result);
+        result.m_root->set_new_owner(&result);
       }
     }
     return result;

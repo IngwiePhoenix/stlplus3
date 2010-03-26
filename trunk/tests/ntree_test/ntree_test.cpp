@@ -200,17 +200,17 @@ int main(int argc, char* argv[])
     std::cerr << "null root = " << data.m_tree.root() << std::endl;
     string_tree::iterator root = data.m_tree.insert("root");
     std::cerr << "added root " << root << std::endl;
-    string_tree::iterator left = data.m_tree.append(root,"left");
+    string_tree::iterator left = data.m_tree.insert(root,"left");
     std::cerr << "added left " << left << std::endl;
-    string_tree::iterator left_left = data.m_tree.append(left,"left_left");
+    string_tree::iterator left_left = data.m_tree.insert(left,"left_left");
     std::cerr << "added left_left " << left_left << std::endl;
-    string_tree::iterator left_right = data.m_tree.append(left,"left_right");
+    string_tree::iterator left_right = data.m_tree.insert(left,"left_right");
     std::cerr << "added left_right " << left_right << std::endl;
-    string_tree::iterator right = data.m_tree.append(root,"right");
+    string_tree::iterator right = data.m_tree.insert(root,"right");
     std::cerr << "added right " << right << std::endl;
-    string_tree::iterator right_left = data.m_tree.append(right,"right_left");
+    string_tree::iterator right_left = data.m_tree.insert(right,"right_left");
     std::cerr << "added right_left " << right_left << std::endl;
-    string_tree::iterator right_right = data.m_tree.append(right,"right_right");
+    string_tree::iterator right_right = data.m_tree.insert(right,"right_right");
     std::cerr << "added right_right " << right_right << std::endl;
     data.add_mappings();
     std::cerr << "tree = " << std::endl << data;
@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
     result &= compare(copied,data);
     // move the tree by cutting
     mapped_tree moved;
-    moved.m_tree = copied.m_tree.cut();
+    moved.m_tree.move(copied.m_tree);
     moved.add_mappings();
     copied.add_mappings();
     std::cerr << "moved tree = " << std::endl << moved;

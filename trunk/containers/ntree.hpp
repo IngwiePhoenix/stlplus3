@@ -315,38 +315,73 @@ namespace stlplus
     //////////////////////////////////////////////////////////////////////////////
     // modification
 
+    // discard previous contents and create a new root node
     iterator insert(const T&);
-
+    // add a new child inserted into the node's children at the specified place
     iterator insert(const iterator& node, unsigned child, const T&)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+    // shortcut for insert at the end i.e. tree.insert(node, node.children(), value)
+    iterator insert(const iterator& node, const T&) 
+      throw(wrong_object,null_dereference,end_dereference);
+    // old name for the above
     iterator append(const iterator& node, const T&) 
       throw(wrong_object,null_dereference,end_dereference);
 
+    // discard previous contents and copy the tree
+    iterator insert(const ntree<T>&);
+    // add a copy of the tree as a new child inserted into the node's children at the specified place
     iterator insert(const iterator& node, unsigned child, const ntree<T>&)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+    // shortcut for insert at the end i.e. tree.insert(node, node.children(), value)
+    iterator insert(const iterator& node, const ntree<T>&)
+      throw(wrong_object,null_dereference,end_dereference);
+    // old name for the above
     iterator append(const iterator& node, const ntree<T>&)
       throw(wrong_object,null_dereference,end_dereference);
 
+    // discard previous contents and move the tree without copying
+    // invalidates all iterators to the old tree
+    iterator move(ntree<T>&);
+    // move the tree to become the designated child
+    // invalidates all iterators to the old tree
+    iterator move(const iterator& node, unsigned child, ntree<T>&)
+      throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+    // shortcut for move to the last child i.e. node.move(node, node.children(), value)
+    iterator move(const iterator& node, ntree<T>&)
+      throw(wrong_object,null_dereference,end_dereference);
+
+    // replace the node with the new value, pushing the old node down to make it the child
+    // returns the iterator to the new, pushed node
     iterator push(const iterator& node, const T&) 
       throw(wrong_object,null_dereference,end_dereference);
+    // erases the specified child, moving its children up to become the node's children
     void pop(const iterator& node, unsigned child) 
       throw(wrong_object,null_dereference,end_dereference);
 
+    // erase the whole tree
     void erase(void);
+    // erase the node and all its children
     void erase(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
+    // erase the specified child
     void erase(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // get a copy of the tree as a tree
     ntree<T> subtree(void);
+    // get a copy of the subtree as a tree with the specified node as root
     ntree<T> subtree(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
+    // get a copy of the subtree as a tree with the specified child as root
     ntree<T> subtree(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // move the whole tree to make a new tree
     ntree<T> cut(void);
+    // move the subtree to make a new tree with the specified node as root
     ntree<T> cut(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
+    // move the subtree to make a new tree with the specified child as root
     ntree<T> cut(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 

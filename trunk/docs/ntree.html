@@ -167,7 +167,7 @@ ntree&lt;string&gt; data;
 ntree&lt;string&gt;::iterator i = data.root();
 if (i.valid())
 {
-  for (unsigned j = 0; j &lt; i-&gt;length(); j++)
+  for (unsigned j = 0; j &lt; data.children(i); j++)
     ...
 }
 </pre>
@@ -201,25 +201,48 @@ example, inserting at position 0 prepends it to the list of child nodes,
 whilst inserting at the position indicated by the current number of children
 will append it to the list. For example, inserting at position 4 for a node
 with 4 children (offsets 0..3 remember) will append it to the list. For
-convenience there is an append function to make this particular action
+convenience there is an alternative insert function to make this particular action
 simpler. Thus, there are two functions for adding a non-root node:</p>
 
 <pre class="cpp">
 iterator ntree::insert(iterator parent, unsigned offset, const T&amp; node_data);
-iterator ntree::append(iterator parent, const T&amp; node_data);
+iterator ntree::insert(iterator parent, const T&amp; node_data);
 </pre>
 
-<p>It is also possible to add a <em>copy</em> of another tree to a node, thus
-adding a whole subtree in one go. Once again, there is an append function for
-the most common kind of insertion:</p>
+<p>It is also possible to add a <em>copy</em> of another tree to the
+root or to a node, thus adding a whole subtree in one go:</p>
 
 <pre class="cpp">
+iterator ntree::insert(const ntree&lt;T&gt;&amp;);
 iterator ntree::insert(iterator, unsigned, const ntree&lt;T&gt;&amp;);
-iterator ntree::append(iterator, const ntree&lt;T&gt;&amp;);
+iterator ntree::insert(iterator, const ntree&lt;T&gt;&amp;);
 </pre>
 
-<p>By the way, adding a copy of another tree as the root of this tree is done by simple
+<p>All of these methods copy the argument into the current tree. The
+  first method erases the current tree and then copies the argument tree into
+  the root. The second copies the tree to make it the designated child
+  of the node. The third is the same as the second but appends it to
+  the set of children.</p>
+
+<p>Another way of adding a copy of another tree as the root of this tree is done by simple
 assignment of one tree to another - assignment does a copy.</p>
+
+<p>If you want to move one tree into another tree without copying it,
+  use the move methods. Once again, there are three with similar
+  functionality to the insert functions:</p>
+
+<pre class="cpp">
+iterator ntree::move(ntree&lt;T&gt;&amp;);
+iterator ntree::move(iterator, unsigned, ntree&lt;T&gt;&amp;);
+iterator ntree::move(iterator, ntree&lt;T&gt;&amp;);
+</pre>
+
+<p>Note that the argument is non-const because it's contents are
+  removed leaving it empty after the move.</p>
+
+<p>The move operations also move all iterators to nodes in the tree
+  being moved so that they can continue to be used even though the
+  nodes now belong to a different tree.</p>
 
 <p>There are three erase functions: one to erase the whole tree, one to erase
 a node and its children and one to erase a single child of a node:</p>
