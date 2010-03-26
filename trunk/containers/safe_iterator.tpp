@@ -17,18 +17,10 @@ namespace stlplus
     safe_iterator_body(const O* owner, N* node) throw() : 
       m_owner(owner), m_node(node), m_count(1)
       {
-//         std::cerr << "constructing " 
-//                   << std::hex << ((unsigned long)this) 
-//                   << " => " << ((unsigned long)m_owner) << ":" << ((unsigned long)m_node)
-//                   << ":" << std::dec << m_count << std::endl;
       }
 
     ~safe_iterator_body(void) throw()
       {
-//         std::cerr << "destroying " 
-//                   << std::hex << ((unsigned long)this) 
-//                   << " => " << ((unsigned long)m_owner) << ":" << ((unsigned long)m_node)
-//                   << ":" << std::dec << m_count << std::endl;
         m_owner = 0;
         m_node = 0;
       }
@@ -41,19 +33,11 @@ namespace stlplus
     void increment(void)
       {
         ++m_count;
-//         std::cerr << "incremented " 
-//                   << std::hex << ((unsigned long)this) 
-//                   << " => " << ((unsigned long)m_owner) << ":" << ((unsigned long)m_node)
-//                   << ":" << std::dec << m_count << std::endl;
       }
 
     bool decrement(void)
       {
         --m_count;
-//         std::cerr << "decremented " 
-//                   << std::hex << ((unsigned long)this) 
-//                   << " => " << ((unsigned long)m_owner) << ":" << ((unsigned long)m_node)
-//                   << ":" << std::dec << m_count << std::endl;
         return m_count == 0;
       }
 
@@ -74,8 +58,7 @@ namespace stlplus
 
     bool equal(const safe_iterator_body<O,N>* right) const throw()
       {
-//        return m_node == right->m_node;
-        return compare(right) == 0;
+        return m_node == right->m_node;
       }
 
     int compare(const safe_iterator_body<O,N>* right) const throw()
@@ -112,21 +95,21 @@ namespace stlplus
     void assert_valid(void) const throw(null_dereference,end_dereference)
       {
         if (null())
-          throw null_dereference("stlplus::safe_iterator");
+          throw null_dereference("stlplus::safe_iterator: dereferencing null iterator");
         if (end())
-          throw end_dereference("stlplus::safe_iterator");
+          throw end_dereference("stlplus::safe_iterator: dereferencing end iterator");
       }
 
     void assert_non_null(void) const throw(null_dereference)
       {
         if (null())
-          throw null_dereference("stlplus::safe_iterator");
+          throw null_dereference("stlplus::safe_iterator: dereferencing null iterator");
       }
 
     void assert_owner(const O* owner) const throw(wrong_object)
       {
         if (owner != m_owner)
-          throw wrong_object("stlplus::safe_iterator");
+          throw wrong_object("stlplus::safe_iterator: using iterator with wrong object");
       }
   };
 
@@ -313,7 +296,8 @@ namespace stlplus
   template<typename O, typename N>
   bool safe_iterator<O,N>::equal(const safe_iterator<O,N>& right) const throw()
   {
-    return compare(right) == 0;
+    if (m_body == right.m_body) return true;
+    return m_body->equal(right.m_body);
   }
 
   template<typename O, typename N>
