@@ -1,4 +1,4 @@
-all clean tidy:
+all build run clean tidy:
 ifeq ($(MONOLITHIC),on)
 	$(MAKE) -C source $@
 else
