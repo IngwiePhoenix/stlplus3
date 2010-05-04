@@ -53,13 +53,17 @@ C++ Library Collection
 <p>My intention is to port the screen library to as many platforms as I can reasonably support.</p>
 
 
-<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts STLplus, used to provide a Compile
-Farm so that I could test STLplus on different platforms. This enabled me, for example, to fix
-problems with data persistence on 64-bit CPUs. Unfortunately, the Compile Farm has now been
-withdrawn, so I can only test the library on my Windows machine. However, I can still test against
-Cygwin Unix emulation on Windows, and Windows native builds using Visual Studio, the MinGW version
-of the Gcc compiler and the Cygwin gcc compiler running in native mode (up to
-v3.x only).</p>
+<p><a href="http://sourceforge.net/">SourceForge</a>, which hosts
+STLplus, used to provide a Compile Farm so that I could test STLplus
+on different platforms. So in the past, the library collection has
+been extensively tested on a wide range of platforms. This enabled me,
+for example, to fix problems with data persistence on 64-bit
+CPUs. Unfortunately, the Compile Farm has now been withdrawn, so I can
+only test the library on my own Windows and Linux PCs. However, this
+setup means that I can still test against a range of compiler/platform
+combinations, including gcc on Linux, gcc on Windows using the Cygwin
+Unix emulator, Windows native builds using Visual Studio and Windows
+native builds using the MinGW version of the gcc compiler.</p>
 
 <h2 id="issues">Porting Status</h2>
 
@@ -70,12 +74,15 @@ v3.x only).</p>
 <dt>Different Operating Systems</dt>
 
 <dd>
+
 <p>One of the objectives of this library is to provide platform-independent
 access to operating system services that differ between platforms. The idea is
 to hide the implementation behind a common interface. By writing software to
 that interface, you automatically get portable software. At least, that is the
 theory.</p>
+
 <p>STLplus has been built on the following Operating Systems:</p>
+
 <ul>
   <li>Windows
     <ul>
@@ -111,10 +118,13 @@ theory.</p>
 </dd>
 
 <dt>Different CPU Architectures</dt>
+
 <dd>
-<p>Different CPUs have different word lengths, different byte ordering and different integer type
-definitions. The intention is that STLplus will work with all variations of these characteristics
-that I come across.</p>
+
+<p>Different CPUs have different word lengths, different byte ordering
+and different integer type definitions. The intention is that STLplus
+will work with all variations of these characteristics that I come
+across.</p>
 
 <p>STLplus has been built on the following CPUs:</p>
 <ul>
@@ -132,15 +142,18 @@ that I come across.</p>
 
 <dd>
 
-<p>The concept of portability means portability between operating systems, not necessarily
-portability between compilers. However, to cater for different tastes in
-compilers, I have supported as many as I have access to.</p>
+<p>The concept of portability means portability between operating
+systems, not necessarily portability between compilers. However, to
+cater for different tastes in compilers, I have supported as many as I
+have access to.</p>
 
-<p>It is also important that software will build with different versions of each compiler, because I
-have no control over which compiler you are using and there's a good chance that you don't either.
-The STLplus library should ideally work in whatever development environment you have chosen (within
-reason). So, STLplus works with different releases of these compilers, not
-just the latest one.</p>
+<p>It is also important that software will build with different
+versions of each compiler, because I have no control over which
+compiler you are using and there's a good chance that you don't
+either.  The STLplus library should ideally work in whatever
+development environment you have chosen (within reason). So, STLplus
+works with different releases of these compilers, not just the latest
+one.</p>
 
 <p>STLplus has been built on the following compilers:</p>
 
@@ -168,8 +181,8 @@ just the latest one.</p>
   </li>
 </ul>
 
-<p>On each operating system there are a number of different development
-environments available:</p>
+<p>On each operating system there are a number of different
+development environments available:</p>
 
 <ul>
 
@@ -202,7 +215,6 @@ environments available:</p>
 </dl>
 
 <p>I refer to a "platform" as a particular combination of CPU, Operating System and Compiler.</p>
-
 
 <p>These requirements create some limitations on the extent of the library - the primary objective
 is for it to be portable such that it presents exactly the same interface on all platforms. This

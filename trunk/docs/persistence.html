@@ -109,10 +109,16 @@ the processing required to convert integer values between their machine form (2'
 and the text form (sign-magnitude decimal). This problem doesn't occur with the persistence format
 which dumps and restores in the native binary form.</p>
 
-<p>The file format is platform-independent so that there are no problems in transferring data
-between different computers, regardless of what operating system they are running, what processor
-they are using, what convention is used to store numeric types (i.e. little-endian versus
+<p>The data format is platform-independent so that there are no problems in transferring data
+between different computers, regardless of what operating system is
+running, what compiler was used, what processor
+is being used, what convention is used to store numeric types (i.e. little-endian versus
 big-endian) or even what size of word is being used (e.g. 32-bit versus 64-bit).</p>
+
+<p>So, for example, a program compiled with Gnu's gcc on Linux running
+  on a 32-bit big-endian processor can transfer data either as a file
+  or over the internet to a program compiled with Microsoft's Visual
+  Studio, running on a 64-bit little-endian processor.</p>
 
 <p>The approach taken with the persistence subsystem is to provide a toolkit which makes it easy if
 not trivial to make a data structure persistent. However, it is not totally automatic - C++ is too
