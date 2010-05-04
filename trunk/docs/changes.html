@@ -41,6 +41,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.6">Changes from Version 3.5 to 3.6</a></li>
 <li class="internal"><a href="#v3.5">Changes from Version 3.4 to 3.5</a></li>
 <li class="internal"><a href="#v3.4">Changes from Version 3.3 to 3.4</a></li>
 <li class="internal"><a href="#v3.3">Changes from Version 3.2 to 3.3</a></li>
@@ -59,6 +60,65 @@ for this version are huge. Therefore only the changes since then have been docum
 <p>The official open-source version of STLplus starts at version 2.0 and you can access the change
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+
+<h2 id="v3.6">Changes from Version 3.5 to 3.6</h2>
+
+<h3>Bug Fix - Crash in portability/ip_sockets due to signals on Linux</h3>
+
+<p>Bug fix contributed by DJDM</p>
+
+<p>On linux, occasionally, if a socket disconnects remotely between
+  the points at which you ask for send_ready and actually doing the
+  send, then the send will fail, but also on Linux sends the SIGPIPE
+  signal, which kills the program if it is unhandled - most of the
+  time. As the return of -1 is all you need from the send function,
+  it's best to set it not to generate the SIGPIPE in the first place,
+  which is done by adding the MSG_NOSIGNAL flag to the send calls.</p>
+
+<h3>Tidy-up of portability/build Reporting</h3>
+
+<p>You can use the portability/build functions to report which version
+  of compiler and build options were used to build STLplus. I've
+  tidied this up and provided more functions to get parts of the
+  build string.</p>
+
+<h3>Bug Fix - Crash in portability/file_system</h3>
+
+<p>The getcwd function returns the C-string path to the current
+  directory. This is then used to construct a std::string. However,
+  getcwd can sometimes return a null pointer, which crashes the
+  std::string constructor. I've fixed the code so that a null return
+  value is converted into an empty string.</p>
+
+<h3>Minor Tidy-up of portability/subprocesses</h3>
+
+<p>Some of the error handling was inconsistently handled in the
+  subprocess classes, so I've worked through systematically adding
+  error handling in a consistent way.</p>
+
+<p>I've also added get_variables methods to the subprocess classes so
+  you can examine the environment of the subprocess.</p>
+
+<h3>Added &lt; operator to containers/foursome and containers/triple</h3>
+
+<p>Fix contributed by DJDM</p>
+
+<p>Having operator&lt; allows these classes to be used in maps and
+sets. They are defined in terms of the operator&lt; <i>only</i>for the
+contained types.</p>
+
+<h3>Rework of containers/ntree</h3>
+
+<p>The ntree container was lacking a set of methods for building trees
+  out of other trees without copying the contents. This is
+  inefficient. I have added a set of move methods which move the
+  argument tree into the target tree, destroying the argument tree in
+  the process. These complement the insert methods that add subtrees
+  in the same way, but copy them first.</p>
+
+<p>In the process, I've deprecated the append method in favour of an
+  insert or move with no offset, which defaults to the append
+  functionality.</p>
 
 <h2 id="v3.5">Changes from Version 3.4 to 3.5</h2>
 
@@ -107,7 +167,7 @@ compatibility with std::map.</p>
 
 <p>This function was present in STLplus v2, but was removed temporarily due to the removal of TextIO
 from STLplus. The intention was to re-add it soon after by porting the function to use IOStreams,
-but it got fogotten in the changeover. It has now been re-added, ported to IOStreams.</p>
+but it got forgotten in the changeover. It has now been re-added, ported to IOStreams.</p>
 
 <h3>Fixed bug in smart_ptr</h3>
 
@@ -166,7 +226,7 @@ v3 has never been ported.</p>
 <p>The libraries have been modified to support both the v5.5 compiler (the
 Free Command-line Tools) and the v5.8 compiler (Turbo C++ 2006 Explorer).</p>
 
-<p>This has required the folowing changes:</p>
+<p>This has required the following changes:</p>
 
 <ul>
 <li>Elimination of the use of 'typename' temporaries (i.e. names of types
@@ -285,7 +345,7 @@ class stlplus_debug_trace. This has been fixed.</p>
 <p>The string formatting was being done by string-stream classes. I have
 rewritten it to use the more efficient portability/dprintf.</p>
 
-<h3>Changes to subsystems/cli_parser use of susbsystems/ini_manager</h3>
+<h3>Changes to subsystems/cli_parser use of subsystems/ini_manager</h3>
 
 <p>The CLI Parser loads default values from the Ini Manager. However, in
 previous versions, it was possible for a typo to mean that an option was
@@ -306,7 +366,7 @@ purpose.</p>
 
 <p>There was a bug in the quoting code for Windows command-lines which
 resulted in quote marks being added after every character in a string that
-needed quoting (i.e. contained special characaters). This has been fixed.</p>
+needed quoting (i.e. contained special characters). This has been fixed.</p>
 
 <h2 id="v2">Changes from Version 2 to 3.0</h2>
 
