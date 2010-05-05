@@ -1,7 +1,5 @@
 include ../../makefiles/subdirectories.mak
 
-all:: run
-
-run::
+all:: build
 	run_tests
 
