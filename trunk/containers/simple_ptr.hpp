@@ -75,11 +75,6 @@ namespace stlplus
     // create a null pointer
     simple_ptr_base(void);
 
-    // create a pointer containing a *copy* of the object using the template parameter C
-    // this copy is taken because the pointer class maintains a dynamically allocated object
-    // and the T& may not be (usually is not) dynamically allocated
-    explicit simple_ptr_base(const T& data) throw(illegal_copy);
-
     // create a pointer containing a dynamically created object
     // Note: the object must be allocated *by the user* with new
     // constructor form - must be called in the form smart_ptr_base<type> x(new type(args))
@@ -121,8 +116,6 @@ namespace stlplus
     //////////////////////////////////////////////////////////////////////////////
     // explicit function forms of the above assignment and dereference operators
 
-    // set the value - note that this does a copy using the C template parameter
-    void set_value(const T& data) throw(illegal_copy);
     // get the value
     T& value(void) throw(null_dereference);
     const T& value(void) const throw(null_dereference);
@@ -165,6 +158,14 @@ namespace stlplus
     // these functions use the copy functor passed as the template parameter C
     // to copy the object with the right copy semantics. If the copy functor
     // is no_copy, an exception will be thrown.
+
+    // create a pointer containing a *copy* of the object using the template parameter C
+    // this copy is taken because the pointer class maintains a dynamically allocated object
+    // and the T& may not be (usually is not) dynamically allocated
+    explicit simple_ptr_base(const T& data) throw(illegal_copy);
+
+    // set the value - note that this does a copy using the C template parameter
+    void set_value(const T& data) throw(illegal_copy);
 
     // make this pointer unique with respect to any other references to the same object
     // if this pointer is already unique, it does nothing - otherwise it copies the object
@@ -248,9 +249,7 @@ namespace stlplus
   {
   public:
     simple_ptr_nocopy(void) {}
-    explicit simple_ptr_nocopy(const T& data) : simple_ptr_base<T, no_copy<T> >(data) {}
     explicit simple_ptr_nocopy(T* data) : simple_ptr_base<T, no_copy<T> >(data) {}
-    simple_ptr_nocopy<T>& operator=(const T& data) {set_value(data); return *this;}
     simple_ptr_nocopy<T>& operator=(T* data) {set(data); return *this;}
     ~simple_ptr_nocopy(void) {}
   };
