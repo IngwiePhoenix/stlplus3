@@ -102,11 +102,17 @@ namespace stlplus
 #else
 #define ENVIRON_TYPE char**
 #endif
+  class subprocess;
+  class async_subprocess;
 
   class env_vector
   {
   private:
     ENVIRON_TYPE m_env;
+    friend class subprocess;
+    friend class async_subprocess;
+    // access the env_vector as an envp type - used for passing to subprocesses
+    ENVIRON_TYPE envp (void) const;
 
   public:
     // create an env_vector vector from the current process
@@ -135,9 +141,6 @@ namespace stlplus
     // get the name=value pairs by index (in the range 0 to size()-1)
     std::pair<std::string,std::string> operator [] (unsigned index) const throw(std::out_of_range);
     std::pair<std::string,std::string> get (unsigned index) const throw(std::out_of_range);
-
-    // access the env_vector as an envp type - used for passing to subprocesses
-    ENVIRON_TYPE envp (void) const;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
