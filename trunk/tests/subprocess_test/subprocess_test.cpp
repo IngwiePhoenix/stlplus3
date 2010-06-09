@@ -20,6 +20,26 @@ int server(const std::string& basic_text, const std::string& command)
 {
   int errors = 0;
   std::cerr << "server: " << stlplus::build() << std::endl;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // environment
+
+  stlplus::env_vector environment;
+  if (environment.size() == 0)
+  {
+    std::cerr << "server: ERROR: no environment" << std::endl;
+    errors++;
+  }
+  else
+  {
+    std::cerr << "server: environment:" << std::endl;
+    for (unsigned i = 0; i < environment.size(); i++)
+    {
+      std::pair<std::string,std::string> value = environment[i];
+      std::cerr << i << ": " << value.first << "=" << value.second << std::endl;
+    }
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
   // Asynchronous subprocess test
   // spawn a client copy of this program and connect only the stdout pipe
