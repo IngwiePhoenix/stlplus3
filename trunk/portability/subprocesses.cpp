@@ -23,6 +23,7 @@
 
 #ifdef MSWINDOWS
 #else
+extern char** environ;
 #include <signal.h>
 #include <errno.h>
 #include <sys/wait.h>
@@ -418,8 +419,6 @@ namespace stlplus
 
 #else
   // Unix utilities
-
-  extern char** environ;
 
   static unsigned envp_size(char* const* envp)
   {
