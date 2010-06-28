@@ -158,7 +158,7 @@ namespace stlplus
 
   class subprocess
   {
-  private:
+  protected:
 
     PID_TYPE m_pid;
 #ifdef MSWINDOWS
@@ -213,7 +213,7 @@ namespace stlplus
 
   class backtick_subprocess : public subprocess
   {
-  private:
+  protected:
     std::string m_text;
   public:
     backtick_subprocess(void);
@@ -231,7 +231,7 @@ namespace stlplus
 
   class async_subprocess
   {
-  private:
+  protected:
     PID_TYPE m_pid;
 #ifdef MSWINDOWS
     HANDLE m_job;
