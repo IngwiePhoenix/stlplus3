@@ -133,16 +133,16 @@
 <span style="color: #ff0099">  122: </span>
 <span style="color: #ff0099">  123: </span>    <span style="color: #000000">env_vector</span><span style="color: #330033">&amp;</span> <span style="color: #990000">operator</span> <span style="color: #330033">=</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">env_vector</span><span style="color: #330033">&amp;</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  124: </span>
-<span style="color: #ff0099">  125: </span>    <span style="color: #990000">void</span> <span style="color: #000000">clear</span> <span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  126: </span>
-<span style="color: #ff0099">  127: </span>    <span style="color: #000099">// manipulate the env_vector by adding or removing variables</span>
-<span style="color: #ff0099">  128: </span>    <span style="color: #000099">// adding a name that already exists replaces its value</span>
-<span style="color: #ff0099">  129: </span>    <span style="color: #990000">void</span> <span style="color: #000000">add</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">value</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  130: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">remove</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">  131: </span>
-<span style="color: #ff0099">  132: </span>    <span style="color: #000099">// get the value associated with a name</span>
-<span style="color: #ff0099">  133: </span>    <span style="color: #000099">// the first uses an indexed notation (e.g. env["PATH"] )</span>
-<span style="color: #ff0099">  134: </span>    <span style="color: #000099">// the second is a function based form (e.g. env.get("PATH"))</span>
+<span style="color: #ff0099">  125: </span>    <span style="color: #000099">// manipulate the env_vector by adding or removing variables</span>
+<span style="color: #ff0099">  126: </span>    <span style="color: #000099">// adding a name that already exists replaces its value</span>
+<span style="color: #ff0099">  127: </span>    <span style="color: #990000">void</span> <span style="color: #000000">add</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">value</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  128: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">remove</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  129: </span>    <span style="color: #990000">void</span> <span style="color: #000000">clear</span> <span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">  130: </span>
+<span style="color: #ff0099">  131: </span>    <span style="color: #000099">// get the value associated with a name</span>
+<span style="color: #ff0099">  132: </span>    <span style="color: #000099">// the first uses an indexed notation (e.g. env["PATH"] )</span>
+<span style="color: #ff0099">  133: </span>    <span style="color: #000099">// the second is a function based form (e.g. env.get("PATH"))</span>
+<span style="color: #ff0099">  134: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">present</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  135: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #990000">operator</span> <span style="color: #330033">[</span><span style="color: #330033">]</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  136: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">get</span> <span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  137: </span>
@@ -169,7 +169,7 @@
 <span style="color: #ff0099">  158: </span>
 <span style="color: #ff0099">  159: </span>  <span style="color: #990000">class</span> <span style="color: #000000">subprocess</span>
 <span style="color: #ff0099">  160: </span>  <span style="color: #330033">{</span>
-<span style="color: #ff0099">  161: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">  161: </span>  <span style="color: #990000">protected</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  162: </span>
 <span style="color: #ff0099">  163: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">m_pid</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  164: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">MSWINDOWS</span>
@@ -224,7 +224,7 @@
 <span style="color: #ff0099">  213: </span>
 <span style="color: #ff0099">  214: </span>  <span style="color: #990000">class</span> <span style="color: #000000">backtick_subprocess</span> <span style="color: #330033">:</span> <span style="color: #990000">public</span> <span style="color: #000000">subprocess</span>
 <span style="color: #ff0099">  215: </span>  <span style="color: #330033">{</span>
-<span style="color: #ff0099">  216: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">  216: </span>  <span style="color: #990000">protected</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  217: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">m_text</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  218: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  219: </span>    <span style="color: #000000">backtick_subprocess</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
@@ -242,7 +242,7 @@
 <span style="color: #ff0099">  231: </span>
 <span style="color: #ff0099">  232: </span>  <span style="color: #990000">class</span> <span style="color: #000000">async_subprocess</span>
 <span style="color: #ff0099">  233: </span>  <span style="color: #330033">{</span>
-<span style="color: #ff0099">  234: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">  234: </span>  <span style="color: #990000">protected</span><span style="color: #330033">:</span>
 <span style="color: #ff0099">  235: </span>    <span style="color: #000000">PID_TYPE</span> <span style="color: #000000">m_pid</span><span style="color: #330033">;</span>
 <span style="color: #ff0099">  236: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">MSWINDOWS</span>
 <span style="color: #ff0099">  237: </span>    <span style="color: #000000">HANDLE</span> <span style="color: #000000">m_job</span><span style="color: #330033">;</span>
