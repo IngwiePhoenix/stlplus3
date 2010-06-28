@@ -63,7 +63,8 @@ namespace stlplus
 
     int compare(const safe_iterator_body<O,N>* right) const throw()
       {
-        return ((long)m_node) - ((long)right->m_node);
+        if (m_node == right->m_node) return 0;
+        return (m_node < right->m_node) ? -1 : 1;
       }
 
     bool null(void) const throw()
@@ -303,7 +304,6 @@ namespace stlplus
   template<typename O, typename N>
   int safe_iterator<O,N>::compare(const safe_iterator<O,N>& right) const throw()
   {
-    if (m_body == right.m_body) return 0;
     return m_body->compare(right.m_body);
   }
 
