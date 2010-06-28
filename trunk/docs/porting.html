@@ -50,20 +50,21 @@ C++ Library Collection
 
 <h2 id="introduction">Introduction</h2>
 
-<p>My intention is to port the screen library to as many platforms as I can reasonably support.</p>
+<p>My intention is to port the STLplus library to as many platforms as I can reasonably support.</p>
 
 
 <p><a href="http://sourceforge.net/">SourceForge</a>, which hosts
 STLplus, used to provide a Compile Farm so that I could test STLplus
 on different platforms. So in the past, the library collection has
 been extensively tested on a wide range of platforms. This enabled me,
-for example, to fix problems with data persistence on 64-bit
-CPUs. Unfortunately, the Compile Farm has now been withdrawn, so I can
-only test the library on my own Windows and Linux PCs. However, this
-setup means that I can still test against a range of compiler/platform
-combinations, including gcc on Linux, gcc on Windows using the Cygwin
-Unix emulator, Windows native builds using Visual Studio and Windows
-native builds using the MinGW version of the gcc compiler.</p>
+for example, to fix problems with data persistence on 64-bit CPUs and
+to provide a MacOS port. Unfortunately, the Compile Farm has now been
+withdrawn, so I can only test the library on my own Windows and Linux
+PCs. However, this setup means that I can still test against a range
+of compiler/platform combinations, including gcc on Linux, gcc on
+Windows using the Cygwin Unix emulator, Windows native builds using
+Visual Studio and Windows native builds using the MinGW version of the
+gcc compiler.</p>
 
 <h2 id="issues">Porting Status</h2>
 
@@ -300,7 +301,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>4.5.0 (MinGW)</td>
 <td><code>MINGW-i686</code></td>
 <td><code>_WIN32</code></td>
-<td>2010-04-19</td>
+<td>2010-06-28</td>
 <td>22/22</td>
 <td>Uses <a href="http://www.mingw.org/">MinGW</a> with gcc v4.5 to build a native Windows program</td>
 </tr>
@@ -326,7 +327,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>4.3.4 (Cygwin)</td>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
-<td>2010-01-22</td>
+<td>2010-06-28</td>
 <td>22/22</td>
 <td>Uses <a href="http://www.cygwin.com/">Cygwin</a> with gcc v4 to build a Unix-emulation program that runs on Windows</td>
 </tr>
@@ -339,7 +340,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>10</td>
 <td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>2010-06-11</td>
+<td>2010-06-28</td>
 <td>22/22</td>
 <td><a href="http://www.microsoft.com/express/">Visual Studio v10 (compiler v16) (2010 Express Edition)</a></td>
 </tr>
