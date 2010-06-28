@@ -1,6 +1,7 @@
 Makefile
 strings.dsp
-strings.vcproj
+strings.vcxproj
+strings.vcxproj.filters
 *.hpp
 *.cpp
 *.tpp

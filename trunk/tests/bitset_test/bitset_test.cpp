@@ -101,8 +101,8 @@ int main(int argc, char* argv[])
     // first build a vector of bit-sets and dump it
     std::cerr << "building" << std::endl;
     bitset_vector data;
-    for (unsigned long i = 0; i < COUNT; i++)
-      data.push_back(i);
+    for (int i = 0; i < COUNT; i++)
+      data.push_back(bitset_N(i));
     std::cerr << data << std::endl;
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_bitset_vector,0);

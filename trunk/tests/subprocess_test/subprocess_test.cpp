@@ -2,6 +2,7 @@
 #include "tcp_sockets.hpp"
 #include "string_utilities.hpp"
 #include "subprocesses.hpp"
+#include "file_system.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -30,14 +31,26 @@ int server(const std::string& basic_text, const std::string& command)
     std::cerr << "server: ERROR: no environment" << std::endl;
     errors++;
   }
-  else
+  // else if (!environment.present("PWD"))
+  // {
+  //   std::cerr << "server: ERROR: no PWD in environment" << std::endl;
+  //   errors++;
+  // }
+  // else
+  // {
+  //   std::cerr << "server: PWD=" << environment["PWD"] << std::endl;
+  //   if (environment["PWD"] != stlplus::folder_current_full())
+  //   {
+  //     std::cerr << "server: ERROR: PWD is wrong, should be " << stlplus::folder_current_full() << std::endl;
+  //     errors++;
+  //   }
+  // }
+
+  std::cerr << "server: environment:" << std::endl;
+  for (unsigned i = 0; i < environment.size(); i++)
   {
-    std::cerr << "server: environment:" << std::endl;
-    for (unsigned i = 0; i < environment.size(); i++)
-    {
-      std::pair<std::string,std::string> value = environment[i];
-      std::cerr << i << ": " << value.first << "=" << value.second << std::endl;
-    }
+    std::pair<std::string,std::string> value = environment[i];
+    std::cerr << i << ": " << value.first << "=" << value.second << std::endl;
   }
 
   ////////////////////////////////////////////////////////////////////////////////

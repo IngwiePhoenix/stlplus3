@@ -1,6 +1,7 @@
 Makefile
 persistence.dsp
-persistence.vcproj
+persistence.vcxproj
+persistence.vcxproj.filters
 *.hpp
 *.tpp
 *.cpp

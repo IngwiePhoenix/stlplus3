@@ -1,5 +1,6 @@
 Makefile
 subsystems.dsp
-subsystems.vcproj
+subsystems.vcxproj
+subsystems.vcxproj.filters
 *.hpp
 *.cpp

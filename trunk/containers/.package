@@ -1,4 +1,5 @@
 containers.dsp
-containers.vcproj
+containers.vcxproj
+containers.vcxproj.filters
 *.hpp
 *.tpp
