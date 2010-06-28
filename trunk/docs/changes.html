@@ -63,6 +63,38 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.6">Changes from Version 3.5 to 3.6</h2>
 
+<h3>Switched to Visual Studio 10 (2010)</h3>
+
+<p>Visual Studio 10 Express Edition is now the preferred offering from
+  Microsoft. Converting the solution and project files from Visual Studio 9
+  overwrote them, so now there are only Visual Studio 10 solutions and
+  projects.</p>
+
+<p>In principle I could rename these to support both simultaneously,
+  but I will wait and see if there is a demand before investing the
+  time and effort to do so.</p>
+
+<h3>Made internals of subprocess and async_subprocess protected</h3>
+
+<p>These fields were private so that derived classes couldn't access
+  them. This was orignally chosen to hide the platform-specific nature
+  of the internals. However, there are occasions when a subclass needs
+  to access these fields, so they are now protected.</p>
+
+<p>Change requested/contributed by DJDM.</p>
+
+<h3>Bug Fix - Declaration of environ incorrect for NetBSD</h3>
+
+<p>On some platforms the external variable environ has to be declared
+  before use. The declaration was accidentally moved inside the
+  stlplus namespace. This doesn't show as a problem on other platforms
+  because they supply system declarations of this variable. However,
+  on NetBSD the system declaration is missing and this shows up the
+  scoping problem.</p>
+
+<p>The problem has been solved by simply moving the external
+  declaration back into global scope where it belongs.</p>
+
 <h3>Bug Fix - Crash in portability/ip_sockets due to signals on Linux</h3>
 
 <p>Bug fix contributed by DJDM</p>
@@ -86,7 +118,7 @@ log for all version 2 releases by looking at the
 
 <p>The getcwd function returns the C-string path to the current
   directory. This is then used to construct a std::string. However,
-  getcwd can sometimes return a null pointer, which crashes the
+  getcwd can very rarely return a null pointer, which crashes the
   std::string constructor. I've fixed the code so that a null return
   value is converted into an empty string.</p>
 
