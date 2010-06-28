@@ -122,16 +122,16 @@ namespace stlplus
 
     env_vector& operator = (const env_vector&);
 
-    void clear (void);
-
     // manipulate the env_vector by adding or removing variables
     // adding a name that already exists replaces its value
     void add (const std::string& name, const std::string& value);
     bool remove (const std::string& name);
+    void clear (void);
 
     // get the value associated with a name
     // the first uses an indexed notation (e.g. env["PATH"] )
     // the second is a function based form (e.g. env.get("PATH"))
+    bool present(const std::string& name) const;
     std::string operator [] (const std::string& name) const;
     std::string get (const std::string& name) const;
 

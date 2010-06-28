@@ -602,6 +602,20 @@ namespace stlplus
     return result;
   }
 
+  bool env_vector::present (const std::string& name) const
+  {
+    unsigned i = 0;
+    while(m_env[i])
+    {
+      std::string current_name;
+      std::string current_value;
+      envp_extract(current_name, current_value, m_env, i);
+      if (envp_equal(name,current_name))
+        return true;
+    }
+    return false;
+  }
+
   std::string env_vector::operator [] (const std::string& name) const
   {
     return get(name);
