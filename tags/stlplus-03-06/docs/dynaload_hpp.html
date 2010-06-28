@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>portability/dynaload.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>portability/dynaload.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_DYNALOAD</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_DYNALOAD</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004 onwards</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   A portable interface to the dynamic loader - i.e. the system for loading</span>
+<span style="color: #ff0099">   11: </span><span style="color: #000099">//   dynamic libraries or shared libraries during the running of a program,</span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//   rather than by linking</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
+<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   17: </span>
+<span style="color: #ff0099">   18: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   19: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   20: </span>
+<span style="color: #ff0099">   21: </span>  <span style="color: #000099">//////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   22: </span>  <span style="color: #000099">// dynaload class manages a dynamic loadable library and unloads it on destruction</span>
+<span style="color: #ff0099">   23: </span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #990000">class</span> <span style="color: #000000">dynaload</span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #330033">{</span>
+<span style="color: #ff0099">   26: </span>  <span style="color: #990000">public</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   27: </span>
+<span style="color: #ff0099">   28: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   29: </span>    <span style="color: #000099">// library management</span>
+<span style="color: #ff0099">   30: </span>
+<span style="color: #ff0099">   31: </span>    <span style="color: #000099">// construct the object but do not load</span>
+<span style="color: #ff0099">   32: </span>    <span style="color: #000000">dynaload</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   33: </span>
+<span style="color: #ff0099">   34: </span>    <span style="color: #000099">// construct and load</span>
+<span style="color: #ff0099">   35: </span>    <span style="color: #000000">dynaload</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">library</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   36: </span>
+<span style="color: #ff0099">   37: </span>    <span style="color: #000099">// destroy and unload if loaded</span>
+<span style="color: #ff0099">   38: </span>    <span style="color: #330033">~</span><span style="color: #000000">dynaload</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   39: </span>
+<span style="color: #ff0099">   40: </span>    <span style="color: #000099">// load the library - return success or fail</span>
+<span style="color: #ff0099">   41: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">load</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">library</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   42: </span>
+<span style="color: #ff0099">   43: </span>    <span style="color: #000099">// unload the library if loaded</span>
+<span style="color: #ff0099">   44: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">unload</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   45: </span>
+<span style="color: #ff0099">   46: </span>    <span style="color: #000099">// test whether the library is loaded</span>
+<span style="color: #ff0099">   47: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">loaded</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   48: </span>
+<span style="color: #ff0099">   49: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   50: </span>    <span style="color: #000099">// symbol management</span>
+<span style="color: #ff0099">   51: </span>
+<span style="color: #ff0099">   52: </span>    <span style="color: #000099">// test whether a function is exported by the library</span>
+<span style="color: #ff0099">   53: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">present</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   54: </span>
+<span style="color: #ff0099">   55: </span>    <span style="color: #000099">// get the function as a generic pointer</span>
+<span style="color: #ff0099">   56: </span>    <span style="color: #990000">void</span><span style="color: #330033">*</span> <span style="color: #000000">symbol</span><span style="color: #330033">(</span><span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">name</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   57: </span>
+<span style="color: #ff0099">   58: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   59: </span>    <span style="color: #000099">// error management</span>
+<span style="color: #ff0099">   60: </span>
+<span style="color: #ff0099">   61: </span>    <span style="color: #000099">// enum values to indicate type of error</span>
+<span style="color: #ff0099">   62: </span>    <span style="color: #990000">enum</span> <span style="color: #000000">error_t</span> <span style="color: #330033">{</span><span style="color: #000000">no_error</span><span style="color: #330033">,</span> <span style="color: #000000">load_error</span><span style="color: #330033">,</span> <span style="color: #000000">unload_error</span><span style="color: #330033">,</span> <span style="color: #000000">symbol_error</span><span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   63: </span>
+<span style="color: #ff0099">   64: </span>    <span style="color: #000099">// test whether there has been an error</span>
+<span style="color: #ff0099">   65: </span>    <span style="color: #990000">bool</span> <span style="color: #000000">error</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   66: </span>
+<span style="color: #ff0099">   67: </span>    <span style="color: #000099">// clear an error once it has been handled (or ignored)</span>
+<span style="color: #ff0099">   68: </span>    <span style="color: #990000">void</span> <span style="color: #000000">clear_error</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   69: </span>
+<span style="color: #ff0099">   70: </span>    <span style="color: #000099">// get the type of the error as indicated by the enum error_t</span>
+<span style="color: #ff0099">   71: </span>    <span style="color: #000000">error_t</span> <span style="color: #000000">error_type</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   72: </span>
+<span style="color: #ff0099">   73: </span>    <span style="color: #000099">// get the text of the error as provided by the OS</span>
+<span style="color: #ff0099">   74: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">error_text</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span> <span style="color: #990000">const</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   75: </span>
+<span style="color: #ff0099">   76: </span>    <span style="color: #000099">////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   77: </span>
+<span style="color: #ff0099">   78: </span>  <span style="color: #990000">private</span><span style="color: #330033">:</span>
+<span style="color: #ff0099">   79: </span>    <span style="color: #990000">void</span><span style="color: #330033">*</span> <span style="color: #000000">m_handle</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   80: </span>    <span style="color: #000000">error_t</span> <span style="color: #000000">m_error</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   81: </span>    <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">m_text</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   82: </span>  <span style="color: #330033">}</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   83: </span>
+<span style="color: #ff0099">   84: </span><span style="color: #330033">}</span>
+<span style="color: #ff0099">   85: </span>
+<span style="color: #ff0099">   86: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

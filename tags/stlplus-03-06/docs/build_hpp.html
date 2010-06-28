@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>portability/build.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>portability/build.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_BUILD</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_BUILD</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004 onwards</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Provides a printable representation of the build characteristics in the form:</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">//     version, platform, compiler, variant</span>
+<span style="color: #ff0099">   13: </span>
+<span style="color: #ff0099">   14: </span><span style="color: #000099">//   Where</span>
+<span style="color: #ff0099">   15: </span><span style="color: #000099">//     version is the version of STLplus</span>
+<span style="color: #ff0099">   16: </span><span style="color: #000099">//     platform is the target operating system</span>
+<span style="color: #ff0099">   17: </span><span style="color: #000099">//     compiler is the compilation system and version that the function was compiled with</span>
+<span style="color: #ff0099">   18: </span><span style="color: #000099">//     variant is the kind of build - debug or release</span>
+<span style="color: #ff0099">   19: </span>
+<span style="color: #ff0099">   20: </span><span style="color: #000099">//   Example:</span>
+<span style="color: #ff0099">   21: </span><span style="color: #000099">//     STLplus version 3.0, Generic Unix, gcc v3.4, debug</span>
+<span style="color: #ff0099">   22: </span>
+<span style="color: #ff0099">   23: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   24: </span><span style="color: #990000">#include</span> <span style="color: #009900">"portability_fixes.hpp"</span>
+<span style="color: #ff0099">   25: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
+<span style="color: #ff0099">   26: </span>
+<span style="color: #ff0099">   27: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   28: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   29: </span>
+<span style="color: #ff0099">   30: </span>  <span style="color: #000099">// STLplus version in the form "STLplus version 3.0" - see version.hpp for a way of getting just the version number</span>
+<span style="color: #ff0099">   31: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">stlplus_version</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   32: </span>
+<span style="color: #ff0099">   33: </span>  <span style="color: #000099">// platform is the target operating system in the form "Windows" or "Generic Unix"</span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">platform</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   35: </span>
+<span style="color: #ff0099">   36: </span>  <span style="color: #000099">// compiler_name is the short name of the compiler, e.g. "gcc" or "MSVC"</span>
+<span style="color: #ff0099">   37: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">compiler_name</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   38: </span>  <span style="color: #000099">// compiler_version is the version string of the compiler e.g. "3.4" for gcc or "15.00" for MSVC</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">compiler_version</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   40: </span>  <span style="color: #000099">// compiler is the compilation system and version above combined into a human- readable form e.g. "gcc v3.4"</span>
+<span style="color: #ff0099">   41: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">compiler</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   42: </span>
+<span style="color: #ff0099">   43: </span>  <span style="color: #000099">// variant is the kind of build - "debug" or "release"</span>
+<span style="color: #ff0099">   44: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">variant</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   45: </span>
+<span style="color: #ff0099">   46: </span>  <span style="color: #000099">// build is all of the above combined into a human-readable string</span>
+<span style="color: #ff0099">   47: </span>  <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span> <span style="color: #000000">build</span><span style="color: #330033">(</span><span style="color: #990000">void</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   48: </span>
+<span style="color: #ff0099">   49: </span><span style="color: #330033">}</span>
+<span style="color: #ff0099">   50: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   51: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>

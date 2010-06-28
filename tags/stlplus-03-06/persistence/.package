@@ -1,0 +1,7 @@
+Makefile
+persistence.dsp
+persistence.vcxproj
+persistence.vcxproj.filters
+*.hpp
+*.tpp
+*.cpp

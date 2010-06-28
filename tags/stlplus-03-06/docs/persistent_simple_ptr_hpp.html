@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>persistence/persistent_simple_ptr.hpp</title>
+<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+</head>
+<body lang="en">
+<h1>persistence/persistent_simple_ptr.hpp</h1>
+<pre style="background-color: #ffffff">
+<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_PERSISTENT_SIMPLE_PTR</span>
+<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_PERSISTENT_SIMPLE_PTR</span>
+<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">    4: </span>
+<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
+<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
+<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004 onwards</span>
+<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
+<span style="color: #ff0099">    9: </span>
+<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Persistence of STLplus simple_ptr</span>
+<span style="color: #ff0099">   11: </span>
+<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistence_fixes.hpp"</span>
+<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistent_contexts.hpp"</span>
+<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"simple_ptr.hpp"</span>
+<span style="color: #ff0099">   16: </span>
+<span style="color: #ff0099">   17: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   18: </span>
+<span style="color: #ff0099">   19: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
+<span style="color: #ff0099">   20: </span><span style="color: #330033">{</span>
+<span style="color: #ff0099">   21: </span>
+<span style="color: #ff0099">   22: </span>  <span style="color: #000099">// simple_ptr - uses dump/restore_pointer on the contents</span>
+<span style="color: #ff0099">   23: </span>
+<span style="color: #ff0099">   24: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">DE</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   25: </span>  <span style="color: #990000">void</span> <span style="color: #000000">dump_simple_ptr</span><span style="color: #330033">(</span><span style="color: #000000">dump_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">simple_ptr</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">,</span> <span style="color: #000000">DE</span> <span style="color: #000000">dump_element</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   26: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_dump_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   27: </span>
+<span style="color: #ff0099">   28: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">RE</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   29: </span>  <span style="color: #990000">void</span> <span style="color: #000000">restore_simple_ptr</span><span style="color: #330033">(</span><span style="color: #000000">restore_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #000000">simple_ptr</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">,</span> <span style="color: #000000">RE</span> <span style="color: #000000">restore_element</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   30: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_restore_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   31: </span>
+<span style="color: #ff0099">   32: </span>  <span style="color: #000099">// simple_ptr_clone using the polymorphic callback approach - uses dump/restore_callback on the contents</span>
+<span style="color: #ff0099">   33: </span>
+<span style="color: #ff0099">   34: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   35: </span>  <span style="color: #990000">void</span> <span style="color: #000000">dump_simple_ptr_clone_callback</span><span style="color: #330033">(</span><span style="color: #000000">dump_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">simple_ptr_clone</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   36: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_dump_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   37: </span>
+<span style="color: #ff0099">   38: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   39: </span>  <span style="color: #990000">void</span> <span style="color: #000000">restore_simple_ptr_clone_callback</span><span style="color: #330033">(</span><span style="color: #000000">restore_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #000000">simple_ptr_clone</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   40: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_restore_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   41: </span>
+<span style="color: #ff0099">   42: </span>  <span style="color: #000099">// simple_ptr_clone using the interface approach - uses dump/restore_interface on the contents</span>
+<span style="color: #ff0099">   43: </span>
+<span style="color: #ff0099">   44: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   45: </span>  <span style="color: #990000">void</span> <span style="color: #000000">dump_simple_ptr_clone_interface</span><span style="color: #330033">(</span><span style="color: #000000">dump_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">simple_ptr_clone</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   46: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_dump_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   47: </span>
+<span style="color: #ff0099">   48: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">&gt;</span>
+<span style="color: #ff0099">   49: </span>  <span style="color: #990000">void</span> <span style="color: #000000">restore_simple_ptr_clone_interface</span><span style="color: #330033">(</span><span style="color: #000000">restore_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #000000">simple_ptr_clone</span><span style="color: #330033">&lt;</span><span style="color: #000000">T</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   50: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_restore_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
+<span style="color: #ff0099">   51: </span>
+<span style="color: #ff0099">   52: </span>  <span style="color: #000099">// simple_ptr_nocopy is not made persistent because if it is uncopyable, it must be undumpable</span>
+<span style="color: #ff0099">   53: </span>
+<span style="color: #ff0099">   54: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
+<span style="color: #ff0099">   55: </span>
+<span style="color: #ff0099">   56: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   57: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistent_simple_ptr.tpp"</span>
+<span style="color: #ff0099">   58: </span><span style="color: #990000">#endif</span>
+</pre>
+</body>
+</html>
