@@ -29,7 +29,6 @@ C++ Library Collection</h1>
 </p>
 </div>
 
-
 </div>
 
 <div id="document">
@@ -64,6 +63,27 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.7">Changes from Version 3.6 to 3.7</h2>
 
+<h3>portability/ip_sockets.cpp: Visual Studio 10 fixes</h3>
+
+<p>Visual Studio now defines constants such as EINPROGRESS so I no
+  longer need to define these. However, I still need to define them
+  for older versions of Visual Studio.</p>
+
+<h3>portability/file_system.cpp: Clarified definition of file and folder</h3>
+
+<p>The functions for differentiating between a file and a folder did
+  not handle 'other' filesystem objects correctly. I have now defined
+  a file to be a regular file, symbolic link (Unix only), socket (Unix
+  only) or named pipe. A folder is defined as just a
+  directory. Character devices and block devices (Unix only) are
+  neither files nor folders.</p>
+
+<h3>Makefile: fixed path problems</h3>
+
+<p>Two makefiles source/Makefile and tests/Makefile, relied on the
+  current directory ('.') being on the path, which for me it always
+  is. However, this caused make to fail for other users. The makefiles
+  have been fixed so they do not rely on this.</p>
 
 <h2 id="v3.6">Changes from Version 3.5 to 3.6</h2>
 
