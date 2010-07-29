@@ -7,6 +7,7 @@ else
 	$(MAKE) -C strings $@
 	$(MAKE) -C subsystems $@
 endif
+ifneq ($(TESTS),off)
 	@if [ -d tests ]; then $(MAKE) -C tests $@; fi
-
+endif
 
