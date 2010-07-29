@@ -23,11 +23,13 @@
 #define IOCTL ioctlsocket
 #define CLOSE closesocket
 #define SHUT_RDWR SD_BOTH
+#define SOCKLEN_T int
+#define SEND_FLAGS 0
+#if _MSC_VER < 1600 // not defined before Visual Studio 10
 #define EINPROGRESS WSAEINPROGRESS
 #define EWOULDBLOCK WSAEWOULDBLOCK
 #define ECONNRESET WSAECONNRESET
-#define SOCKLEN_T int
-#define SEND_FLAGS 0
+#endif
 #else
 // Generic Unix includes
 // fix for older versions of Darwin?
