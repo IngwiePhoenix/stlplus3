@@ -1,5 +1,5 @@
 include ../../makefiles/subdirectories.mak
 
 all::
-	run_tests
+	./run_tests
 
