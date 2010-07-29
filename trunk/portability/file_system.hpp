@@ -36,6 +36,7 @@ namespace stlplus
   // test for whether there's something present and its a folder
   bool is_folder(const std::string& thing);
   // test for whether there's something present and its a file
+  // a file can be a regular file, a symbolic link, a FIFO or a socket, but not a device
   bool is_file(const std::string& thing);
 
   ////////////////////////////////////////////////////////////////////////////////

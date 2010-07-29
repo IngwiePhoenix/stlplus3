@@ -30,15 +30,15 @@
 #include <direct.h>
 #include <fcntl.h>
 #include <io.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #else
 #include <dirent.h>
 #include <fcntl.h>
 #include <sys/param.h>
 #include <unistd.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -406,10 +406,60 @@ namespace stlplus
 ////////////////////////////////////////////////////////////////////////////////
 // classifying functions
 
+// Under both Windows and Unix, the stat function is used for classification
+
+// Under Linux, the following classifications are defined
+// source: Linux man page for stat(2) http://linux.die.net/man/2/stat
+//   S_IFMT 	0170000	bitmask for the file type bitfields
+//   S_IFSOCK 	0140000	socket (Note this overlaps with S_IFDIR)
+//   S_IFLNK 	0120000	symbolic link
+//   S_IFREG 	0100000	regular file
+//   S_IFBLK 	0060000	block device
+//   S_IFDIR 	0040000	directory
+//   S_IFCHR 	0020000	character device
+//   S_IFIFO 	0010000	FIFO
+// There are also some Posix-standard macros:
+//   S_ISREG(m)        is it a regular file? 
+//   S_ISDIR(m)        directory? 
+//   S_ISCHR(m)        character device? 
+//   S_ISBLK(m)        block device? 
+//   S_ISFIFO(m)       FIFO (named pipe)? 
+//   S_ISLNK(m)        symbolic link? (Not in POSIX.1-1996.) 
+//   S_ISSOCK(m)       socket? (Not in POSIX.1-1996.)
+// Under Windows, the following are defined:
+// source: Header file sys/stat.h distributed with Visual Studio 10
+//   _S_IFMT  (S_IFMT)   0xF000 file type mask
+//   _S_IFREG (S_IFREG)  0x8000 regular
+//   _S_IFDIR (S_IFDIR)  0x4000 directory
+//   _S_IFCHR (S_IFCHR)  0x2000 character special
+//   _S_IFIFO            0x1000 pipe
+
 #ifdef MSWINDOWS
 // file type tests are not defined for some reason on Windows despite them providing the stat() function!
 #define R_OK 4
 #define W_OK 2
+// Posix-style macros for Windows
+#ifndef S_ISREG
+#define S_ISREG(mode)  ((mode & _S_IFMT) == _S_IFREG)
+#endif
+#ifndef S_ISDIR
+#define S_ISDIR(mode)  ((mode & _S_IFMT) == _S_IFDIR)
+#endif
+#ifndef S_ISCHR
+#define S_ISCHR(mode)  ((mode & _S_IFMT) == _S_IFCHR)
+#endif
+#ifndef S_ISBLK
+#define S_ISBLK(mode)  (false)
+#endif
+#ifndef S_ISFIFO
+#define S_ISFIFO(mode) ((mode & _S_IFMT) == _S_IFIFO)
+#endif
+#ifndef S_ISLNK
+#define S_ISLNK(mode)  (false)
+#endif
+#ifndef S_ISSOCK
+#define S_ISSOCK(mode) (false)
+#endif
 #endif
 
   bool is_present (const std::string& thing)
@@ -431,8 +481,11 @@ namespace stlplus
       path.erase(path.size()-1,1);
     // now test if this thing exists using the built-in stat function and if so, is it a folder
     struct stat buf;
-    if (!(stat(path.c_str(), &buf) == 0)) {return false;}
-    return (buf.st_mode & S_IFDIR) != 0;
+    if (!(stat(path.c_str(), &buf) == 0))
+      return false;
+    // If the object is present, see if it is a directory
+    // this is the Posix-approved way of testing
+    return S_ISDIR(buf.st_mode);
   }
 
   bool is_file (const std::string& thing)
@@ -443,8 +496,12 @@ namespace stlplus
       path.erase(path.size()-1,1);
     // now test if this thing exists using the built-in stat function and if so, is it a file
     struct stat buf;
-    if (!(stat(path.c_str(), &buf) == 0)) {return false;}
-    return (buf.st_mode & S_IFREG) != 0;
+    if (!(stat(path.c_str(), &buf) == 0))
+      return false;
+    // If the object is present, see if it is a file or file-like object
+    // Note that devices are neither folders nor files
+    // this is the Posix-approved way of testing
+    return S_ISREG(buf.st_mode) || S_ISLNK(buf.st_mode) || S_ISSOCK(buf.st_mode) || S_ISFIFO(buf.st_mode);
   }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -464,7 +521,8 @@ namespace stlplus
 
   bool file_writable (const std::string& filespec)
   {
-    // a file is writable if it exists as a file and is writable or if it doesn't exist but could be created and would be writable
+    // a file is writable if it exists as a file and is writable or if
+    // it doesn't exist but could be created and would be writable
     if (is_present(filespec))
     {
       if (!is_file(filespec)) return false;
