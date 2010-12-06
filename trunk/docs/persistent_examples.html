@@ -415,35 +415,43 @@ public:
 };
 </pre>
 
-<p>To add persistence, it is only necessary to add a dump and restore function which use the
-pre-defined dump and restore for string and int. The functions are added to the class as friend
-functions so that they can access the private data fields directly:</p>
+<p>To add persistence, it is only necessary to add a dump and restore
+function which use the pre-defined dump and restore for string and
+int. The functions are made friends of the class so that they can
+access the private data fields directly:</p>
 
 <pre class="cpp">
 class address
 {
   ...
-  friend void dump_address(stlplus::dump_context&amp; context, const address&amp; data)
-  {
-    stlplus::dump_string(context, data.m_name);
-    stlplus::dump_string(context, data.m_email);
-    stlplus::dump_int(context, data.m_age);
-  }
-
-  friend void restore_address(stlplus::restore_context&amp; context, address&amp; data)
-  {
-    stlplus::restore_string(context, data.m_name);
-    stlplus::restore_string(context, data.m_email);
-    stlplus::restore_int(context, data.m_age);
-  }
+  friend void dump_address(stlplus::dump_context&amp; context, const address&amp; data);
+  friend void restore_address(stlplus::restore_context&amp; context, address&amp; data);
 };
+</pre>
+
+<p>The function bodies are then declared outside the class:</p>
+
+<pre cless="cpp">
+void dump_address(stlplus::dump_context&amp; context, const address&amp; data)
+{
+  stlplus::dump_string(context, data.m_name);
+  stlplus::dump_string(context, data.m_email);
+  stlplus::dump_int(context, data.m_age);
+}
+
+void restore_address(stlplus::restore_context&amp; context, address&amp; data)
+{
+  stlplus::restore_string(context, data.m_name);
+  stlplus::restore_string(context, data.m_email);
+  stlplus::restore_int(context, data.m_age);
+}
 </pre>
 
 <p>The next stage is to define an address book, which is simply an unsorted
 vector of addresses:</p>
 
 <pre class="cpp">
-typedef stl::vector&lt;address&gt; address_book;
+typedef std::vector&lt;address&gt; address_book;
 </pre>
 
 <p>This type is already persistent - there is a pre-defined pair of template
@@ -460,7 +468,7 @@ void dump_address_book(stlplus::dump_context&amp; context, const address_book&am
 
 void restore_address_book(stlplus::restore_context&amp; context, address_book&amp; data)
 {
-  stlplus::restore_vector(str, data, restore_address);
+  stlplus::restore_vector(context, data, restore_address);
 }
 </pre>
 
@@ -468,11 +476,12 @@ void restore_address_book(stlplus::restore_context&amp; context, address_book&am
 dumped, then restored to another address_book object:</p>
 
 <pre class="cpp">
-#include "address_book.hpp"
 #include "persistent_contexts.hpp"
 #include &lt;fstream&gt;
 
-int main(unsigned argc, char* argv[])
+&lt;all the code for the address book above&gt;
+
+int main(int argc, char* argv[])
 {
   // create and populate an address book
   address_book addresses;
@@ -482,14 +491,14 @@ int main(unsigned argc, char* argv[])
 
   // dump the address book
   std::ofstream output("test.tmp", std::ios_base::out | std::ios_base::binary);
-  dump_context dumper(output);
+  stlplus::dump_context dumper(output);
   dump_address_book(dumper,addresses);
   output.close();
 
   // restore the address book to a different object
   address_book restored;
   std::ifstream input("test.tmp", std::ios_base::in | std::ios_base::binary);
-  restore_context restorer(input);
+  stlplus::restore_context restorer(input);
   restore_address_book(restorer,restored);
 
   return 0;
@@ -497,7 +506,10 @@ int main(unsigned argc, char* argv[])
 </pre>
 
 <p>In this case I'm using persistence to a file, so I've used the fstream
-devices ofstream and ifstream.</p>
+devices ofstream and ifstream. This program has no output in its
+  present form - you could then add iostream output methods to print
+  out the restored address book and confirm that it is identical to
+  the input.</p>
 
 <h2 id="interfaces">Polymorphic Classes using Interfaces</h2>
 
