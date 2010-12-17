@@ -74,7 +74,7 @@ private:
   int m_z;
 public:
   ...
-}
+};
 </pre>
 
 <p>The required parameter profile of the dump/restore functions is:</p>
@@ -104,7 +104,7 @@ public:
   ...
   friend void dump_point(stlplus::dump_context&amp; context, const point&amp; pt);
   friend void restore_point(stlplus::restore_context&amp; context, point&amp; pt);
-}
+};
 
 void dump_point(stlplus::dump_context&amp; context, const point&amp; pt);
 void restore_point(stlplus::restore_context&amp; context, point&amp; pt);
@@ -136,13 +136,16 @@ delegated to the pre-written functions provided in <a
 href="persistent_basic.html#integer">persistent_basic.hpp</a> for type int. Note also that to access
 the values directly I have declared the functions as friends.</p>
 
+<p>A complete test program demonstrating this example can
+  be <a href="point_test.cpp">downloaded here</a>.</p>
+
 <h2 id="enums">Persistence of Enumeration Types</h2>
 
 <p>Consider the following example. The enum defines a traffic light
 sequence:</p>
 
 <pre class="cpp">
-enum traffic_lights {red, red_amber, green, amber};
+enum traffic_light {red, red_amber, green, amber};
 </pre>
 
 <p>This can be used with stlplus::dump_enum and stlplus::restore_enum directly, but is is better
@@ -152,16 +155,19 @@ the template:</p>
 <pre class="cpp">
 #include "persistent_enum.hpp"
 
-void dump_traffic_lights(stlplus::dump_context&amp; context, const traffic_lights&amp; lights)
+void dump_traffic_light(stlplus::dump_context&amp; context, const traffic_light&amp; lights)
 {
   stlplus::dump_enum(context, lights);
 }
 
-void restore_traffic_lights(stlplus::restore_context&amp; context, traffic_lights&amp; lights)
+void restore_traffic_light(stlplus::restore_context&amp; context, traffic_light&amp; lights)
 {
   stlplus::restore_enum(context, lights);
 }
 </pre>
+
+<p>A complete test program demonstrating this example can
+  be <a href="traffic_light_test.cpp">downloaded here</a>.</p>
 
 <h2 id="layers">Persistence of Multi-Level Types</h2>
 
@@ -213,6 +219,9 @@ the class.</p>
 <p>In this case, to dump an edge means dumping two points which uses the dump function for the point
 class written in the last section. This layering can be continued ad infinitum.</p>
 
+<p>A complete test program demonstrating this example can
+  be <a href="edge_test.cpp">downloaded here</a>.</p>
+
 <h2 id="templates">Persistence of Templates</h2>
 
 <p>The template classes provided by the STL and the template classes provided by STLplus have been
@@ -243,6 +252,9 @@ void restore_edge_vector(stlplus::restore_context&amp; context, std::vector&lt;e
   stlplus::restore_vector(context, e, restore_edge);
 }
 </pre>
+
+<p>A complete test program demonstrating this example can
+  be <a href="edge_vector_test.cpp">downloaded here</a>.</p>
 
 <h2 id="single">Single-Level STL Structures</h2>
 
