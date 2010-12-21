@@ -19,7 +19,7 @@ namespace stlplus
   {
     print_fn1(device, values.first);
     device << separator;
-    print__fn2(device, values.second);
+    print_fn2(device, values.second);
   }
 
 } // end namespace stlplus
