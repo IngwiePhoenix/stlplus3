@@ -45,6 +45,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "udp_test", "udp_test\udp_te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subprocess_test", "subprocess_test\subprocess_test.vcxproj", "{AB407335-B13D-44E9-92BB-4A32DDCACA59}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "point_test", "point_test\point_test.vcxproj", "{8B7668B4-15EE-F11D-633D-70CB084C510C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "edge_test", "edge_test\edge_test.vcxproj", "{CA4218C6-558E-C5BC-845D-1D9F3433E7FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "edge_vector_test", "edge_vector_test\edge_vector_test.vcxproj", "{0C78A002-95DF-855E-F555-F360B49CE28B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "traffic_light_test", "traffic_light_test\traffic_light_test.vcxproj", "{966C696C-55AE-087E-4466-C08F86DF5726}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -139,6 +147,22 @@ Global
 		{AB407335-B13D-44E9-92BB-4A32DDCACA59}.Debug|Win32.Build.0 = Debug|Win32
 		{AB407335-B13D-44E9-92BB-4A32DDCACA59}.Release|Win32.ActiveCfg = Release|Win32
 		{AB407335-B13D-44E9-92BB-4A32DDCACA59}.Release|Win32.Build.0 = Release|Win32
+		{8B7668B4-15EE-F11D-633D-70CB084C510C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8B7668B4-15EE-F11D-633D-70CB084C510C}.Debug|Win32.Build.0 = Debug|Win32
+		{8B7668B4-15EE-F11D-633D-70CB084C510C}.Release|Win32.ActiveCfg = Release|Win32
+		{8B7668B4-15EE-F11D-633D-70CB084C510C}.Release|Win32.Build.0 = Release|Win32
+		{CA4218C6-558E-C5BC-845D-1D9F3433E7FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA4218C6-558E-C5BC-845D-1D9F3433E7FF}.Debug|Win32.Build.0 = Debug|Win32
+		{CA4218C6-558E-C5BC-845D-1D9F3433E7FF}.Release|Win32.ActiveCfg = Release|Win32
+		{CA4218C6-558E-C5BC-845D-1D9F3433E7FF}.Release|Win32.Build.0 = Release|Win32
+		{0C78A002-95DF-855E-F555-F360B49CE28B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0C78A002-95DF-855E-F555-F360B49CE28B}.Debug|Win32.Build.0 = Debug|Win32
+		{0C78A002-95DF-855E-F555-F360B49CE28B}.Release|Win32.ActiveCfg = Release|Win32
+		{0C78A002-95DF-855E-F555-F360B49CE28B}.Release|Win32.Build.0 = Release|Win32
+		{966C696C-55AE-087E-4466-C08F86DF5726}.Debug|Win32.ActiveCfg = Debug|Win32
+		{966C696C-55AE-087E-4466-C08F86DF5726}.Debug|Win32.Build.0 = Debug|Win32
+		{966C696C-55AE-087E-4466-C08F86DF5726}.Release|Win32.ActiveCfg = Release|Win32
+		{966C696C-55AE-087E-4466-C08F86DF5726}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
