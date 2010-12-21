@@ -1,3 +1,6 @@
+#include <string>
+#include <map>
+#include "persistent_contexts.hpp"
 #include "persistent_map.hpp"
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
@@ -6,8 +9,6 @@
 #include "dprintf.hpp"
 #include "file_system.hpp"
 #include "build.hpp"
-#include <string>
-#include <map>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -49,14 +50,15 @@ bool compare(const int_string_map& left, const int_string_map& right)
   return result;
 }
 
-std::string int_to_string(int data)
+void print_int(std::ostream& str, int data)
 {
-	return stlplus::int_to_string(data);
+  return stlplus::print_int(str, data);
 }
 
 std::ostream& operator<< (std::ostream& str, const int_string_map& data)
 {
-  return str << stlplus::map_to_string(data, int_to_string, stlplus::string_to_string, ":", ",");
+  stlplus::print_map(str, data, print_int, stlplus::print_string, ":", ",");
+  return str;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
