@@ -137,7 +137,7 @@ href="persistent_basic.html#integer">persistent_basic.hpp</a> for type int. Note
 the values directly I have declared the functions as friends.</p>
 
 <p>A complete test program demonstrating this example can
-  be <a href="point_test.cpp">downloaded here</a>.</p>
+  be <a href="persistent_point_test.cpp">downloaded here</a>.</p>
 
 <h2 id="enums">Persistence of Enumeration Types</h2>
 
@@ -167,7 +167,7 @@ void restore_traffic_light(stlplus::restore_context&amp; context, traffic_light&
 </pre>
 
 <p>A complete test program demonstrating this example can
-  be <a href="traffic_light_test.cpp">downloaded here</a>.</p>
+  be <a href="persistent_traffic_light_test.cpp">downloaded here</a>.</p>
 
 <h2 id="layers">Persistence of Multi-Level Types</h2>
 
@@ -220,7 +220,7 @@ the class.</p>
 class written in the last section. This layering can be continued ad infinitum.</p>
 
 <p>A complete test program demonstrating this example can
-  be <a href="edge_test.cpp">downloaded here</a>.</p>
+  be <a href="persistent_edge_test.cpp">downloaded here</a>.</p>
 
 <h2 id="templates">Persistence of Templates</h2>
 
@@ -254,12 +254,12 @@ void restore_edge_vector(stlplus::restore_context&amp; context, std::vector&lt;e
 </pre>
 
 <p>A complete test program demonstrating this example can
-  be <a href="edge_vector_test.cpp">downloaded here</a>.</p>
+  be <a href="persistent_edge_vector_test.cpp">downloaded here</a>.</p>
 
 <h2 id="single">Single-Level STL Structures</h2>
 
-<p>This example shows how to make a multimap persistent. This is a
-one-layer data structure because the multimap only contains the basic
+<p>This example shows how to make a map persistent. This is a
+one-layer data structure because the map only contains the basic
 types int and string (conceptually a
 string is an atomic type, even if its implementation just happens
 to be quite complicated - don't confuse implementation with concept).</p>
@@ -274,117 +274,189 @@ include will be explained as the example unfolds:</p>
 
 <pre class="cpp">
 #include &lt;string&gt;
-#include &lt;multimap&gt;
+#include &lt;map&gt;
+#include "persistent_contexts.hpp"
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
-#include "persistent_multimap.hpp"
+#include "persistent_map.hpp"
+#include "persistent_shortcuts.hpp"
+#include "strings.hpp"
+#include "dprintf.hpp"
+#include "file_system.hpp"
+#include "build.hpp"
 </pre>
 
 <p>The following definition is used to define a type that maps an
-int onto a string, allowing multiple mappings for each int:</p>
+int onto a string, allowing only one mapping for each int (use a multi
+ map if you want multiple mappings of each int):</p>
 
 <pre class="cpp">
-typedef std::multimap&lt;int,std::string&gt; int_string_map;
+typedef std::map&lt;int,std::string&gt; int_string_map;
 </pre>
 
-<p>Two variables of this type can then be defined:</p>
+<p>The persistence functions are then instantiations of the template
+  persistence functions for map, using the persistence functions for
+  int and string as parameters:</p>
 
 <pre class="cpp">
-int_string_map data, restored;
-</pre>
-
-<p>The object called data will be used to store the data to be saved
-in a file, whilst the object called restored will be used to restore
-the data. It is then possible to compare the two to verify that they are the
-same.</p>
-
-<p>First, I fill the map with a random amount of random data, just to
-demonstrate the data persistence:</p>
-
-<pre class="cpp">
-#define MAX_SIZE 2877
-#define MAX_NUM 15254
-...
-// seed the random number generator with a different value each run (this is a common trick)
-srand(time(0));
-// select the random map size to generate
-const unsigned number = (unsigned)rand() % MAX_NUM;
-for (unsigned i = 0; i &lt; number; i++)
+void dump_int_string_map(stlplus::dump_context&amp; context, const int_string_map&amp; data)
 {
-  // select a random key to add to the map
-  int key = rand();
-  // select random characters to add to the data string
-  const unsigned size = (unsigned)rand() % MAX_SIZE;
-  std::string value;
-  for  (unsigned j = 0; j &lt; size; j++)
-  {
-    char ch = (char)rand();
-    value += ch;
-  }
-  // finally, add the key/data pair to the multimap
-  data.insert(std::make_pair(key,value));
+  stlplus::dump_map(context, data, stlplus::dump_int, stlplus::dump_string);
+}
+
+void restore_int_string_map(stlplus::restore_context&amp; context, int_string_map&amp; data)
+{
+  stlplus::restore_map(context, data, stlplus::restore_int, stlplus::restore_string);
 }
 </pre>
 
-<p>So, the multimap contains random integer keys mapped onto random length
-strings of random data.</p>
+<p>The pre-defined persistence functions can do the whole job and the
+programmers task is to simply wrap the template functions in
+non-template wrapper functions.  The dump_map function dumps the
+map by calling dump on the key and data types. The key type is int,
+which already has a dump function defined. The data type is string,
+which also has a dump function defined.</p>
 
-<p>No functions need to be written to implement persistence of this data structure! The pre-defined
-persistence functions can do the whole job. The dump_multimap function dumps the map by calling dump
-on the key and data types. The key type is int, which already has a dump function defined. The data
-type is string, which also has a dump function defined.</p>
-
-<p>The first stage in saving this data structure to file is to create a
-dump_context which needs to be attached to an IOStream output device. In
-this case I'll choose to save the dump to file:</p>
+<p>For the test we need to be able to compare a restored map with an
+  original one, so here is a comparison function:</p>
 
 <pre class="cpp">
-std::ofstream output("test_map.tmp", std::ios_base::out | std::ios_base::binary);
-stlplus::dump_context dumper(out);
+bool compare(const int_string_map&amp; left, const int_string_map&amp; right)
+{
+  bool result = true;
+  if (left.size() != right.size())
+  {
+    std::cerr &lt;&lt; "different size - left = " &lt;&lt; left.size() &lt;&lt; " right = " &lt;&lt; right.size() &lt;&lt; std::endl;
+    result = false;
+  }
+  int_string_map::const_iterator j, k;
+  for (j = left.begin(), k = right.begin(); j != left.end() &amp;&amp; k != right.end(); j++, k++)
+  {
+    if (*j != *k)
+    {
+      std::cerr &lt;&lt; "left = \"" &lt;&lt; j-&gt;first &lt;&lt; "\" is different from right = \"" &lt;&lt; k-&gt;first &lt;&lt; "\"" &lt;&lt; std::endl;
+      result = false;
+    }
+  }
+  return result;
+}
 </pre>
 
-<p>Now, the data structure can be dumped to this file:</p>
+<p>We also need to be able to print out the map, so print functions
+  can be built up using the STLplus strings library::</p>
 
 <pre class="cpp">
-stlplus::dump_multimap(dumper,data,stlplus::dump_int,stlplus::dump_string);
-out.close();
+void print_int(std::ostream&amp; str, int data)
+{
+  return stlplus::print_int(str, data);
+}
+
+std::ostream&amp; operator&lt;&lt; (std::ostream&amp; str, const int_string_map&amp; data)
+{
+  stlplus::print_map(str, data, print_int, stlplus::print_string, ":", ",");
+  return str;
+}
 </pre>
 
-<p>In this example, the output file is explicitly closed because I'm about to
-read it straight back in again. To read the file, a restore_context
-needs to be created:</p>
+<p>The local version of print_int is needed because the STLplus
+  version has extra formatting parameters and the way the print templates work
+  means there must be exactly two parameters to a function passed as
+  an argument.</p>
+
+<p>Finally, a test program can be written:</p>
 
 <pre class="cpp">
-std::ifstream input("test_map.tmp", std::ios_base::in | std::ios_base::binary);
-stlplus::restore_context restorer(input);
+#define NUMBER 100
+#define DATA "map_test.tmp"
+#define MASTER "map_test.dump"
+
+int main(int argc, char* argv[])
+{
+  bool result = true;
+  std::cerr &lt;&lt; stlplus::build() &lt;&lt; " testing " &lt;&lt; NUMBER &lt;&lt; " mappings" &lt;&lt; std::endl;
+
+  try
+  {
+    // build the sample data structure
+    std::cerr &lt;&lt; "creating" &lt;&lt; std::endl;
+    int_string_map data;
+    for (unsigned i = 0; i &lt; NUMBER; i++)
+      data[i] = stlplus::dformat("%d",i);
+    std::cerr &lt;&lt; data &lt;&lt; std::endl;
+    // now dump to the file
+    std::cerr &lt;&lt; "dumping" &lt;&lt; std::endl;
+    stlplus::dump_to_file(data,DATA,dump_int_string_map,0);
+
+    // now restore the same file and compare
+    std::cerr &lt;&lt; "restoring" &lt;&lt; std::endl;
+    int_string_map restored;
+    stlplus::restore_from_file(DATA,restored,restore_int_string_map,0);
+    result &amp;= compare(data,restored);
+
+    // compare with the master dump if present
+    if (!stlplus::file_exists(MASTER))
+      stlplus::file_copy(DATA,MASTER);
+    else
+    {
+      std::cerr &lt;&lt; "restoring master" &lt;&lt; std::endl;
+      int_string_map master;
+      stlplus::restore_from_file(MASTER,master,restore_int_string_map,0);
+      result &amp;= compare(data,master);
+    }
+  }
+  catch(std::exception&amp; except)
+  {
+    std::cerr &lt;&lt; "caught standard exception " &lt;&lt; except.what() &lt;&lt; std::endl;
+    result = false;
+  }
+  catch(...)
+  {
+    std::cerr &lt;&lt; "caught unknown exception" &lt;&lt; std::endl;
+    result = false;
+  }
+
+  if (!result)
+    std::cerr &lt;&lt; "test failed" &lt;&lt; std::endl;
+  else
+    std::cerr &lt;&lt; "test passed" &lt;&lt; std::endl;
+  return result ? 0 : 1;
+}
 </pre>
 
-<p>Now the data structure can be restored, in this case to a different object:</p>
+<p>The object called data will be used to store the data to be saved
+in a file. First, I fill the map with number sequnce mapped onto the
+string representation of the number, just to demonstrate the data
+persistence.</p>
 
-<pre class="cpp">
-stlplus::restore_multimap(restorer,restored,stlplus::restore_int,stlplus::restore_string);
-</pre>
+<p>To save this data structure to file I use the shortcut function
+  dump_to_file, which does the whole job in one step.</p>
 
-<p>The rest of the program just compares the two data structures to confirm
-they are identical. I don't need to go into that here.</p>
+<p>Then the data structure is restored using the complementarry
+  shortcut function restore_from_file.</p>
+
+<p>The rest of the program compares the two data structures to confirm
+they are identical. It also compares with a pre-saved master copy.</p>
 
 <p>In practice, it is clearer if you use a typedef to create a named <em>type</em>, as in this case, and then write a
 trivial pair of functions called dump_<em>type</em> and restore_<em>type</em> to hide the use of the
 template functions. This also means that you can always remember the name of the persistence
 functions for any type you have designed - because they are always called dump and restore followed
-by the name of the type. The functions are:</p>
+by the name of the type. The functions in this case are:</p>
 
 <pre class="cpp">
 void dump_int_string_map(stlplus::dump_context&amp; context, const int_string_map&amp; data)
 {
-  stlplus::dump_multimap(context, data, stlplus::dump_int, stlplus::dump_string);
+  stlplus::dump_map(context, data, stlplus::dump_int, stlplus::dump_string);
 }
 
 void restore_int_string_map(stlplus::restore_context&amp; context, int_string_map&amp; data)
 {
-  stlplus::restore_multimap(context, data, stlplus::restore_int, stlplus::restore_string);
+  stlplus::restore_map(context, data, stlplus::restore_int, stlplus::restore_string);
 }
 </pre>
+
+<p>A complete test program demonstrating this example can
+  be <a href="persistent_map_test.cpp">downloaded here</a>.</p>
 
 <h2 id="multi">Multi-level STL Structures</h2>
 
