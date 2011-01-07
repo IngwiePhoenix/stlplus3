@@ -11,6 +11,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "persistence_fixes.hpp"
 #include "persistent_bitset.hpp"
 #include "persistent_complex.hpp"
 #include "persistent_deque.hpp"
@@ -22,5 +23,8 @@
 #include "persistent_set.hpp"
 #include "persistent_string.hpp"
 #include "persistent_vector.hpp"
+#ifdef STLPLUS_HAS_CXX0X
+#include "persistent_shared_ptr.hpp"
+#endif
 
 #endif

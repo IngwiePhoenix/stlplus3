@@ -63,19 +63,48 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.7">Changes from Version 3.6 to 3.7</h2>
 
+<h3>Added persistence to the STL shared_ptr</h3>
+
+<p>There is now support in the persistence library for the
+  std::shared_ptr class. This is only supported for persistence if it
+  is a true c++0x version of shared_ptr - that is, it is in the std::
+  namespace, not the std::tr1 namespace.</p>
+
+<p>I don't support std::tr1::shared_ptr nor boost::shared_ptr.</p>
+
+<p>In Visual Studio 2010, std::shared_ptr is available as
+  standard.</p>
+
+<p>In gcc version 4.5 (I'm not sure the earliest version), it is
+  enabled by the gcc option -std=c++0x or by running make as:</p>
+
+<pre>
+make CXXFLAGS=-std=c++0x
+</pre>
+
+<h3>docs/persistent_examples.html</h3>
+
+<p>Added downloadable code for some of the persistence examples.</p>
+
+<h3>strings/print_pair.tpp and strings/print_map.tpp: Bug fixes</h3>
+
+<p>A couple of bugs fixed related to the conversion from STLplus
+  2. These only showed when trying to compile a program that uses
+  these functions.</p>
+
 <h3>portability/ip_sockets.cpp: Visual Studio 10 fixes</h3>
 
 <p>Visual Studio now defines constants such as EINPROGRESS so I no
-  longer need to define these. However, I still need to define them
+  longer need to define these. However, I still define them
   for older versions of Visual Studio.</p>
 
 <h3>portability/file_system.cpp: Clarified definition of file and folder</h3>
 
 <p>The functions for differentiating between a file and a folder did
   not handle 'other' filesystem objects correctly. I have now defined
-  a file to be a regular file, symbolic link (Unix only), socket (Unix
-  only) or named pipe. A folder is defined as just a
-  directory. Character devices and block devices (Unix only) are
+  a file to be a regular file (any OS), symbolic link (Unix only), socket (Unix
+  only) or named pipe (any OS). A folder is defined as just a
+  directory (any OS). Character devices (any OS) and block devices (Unix only) are
   neither files nor folders.</p>
 
 <h3>Makefile: fixed path problems</h3>
