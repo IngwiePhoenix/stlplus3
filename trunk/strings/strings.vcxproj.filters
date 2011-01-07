@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="print_address.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_vector.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_bool.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_cstring.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_float.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_inf.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_int.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_string.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="print_vector.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_address.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_bool.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_cstring.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_float.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_inf.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_int.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_string.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+    <ClCompile Include="string_utilities.cpp">
+      <Filter>Bodies</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="format_types.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_address.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_basic.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_bitset.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_bool.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_cstring.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_digraph.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_float.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_foursome.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_hash.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_inf.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_int.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_list.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_map.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_matrix.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_ntree.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_pair.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_pointer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_sequence.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_set.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_simple_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_smart_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_stl.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_stlplus.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_string.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_triple.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="print_vector.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_address.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_basic.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_bitset.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_bool.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_cstring.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_digraph.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_float.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_foursome.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_hash.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_inf.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_int.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_list.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_map.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_matrix.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_ntree.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_pair.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_pointer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_sequence.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_set.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_simple_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_smart_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_stl.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_stlplus.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_string.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_triple.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_utilities.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="string_vector.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="strings.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="strings_fixes.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="print_bitset.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_digraph.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_foursome.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_hash.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_list.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_smart_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_map.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_matrix.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_ntree.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_pair.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_pointer.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_sequence.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_set.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_simple_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_list.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_smart_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_map.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_matrix.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_ntree.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_pair.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_pointer.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_sequence.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_set.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_simple_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_triple.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="print_vector.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_bitset.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_digraph.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_foursome.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_hash.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_triple.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="string_vector.tpp">
+      <Filter>Templates</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{f0ae2fd6-4bc1-4251-816c-90a65d8c7f79}</UniqueIdentifier>
+      <Extensions>*.hpp</Extensions>
+    </Filter>
+    <Filter Include="Templates">
+      <UniqueIdentifier>{9fbd0776-a726-49a8-a351-3b690812f49e}</UniqueIdentifier>
+      <Extensions>*.tpp</Extensions>
+    </Filter>
+    <Filter Include="Bodies">
+      <UniqueIdentifier>{9a256116-3751-4d16-9021-88da0ea5c1b3}</UniqueIdentifier>
+      <Extensions>*.cpp</Extensions>
+    </Filter>
+  </ItemGroup>
+</Project>

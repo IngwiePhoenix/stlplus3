@@ -131,6 +131,7 @@
     <ClInclude Include="persistent_pointer.hpp" />
     <ClInclude Include="persistent_pointers.hpp" />
     <ClInclude Include="persistent_set.hpp" />
+    <ClInclude Include="persistent_shared_ptr.hpp" />
     <ClInclude Include="persistent_shortcuts.hpp" />
     <ClInclude Include="persistent_simple_ptr.hpp" />
     <ClInclude Include="persistent_smart_ptr.hpp" />
@@ -216,6 +217,7 @@
     <None Include="persistent_pair.tpp" />
     <None Include="persistent_pointer.tpp" />
     <None Include="persistent_set.tpp" />
+    <None Include="persistent_shared_ptr.tpp" />
     <None Include="persistent_shortcuts.tpp" />
     <None Include="persistent_simple_ptr.tpp" />
     <None Include="persistent_smart_ptr.tpp" />
