@@ -19,14 +19,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Problem with missing __FUNCTION__ macro
 ////////////////////////////////////////////////////////////////////////////////
-// this macro is used in debugging but was missing in Visual Studio prior to version 7
-// it also has a different name in Borland
 
+// this macro is used in debugging but was missing in Visual Studio prior to version 7
 #if defined(_MSC_VER) && (_MSC_VER < 1300)
 #define __FUNCTION__ 0
 #endif
 
-#ifdef __BORLANDC__
+// old versions of Borland compiler defined a macro __FUNC__ but more recent ones define __FUNCTION__
+// I'm not sure at what version this change was made - assumed C++ Builder 6.32
+#if defined(__BORLANDC__) && (__BORLANDC__ < 1585)
 #define __FUNCTION__ __FUNC__
 #endif
 
