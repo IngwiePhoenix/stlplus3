@@ -56,7 +56,7 @@ namespace stlplus
 #elif defined _MSC_VER
     return dformat("%0.2f",((float)_MSC_VER)/100.0);
 #elif defined __BORLANDC__
-    return dformat("%d.%d.%d",__BORLANDC__/256,__BORLANDC__/16%16,__BORLANDC__%16);
+    return dformat("%d.%d%d",__BORLANDC__/256,__BORLANDC__/16%16,__BORLANDC__%16);
 #else
     return std::string();
 #endif
