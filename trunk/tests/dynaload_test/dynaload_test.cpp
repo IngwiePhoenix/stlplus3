@@ -5,7 +5,6 @@
 
 typedef char* (*sqlite3_libversion_t)(void);
 
-
 int main (int argc, char* argv[])
 {
   DEBUG_TRACE;
