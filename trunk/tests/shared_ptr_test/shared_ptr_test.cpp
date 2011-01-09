@@ -2,22 +2,23 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "persistent_stl.hpp"
-#include "persistent_shortcuts.hpp"
-#include "string_utilities.hpp"
-#include "string_string.hpp"
-#include "string_pair.hpp"
+#include "persistence.hpp"
+#include "strings.hpp"
 #include "build.hpp"
 #include "file_system.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
+
+#ifdef STLPLUS_HAS_CXX0X
 
 typedef std::shared_ptr<std::string> string_ptr;
 
 void print(const std::string& label, const string_ptr& value)
 {
   std::cout << label;
-  std::cout << " = " << (value.get() ? *value : "<null>");
+  // use two ways of printing to check both
+  std::cout << " = " << stlplus::shared_ptr_to_string(value, stlplus::string_to_string) << " = ";
+  stlplus::print_shared_ptr(std::cout, value, stlplus::print_string);
   std::cout << " pointer = " << value.get();
   std::cout << " count = " << value.use_count();
   std::cout << std::endl;
@@ -63,6 +64,8 @@ bool compare (string_ptr_pair& left, string_ptr_pair& right)
   return ((*left.first) == (*right.first)) && ((*left.second) == (*right.second));
 }
 
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 
 static const char* DATA1 = "data1.tmp";
@@ -79,6 +82,8 @@ int main (int argc, char* argv[])
   try
   {
     unsigned errors = 0;
+
+#ifdef STLPLUS_HAS_CXX0X
 
     // shared_ptr()
     string_ptr s0;
@@ -196,6 +201,13 @@ int main (int argc, char* argv[])
       if (!compare(p1,master))
         errors++;
     }
+
+#else
+
+    std::cerr << "error: This compiler does not support std::shared_ptr" << std::endl;
+    errors++;
+
+#endif
 
     if (errors == 0)
       std::cerr << "No errors were found - test SUCCEEDED" << std::endl;
