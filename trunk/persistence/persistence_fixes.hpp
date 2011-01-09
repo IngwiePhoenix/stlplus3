@@ -39,34 +39,36 @@
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
-// Rules for testing whether this compiler has TR1 extension data types
+// Rules for testing whether this compiler has C++0x extension data types (especially shared_ptr)
 // Specifically I only support use of these extensions in their final, C++0x standard form
 // i.e. 
 //   1) the headers are in the global memory space (e.g. #include <memory>)
-//   2) the components are in the std:: namespace
-// Earlier versions put headers in a tr1/ subdirectory and compoinents in a std::tr1 sub-namespace
+//   2) the components are in the std:: namespace (e.g. std::shared_ptr)
+//
+// I don't support the TR1 proposed versions which put headers in a
+// tr1/ subdirectory and components in a std::tr1 sub-namespace
 ////////////////////////////////////////////////////////////////////////////////
 
 // gcc has TR1 after version 4
-// in normal mode, the TR1 extensions are in the tr1/ header space and std::tr1 namespace
-// in C++0x mode they are in the global header space and std:: namespace
-// C++0x mode is switched on from the command line using the -std=c++0x flag
+// in normal mode, the extensions are TR1 versions and therefore not supported
+// However, gcc has a C++0x mode and then they are supported
+// C++0x mode is switched on from the command line using the -std=c++0x flag and that sets the following macro
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 #define STLPLUS_HAS_CXX0X 1
 #endif
 
 // Visual Studio
-#ifdef _MSC_VER
-// Microsoft only incorporated TR1 into std:: namespace in Visual Studio 2010 (v16.00)
-#if _MSC_VER >= 1600
+// Microsoft only incorporated the extensions in their C++0x form from Visual Studio 2010 (v16.00)
+#if defined(_MSC_VER) && (_MSC_VER >= 1600)
 #define STLPLUS_HAS_CXX0X 1
-#endif
 #endif
 
 // Borland
-#ifdef __BORLANDC__
-// Borland have supported TR1 since v5.82
-#if __BORLANDC__ >= 0x582
+// Borland use an old version of Dinkumware's library which doesn't have of the C++0x features (as of v6.31)
+// Add support as soon as it becomes available which I think is Dinkumware v505
+#if defined(__BORLANDC__) && (__BORLANDC__ >= 0x631)
+#include <yvals.h>
+#if defined(_CPPLIB_VER) && (_CPPLIB_VER >= 505)
 #define STLPLUS_HAS_CXX0X 1
 #endif
 #endif
