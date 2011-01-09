@@ -11,6 +11,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "strings_fixes.hpp"
 #include "print_bitset.hpp"
 #include "print_list.hpp"
 #include "print_map.hpp"
@@ -19,5 +20,8 @@
 #include "print_set.hpp"
 #include "print_string.hpp"
 #include "print_vector.hpp"
+#ifdef STLPLUS_HAS_CXX0X
+#include "print_shared_ptr.hpp"
+#endif
 
 #endif
