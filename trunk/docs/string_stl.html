@@ -147,6 +147,20 @@ std::string stlplus::pointer_to_string(const T* value,
                                        const std::string&amp; suffix);
 </pre>
 
+<p>The shared_ptr container has a similar interface, but there is a
+  difference between an empty string and a null string:</p>
+
+<pre class="cpp">
+template &lt;typename T, typename S&gt;
+std::string stlplus::shared_ptr_to_string(const std::shared_ptr&lt;T&gt; value,
+                                          S to_string_fn,
+                                          const std::string&amp; empty_string,
+                                          const std::string&amp; null_string,
+                                          const std::string&amp; prefix,
+                                          const std::string&amp; suffix);
+</pre>
+
+
 <p>To print a template container which contains another template container,
 write a <em>type</em>_to_string function simply calling the containing <em>type</em>_to_string function. For
 example, to write a string_list_vector_to_string function for a list&lt;vector&lt;string&gt;&gt;
@@ -191,6 +205,23 @@ above.</p>
 <p>The set of print functions are:</p>
 
 <pre class="cpp">
+template &lt;typename T, typename S&gt;
+void print_pointer(std::ostream&amp; device,
+                   const T* value,
+                   S print_fn,
+                   const std::string&amp; null_string,
+                   const std::string&amp; prefix,
+                   const std::string&amp; suffix);
+
+template&lt;typename T, typename S&gt;
+void print_shared_ptr(std::ostream&amp; device,
+                      const std::shared_ptr&lt;T&gt;&amp; value,
+                      S print_fn,
+                      const std::string&amp; empty_string,
+                      const std::string&amp; null_string,
+                      const std::string&amp; prefix,
+                      const std::string&amp; suffix);
+
 template &lt;typename I, typename S&gt;
 void print_sequence(std::ostream&amp; device,
                     I begin, I end, 

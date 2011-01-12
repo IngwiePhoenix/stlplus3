@@ -38,7 +38,15 @@ namespace stlplus
     throw(persistent_dump_failed);
 
   template<typename T>
+  void dump_object_xref(dump_context&, const T* const data)
+    throw(persistent_dump_failed);
+
+  template<typename T>
   void restore_xref(restore_context&, T*& data)
+    throw(persistent_restore_failed);
+
+  template<typename T>
+  void restore_object_xref(restore_context&, T*& data)
     throw(persistent_restore_failed);
 
 } // end namespace stlplus

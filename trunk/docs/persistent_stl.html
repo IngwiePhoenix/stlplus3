@@ -54,6 +54,7 @@ C++ Library Collection</h1>
 <li class="internal"><a href="#multimap">std::multimap</a></li>
 <li class="internal"><a href="#complex">std::complex</a></li>
 <li class="internal"><a href="#bitset">std::bitset</a></li>
+<li class="internal"><a href="#shared_ptr">std::shared_ptr</a></li>
 <li class="internal"><a href="#omitted">Omitted Classes - adaptors and iterators</a></li>
 </ul>
 
@@ -489,6 +490,72 @@ void restore_flags_vector(stlplus::restore_context&amp; context, flags_vector&am
   stlplus::restore_vector(context, data, stlplus::restore_bitset&lt;100&gt;);
 }
 </pre>
+
+<h2 id="shared_ptr">Persistence of std::shared_ptr</h2>
+
+<ul>
+<li class="external"><a href="persistent_shared_ptr_hpp.html">Browse Header persistent_shared_ptr.hpp</a></li>
+</ul>
+
+<p>The shared_ptr class is part of the proposed "C++0x" extensions to
+  C++. This standard has not yet been ratified, but some compilers are
+  already supporting some of its features. For this reason, support
+  for persistence of shared_ptr has been added to the STLplus
+  persistence library, but only for those compilers that suuport
+  it.</p>
+
+<p>Note: the shared_ptr class has been pre-released as part of the
+  "TR1" proposed extensions which eventually become part of the
+  "C++0x" standard. I do not support shared_ptr in its TR1 form
+  because it's implementation has varied between compilers too much to
+  provide a portable solution.</p>
+
+<p>At the time of writing the following compilers support
+  shared_ptr:</p>
+
+<dl>
+
+<dt>Microsoft Visual Studio</dt>
+<dd>From Visual Studio Express 2010 the C++0x form of shared_ptr is
+  provided by default.</dd>
+
+<dt>Gnu gcc</dt>
+<dd>The C++0x form of shared_ptr is supported in gcc from version 4,
+  provided you enable the c++0x mode with the command-line switch
+  -std=c++0x. It is available in TR1 form without the switch but I do
+  not support that version.</dd>
+
+<dt>Borland (now Embarcadero) C++ Builder</dt>
+<dd>The Borland compiler does not provide shared_ptr as yet (checked
+  in v6.31). It uses the Dinkumware STL library as does Visual Studio,
+  but an older version.</dd>
+
+</dl>
+
+<p>The shared_ptr class contains a pointer to one element type and
+therefore is parametrised by one element function.</p>
+
+<p>The interface is:</p>
+
+<pre class="cpp">
+template&lt;typename T, typename DE&gt;
+void dump_shared_ptr(dump_context&amp;, const std::shared_ptr&lt;T&gt;&amp; data, DE dump_element)
+  throw(persistent_dump_failed);
+
+template&lt;typename T, typename RE&gt;
+void restore_shared_ptr(restore_context&amp;, std::shared_ptr&lt;T&gt;&amp; data, RE restore_element)
+  throw(persistent_restore_failed);
+</pre>
+
+<p>This pair of functions are templatised functions for the persistence of a shared_ptr containing
+an element of the template class and takes as its third parameter the function for managing the elements. For
+example, for a pointer to a string, the element functions would be stlplus::dump_string and
+stlplus::restore_string.</p>
+
+<p>Note: the functions for implementing pointers to polymorphic
+  classes haven't been completed yet. See the discussion for
+  implementing persistence with polymorphism for the
+  <a href="persistent_pointers.html#smart_ptr">STLplus smart pointers</a> for more information.</p>
 
 <h2 id="omitted">Omitted Classes - Adaptors and Iterators</h2>
 

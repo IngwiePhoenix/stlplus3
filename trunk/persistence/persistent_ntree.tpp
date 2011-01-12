@@ -44,7 +44,7 @@ namespace stlplus
   {
     // dump a magic key to the address of the tree for use in persistence of iterators
     // and register it as a dumped address
-    std::pair<bool,unsigned> mapping = context.pointer_map(&tree);
+    std::pair<bool,unsigned> mapping = context.object_map(&tree);
     if (mapping.first) throw persistent_dump_failed("ntree: already dumped this tree");
     dump_unsigned(context,mapping.second);
     // now dump the tree contents - start with a flag to indicate whether the tree is empty
@@ -93,7 +93,7 @@ namespace stlplus
     // this is used in the persistence of iterators
     unsigned magic = 0;
     restore_unsigned(context,magic);
-    context.pointer_add(magic,&tree);
+    context.object_add(magic,&tree);
     // now restore the contents
     bool empty = true;
     restore_bool(context, empty);
@@ -112,7 +112,7 @@ namespace stlplus
     throw(persistent_dump_failed)
   {
     data.assert_valid();
-    dump_xref(context,data.owner());
+    dump_object_xref(context,data.owner());
     dump_xref(context,data.node());
   }
 
@@ -123,7 +123,7 @@ namespace stlplus
   {
     const ntree<T>* owner = 0;
     ntree_node<T>* node = 0;
-    restore_xref(context,owner);
+    restore_object_xref(context,owner);
     restore_xref(context,node);
     data = ntree_iterator<T,TRef,TPtr>(node->m_master);
     data.assert_valid(owner);

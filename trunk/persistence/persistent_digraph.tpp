@@ -20,7 +20,7 @@ namespace stlplus
   {
     // dump a magic key to the address of the graph for use in persistence of iterators
     // and register it as a dumped address
-    std::pair<bool,unsigned> mapping = context.pointer_map(&data);
+    std::pair<bool,unsigned> mapping = context.object_map(&data);
     if (mapping.first) throw persistent_dump_failed("digraph: already dumped this graph");
     dump_unsigned(context,mapping.second);
     // dump the nodes
@@ -64,7 +64,7 @@ namespace stlplus
     // this is used in the persistence of iterators
     unsigned magic = 0;
     restore_unsigned(context,magic);
-    context.pointer_add(magic,&data);
+    context.object_add(magic,&data);
     // restore the nodes
     unsigned nodes = 0;
     restore_unsigned(context, nodes);
@@ -107,7 +107,7 @@ namespace stlplus
                              const digraph_iterator<NT,AT,NRef,NPtr>& data)
     throw(persistent_dump_failed)
   {
-    dump_xref(context,data.owner());
+    dump_object_xref(context,data.owner());
     dump_xref(context,data.node());
   }
 
@@ -118,7 +118,7 @@ namespace stlplus
   {
     digraph<NT,AT>* owner = 0;
     digraph_node<NT,AT>* node = 0;
-    restore_xref(context,owner);
+    restore_object_xref(context,owner);
     restore_xref(context,node);
     data = digraph_iterator<NT,AT,NRef,NPtr>(node);
     data.assert_owner(owner);
@@ -131,7 +131,7 @@ namespace stlplus
                                  const digraph_arc_iterator<NT,AT,NRef,NPtr>& data)
     throw(persistent_dump_failed)
   {
-    dump_xref(context,data.owner());
+    dump_object_xref(context,data.owner());
     dump_xref(context,data.node());
   }
 
@@ -142,7 +142,7 @@ namespace stlplus
   {
     digraph<NT,AT>* owner = 0;
     digraph_arc<NT,AT>* arc = 0;
-    restore_xref(context,owner);
+    restore_object_xref(context,owner);
     restore_xref(context,arc);
     data = digraph_arc_iterator<NT,AT,NRef,NPtr>(arc);
     data.assert_owner(owner);

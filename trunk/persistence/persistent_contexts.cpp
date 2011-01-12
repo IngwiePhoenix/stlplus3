@@ -64,6 +64,7 @@ namespace stlplus
     bool m_little_endian;
     std::ostream* m_device;
     magic_map m_pointers;
+    magic_map m_objects;
     callback_map m_callbacks;
     interface_map m_interfaces;
 
@@ -108,6 +109,20 @@ namespace stlplus
           // add a new mapping
           unsigned magic = m_pointers.size();
           m_pointers[pointer] = magic;
+          return std::pair<bool,unsigned>(false,magic);
+        }
+        // return the old mapping
+        return std::pair<bool,unsigned>(true,found->second);
+      }
+
+    std::pair<bool,unsigned> object_map(const void* const pointer)
+      {
+        magic_map::iterator found = m_objects.find(pointer);
+        if (found == m_objects.end())
+        {
+          // add a new mapping
+          unsigned magic = m_objects.size();
+          m_objects[pointer] = magic;
           return std::pair<bool,unsigned>(false,magic);
         }
         // return the old mapping
@@ -196,6 +211,11 @@ namespace stlplus
     return m_body->pointer_map(pointer);
   }
 
+  std::pair<bool,unsigned> dump_context::object_map(const void* const pointer)
+  {
+    return m_body->object_map(pointer);
+  }
+
   unsigned dump_context::register_callback(const std::type_info& info, dump_context::dump_callback callback)
   {
     return m_body->register_callback(info,callback);
@@ -248,6 +268,7 @@ namespace stlplus
     bool m_little_endian;
     std::istream* m_device;
     magic_map m_pointers;
+    magic_map m_objects;
     callback_map m_callbacks;
     interface_map m_interfaces;
 
@@ -307,6 +328,22 @@ namespace stlplus
     void pointer_add(unsigned magic, void* new_pointer)
       {
         m_pointers[magic] = new_pointer;
+      }
+
+    std::pair<bool,void*> object_map(unsigned magic)
+      {
+        magic_map::iterator found = m_objects.find(magic);
+        if (found == m_objects.end())
+        {
+          // this magic number has never been seen before
+          return std::pair<bool,void*>(false,(void*)0);
+        }
+        return std::pair<bool,void*>(true,found->second);
+      }
+
+    void object_add(unsigned magic, void* new_pointer)
+      {
+        m_objects[magic] = new_pointer;
       }
 
     unsigned register_callback(restore_context::create_callback create, restore_context::restore_callback restore)
@@ -391,6 +428,16 @@ namespace stlplus
   void restore_context::pointer_add(unsigned magic, void* new_pointer)
   {
     m_body->pointer_add(magic,new_pointer);
+  }
+
+  std::pair<bool,void*> restore_context::object_map(unsigned magic)
+  {
+    return m_body->object_map(magic);
+  }
+
+  void restore_context::object_add(unsigned magic, void* new_pointer)
+  {
+    m_body->object_add(magic,new_pointer);
   }
 
   unsigned restore_context::register_callback(restore_context::create_callback create, restore_context::restore_callback restore)

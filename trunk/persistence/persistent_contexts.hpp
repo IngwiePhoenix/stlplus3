@@ -64,6 +64,8 @@ namespace stlplus
     // Assist functions for Pointers
     // the return pair value is a flag saying whether this is a new pointer and the magic key to dump to file
     std::pair<bool,unsigned> pointer_map(const void* const pointer);
+    // the return pair value is a flag saying whether this is a new object and the magic key to dump to file
+    std::pair<bool,unsigned> object_map(const void* const pointer);
 
     // Assist functions for Polymorphous classes (i.e. subclasses) using callback approach
     typedef void (*dump_callback)(dump_context&,const void*);
@@ -119,6 +121,8 @@ namespace stlplus
     // Assist functions for Pointers
     std::pair<bool,void*> pointer_map(unsigned magic);
     void pointer_add(unsigned magic, void* new_pointer);
+    std::pair<bool,void*> object_map(unsigned magic);
+    void object_add(unsigned magic, void* new_pointer);
 
     // Assist functions for Polymorphous classes using the callback approach
     typedef void* (*create_callback)(void);
