@@ -1,0 +1,14 @@
+containers.vcxproj
+containers.vcxproj.filters
+persistence.vcxproj
+persistence.vcxproj.filters
+portability.vcxproj
+portability.vcxproj.filters
+stlplus3.sln
+stlplus3_monolithic.sln
+stlplus3_monolithic.vcxproj
+stlplus3_monolithic.vcxproj.filters
+strings.vcxproj
+strings.vcxproj.filters
+subsystems.vcxproj
+subsystems.vcxproj.filters

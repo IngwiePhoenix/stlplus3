@@ -1,6 +1,3 @@
 Makefile
-portability.dsp
-portability.vcxproj
-portability.vcxproj.filters
 *.hpp
 *.cpp

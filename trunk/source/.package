@@ -4,9 +4,4 @@ make_monolithic.bat
 unmake_monolithic
 unmake_monolithic.bat
 Makefile
-stlplus3.sln
-stlplus3.vcxproj
-stlplus3.vcxproj.filters
-stlplus3.dsw
-stlplus3.dsp
 stlplus3.header
