@@ -63,12 +63,38 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.7">Changes from Version 3.6 to 3.7</h2>
 
-<h3>Added persistence to the STL shared_ptr</h3>
+<h3>Moved Project Files to Separate /ide Directory</h3>
 
-<p>There is now support in the persistence library for the
-  std::shared_ptr class. This is only supported for persistence if it
+<p>The project files for various IDEs are multiplying. So to manage
+  these files better, I have created a separate top-level directory to
+  contain them. There is a separate sub-directory for each supported
+  IDE.</p>
+
+<p>At present there are two IDEs supported:</p>
+
+<dl>
+
+<dt>bcb6</dt>
+<dd>Borland C++ Builder v6 (a.k.a. Embarcadero RAD Suite v8)</dd>
+
+<dt>vs2010</dt>
+<dd>Microsoft Visual Studio 2010 (v10)</dd>
+
+</dl>
+
+<p>There is a project file for building STLplus as 5 separate
+  libraries and another for building the single monolithic library.</p>
+
+<p>The <strong>gcc</strong> make system has not been changed and the Makefiles are
+  still local to each folder in the build. This works better in my
+  opinion for command-line make.</p>
+
+<h3>Added persistence and print/to_string to the STL shared_ptr</h3>
+
+<p>There is now support in the persistence library and in the strings
+  library for the std::shared_ptr class. This is only supported if it
   is a true c++0x version of shared_ptr - that is, it is in the std::
-  namespace, not the std::tr1 namespace.</p>
+  namespace.</p>
 
 <p>I don't support std::tr1::shared_ptr nor boost::shared_ptr.</p>
 
@@ -81,6 +107,14 @@ log for all version 2 releases by looking at the
 <pre>
 make CXXFLAGS=-std=c++0x
 </pre>
+
+<p>In Borland (Emarcadero) C++ Builder, std::shared_ptr is not available.</p>
+
+<p>In order to support this, I've made internal changes to the
+  persistence context classes and to the implementation of persistence
+  for smart_ptr, simple_ptr, digraph and ntree. However, these have no
+  impact on user code and there is no change in the persistence file
+  format.</p>
 
 <h3>docs/persistent_examples.html</h3>
 
