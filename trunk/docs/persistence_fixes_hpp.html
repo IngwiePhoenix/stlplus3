@@ -50,40 +50,42 @@
 <span style="color: #ff0099">   39: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">   40: </span>
 <span style="color: #ff0099">   41: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   42: </span><span style="color: #000099">// Rules for testing whether this compiler has TR1 extension data types</span>
+<span style="color: #ff0099">   42: </span><span style="color: #000099">// Rules for testing whether this compiler has C++0x extension data types (especially shared_ptr)</span>
 <span style="color: #ff0099">   43: </span><span style="color: #000099">// Specifically I only support use of these extensions in their final, C++0x standard form</span>
 <span style="color: #ff0099">   44: </span><span style="color: #000099">// i.e. </span>
 <span style="color: #ff0099">   45: </span><span style="color: #000099">//   1) the headers are in the global memory space (e.g. #include &lt;memory&gt;)</span>
-<span style="color: #ff0099">   46: </span><span style="color: #000099">//   2) the components are in the std:: namespace</span>
-<span style="color: #ff0099">   47: </span><span style="color: #000099">// Earlier versions put headers in a tr1/ subdirectory and compoinents in a std::tr1 sub-namespace</span>
-<span style="color: #ff0099">   48: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   49: </span>
-<span style="color: #ff0099">   50: </span><span style="color: #000099">// gcc has TR1 after version 4</span>
-<span style="color: #ff0099">   51: </span><span style="color: #000099">// in normal mode, the TR1 extensions are in the tr1/ header space and std::tr1 namespace</span>
-<span style="color: #ff0099">   52: </span><span style="color: #000099">// in C++0x mode they are in the global header space and std:: namespace</span>
-<span style="color: #ff0099">   53: </span><span style="color: #000099">// C++0x mode is switched on from the command line using the -std=c++0x flag</span>
-<span style="color: #ff0099">   54: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__GXX_EXPERIMENTAL_CXX0X__</span>
-<span style="color: #ff0099">   55: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
-<span style="color: #ff0099">   56: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">   57: </span>
-<span style="color: #ff0099">   58: </span><span style="color: #000099">// Visual Studio</span>
-<span style="color: #ff0099">   59: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">_MSC_VER</span>
-<span style="color: #ff0099">   60: </span><span style="color: #000099">// Microsoft only incorporated TR1 into std:: namespace in Visual Studio 2010 (v16.00)</span>
-<span style="color: #ff0099">   61: </span><span style="color: #990000">#if</span> <span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&gt;</span><span style="color: #330033">=</span> <span style="color: #993399">1600</span>
-<span style="color: #ff0099">   62: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
-<span style="color: #ff0099">   63: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   46: </span><span style="color: #000099">//   2) the components are in the std:: namespace (e.g. std::shared_ptr)</span>
+<span style="color: #ff0099">   47: </span><span style="color: #000099">//</span>
+<span style="color: #ff0099">   48: </span><span style="color: #000099">// I don't support the TR1 proposed versions which put headers in a</span>
+<span style="color: #ff0099">   49: </span><span style="color: #000099">// tr1/ subdirectory and components in a std::tr1 sub-namespace</span>
+<span style="color: #ff0099">   50: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   51: </span>
+<span style="color: #ff0099">   52: </span><span style="color: #000099">// gcc has TR1 after version 4</span>
+<span style="color: #ff0099">   53: </span><span style="color: #000099">// in normal mode, the extensions are TR1 versions and therefore not supported</span>
+<span style="color: #ff0099">   54: </span><span style="color: #000099">// However, gcc has a C++0x mode and then they are supported</span>
+<span style="color: #ff0099">   55: </span><span style="color: #000099">// C++0x mode is switched on from the command line using the -std=c++0x flag and that sets the following macro</span>
+<span style="color: #ff0099">   56: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__GXX_EXPERIMENTAL_CXX0X__</span>
+<span style="color: #ff0099">   57: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
+<span style="color: #ff0099">   58: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   59: </span>
+<span style="color: #ff0099">   60: </span><span style="color: #000099">// Visual Studio</span>
+<span style="color: #ff0099">   61: </span><span style="color: #000099">// Microsoft only incorporated the extensions in their C++0x form from Visual Studio 2010 (v16.00)</span>
+<span style="color: #ff0099">   62: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_MSC_VER</span><span style="color: #330033">)</span> <span style="color: #330033">&amp;&amp;</span> <span style="color: #330033">(</span><span style="color: #000000">_MSC_VER</span> <span style="color: #330033">&gt;</span><span style="color: #330033">=</span> <span style="color: #993399">1600</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   63: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
 <span style="color: #ff0099">   64: </span><span style="color: #990000">#endif</span>
 <span style="color: #ff0099">   65: </span>
 <span style="color: #ff0099">   66: </span><span style="color: #000099">// Borland</span>
-<span style="color: #ff0099">   67: </span><span style="color: #990000">#ifdef</span> <span style="color: #000000">__BORLANDC__</span>
-<span style="color: #ff0099">   68: </span><span style="color: #000099">// Borland have supported TR1 since v5.82</span>
-<span style="color: #ff0099">   69: </span><span style="color: #990000">#if</span> <span style="color: #000000">__BORLANDC__</span> <span style="color: #330033">&gt;</span><span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #000000">x582</span>
-<span style="color: #ff0099">   70: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
-<span style="color: #ff0099">   71: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">   72: </span><span style="color: #990000">#endif</span>
-<span style="color: #ff0099">   73: </span>
-<span style="color: #ff0099">   74: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   75: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   67: </span><span style="color: #000099">// Borland use an old version of Dinkumware's library which doesn't have of the C++0x features (as of v6.31)</span>
+<span style="color: #ff0099">   68: </span><span style="color: #000099">// Add support as soon as it becomes available which I think is Dinkumware v505</span>
+<span style="color: #ff0099">   69: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">__BORLANDC__</span><span style="color: #330033">)</span> <span style="color: #330033">&amp;&amp;</span> <span style="color: #330033">(</span><span style="color: #000000">__BORLANDC__</span> <span style="color: #330033">&gt;</span><span style="color: #330033">=</span> <span style="color: #993399">0</span><span style="color: #000000">x631</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   70: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;yvals.h&gt;</span>
+<span style="color: #ff0099">   71: </span><span style="color: #990000">#if</span> <span style="color: #000000">defined</span><span style="color: #330033">(</span><span style="color: #000000">_CPPLIB_VER</span><span style="color: #330033">)</span> <span style="color: #330033">&amp;&amp;</span> <span style="color: #330033">(</span><span style="color: #000000">_CPPLIB_VER</span> <span style="color: #330033">&gt;</span><span style="color: #330033">=</span> <span style="color: #993399">505</span><span style="color: #330033">)</span>
+<span style="color: #ff0099">   72: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_HAS_CXX0X</span> <span style="color: #993399">1</span>
+<span style="color: #ff0099">   73: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   74: </span><span style="color: #990000">#endif</span>
+<span style="color: #ff0099">   75: </span>
+<span style="color: #ff0099">   76: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: #ff0099">   77: </span><span style="color: #990000">#endif</span>
 </pre>
 </body>
 </html>
