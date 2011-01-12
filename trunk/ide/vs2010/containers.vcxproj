@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -99,30 +99,30 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="containers.hpp" />
-    <ClInclude Include="containers_fixes.hpp" />
-    <ClInclude Include="copy_functors.hpp" />
-    <ClInclude Include="digraph.hpp" />
-    <ClInclude Include="exceptions.hpp" />
-    <ClInclude Include="foursome.hpp" />
-    <ClInclude Include="hash.hpp" />
-    <ClInclude Include="matrix.hpp" />
-    <ClInclude Include="ntree.hpp" />
-    <ClInclude Include="safe_iterator.hpp" />
-    <ClInclude Include="simple_ptr.hpp" />
-    <ClInclude Include="smart_ptr.hpp" />
-    <ClInclude Include="triple.hpp" />
+    <ClInclude Include="../../containers/containers.hpp" />
+    <ClInclude Include="../../containers/containers_fixes.hpp" />
+    <ClInclude Include="../../containers/copy_functors.hpp" />
+    <ClInclude Include="../../containers/digraph.hpp" />
+    <ClInclude Include="../../containers/exceptions.hpp" />
+    <ClInclude Include="../../containers/foursome.hpp" />
+    <ClInclude Include="../../containers/hash.hpp" />
+    <ClInclude Include="../../containers/matrix.hpp" />
+    <ClInclude Include="../../containers/ntree.hpp" />
+    <ClInclude Include="../../containers/safe_iterator.hpp" />
+    <ClInclude Include="../../containers/simple_ptr.hpp" />
+    <ClInclude Include="../../containers/smart_ptr.hpp" />
+    <ClInclude Include="../../containers/triple.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="digraph.tpp" />
-    <None Include="foursome.tpp" />
-    <None Include="hash.tpp" />
-    <None Include="matrix.tpp" />
-    <None Include="ntree.tpp" />
-    <None Include="safe_iterator.tpp" />
-    <None Include="simple_ptr.tpp" />
-    <None Include="smart_ptr.tpp" />
-    <None Include="triple.tpp" />
+    <None Include="../../containers/digraph.tpp" />
+    <None Include="../../containers/foursome.tpp" />
+    <None Include="../../containers/hash.tpp" />
+    <None Include="../../containers/matrix.tpp" />
+    <None Include="../../containers/ntree.tpp" />
+    <None Include="../../containers/safe_iterator.tpp" />
+    <None Include="../../containers/simple_ptr.tpp" />
+    <None Include="../../containers/smart_ptr.tpp" />
+    <None Include="../../containers/triple.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

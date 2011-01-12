@@ -1,72 +1,72 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="containers.hpp">
+    <ClInclude Include="../../containers/containers.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="triple.hpp">
+    <ClInclude Include="../../containers/triple.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="containers_fixes.hpp">
+    <ClInclude Include="../../containers/containers_fixes.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="copy_functors.hpp">
+    <ClInclude Include="../../containers/copy_functors.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="digraph.hpp">
+    <ClInclude Include="../../containers/digraph.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="exceptions.hpp">
+    <ClInclude Include="../../containers/exceptions.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="foursome.hpp">
+    <ClInclude Include="../../containers/foursome.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="hash.hpp">
+    <ClInclude Include="../../containers/hash.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="matrix.hpp">
+    <ClInclude Include="../../containers/matrix.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="ntree.hpp">
+    <ClInclude Include="../../containers/ntree.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="safe_iterator.hpp">
+    <ClInclude Include="../../containers/safe_iterator.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="simple_ptr.hpp">
+    <ClInclude Include="../../containers/simple_ptr.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="smart_ptr.hpp">
+    <ClInclude Include="../../containers/smart_ptr.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="triple.tpp">
+    <None Include="../../containers/triple.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="smart_ptr.tpp">
+    <None Include="../../containers/smart_ptr.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="simple_ptr.tpp">
+    <None Include="../../containers/simple_ptr.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="safe_iterator.tpp">
+    <None Include="../../containers/safe_iterator.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="ntree.tpp">
+    <None Include="../../containers/ntree.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="matrix.tpp">
+    <None Include="../../containers/matrix.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="hash.tpp">
+    <None Include="../../containers/hash.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="foursome.tpp">
+    <None Include="../../containers/foursome.tpp">
       <Filter>Templates</Filter>
     </None>
-    <None Include="digraph.tpp">
+    <None Include="../../containers/digraph.tpp">
       <Filter>Templates</Filter>
     </None>
   </ItemGroup>

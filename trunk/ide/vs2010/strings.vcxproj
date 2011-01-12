@@ -47,7 +47,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>..\portability;..\containers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\portability;..\..\containers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\portability;..\containers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\portability;..\..\containers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -101,161 +101,161 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="format_types.hpp" />
-    <ClInclude Include="print_address.hpp" />
-    <ClInclude Include="print_basic.hpp" />
-    <ClInclude Include="print_bitset.hpp" />
-    <ClInclude Include="print_bool.hpp" />
-    <ClInclude Include="print_cstring.hpp" />
-    <ClInclude Include="print_digraph.hpp" />
-    <ClInclude Include="print_float.hpp" />
-    <ClInclude Include="print_foursome.hpp" />
-    <ClInclude Include="print_hash.hpp" />
-    <ClInclude Include="print_inf.hpp" />
-    <ClInclude Include="print_int.hpp" />
-    <ClInclude Include="print_list.hpp" />
-    <ClInclude Include="print_map.hpp" />
-    <ClInclude Include="print_matrix.hpp" />
-    <ClInclude Include="print_ntree.hpp" />
-    <ClInclude Include="print_pair.hpp" />
-    <ClInclude Include="print_pointer.hpp" />
-    <ClInclude Include="print_sequence.hpp" />
-    <ClInclude Include="print_set.hpp" />
-    <ClInclude Include="print_simple_ptr.hpp" />
-    <ClInclude Include="print_smart_ptr.hpp" />
-    <ClInclude Include="print_stl.hpp" />
-    <ClInclude Include="print_stlplus.hpp" />
-    <ClInclude Include="print_string.hpp" />
-    <ClInclude Include="print_triple.hpp" />
-    <ClInclude Include="print_vector.hpp" />
-    <ClInclude Include="string_address.hpp" />
-    <ClInclude Include="string_basic.hpp" />
-    <ClInclude Include="string_bitset.hpp" />
-    <ClInclude Include="string_bool.hpp" />
-    <ClInclude Include="string_cstring.hpp" />
-    <ClInclude Include="string_digraph.hpp" />
-    <ClInclude Include="string_float.hpp" />
-    <ClInclude Include="string_foursome.hpp" />
-    <ClInclude Include="string_hash.hpp" />
-    <ClInclude Include="string_inf.hpp" />
-    <ClInclude Include="string_int.hpp" />
-    <ClInclude Include="string_list.hpp" />
-    <ClInclude Include="string_map.hpp" />
-    <ClInclude Include="string_matrix.hpp" />
-    <ClInclude Include="string_ntree.hpp" />
-    <ClInclude Include="string_pair.hpp" />
-    <ClInclude Include="string_pointer.hpp" />
-    <ClInclude Include="string_sequence.hpp" />
-    <ClInclude Include="string_set.hpp" />
-    <ClInclude Include="string_simple_ptr.hpp" />
-    <ClInclude Include="string_smart_ptr.hpp" />
-    <ClInclude Include="string_stl.hpp" />
-    <ClInclude Include="string_stlplus.hpp" />
-    <ClInclude Include="string_string.hpp" />
-    <ClInclude Include="string_triple.hpp" />
-    <ClInclude Include="string_utilities.hpp" />
-    <ClInclude Include="string_vector.hpp" />
-    <ClInclude Include="strings.hpp" />
-    <ClInclude Include="strings_fixes.hpp" />
+    <ClInclude Include="../../strings/format_types.hpp" />
+    <ClInclude Include="../../strings/print_address.hpp" />
+    <ClInclude Include="../../strings/print_basic.hpp" />
+    <ClInclude Include="../../strings/print_bitset.hpp" />
+    <ClInclude Include="../../strings/print_bool.hpp" />
+    <ClInclude Include="../../strings/print_cstring.hpp" />
+    <ClInclude Include="../../strings/print_digraph.hpp" />
+    <ClInclude Include="../../strings/print_float.hpp" />
+    <ClInclude Include="../../strings/print_foursome.hpp" />
+    <ClInclude Include="../../strings/print_hash.hpp" />
+    <ClInclude Include="../../strings/print_inf.hpp" />
+    <ClInclude Include="../../strings/print_int.hpp" />
+    <ClInclude Include="../../strings/print_list.hpp" />
+    <ClInclude Include="../../strings/print_map.hpp" />
+    <ClInclude Include="../../strings/print_matrix.hpp" />
+    <ClInclude Include="../../strings/print_ntree.hpp" />
+    <ClInclude Include="../../strings/print_pair.hpp" />
+    <ClInclude Include="../../strings/print_pointer.hpp" />
+    <ClInclude Include="../../strings/print_sequence.hpp" />
+    <ClInclude Include="../../strings/print_set.hpp" />
+    <ClInclude Include="../../strings/print_simple_ptr.hpp" />
+    <ClInclude Include="../../strings/print_smart_ptr.hpp" />
+    <ClInclude Include="../../strings/print_stl.hpp" />
+    <ClInclude Include="../../strings/print_stlplus.hpp" />
+    <ClInclude Include="../../strings/print_string.hpp" />
+    <ClInclude Include="../../strings/print_triple.hpp" />
+    <ClInclude Include="../../strings/print_vector.hpp" />
+    <ClInclude Include="../../strings/string_address.hpp" />
+    <ClInclude Include="../../strings/string_basic.hpp" />
+    <ClInclude Include="../../strings/string_bitset.hpp" />
+    <ClInclude Include="../../strings/string_bool.hpp" />
+    <ClInclude Include="../../strings/string_cstring.hpp" />
+    <ClInclude Include="../../strings/string_digraph.hpp" />
+    <ClInclude Include="../../strings/string_float.hpp" />
+    <ClInclude Include="../../strings/string_foursome.hpp" />
+    <ClInclude Include="../../strings/string_hash.hpp" />
+    <ClInclude Include="../../strings/string_inf.hpp" />
+    <ClInclude Include="../../strings/string_int.hpp" />
+    <ClInclude Include="../../strings/string_list.hpp" />
+    <ClInclude Include="../../strings/string_map.hpp" />
+    <ClInclude Include="../../strings/string_matrix.hpp" />
+    <ClInclude Include="../../strings/string_ntree.hpp" />
+    <ClInclude Include="../../strings/string_pair.hpp" />
+    <ClInclude Include="../../strings/string_pointer.hpp" />
+    <ClInclude Include="../../strings/string_sequence.hpp" />
+    <ClInclude Include="../../strings/string_set.hpp" />
+    <ClInclude Include="../../strings/string_simple_ptr.hpp" />
+    <ClInclude Include="../../strings/string_smart_ptr.hpp" />
+    <ClInclude Include="../../strings/string_stl.hpp" />
+    <ClInclude Include="../../strings/string_stlplus.hpp" />
+    <ClInclude Include="../../strings/string_string.hpp" />
+    <ClInclude Include="../../strings/string_triple.hpp" />
+    <ClInclude Include="../../strings/string_utilities.hpp" />
+    <ClInclude Include="../../strings/string_vector.hpp" />
+    <ClInclude Include="../../strings/strings.hpp" />
+    <ClInclude Include="../../strings/strings_fixes.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="print_address.cpp">
+    <ClCompile Include="../../strings/print_address.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_bool.cpp">
+    <ClCompile Include="../../strings/print_bool.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_cstring.cpp">
+    <ClCompile Include="../../strings/print_cstring.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_float.cpp">
+    <ClCompile Include="../../strings/print_float.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_inf.cpp">
+    <ClCompile Include="../../strings/print_inf.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_int.cpp">
+    <ClCompile Include="../../strings/print_int.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_string.cpp">
+    <ClCompile Include="../../strings/print_string.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="print_vector.cpp">
+    <ClCompile Include="../../strings/print_vector.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_address.cpp">
+    <ClCompile Include="../../strings/string_address.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_bool.cpp">
+    <ClCompile Include="../../strings/string_bool.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_cstring.cpp">
+    <ClCompile Include="../../strings/string_cstring.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_float.cpp">
+    <ClCompile Include="../../strings/string_float.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_inf.cpp">
+    <ClCompile Include="../../strings/string_inf.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_int.cpp">
+    <ClCompile Include="../../strings/string_int.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_string.cpp">
+    <ClCompile Include="../../strings/string_string.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_utilities.cpp">
+    <ClCompile Include="../../strings/string_utilities.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="string_vector.cpp">
+    <ClCompile Include="../../strings/string_vector.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -263,38 +263,38 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="print_bitset.tpp" />
-    <None Include="print_digraph.tpp" />
-    <None Include="print_foursome.tpp" />
-    <None Include="print_hash.tpp" />
-    <None Include="print_list.tpp" />
-    <None Include="print_map.tpp" />
-    <None Include="print_matrix.tpp" />
-    <None Include="print_ntree.tpp" />
-    <None Include="print_pair.tpp" />
-    <None Include="print_pointer.tpp" />
-    <None Include="print_sequence.tpp" />
-    <None Include="print_set.tpp" />
-    <None Include="print_simple_ptr.tpp" />
-    <None Include="print_smart_ptr.tpp" />
-    <None Include="print_triple.tpp" />
-    <None Include="print_vector.tpp" />
-    <None Include="string_bitset.tpp" />
-    <None Include="string_digraph.tpp" />
-    <None Include="string_foursome.tpp" />
-    <None Include="string_hash.tpp" />
-    <None Include="string_list.tpp" />
-    <None Include="string_map.tpp" />
-    <None Include="string_matrix.tpp" />
-    <None Include="string_ntree.tpp" />
-    <None Include="string_pair.tpp" />
-    <None Include="string_pointer.tpp" />
-    <None Include="string_sequence.tpp" />
-    <None Include="string_set.tpp" />
-    <None Include="string_simple_ptr.tpp" />
-    <None Include="string_smart_ptr.tpp" />
-    <None Include="string_triple.tpp" />
-    <None Include="string_vector.tpp" />
+    <None Include="../../strings/print_bitset.tpp" />
+    <None Include="../../strings/print_digraph.tpp" />
+    <None Include="../../strings/print_foursome.tpp" />
+    <None Include="../../strings/print_hash.tpp" />
+    <None Include="../../strings/print_list.tpp" />
+    <None Include="../../strings/print_map.tpp" />
+    <None Include="../../strings/print_matrix.tpp" />
+    <None Include="../../strings/print_ntree.tpp" />
+    <None Include="../../strings/print_pair.tpp" />
+    <None Include="../../strings/print_pointer.tpp" />
+    <None Include="../../strings/print_sequence.tpp" />
+    <None Include="../../strings/print_set.tpp" />
+    <None Include="../../strings/print_simple_ptr.tpp" />
+    <None Include="../../strings/print_smart_ptr.tpp" />
+    <None Include="../../strings/print_triple.tpp" />
+    <None Include="../../strings/print_vector.tpp" />
+    <None Include="../../strings/string_bitset.tpp" />
+    <None Include="../../strings/string_digraph.tpp" />
+    <None Include="../../strings/string_foursome.tpp" />
+    <None Include="../../strings/string_hash.tpp" />
+    <None Include="../../strings/string_list.tpp" />
+    <None Include="../../strings/string_map.tpp" />
+    <None Include="../../strings/string_matrix.tpp" />
+    <None Include="../../strings/string_ntree.tpp" />
+    <None Include="../../strings/string_pair.tpp" />
+    <None Include="../../strings/string_pointer.tpp" />
+    <None Include="../../strings/string_sequence.tpp" />
+    <None Include="../../strings/string_set.tpp" />
+    <None Include="../../strings/string_simple_ptr.tpp" />
+    <None Include="../../strings/string_smart_ptr.tpp" />
+    <None Include="../../strings/string_triple.tpp" />
+    <None Include="../../strings/string_vector.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
