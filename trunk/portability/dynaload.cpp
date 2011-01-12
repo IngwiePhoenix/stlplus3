@@ -79,7 +79,7 @@ namespace stlplus
   bool dynaload::load(const std::string& library)
   {
 #ifdef MSWINDOWS
-    m_handle = (void*)LoadLibrary(library.c_str());
+    m_handle = (void*)LoadLibraryA(library.c_str());
 #elif defined(CYGWIN)
     m_handle = dlopen(library.c_str(),RTLD_NOW);
 #else
