@@ -154,7 +154,7 @@
 			</None>
 			<None Include="..\..\strings\print_set.tpp"/>
 			<None Include="..\..\strings\print_shared_ptr.hpp">
-				<BuildOrder>38</BuildOrder>
+				<BuildOrder>107</BuildOrder>
 			</None>
 			<None Include="..\..\strings\print_shared_ptr.tpp"/>
 			<None Include="..\..\strings\print_simple_ptr.hpp">
@@ -282,7 +282,7 @@
 			</None>
 			<None Include="..\..\strings\string_set.tpp"/>
 			<None Include="..\..\strings\string_shared_ptr.hpp">
-				<BuildOrder>90</BuildOrder>
+				<BuildOrder>108</BuildOrder>
 			</None>
 			<None Include="..\..\strings\string_shared_ptr.tpp"/>
 			<None Include="..\..\strings\string_simple_ptr.hpp">

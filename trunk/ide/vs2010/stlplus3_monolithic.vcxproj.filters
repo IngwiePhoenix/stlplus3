@@ -534,6 +534,15 @@
     <ClInclude Include="../../source/wildcard.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\string_shared_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\persistent_shared_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\print_shared_ptr.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="../../source/digraph.tpp">
@@ -732,6 +741,15 @@
       <Filter>Templates</Filter>
     </None>
     <None Include="../../source/triple.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="..\..\source\string_shared_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="..\..\source\persistent_shared_ptr.tpp">
+      <Filter>Templates</Filter>
+    </None>
+    <None Include="..\..\source\print_shared_ptr.tpp">
       <Filter>Templates</Filter>
     </None>
   </ItemGroup>

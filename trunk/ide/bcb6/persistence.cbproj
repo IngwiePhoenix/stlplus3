@@ -192,6 +192,10 @@
 				<BuildOrder>53</BuildOrder>
 			</None>
 			<None Include="..\..\persistence\persistent_set.tpp"/>
+			<None Include="..\..\persistence\persistent_shared_ptr.hpp">
+				<BuildOrder>74</BuildOrder>
+			</None>
+			<None Include="..\..\persistence\persistent_shared_ptr.tpp"/>
 			<None Include="..\..\persistence\persistent_shortcuts.hpp">
 				<BuildOrder>55</BuildOrder>
 			</None>

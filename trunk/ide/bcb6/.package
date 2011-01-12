@@ -1,8 +1,3 @@
-containers.cbproj
-persistence.cbproj
-portability.cbproj
-stlplus3.cbproj
-stlplus3.groupproj
-stlplus3_monolithic.groupproj
-strings.cbproj
-subsystems.cbproj
+*.cbproj
+*.groupproj
+

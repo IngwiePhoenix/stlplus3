@@ -6,7 +6,7 @@
 			<Config Condition="'$(Config)'==''">Debug</Config>
 			<Platform>Win32</Platform>
 			<AppType>StaticLibrary</AppType>
-			<FrameworkType>VCL</FrameworkType>
+			<FrameworkType>None</FrameworkType>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
 			<Base>true</Base>
@@ -294,7 +294,7 @@
 			</None>
 			<None Include="..\..\source\persistent_set.tpp"/>
 			<None Include="..\..\source\persistent_shared_ptr.hpp">
-				<BuildOrder>92</BuildOrder>
+				<BuildOrder>248</BuildOrder>
 			</None>
 			<None Include="..\..\source\persistent_shared_ptr.tpp"/>
 			<None Include="..\..\source\persistent_shortcuts.hpp">
@@ -437,7 +437,7 @@
 			</None>
 			<None Include="..\..\source\print_set.tpp"/>
 			<None Include="..\..\source\print_shared_ptr.hpp">
-				<BuildOrder>153</BuildOrder>
+				<BuildOrder>249</BuildOrder>
 			</None>
 			<None Include="..\..\source\print_shared_ptr.tpp"/>
 			<None Include="..\..\source\print_simple_ptr.hpp">
@@ -581,7 +581,7 @@
 			</None>
 			<None Include="..\..\source\string_set.tpp"/>
 			<None Include="..\..\source\string_shared_ptr.hpp">
-				<BuildOrder>213</BuildOrder>
+				<BuildOrder>250</BuildOrder>
 			</None>
 			<None Include="..\..\source\string_shared_ptr.tpp"/>
 			<None Include="..\..\source\string_simple_ptr.hpp">

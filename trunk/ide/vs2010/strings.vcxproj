@@ -157,6 +157,8 @@
     <ClInclude Include="../../strings/string_vector.hpp" />
     <ClInclude Include="../../strings/strings.hpp" />
     <ClInclude Include="../../strings/strings_fixes.hpp" />
+    <ClInclude Include="..\..\strings\print_shared_ptr.hpp" />
+    <ClInclude Include="..\..\strings\string_shared_ptr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../../strings/print_address.cpp">
@@ -295,6 +297,8 @@
     <None Include="../../strings/string_smart_ptr.tpp" />
     <None Include="../../strings/string_triple.tpp" />
     <None Include="../../strings/string_vector.tpp" />
+    <None Include="..\..\strings\print_shared_ptr.tpp" />
+    <None Include="..\..\strings\string_shared_ptr.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

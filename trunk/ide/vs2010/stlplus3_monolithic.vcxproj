@@ -241,6 +241,9 @@
     <ClInclude Include="../../source/udp_sockets.hpp" />
     <ClInclude Include="../../source/version.hpp" />
     <ClInclude Include="../../source/wildcard.hpp" />
+    <ClInclude Include="..\..\source\persistent_shared_ptr.hpp" />
+    <ClInclude Include="..\..\source\print_shared_ptr.hpp" />
+    <ClInclude Include="..\..\source\string_shared_ptr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../../source/build.cpp" />
@@ -356,6 +359,9 @@
     <None Include="../../source/string_triple.tpp" />
     <None Include="../../source/string_vector.tpp" />
     <None Include="../../source/triple.tpp" />
+    <None Include="..\..\source\persistent_shared_ptr.tpp" />
+    <None Include="..\..\source\print_shared_ptr.tpp" />
+    <None Include="..\..\source\string_shared_ptr.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
