@@ -1,50 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title>strings/print_set.hpp</title>
-<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+<link rel="stylesheet" type="text/css" href="shCore.css">
+<link rel="stylesheet" type="text/css" href="shThemeSTLplus.css">
+<script type="text/javascript" src="shCore.js"></script>
+<script type="text/javascript" src="shBrushCpp.js"></script>
+<meta http-equiv="generator" content="cpp2html C++ colouriser by Andy Rushton">
 </head>
-<body lang="en">
+<body>
 <h1>strings/print_set.hpp</h1>
-<pre style="background-color: #ffffff">
-<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_PRINT_SET</span>
-<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_PRINT_SET</span>
-<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">    4: </span>
-<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
-<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
-<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004 onwards</span>
-<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
-<span style="color: #ff0099">    9: </span>
-<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Generate a string representation of a set/multiset</span>
-<span style="color: #ff0099">   11: </span>
-<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"strings_fixes.hpp"</span>
-<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;string&gt;</span>
-<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;iostream&gt;</span>
-<span style="color: #ff0099">   16: </span><span style="color: #990000">#include</span> <span style="color: #009900">&lt;set&gt;</span>
-<span style="color: #ff0099">   17: </span>
-<span style="color: #ff0099">   18: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
-<span style="color: #ff0099">   19: </span><span style="color: #330033">{</span>
-<span style="color: #ff0099">   20: </span>
-<span style="color: #ff0099">   21: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">K</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">C</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">S</span><span style="color: #330033">&gt;</span>
-<span style="color: #ff0099">   22: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_set</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   23: </span>                 <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">set</span><span style="color: #330033">&lt;</span><span style="color: #000000">K</span><span style="color: #330033">,</span><span style="color: #000000">C</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">values</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   24: </span>                 <span style="color: #000000">S</span> <span style="color: #000000">print_fn</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   25: </span>                 <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">separator</span> <span style="color: #330033">=</span> <span style="color: #009900">","</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   26: </span>
-<span style="color: #ff0099">   27: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">K</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">C</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">S</span><span style="color: #330033">&gt;</span>
-<span style="color: #ff0099">   28: </span>  <span style="color: #990000">void</span> <span style="color: #000000">print_multiset</span><span style="color: #330033">(</span><span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">ostream</span><span style="color: #330033">&amp;</span> <span style="color: #000000">device</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   29: </span>                      <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">multiset</span><span style="color: #330033">&lt;</span><span style="color: #000000">K</span><span style="color: #330033">,</span><span style="color: #000000">C</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">values</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   30: </span>                      <span style="color: #000000">S</span> <span style="color: #000000">print_fn</span><span style="color: #330033">,</span>
-<span style="color: #ff0099">   31: </span>                      <span style="color: #990000">const</span> <span style="color: #000000">std</span><span style="color: #330033">::</span><span style="color: #000000">string</span><span style="color: #330033">&amp;</span> <span style="color: #000000">separator</span> <span style="color: #330033">=</span> <span style="color: #009900">","</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   32: </span>
-<span style="color: #ff0099">   33: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
-<span style="color: #ff0099">   34: </span>
-<span style="color: #ff0099">   35: </span><span style="color: #990000">#include</span> <span style="color: #009900">"print_set.tpp"</span>
-<span style="color: #ff0099">   36: </span><span style="color: #990000">#endif</span>
+<pre class="brush: cpp">
+#ifndef STLPLUS_PRINT_SET
+#define STLPLUS_PRINT_SET
+////////////////////////////////////////////////////////////////////////////////
+
+//   Author:    Andy Rushton
+//   Copyright: (c) Southampton University 1999-2004
+//              (c) Andy Rushton           2004 onwards
+//   License:   BSD License, see ../docs/license.html
+
+//   Generate a string representation of a set/multiset
+
+////////////////////////////////////////////////////////////////////////////////
+#include &quot;strings_fixes.hpp&quot;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;set&gt;
+
+namespace stlplus
+{
+
+  template&lt;typename K, typename C, typename S&gt;
+  void print_set(std::ostream&amp; device,
+                 const std::set&lt;K,C&gt;&amp; values,
+                 S print_fn,
+                 const std::string&amp; separator = &quot;,&quot;);
+
+  template&lt;typename K, typename C, typename S&gt;
+  void print_multiset(std::ostream&amp; device,
+                      const std::multiset&lt;K,C&gt;&amp; values,
+                      S print_fn,
+                      const std::string&amp; separator = &quot;,&quot;);
+
+} // end namespace stlplus
+
+#include &quot;print_set.tpp&quot;
+#endif
 </pre>
+<script type="text/javascript">SyntaxHighlighter.defaults['toolbar']=false; SyntaxHighlighter.all()</script>
 </body>
-</html>

@@ -1,48 +1,52 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title>persistence/persistent_hash.hpp</title>
-<meta http-equiv="generator" content="ccolour C++ colouriser by Andy Rushton">
+<link rel="stylesheet" type="text/css" href="shCore.css">
+<link rel="stylesheet" type="text/css" href="shThemeSTLplus.css">
+<script type="text/javascript" src="shCore.js"></script>
+<script type="text/javascript" src="shBrushCpp.js"></script>
+<meta http-equiv="generator" content="cpp2html C++ colouriser by Andy Rushton">
 </head>
-<body lang="en">
+<body>
 <h1>persistence/persistent_hash.hpp</h1>
-<pre style="background-color: #ffffff">
-<span style="color: #ff0099">    1: </span><span style="color: #990000">#ifndef</span> <span style="color: #000000">STLPLUS_PERSISTENT_HASH</span>
-<span style="color: #ff0099">    2: </span><span style="color: #990000">#define</span> <span style="color: #000000">STLPLUS_PERSISTENT_HASH</span>
-<span style="color: #ff0099">    3: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">    4: </span>
-<span style="color: #ff0099">    5: </span><span style="color: #000099">//   Author:    Andy Rushton</span>
-<span style="color: #ff0099">    6: </span><span style="color: #000099">//   Copyright: (c) Southampton University 1999-2004</span>
-<span style="color: #ff0099">    7: </span><span style="color: #000099">//              (c) Andy Rushton           2004 onwards</span>
-<span style="color: #ff0099">    8: </span><span style="color: #000099">//   License:   BSD License, see ../docs/license.html</span>
-<span style="color: #ff0099">    9: </span>
-<span style="color: #ff0099">   10: </span><span style="color: #000099">//   Persistence for STLplus hash</span>
-<span style="color: #ff0099">   11: </span>
-<span style="color: #ff0099">   12: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   13: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistence_fixes.hpp"</span>
-<span style="color: #ff0099">   14: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistent_contexts.hpp"</span>
-<span style="color: #ff0099">   15: </span><span style="color: #990000">#include</span> <span style="color: #009900">"hash.hpp"</span>
-<span style="color: #ff0099">   16: </span>
-<span style="color: #ff0099">   17: </span><span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   18: </span>
-<span style="color: #ff0099">   19: </span><span style="color: #990000">namespace</span> <span style="color: #000000">stlplus</span>
-<span style="color: #ff0099">   20: </span><span style="color: #330033">{</span>
-<span style="color: #ff0099">   21: </span>
-<span style="color: #ff0099">   22: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">K</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">H</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">E</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">DK</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">DT</span><span style="color: #330033">&gt;</span>
-<span style="color: #ff0099">   23: </span>  <span style="color: #990000">void</span> <span style="color: #000000">dump_hash</span><span style="color: #330033">(</span><span style="color: #000000">dump_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #990000">const</span> <span style="color: #000000">hash</span><span style="color: #330033">&lt;</span><span style="color: #000000">K</span><span style="color: #330033">,</span><span style="color: #000000">T</span><span style="color: #330033">,</span><span style="color: #000000">H</span><span style="color: #330033">,</span><span style="color: #000000">E</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">,</span> <span style="color: #000000">DK</span> <span style="color: #000000">key_dump_fn</span><span style="color: #330033">,</span> <span style="color: #000000">DT</span> <span style="color: #000000">val_dump_fn</span><span style="color: #330033">)</span>
-<span style="color: #ff0099">   24: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_dump_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   25: </span>
-<span style="color: #ff0099">   26: </span>  <span style="color: #990000">template</span><span style="color: #330033">&lt;</span><span style="color: #990000">typename</span> <span style="color: #000000">K</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">T</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">H</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">E</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">RK</span><span style="color: #330033">,</span> <span style="color: #990000">typename</span> <span style="color: #000000">RT</span><span style="color: #330033">&gt;</span>
-<span style="color: #ff0099">   27: </span>  <span style="color: #990000">void</span> <span style="color: #000000">restore_hash</span><span style="color: #330033">(</span><span style="color: #000000">restore_context</span><span style="color: #330033">&amp;</span><span style="color: #330033">,</span> <span style="color: #000000">hash</span><span style="color: #330033">&lt;</span><span style="color: #000000">K</span><span style="color: #330033">,</span><span style="color: #000000">T</span><span style="color: #330033">,</span><span style="color: #000000">H</span><span style="color: #330033">,</span><span style="color: #000000">E</span><span style="color: #330033">&gt;</span><span style="color: #330033">&amp;</span> <span style="color: #000000">data</span><span style="color: #330033">,</span> <span style="color: #000000">RK</span> <span style="color: #000000">key_restore_fn</span><span style="color: #330033">,</span> <span style="color: #000000">RT</span> <span style="color: #000000">val_restore_fn</span><span style="color: #330033">)</span>
-<span style="color: #ff0099">   28: </span>    <span style="color: #990000">throw</span><span style="color: #330033">(</span><span style="color: #000000">persistent_restore_failed</span><span style="color: #330033">)</span><span style="color: #330033">;</span>
-<span style="color: #ff0099">   29: </span>
-<span style="color: #ff0099">   30: </span><span style="color: #330033">}</span> <span style="color: #000099">// end namespace stlplus</span>
-<span style="color: #ff0099">   31: </span>
-<span style="color: #ff0099">   32: </span>  <span style="color: #000099">////////////////////////////////////////////////////////////////////////////////</span>
-<span style="color: #ff0099">   33: </span><span style="color: #990000">#include</span> <span style="color: #009900">"persistent_hash.tpp"</span>
-<span style="color: #ff0099">   34: </span><span style="color: #990000">#endif</span>
+<pre class="brush: cpp">
+#ifndef STLPLUS_PERSISTENT_HASH
+#define STLPLUS_PERSISTENT_HASH
+////////////////////////////////////////////////////////////////////////////////
+
+//   Author:    Andy Rushton
+//   Copyright: (c) Southampton University 1999-2004
+//              (c) Andy Rushton           2004 onwards
+//   License:   BSD License, see ../docs/license.html
+
+//   Persistence for STLplus hash
+
+////////////////////////////////////////////////////////////////////////////////
+#include &quot;persistence_fixes.hpp&quot;
+#include &quot;persistent_contexts.hpp&quot;
+#include &quot;hash.hpp&quot;
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace stlplus
+{
+
+  template&lt;typename K, typename T, typename H, typename E, typename DK, typename DT&gt;
+  void dump_hash(dump_context&amp;, const hash&lt;K,T,H,E&gt;&amp; data, DK key_dump_fn, DT val_dump_fn)
+    throw(persistent_dump_failed);
+
+  template&lt;typename K, typename T, typename H, typename E, typename RK, typename RT&gt;
+  void restore_hash(restore_context&amp;, hash&lt;K,T,H,E&gt;&amp; data, RK key_restore_fn, RT val_restore_fn)
+    throw(persistent_restore_failed);
+
+} // end namespace stlplus
+
+  ////////////////////////////////////////////////////////////////////////////////
+#include &quot;persistent_hash.tpp&quot;
+#endif
 </pre>
+<script type="text/javascript">SyntaxHighlighter.defaults['toolbar']=false; SyntaxHighlighter.all()</script>
 </body>
-</html>
