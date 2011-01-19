@@ -22,6 +22,10 @@
 #include <stdlib.h>
 
 #ifdef MSWINDOWS
+#ifdef __BORLANDC__
+// missing declaration in Borland headers
+LPTCH WINAPI GetEnvironmentStringsA(void);
+#endif
 #else
 extern char** environ;
 #include <signal.h>
@@ -490,15 +494,10 @@ namespace stlplus
 #endif
   ////////////////////////////////////////////////////////////////////////////////
 
-  #ifdef __BORLANDC__
-  // missing declaration in Borland headers
-  LPTCH WINAPI GetEnvironmentStringsA(void);
-  #endif
-
   env_vector::env_vector(void)
   {
 #ifdef MSWINDOWS
-	char* env = (char*)GetEnvironmentStringsA();
+    char* env = (char*)GetEnvironmentStringsA();
     m_env = envp_copy(env);
     FreeEnvironmentStringsA(env);
 #else
