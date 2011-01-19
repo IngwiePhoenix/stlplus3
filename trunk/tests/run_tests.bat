@@ -21,6 +21,7 @@ goto :EOF
 :: have the same name.
 ::
 :test_case
+echo # testing %1
 set original=%cd%
 cd %1
 %1
