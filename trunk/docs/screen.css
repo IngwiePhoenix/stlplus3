@@ -264,9 +264,6 @@ pre
 {
   font-family: monospace;
   font-size: small;
-  border: thin solid #707080;
-  padding: 1em;
-  overflow: auto;
 }
 
 pre.vhdl
