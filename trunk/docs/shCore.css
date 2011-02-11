@@ -24,6 +24,8 @@
 .syntaxhighlighter table thead,
 .syntaxhighlighter table caption,
 .syntaxhighlighter textarea {
+  -moz-border-radius: 0 0 0 0 !important;
+  -webkit-border-radius: 0 0 0 0 !important;
   background: none !important;
   border: 0 !important;
   bottom: auto !important;
@@ -42,7 +44,7 @@
   vertical-align: baseline !important;
   width: auto !important;
   box-sizing: content-box !important;
-  font-family: "Courier New", Courier, monospace !important;
+  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
   font-weight: normal !important;
   font-style: normal !important;
   font-size: small !important;
@@ -55,6 +57,7 @@
   margin: 1em 0 1em 0 !important;
   position: relative !important;
   overflow: auto !important;
+  font-size: 1em !important;
 }
 .syntaxhighlighter.source {
   overflow: hidden !important;
