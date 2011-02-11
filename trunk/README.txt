@@ -12,6 +12,14 @@ The documentation is in the 'docs' directory and starts with index.html.
 Build files for IDEs are found in the 'ide' directory, but the gcc
 command-line tools use make.
 
+Gcc Build
+---------
+
+The Makefile requires the makefiles project, which is available from
+the same SourceForge site that you downloaded the STLplus library
+from. Follow the "View all Files" link - sadly SourceForge don't give
+a way of providing two download buttons.
+
 Multi-Library Build
 -------------------
 
