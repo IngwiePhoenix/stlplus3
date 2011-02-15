@@ -191,22 +191,6 @@ namespace stlplus
     void copy(const simple_ptr_base&lt;T,C&gt;&amp;) throw(illegal_copy);
 
     //////////////////////////////////////////////////////////////////////////////
-    // functions that involve casting
-
-#ifdef STLPLUS_MEMBER_TEMPLATES
-
-    // dynamic cast of underlying pointer to a derived/parent
-    template&lt;typename T2&gt; simple_ptr_base&lt;T2,C&gt; dyn_cast(void) const;
-
-    // static cast of underlying pointer to a derived/parent
-    template&lt;typename T2&gt; simple_ptr_base&lt;T2,C&gt; stat_cast(void) const;
-
-    // cast of underlying pointer to a base - while keeping the same ref-counted object
-    template&lt;typename T2&gt; simple_ptr_base&lt;T2,C&gt; cast(void) const;
-
-#endif
-
-    //////////////////////////////////////////////////////////////////////////////
 
   protected:
     T* m_pointer;
@@ -239,10 +223,30 @@ namespace stlplus
     simple_ptr&lt;T&gt;&amp; operator=(const T&amp; data) {set_value(data); return *this;}
     simple_ptr&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
     ~simple_ptr(void) {}
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class for two main reasons, though the second is a feature of the first:
+
+    // 1. GCC cannot cast the previous base result of simple_ptr_base&lt;T2, constructor_copy&lt;T&gt; &gt;
+    //    as a simple_ptr&lt;T2&gt; even though it used to look like a duck and quack like a duck.
+    //    I think it was really complaining that the copy class was not guaranteed to be the same.
+
+    // 2. Within the cast routines, one pointer type tried accessing private data of the other
+    //    pointer type and even though they are really the same type, was not allowed. Because
+    //    of this, the &quot;private&quot; function _make_alias is utilised to get the same result.
+
+    // By having the cast functions in each derived class, you are guaranteed to use the same
+    // copy class - no question. GCC is ok with this.
+
+    template&lt;typename T2&gt; simple_ptr&lt;T2&gt; dyn_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr&lt;T2&gt; stat_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr&lt;T2&gt; cast(void) const;
+#endif
   };
 
   ////////////////////////////////////////////////////////////////////////////////
-  // smart_ptr_clone  for polymorphic class hierarchies which have a clone method
+  // simple_ptr_clone  for polymorphic class hierarchies which have a clone method
 
   template &lt;typename T&gt;
   class simple_ptr_clone : public simple_ptr_base&lt;T, clone_copy&lt;T&gt; &gt;
@@ -254,10 +258,18 @@ namespace stlplus
     simple_ptr_clone&lt;T&gt;&amp; operator=(const T&amp; data) {set_value(data); return *this;}
     simple_ptr_clone&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
     ~simple_ptr_clone(void) {}
-  };
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class - see simple_ptr above
+    template&lt;typename T2&gt; simple_ptr_clone&lt;T2&gt; dyn_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr_clone&lt;T2&gt; stat_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr_clone&lt;T2&gt; cast(void) const;
+#endif
+};
 
   ////////////////////////////////////////////////////////////////////////////////
-  // smart_ptr_nocopy for any class that cannot or should not be copied
+  // simple_ptr_nocopy for any class that cannot or should not be copied
 
   template &lt;typename T&gt;
   class simple_ptr_nocopy : public simple_ptr_base&lt;T, no_copy&lt;T&gt; &gt;
@@ -267,6 +279,14 @@ namespace stlplus
     explicit simple_ptr_nocopy(T* data) : simple_ptr_base&lt;T, no_copy&lt;T&gt; &gt;(data) {}
     simple_ptr_nocopy&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
     ~simple_ptr_nocopy(void) {}
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class - see simple_ptr above
+    template&lt;typename T2&gt; simple_ptr_nocopy&lt;T2&gt; dyn_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr_nocopy&lt;T2&gt; stat_cast(void) const;
+    template&lt;typename T2&gt; simple_ptr_nocopy&lt;T2&gt; cast(void) const;
+#endif
   };
 
   ////////////////////////////////////////////////////////////////////////////////
