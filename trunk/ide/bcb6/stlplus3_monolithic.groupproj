@@ -3,7 +3,7 @@
 			<ProjectGuid>{F32B7444-959E-4FE0-938E-24ABE841ED90}</ProjectGuid>
 		</PropertyGroup>
 		<ItemGroup>
-			<Projects Include="stlplus3.cbproj">
+			<Projects Include="stlplus3_monolithic.cbproj">
 				<Dependencies/>
 			</Projects>
 		</ItemGroup>
@@ -15,13 +15,13 @@
 			</BorlandProject>
 		</ProjectExtensions>
 		<Target Name="stlplus3">
-			<MSBuild Projects="stlplus3.cbproj"/>
+			<MSBuild Projects="stlplus3_monolithic.cbproj"/>
 		</Target>
 		<Target Name="stlplus3:Clean">
-			<MSBuild Projects="stlplus3.cbproj" Targets="Clean"/>
+			<MSBuild Projects="stlplus3_monolithic.cbproj" Targets="Clean"/>
 		</Target>
 		<Target Name="stlplus3:Make">
-			<MSBuild Projects="stlplus3.cbproj" Targets="Make"/>
+			<MSBuild Projects="stlplus3_monolithic.cbproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
 			<CallTarget Targets="stlplus3"/>
