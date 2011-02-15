@@ -63,6 +63,16 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.7">Changes from Version 3.6 to 3.7</h2>
 
+<h3>Rework of simple_ptr type conversion methods to work with gcc</h3>
+
+<p>Contributed by DJDM.</p>
+
+<p>GCC is a little more rigid with it's types
+when it comes to using derivative template types being returned from
+template functions of a template. It is also a bit more rigid when it
+comes to accessing the private members of one instance of a template
+from another instance.</p>
+
 <h3>Moved Project Files to Separate /ide Directory</h3>
 
 <p>The project files for various IDEs are multiplying. So to manage
@@ -70,7 +80,7 @@ log for all version 2 releases by looking at the
   contain them. There is a separate sub-directory for each supported
   IDE.</p>
 
-<p>At present there are two IDEs supported:</p>
+<p>At present the following IDEs are supported:</p>
 
 <dl>
 
@@ -79,6 +89,10 @@ log for all version 2 releases by looking at the
 
 <dt>vs2010</dt>
 <dd>Microsoft Visual Studio 2010 (v10)</dd>
+
+<dt>vs6</dt>
+<dd>Microsoft Visual Studio v6 - A baseline from which other versions
+  can be supported</dd>
 
 </dl>
 
