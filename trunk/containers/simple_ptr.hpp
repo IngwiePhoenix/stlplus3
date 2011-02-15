@@ -176,22 +176,6 @@ namespace stlplus
     void copy(const simple_ptr_base<T,C>&) throw(illegal_copy);
 
     //////////////////////////////////////////////////////////////////////////////
-    // functions that involve casting
-
-#ifdef STLPLUS_MEMBER_TEMPLATES
-
-    // dynamic cast of underlying pointer to a derived/parent
-    template<typename T2> simple_ptr_base<T2,C> dyn_cast(void) const;
-
-    // static cast of underlying pointer to a derived/parent
-    template<typename T2> simple_ptr_base<T2,C> stat_cast(void) const;
-
-    // cast of underlying pointer to a base - while keeping the same ref-counted object
-    template<typename T2> simple_ptr_base<T2,C> cast(void) const;
-
-#endif
-
-    //////////////////////////////////////////////////////////////////////////////
 
   protected:
     T* m_pointer;
@@ -224,10 +208,30 @@ namespace stlplus
     simple_ptr<T>& operator=(const T& data) {set_value(data); return *this;}
     simple_ptr<T>& operator=(T* data) {set(data); return *this;}
     ~simple_ptr(void) {}
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class for two main reasons, though the second is a feature of the first:
+
+    // 1. GCC cannot cast the previous base result of simple_ptr_base<T2, constructor_copy<T> >
+    //    as a simple_ptr<T2> even though it used to look like a duck and quack like a duck.
+    //    I think it was really complaining that the copy class was not guaranteed to be the same.
+
+    // 2. Within the cast routines, one pointer type tried accessing private data of the other
+    //    pointer type and even though they are really the same type, was not allowed. Because
+    //    of this, the "private" function _make_alias is utilised to get the same result.
+
+    // By having the cast functions in each derived class, you are guaranteed to use the same
+    // copy class - no question. GCC is ok with this.
+
+    template<typename T2> simple_ptr<T2> dyn_cast(void) const;
+    template<typename T2> simple_ptr<T2> stat_cast(void) const;
+    template<typename T2> simple_ptr<T2> cast(void) const;
+#endif
   };
 
   ////////////////////////////////////////////////////////////////////////////////
-  // smart_ptr_clone  for polymorphic class hierarchies which have a clone method
+  // simple_ptr_clone  for polymorphic class hierarchies which have a clone method
 
   template <typename T>
   class simple_ptr_clone : public simple_ptr_base<T, clone_copy<T> >
@@ -239,10 +243,18 @@ namespace stlplus
     simple_ptr_clone<T>& operator=(const T& data) {set_value(data); return *this;}
     simple_ptr_clone<T>& operator=(T* data) {set(data); return *this;}
     ~simple_ptr_clone(void) {}
-  };
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class - see simple_ptr above
+    template<typename T2> simple_ptr_clone<T2> dyn_cast(void) const;
+    template<typename T2> simple_ptr_clone<T2> stat_cast(void) const;
+    template<typename T2> simple_ptr_clone<T2> cast(void) const;
+#endif
+};
 
   ////////////////////////////////////////////////////////////////////////////////
-  // smart_ptr_nocopy for any class that cannot or should not be copied
+  // simple_ptr_nocopy for any class that cannot or should not be copied
 
   template <typename T>
   class simple_ptr_nocopy : public simple_ptr_base<T, no_copy<T> >
@@ -252,6 +264,14 @@ namespace stlplus
     explicit simple_ptr_nocopy(T* data) : simple_ptr_base<T, no_copy<T> >(data) {}
     simple_ptr_nocopy<T>& operator=(T* data) {set(data); return *this;}
     ~simple_ptr_nocopy(void) {}
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+    // functions that involve casting
+    // moved from base class - see simple_ptr above
+    template<typename T2> simple_ptr_nocopy<T2> dyn_cast(void) const;
+    template<typename T2> simple_ptr_nocopy<T2> stat_cast(void) const;
+    template<typename T2> simple_ptr_nocopy<T2> cast(void) const;
+#endif
   };
 
   ////////////////////////////////////////////////////////////////////////////////

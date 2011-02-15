@@ -250,55 +250,6 @@ namespace stlplus
     make_unique();
   }
 
-#ifdef STLPLUS_MEMBER_TEMPLATES
-
-  // dynamic cast of underlying pointer to a derived/parent
-  template <typename T, typename C>
-  template <typename T2>
-  simple_ptr_base<T2,C> simple_ptr_base<T,C>::dyn_cast(void) const
-  {
-    simple_ptr_base<T2,C> rtn;
-    rtn.m_pointer = dynamic_cast<T2*>(m_pointer);
-    if (rtn.m_pointer) {
-      delete rtn.m_count;
-      rtn.m_count = m_count;
-      rtn.increment();
-    }
-    return rtn;
-  }
-
-  // static cast of underlying pointer to a derived/parent
-  template <typename T, typename C>
-  template <typename T2>
-  simple_ptr_base<T2,C> simple_ptr_base<T,C>::stat_cast(void) const
-  {
-    simple_ptr_base<T2,C> rtn;
-    rtn.m_pointer = static_cast<T2*>(m_pointer);
-    if (rtn.m_pointer) {
-      delete rtn.m_count;
-      rtn.m_count = m_count;
-      rtn.increment();
-    }
-    return rtn;
-  }
-
-  // cast of underlying pointer to a base - while keeping the same ref-counted object
-  template <typename T, typename C>
-  template <typename T2>
-  simple_ptr_base<T2,C> simple_ptr_base<T,C>::cast(void) const
-  {
-    simple_ptr_base<T2,C> rtn;
-    rtn.m_pointer = (T2*)m_pointer;
-    if (rtn.m_pointer) {
-      delete rtn.m_count;
-      rtn.m_count = m_count;
-      rtn.increment();
-    }
-    return rtn;
-  }
-
-#endif
-
   // internal function for distinguishing unique simple_ptr objects
   // used for example in persistence routines
 
@@ -331,6 +282,112 @@ namespace stlplus
       increment();
     }
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // simple_ptr class
+  ////////////////////////////////////////////////////////////////////////////////
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr<T2> simple_ptr<T>::dyn_cast(void) const {
+		simple_ptr<T2> rtn;
+		T2* p = dynamic_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr<T2> simple_ptr<T>::stat_cast(void) const {
+		simple_ptr<T2> rtn;
+		T2* p = static_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr<T2> simple_ptr<T>::cast(void) const {
+		simple_ptr<T2> rtn;
+		T2* p = (T2*)this->m_pointer;
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+#endif
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // simple_ptr_clone class
+  ////////////////////////////////////////////////////////////////////////////////
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_clone<T2> simple_ptr_clone<T>::dyn_cast(void) const {
+		simple_ptr_clone<T2> rtn;
+		T2* p = dynamic_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_clone<T2> simple_ptr_clone<T>::stat_cast(void) const {
+		simple_ptr_clone<T2> rtn;
+		T2* p = static_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_clone<T2> simple_ptr_clone<T>::cast(void) const {
+		simple_ptr_clone<T2> rtn;
+		T2* p = (T2*)this->m_pointer;
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+#endif
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // simple_ptr_nocopy class
+  ////////////////////////////////////////////////////////////////////////////////
+
+#ifdef STLPLUS_MEMBER_TEMPLATES
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_nocopy<T2> simple_ptr_nocopy<T>::dyn_cast(void) const {
+		simple_ptr_nocopy<T2> rtn;
+		T2* p = dynamic_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_nocopy<T2> simple_ptr_nocopy<T>::stat_cast(void) const {
+		simple_ptr_nocopy<T2> rtn;
+		T2* p = static_cast<T2*>(this->m_pointer);
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+  template <typename T>
+	template <typename T2>
+  simple_ptr_nocopy<T2> simple_ptr_nocopy<T>::cast(void) const {
+		simple_ptr_nocopy<T2> rtn;
+		T2* p = (T2*)this->m_pointer;
+		if (p) rtn._make_alias(p, this->m_count);
+		return rtn;
+	}
+
+#endif
 
   ////////////////////////////////////////////////////////////////////////////////
 
