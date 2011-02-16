@@ -204,8 +204,8 @@ int main (int argc, char* argv[])
 
 #else
 
-    std::cerr << "error: This compiler does not support std::shared_ptr" << std::endl;
-    errors++;
+    std::cerr << "Note: This compiler does not support std::shared_ptr" << std::endl;
+    std::cerr << "      This is not considered an error because it is the expected outcome for this compiler" << std::endl;
 
 #endif
 
