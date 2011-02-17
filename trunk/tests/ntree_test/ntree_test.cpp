@@ -77,6 +77,7 @@ bool compare(const string_tree& left, const string_tree& right)
 std::ostream& operator << (std::ostream& device, const string_tree& tree)
 {
   stlplus::print_ntree(device, tree, stlplus::print_string, std::string("\n"), std::string("  "));
+  device << std::endl;
   return device;
 }
 
@@ -135,11 +136,8 @@ void restore_tree_map(stlplus::restore_context& context, tree_map& data)
 
 std::ostream& operator << (std::ostream& device, const tree_map& mappings)
 {
-  for (tree_map::const_iterator i = mappings.begin(); i != mappings.end(); i++)
-  {
-    if (i != mappings.begin()) device << ",";
-    device << "(" << i->first << "=" << i->second << ")";
-  }
+  stlplus::print_map(device, mappings, stlplus::print_string, print_string_tree_iterator, "=", ",");
+  device << std::endl;
   return device;
 }
 
@@ -176,8 +174,8 @@ void restore_mapped_tree(stlplus::restore_context& context, mapped_tree& data)
 }
 std::ostream& operator << (std::ostream& device, const mapped_tree& data)
 {
-  device << data.m_tree << std::endl;
-  device << data.m_map << std::endl;
+  device << data.m_tree;
+  device << data.m_map;
   return device;
 }
 bool compare(const mapped_tree& left, const mapped_tree& right)
@@ -303,6 +301,10 @@ int main(int argc, char* argv[])
       std::cerr << "Success: caught exception " << except.what() << std::endl;
     }
 
+    // test for cut - testing a bug fix
+    string_tree branch = data.m_tree.cut(left);
+    std::cerr << "cut left = " << std::endl << branch;
+    std::cerr << "cut remainder = " << std::endl << data.m_tree;
   }
   catch(std::exception& except)
   {
