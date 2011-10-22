@@ -6,7 +6,7 @@ LIBRARIES := ../../portability
 endif
 include ../../../makefiles/gcc.mak
 ifeq ($(PLATFORM),LINUX)
-LDFLAGS += -ldl
+LOADLIBES += -ldl
 endif
 
 
