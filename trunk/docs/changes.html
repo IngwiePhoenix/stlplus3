@@ -48,7 +48,7 @@ C++ Library Collection</h1>
 <li class="internal"><a href="#v3.3">Changes from Version 3.2 to 3.3</a></li>
 <li class="internal"><a href="#v3.2">Changes from Version 3.1 to 3.2</a></li>
 <li class="internal"><a href="#v3.1">Changes from Version 3.0 to 3.1</a></li>
-<li class="internal"><a href="#v2">Changes from Version 2 to 3.0</a></li>
+<li class="internal"><a href="#v3.0">Changes from Version 2 to 3.0</a></li>
 </ul>
 </div>
 
@@ -64,24 +64,30 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.8">Changes from Version 3.7 to 3.8</h2>
 
+<h3>Fixed bug in digraph relating to the removal of the first/last node or arc</h3>
+
+<p>A user (dark_knight_ita) reported a bug in digraph whereby removing the first or last node or arc left the internal pointers pointing at deleted memory.</p>
+
+<p>This has been corrected by a patch also provided by the user.</p>
+
 <h3>Make containers/simple_ptr and containers/smart-ptr double-destruct-proof</h3>
 
 <p>DJDM reported a situation in which a simple_ptr had been
-  double-destructed, causing a crash. OK, this should never happen
-  anyway, but it is also simple to make these pointer classes proof
-  against this as well.</p>
+double-destructed, causing a crash. OK, double-destruction should
+never happen anyway, but it is also simple to make these pointer
+classes proof against this as well.</p>
 
-<p>DJDM contributed the double-destruct proofing od simple_ptr and I
-  (AJR) contributed the double-destruct proofing of smart_ptr. This
-  code only deals with double-destruction issues, it does not allow
-  method-based access of a destroyed object.</p>
+<p>DJDM contributed the double-destruct proofing of simple_ptr and I
+(AJR) adapted this for smart_ptr. This code only deals with avoiding
+double-destruction issues, it does not allow method-based access of a
+destroyed object.</p>
 
 <h3>Re-added a bug fix to containers/ntree</h3>
 
 <p>The ntree::cut method had a bug where the old method name
   set_new_owner was used when the renamed method change_owner should
   have been used. This bug was fixed in v3.6 but seems to have crept
-  back in, possibly in the rework of ntree which was done for v3.6. So
+  back in, possibly in the rework of ntree which was done for v3.7. So
   I've fixed it again.</p>
 
 <h2 id="v3.7">Changes from Version 3.6 to 3.7</h2>
@@ -145,7 +151,7 @@ from another instance.</p>
 make CXXFLAGS=-std=c++0x
 </pre>
 
-<p>In Borland (Emarcadero) C++ Builder, std::shared_ptr is not available.</p>
+<p>In Borland (Embarcadero) C++ Builder, std::shared_ptr is not available.</p>
 
 <p>In order to support this, I've made internal changes to the
   persistence context classes and to the implementation of persistence
@@ -421,7 +427,7 @@ Copyright: (c) Southampton University 1999-2004
            (c) Andy Rushton           2004-2008
 </pre>
 
-<p>This has no effect on <a href="license.html">licensing</a>.<p>
+<p>This has no effect on <a href="license.html">licensing</a>.</p>
 
 <h2 id="v3.2">Changes from Version 3.1 to 3.2</h2>
 
@@ -524,7 +530,7 @@ purpose.</p>
 resulted in quote marks being added after every character in a string that
 needed quoting (i.e. contained special characters). This has been fixed.</p>
 
-<h2 id="v2">Changes from Version 2 to 3.0</h2>
+<h2 id="v3.0">Changes from Version 2 to 3.0</h2>
 
 <h3>Split the library into a Collection</h3>
 
