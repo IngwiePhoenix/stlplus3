@@ -259,9 +259,12 @@ namespace stlplus
     // now every key in this must be in right and have the same data
     for (hash_iterator<K,T,H,E,const std::pair<const K,T> > i = begin(); i != end(); i++)
     {
-      hash_iterator<K,T,H,E,const std::pair<const K,T> > found = right.find(i->first);
-      if (found == right.end()) return false;
-      if (!(i->second == found->second)) return false;
+    	hash_element<K,T,H,E>* found = right._find_element(i->first);
+    	if (found == 0) return false;
+      if (!(i->second == found->m_value.second)) return false;
+//      hash_iterator<K,T,H,E,const std::pair<const K,T> > found = right.find(i->first);
+//      if (found == right.end()) return false;
+//      if (!(i->second == found->second)) return false;
     }
     return true;
   }
@@ -366,7 +369,7 @@ namespace stlplus
   template<typename K, typename T, class H, class E>
   bool hash<K,T,H,E>::present(const K& key) const
   {
-    return find(key) != end();
+  	return _find_element(key) != 0;
   }
 
   template<typename K, typename T, class H, class E>
@@ -517,29 +520,17 @@ namespace stlplus
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
   {
-    // scan the list for this key's hash value for the element with a matching key
-    unsigned hash_value_full = H()(key);
-    unsigned bin = hash_value_full % m_bins;
-    for (hash_element<K,T,H,E>* current = m_values[bin]; current; current = current->m_next)
-    {
-      if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-        return hash_iterator<K,T,H,E,const std::pair<const K,T> >(current);
-    }
-    return end();
+  	hash_element<K,T,H,E>* found = _find_element(key);
+  	return found ? hash_iterator<K,T,H,E,const std::pair<const K,T> >(found) : end();
+//  	return hash_iterator<K,T,H,E,const std::pair<const K,T> >(found ? found : this);
   }
 
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
   {
-    // scan the list for this key's hash value for the element with a matching key
-    unsigned hash_value_full = H()(key);
-    unsigned bin = hash_value_full % m_bins;
-    for (hash_element<K,T,H,E>* current = m_values[bin]; current; current = current->m_next)
-    {
-      if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
-        return hash_iterator<K,T,H,E,std::pair<const K,T> >(current);
-    }
-    return end();
+  	hash_element<K,T,H,E>* found = _find_element(key);
+  	return found ? hash_iterator<K,T,H,E,std::pair<const K,T> >(found) : end();
+//  	return hash_iterator<K,T,H,E,std::pair<const K,T> >(found ? found : this);
   }
 
   // table lookup by key using the index operator[], returning a reference to the data field, not an iterator
@@ -552,20 +543,18 @@ namespace stlplus
   const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
   {
     // this const version cannot change the hash, so has to raise an exception if the key is missing
-    hash_iterator<K,T,H,E,const std::pair<const K,T> > found = find(key);
-    if (found == end())
+  	hash_element<K,T,H,E>* found = _find_element(key);
+    if (!found)
       throw std::out_of_range("key not found in stlplus::hash::operator[]");
-    return found->second;
+    return found->m_value.second;
   }
 
   template<typename K, typename T, class H, class E>
   T& hash<K,T,H,E>::operator[] (const K& key)
   {
     // this non-const version can change the hash, so creates a new element if the key is missing
-    hash_iterator<K,T,H,E,std::pair<const K,T> > found = find(key);
-    if (found == end())
-      found = insert(key);
-    return found->second;
+  	hash_element<K,T,H,E>* found = _find_element(key);
+    return found ? found->m_value.second : insert(key)->second;
   }
 
   // iterators
@@ -650,6 +639,23 @@ namespace stlplus
     }
     str << std::endl;
     str << "------------------------------------------------------------------------" << std::endl;
+  }
+
+  // find a key and return the element pointer
+  // zero is returned if the find fails
+  // this is used internally where iterator usage may not be required (after profiling by DJDM)
+  template<typename K, typename T, class H, class E>
+  hash_element<K,T,H,E>* hash<K,T,H,E>::_find_element(const K& key) const
+  {
+    // scan the list for this key's hash value for the element with a matching key
+    unsigned hash_value_full = H()(key);
+    unsigned bin = hash_value_full % m_bins;
+    for (hash_element<K,T,H,E>* current = m_values[bin]; current; current = current->m_next)
+    {
+      if (current->m_hash == hash_value_full && E()(current->m_value.first, key))
+        return current;
+    }
+    return 0;
   }
 
   ////////////////////////////////////////////////////////////////////////////////

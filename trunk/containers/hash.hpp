@@ -187,6 +187,11 @@ namespace stlplus
 
     // internals
   private:
+    // find a key and return the element pointer
+    // zero is returned if the find fails
+    // this is used internally where iterator usage may not be required (after profiling by DJDM)
+    hash_element<K,T,H,E>* _find_element(const K& key) const;
+
     friend class hash_element<K,T,H,E>;
     friend class hash_iterator<K,T,H,E,std::pair<const K,T> >;
     friend class hash_iterator<K,T,H,E,const std::pair<const K,T> >;
