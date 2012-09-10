@@ -167,7 +167,7 @@ namespace stlplus
   template<typename NT, typename AT, typename NRef, typename NPtr>
   bool digraph_iterator<NT,AT,NRef,NPtr>::operator == (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
   {
-    return equal(r);
+    return this->equal(r);
   }
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
@@ -179,7 +179,7 @@ namespace stlplus
   template<typename NT, typename AT, typename NRef, typename NPtr>
   bool digraph_iterator<NT,AT,NRef,NPtr>::operator < (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
   {
-    return compare(r) < 0;
+    return this->compare(r) < 0;
   }
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
@@ -290,7 +290,7 @@ namespace stlplus
   template<typename NT, typename AT, typename ARef, typename APtr>
   bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator == (const TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
   {
-    return equal(r);
+    return this->equal(r);
   }
 
   template<typename NT, typename AT, typename ARef, typename APtr>
@@ -302,7 +302,7 @@ namespace stlplus
   template<typename NT, typename AT, typename ARef, typename APtr>
   bool digraph_arc_iterator<NT,AT,ARef,APtr>::operator < (const TYPENAME digraph_arc_iterator<NT,AT,ARef,APtr>::this_iterator& r) const
   {
-    return compare(r) < 0;
+    return this->compare(r) < 0;
   }
 
   template<typename NT, typename AT, typename ARef, typename APtr>

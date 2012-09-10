@@ -130,7 +130,7 @@ namespace stlplus
   template<typename T, typename TRef, typename TPtr>
   bool ntree_iterator<T,TRef,TPtr>::operator == (const TYPENAME ntree_iterator<T,TRef,TPtr>::this_iterator& r) const
   {
-    return equal(r);
+    return this->equal(r);
   }
 
   template<typename T, typename TRef, typename TPtr>
@@ -142,7 +142,7 @@ namespace stlplus
   template<typename T, typename TRef, typename TPtr>
   bool ntree_iterator<T,TRef,TPtr>::operator < (const TYPENAME ntree_iterator<T,TRef,TPtr>::this_iterator& r) const
   {
-    return compare(r) < 0;
+    return this->compare(r) < 0;
   }
 
   template<typename T, typename TRef, typename TPtr>

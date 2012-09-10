@@ -109,7 +109,7 @@ namespace stlplus
   {
     this->assert_valid();
     if (this->node()->m_next)
-      set(this->node()->m_next->m_master);
+      this->set(this->node()->m_next->m_master);
     else
     {
       // failing that, subsequent hash values are tried until either an element is found or there are no more bins
@@ -119,7 +119,7 @@ namespace stlplus
       for(current_bin++; !element && (current_bin < this->owner()->m_bins); current_bin++)
         element = this->owner()->m_values[current_bin];
       if (element)
-        set(element->m_master);
+        this->set(element->m_master);
       else
         this->set_end();
     }
@@ -141,7 +141,7 @@ namespace stlplus
   template<typename K, typename T, class H, class E, typename V>
   bool hash_iterator<K,T,H,E,V>::operator == (const hash_iterator<K,T,H,E,V>& r) const
   {
-    return equal(r);
+    return this->equal(r);
   }
 
   template<typename K, typename T, class H, class E, typename V>
@@ -153,7 +153,7 @@ namespace stlplus
   template<typename K, typename T, class H, class E, typename V>
   bool hash_iterator<K,T,H,E,V>::operator < (const hash_iterator<K,T,H,E,V>& r) const
   {
-    return compare(r) < 0;
+    return this->compare(r) < 0;
   }
 
   // iterator dereferencing is only legal on a non-null iterator
