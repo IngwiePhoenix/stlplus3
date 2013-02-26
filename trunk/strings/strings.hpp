@@ -17,6 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "string_utilities.hpp"
+#include "file_utilities.hpp"
 
 #include "string_basic.hpp"
 #include "string_stl.hpp"
