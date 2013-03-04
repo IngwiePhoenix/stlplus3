@@ -18,7 +18,7 @@ stlplus::text stlplus::read_text(std::istream& device)
   stlplus::text result;
   while (!device.eof())
   {
-    std:: string line;
+    std::string line;
     getline(device, line);
     result.push_back(line);
   }
