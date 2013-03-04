@@ -220,8 +220,8 @@ namespace stlplus
     simple_ptr(void) {}
     explicit simple_ptr(const T&amp; data) : simple_ptr_base&lt;T, constructor_copy&lt;T&gt; &gt;(data) {}
     explicit simple_ptr(T* data) : simple_ptr_base&lt;T, constructor_copy&lt;T&gt; &gt;(data) {}
-    simple_ptr&lt;T&gt;&amp; operator=(const T&amp; data) {set_value(data); return *this;}
-    simple_ptr&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
+    simple_ptr&lt;T&gt;&amp; operator=(const T&amp; data) {this-&gt;set_value(data); return *this;}
+    simple_ptr&lt;T&gt;&amp; operator=(T* data) {this-&gt;set(data); return *this;}
     ~simple_ptr(void) {}
 
 #ifdef STLPLUS_MEMBER_TEMPLATES
@@ -255,8 +255,8 @@ namespace stlplus
     simple_ptr_clone(void) {}
     explicit simple_ptr_clone(const T&amp; data) : simple_ptr_base&lt;T, clone_copy&lt;T&gt; &gt;(data) {}
     explicit simple_ptr_clone(T* data) : simple_ptr_base&lt;T, clone_copy&lt;T&gt; &gt;(data) {}
-    simple_ptr_clone&lt;T&gt;&amp; operator=(const T&amp; data) {set_value(data); return *this;}
-    simple_ptr_clone&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
+    simple_ptr_clone&lt;T&gt;&amp; operator=(const T&amp; data) {this-&gt;set_value(data); return *this;}
+    simple_ptr_clone&lt;T&gt;&amp; operator=(T* data) {this-&gt;set(data); return *this;}
     ~simple_ptr_clone(void) {}
 
 #ifdef STLPLUS_MEMBER_TEMPLATES
@@ -277,7 +277,7 @@ namespace stlplus
   public:
     simple_ptr_nocopy(void) {}
     explicit simple_ptr_nocopy(T* data) : simple_ptr_base&lt;T, no_copy&lt;T&gt; &gt;(data) {}
-    simple_ptr_nocopy&lt;T&gt;&amp; operator=(T* data) {set(data); return *this;}
+    simple_ptr_nocopy&lt;T&gt;&amp; operator=(T* data) {this-&gt;set(data); return *this;}
     ~simple_ptr_nocopy(void) {}
 
 #ifdef STLPLUS_MEMBER_TEMPLATES
