@@ -37,6 +37,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.9">Changes from Version 3.8 to 3.9</a></li>
 <li class="internal"><a href="#v3.8">Changes from Version 3.7 to 3.8</a></li>
 <li class="internal"><a href="#v3.7">Changes from Version 3.6 to 3.7</a></li>
 <li class="internal"><a href="#v3.6">Changes from Version 3.5 to 3.6</a></li>
@@ -59,7 +60,16 @@ for this version are huge. Therefore only the changes since then have been docum
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
 
+<h2 id="v3.9">Changes from Version 3.8 to 3.9</h2>
+
 <h2 id="v3.8">Changes from Version 3.7 to 3.8</h2>
+
+<h3>Fixed missing this-&gt;</h3>
+
+<p>Some of the containers referenced internal methods without the
+  this-&gt; prefix. This is now required by the latest version of g++,
+  so I have added the required prefix in all cases where the compiler
+  raised an error.</p>
 
 <h3>Fixed bug in digraph relating to the removal of the first/last node or arc</h3>
 
