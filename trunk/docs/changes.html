@@ -62,7 +62,10 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.9">Changes from Version 3.8 to 3.9</h2>
 
-<h2 id="v3.8">Changes from Version 3.7 to 3.8</h2>
+<h3>Factored the find method in the hash table</h3>
+
+<p>The basic find algorithm was inefficient - so I've implemented a
+  simpler find method for internal use only.</p>
 
 <h3>Fixed missing this-&gt;</h3>
 
@@ -70,6 +73,8 @@ log for all version 2 releases by looking at the
   this-&gt; prefix. This is now required by the latest version of g++,
   so I have added the required prefix in all cases where the compiler
   raised an error.</p>
+
+<h2 id="v3.8">Changes from Version 3.7 to 3.8</h2>
 
 <h3>Fixed bug in digraph relating to the removal of the first/last node or arc</h3>
 
@@ -91,7 +96,7 @@ destroyed object.</p>
 
 <h3>Re-added a bug fix to containers/ntree</h3>
 
-<p>The ntree::cut method had a bug where the old method name
+<p>The ntree::cut method had a bug (reported by sacbor) where the old method name
   set_new_owner was used when the renamed method change_owner should
   have been used. This bug was fixed in v3.6 but seems to have crept
   back in, possibly in the rework of ntree which was done for v3.7. So
