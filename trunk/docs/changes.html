@@ -37,6 +37,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.10">Changes from Version 3.9 to 3.10</a></li>
 <li class="internal"><a href="#v3.9">Changes from Version 3.8 to 3.9</a></li>
 <li class="internal"><a href="#v3.8">Changes from Version 3.7 to 3.8</a></li>
 <li class="internal"><a href="#v3.7">Changes from Version 3.6 to 3.7</a></li>
@@ -60,12 +61,23 @@ for this version are huge. Therefore only the changes since then have been docum
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
 
+<h2 id="v3.10">Changes from Version 3.9 to 3.10</h2>
+
+<h3>Added support for Visual Studio 2012</h3>
+
+<p>There are now project files for Visual Studio 2012 as well as
+  2010. Pick the correct one for the version of the compiler you are
+  using.</p>
+
+<p>Developers: there is now an IDE directory in the tests directory which
+  contains separate project files for the different Visual Studio versions.</p>
+
 <h2 id="v3.9">Changes from Version 3.8 to 3.9</h2>
 
 <h3>Factored the find method in the hash table</h3>
 
-<p>The basic find algorithm was inefficient - so I've implemented a
-  simpler find method for internal use only.</p>
+<p>The basic find algorithm was inefficient - so DJDM implemented a
+faster find method for internal use only.</p>
 
 <h3>Fixed missing this-&gt;</h3>
 
