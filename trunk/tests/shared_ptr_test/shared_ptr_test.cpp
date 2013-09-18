@@ -7,21 +7,23 @@
 #include "build.hpp"
 #include "file_system.hpp"
 
+using namespace std;
+
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifdef STLPLUS_HAS_CXX0X
+#ifdef STLPLUS_HAS_CXX11
 
-typedef std::shared_ptr<std::string> string_ptr;
+using string_ptr = shared_ptr<string>;
 
-void print(const std::string& label, const string_ptr& value)
+void print(const string& label, const string_ptr& value)
 {
-  std::cout << label;
+  cout << label;
   // use two ways of printing to check both
-  std::cout << " = " << stlplus::shared_ptr_to_string(value, stlplus::string_to_string) << " = ";
-  stlplus::print_shared_ptr(std::cout, value, stlplus::print_string);
-  std::cout << " pointer = " << value.get();
-  std::cout << " count = " << value.use_count();
-  std::cout << std::endl;
+  cout << " = " << stlplus::shared_ptr_to_string(value, stlplus::string_to_string) << " = ";
+  stlplus::print_shared_ptr(cout, value, stlplus::print_string);
+  cout << " pointer = " << value.get();
+  cout << " count = " << value.use_count();
+  cout << endl;
 }
 
 void dump_string_ptr(stlplus::dump_context& context, const string_ptr& data)
@@ -38,11 +40,11 @@ void restore_string_ptr(stlplus::restore_context& context, string_ptr& data)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-typedef std::pair<string_ptr,string_ptr> string_ptr_pair;
+typedef pair<string_ptr,string_ptr> string_ptr_pair;
 
-void print(const std::string& label, const string_ptr_pair& values)
+void print(const string& label, const string_ptr_pair& values)
 {
-  std::cout << "pair " << label << std::endl;
+  cout << "pair " << label << endl;
   print("first:", values.first);
   print("second:", values.second);
 }
@@ -78,32 +80,32 @@ static const char* MASTER2 = "shared_ptr_test2.dump";
 
 int main (int argc, char* argv[])
 {
-  std::cerr << stlplus::build() << std::endl;
+  cerr << stlplus::build() << endl;
   try
   {
     unsigned errors = 0;
 
-#ifdef STLPLUS_HAS_CXX0X
+#ifdef STLPLUS_HAS_CXX11
 
     // shared_ptr()
     string_ptr s0;
     print("created string_ptr s0", s0);
 
     // shared_ptr(T*)
-    string_ptr s1(new std::string("s1"));
+    string_ptr s1{new string("s1")};
     print("created string_ptr s1(new string)", s1);
 
     // shared_ptr(shared_ptr<T>)
-    string_ptr s2(s1);
+    string_ptr s2{s1};
     print("created string_ptr s2(s1)", s2);
     if (s1.get() != s2.get())
     {
-      std::cerr << "error: s2 not an alias of s1" << std::endl;
+      cerr << "error: s2 not an alias of s1" << endl;
       errors++;
     }
 
     // shared_ptr(T*)
-    string_ptr s3(new std::string("s3"));
+    string_ptr s3{new string("s3")};
     print("created string_ptr s3(new string)", s3);
 
     // operator=(shared_ptr<T>)
@@ -111,34 +113,34 @@ int main (int argc, char* argv[])
     print("s3 = s2", s3);
     if (s3.get() != s2.get())
     {
-      std::cerr << "error: s3 not an alias of s2" << std::endl;
+      cerr << "error: s3 not an alias of s2" << endl;
       errors++;
     }
 
     // reset(T*)
-    s3.reset(new std::string("s3 reset"));
+    s3.reset(new string("s3 reset"));
     print("s3.reset(new string)", s3);
     print("s2", s2);
     print("s1", s1);
     if (s3.get() == s2.get())
     {
-      std::cerr << "error: s3 an alias of s2" << std::endl;
+      cerr << "error: s3 an alias of s2" << endl;
       errors++;
     }
 
     // operator=(string_ptr)
-    s3 = string_ptr(new std::string("s3 copy"));
+    s3 = string_ptr{new string("s3 copy")};
     print("s3 = string_ptr(new string)", s3);
     print("s2", s2);
     print("s1", s1);
     if (s3.get() == s2.get())
     {
-      std::cerr << "error: s3 an alias of s2" << std::endl;
+      cerr << "error: s3 an alias of s2" << endl;
       errors++;
     }
 
     // create a pair containing two aliases
-    string_ptr_pair p1 = std::make_pair(s1,s1);
+    string_ptr_pair p1 = make_pair(s1,s1);
     print("make_pair(s1,s1)",p1);
 
     // dump/restore
@@ -148,19 +150,19 @@ int main (int argc, char* argv[])
     print("p2 = dump/restore(p1)", p2);
     if (p2.first.get() != p2.second.get())
     {
-      std::cerr << "error: first not an alias of second" << std::endl;
+      cerr << "error: first not an alias of second" << endl;
       errors++;
     }
 
     // compare with the master dump if present
     if (!stlplus::file_exists(MASTER1))
     {
-      std::cerr << "creating master 1" << std::endl;
+      cerr << "creating master 1" << endl;
       stlplus::file_copy(DATA1,MASTER1);
     }
     else
     {
-      std::cerr << "restoring master 1" << std::endl;
+      cerr << "restoring master 1" << endl;
       string_ptr_pair master;
       stlplus::restore_from_file(MASTER1,master,restore_string_ptr_pair,0);
       if (!compare(p1,master))
@@ -168,11 +170,11 @@ int main (int argc, char* argv[])
     }
 
     // dealias one of these
-    p1.second.reset(new std::string("p1"));
+    p1.second.reset(new string("p1"));
     print("p1.second.reset(new ...)", p1);
     if (p1.first.get() == p1.second.get())
     {
-      std::cerr << "error: first still an alias of second" << std::endl;
+      cerr << "error: first still an alias of second" << endl;
       errors++;
     }
 
@@ -183,19 +185,19 @@ int main (int argc, char* argv[])
     print("p3 = dump/restore(p1)", p3);
     if (p3.first.get() == p3.second.get())
     {
-      std::cerr << "error: first still an alias of second" << std::endl;
+      cerr << "error: first still an alias of second" << endl;
       errors++;
     }
 
     // compare with the master dump if present
     if (!stlplus::file_exists(MASTER2))
     {
-      std::cerr << "creating master 2" << std::endl;
+      cerr << "creating master 2" << endl;
       stlplus::file_copy(DATA2,MASTER2);
     }
     else
     {
-      std::cerr << "restoring master 2" << std::endl;
+      cerr << "restoring master 2" << endl;
       string_ptr_pair master;
       stlplus::restore_from_file(MASTER2,master,restore_string_ptr_pair,0);
       if (!compare(p1,master))
@@ -204,20 +206,20 @@ int main (int argc, char* argv[])
 
 #else
 
-    std::cerr << "Note: This compiler does not support std::shared_ptr" << std::endl;
-    std::cerr << "      This is not considered an error because it is the expected outcome for this compiler" << std::endl;
+    cerr << "Note: This compiler does not support shared_ptr" << endl;
+    cerr << "      This is not considered an error because it is the expected outcome for this compiler" << endl;
 
 #endif
 
     if (errors == 0)
-      std::cerr << "No errors were found - test SUCCEEDED" << std::endl;
+      cerr << "No errors were found - test SUCCEEDED" << endl;
     else
-      std::cerr << "ERRORS were found - test FAILED" << std::endl;
+      cerr << "ERRORS were found - test FAILED" << endl;
     return errors;
   }
-  catch(std::exception& exception)
+  catch(exception& exception)
   {
-    std::cerr << "exception: failed with " << exception.what() << std::endl;
+    cerr << "exception: failed with " << exception.what() << endl;
     return -1;
   }
   return -2;

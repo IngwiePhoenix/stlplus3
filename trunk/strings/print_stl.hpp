@@ -20,7 +20,7 @@
 #include "print_set.hpp"
 #include "print_string.hpp"
 #include "print_vector.hpp"
-#ifdef STLPLUS_HAS_CXX0X
+#ifdef STLPLUS_HAS_CXX11
 #include "print_shared_ptr.hpp"
 #endif
 

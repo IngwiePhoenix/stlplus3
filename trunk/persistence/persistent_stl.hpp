@@ -23,7 +23,7 @@
 #include "persistent_set.hpp"
 #include "persistent_string.hpp"
 #include "persistent_vector.hpp"
-#ifdef STLPLUS_HAS_CXX0X
+#ifdef STLPLUS_HAS_CXX11
 #include "persistent_shared_ptr.hpp"
 #endif
 
