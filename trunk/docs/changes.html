@@ -72,6 +72,23 @@ log for all version 2 releases by looking at the
 <p>Developers: there is now an IDE directory in the tests directory which
   contains separate project files for the different Visual Studio versions.</p>
 
+<h3>Changed Linux to GNU</h3>
+
+<p>It is technically incorrect to label GNU/Linux as Linux. Linux is
+the Kernel, whereas GNU is the OS. So I have changed the
+documentation, code and build tools to use the correct OS name of GNU.</p>
+
+<p>This also means that the buiuld subdirectory is now
+e.g. GNU-i686-debug rather than LINUX-i686-debug.</p>
+
+<h3>Ported to gNewSense</h3>
+
+<p>The gNewSense distribution of GNU/Linux is a pure free software
+distribution. I have tested STLplus on this platform and confirmed
+that it works correctly. The only limitation is that you must install
+the development headers for the "ltdl" library, i.e. package
+"libltdl-dev" to get the dynalinker component to build.</p>
+
 <h2 id="v3.9">Changes from Version 3.8 to 3.9</h2>
 
 <h3>Factored the find method in the hash table</h3>
