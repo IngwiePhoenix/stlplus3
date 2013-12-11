@@ -203,7 +203,7 @@ object files are stored in separate subdirectories for each build.</p>
 &lt;library&gt; is the name of the library - e.g. libportability.a for the portability library. This
 is stored in a subdirectory of the library directory which is build-specific. Refer to the <a
 href="porting.html#progress">porting</a> page and look for the Build Name column in the table. As an example,
-the build for DEC Alpha running Gnu/Linux has the Build Name <code>LINUX-alpha</code>. This then has an extra
+the build for DEC Alpha running Gnu/Linux has the Build Name <code>GNU-alpha</code>. This then has an extra
 suffix added depending on the variant:</p>
 
 <dl>
@@ -213,13 +213,13 @@ suffix added depending on the variant:</p>
 </dl>
 
 <p>So, for example, the debug variant of the DEC Alpha build will be stored in a subdirectory called
-<code>LINUX-alpha-debug</code>.</p>
+  <code>GNU-alpha-debug</code>.</p>
 
 <p>When you use my makefile system in a multi-library project, the make system will automatically
 select the correct version of <code>lib&lt;library&gt;.a</code> depending on the configuration
 chosen for the build. For example, if you build an application dependent on the portability library
 and you are on a DEC Alpha platform and building the debug variant, the build system will automatically
-link with <code>LINUX-alpha-debug/libportability.a</code>.</p>
+link with <code>GNU-alpha-debug/libportability.a</code>.</p>
 
 <h3>Using with my Make System</h3>
 
@@ -329,7 +329,7 @@ include ../../makefiles/gcc.mak
 <ul>
 <li class="file">Makefile</li>
 <li class="file">&lt;portability library source files&gt;</li>
-<li class="folder">LINUX-alpha-debug
+<li class="folder">GNU-alpha-debug
 <ul>
 <li class="file">libportability.a</li>
 </ul>
@@ -340,7 +340,7 @@ include ../../makefiles/gcc.mak
 <ul>
 <li class="file">Makefile</li>
 <li class="file">&lt;containers library source files&gt;</li>
-<li class="folder">LINUX-alpha-debug
+<li class="folder">GNU-alpha-debug
 <ul>
 <li class="file">libcontainers.a</li>
 </ul>
@@ -359,7 +359,7 @@ include ../../makefiles/gcc.mak
 <ul>
 <li class="file">Makefile</li>
 <li class="file">&lt;client program source files&gt;</li>
-<li class="folder">LINUX-alpha-debug
+<li class="folder">GNU-alpha-debug
 <ul>
 <li class="file">libclient.a</li>
 </ul>
@@ -382,12 +382,12 @@ LIBRARIES = ../../stlplus3/portability ../../stlplus3/containers
 include ../../makefiles/gcc.mak
 </pre>
 
-<p>This will put Cygwin binaries in ../../bin/CYGWIN and Gnu/Linux binaries into ../../bin/LINUX.</p>
+<p>This will put Cygwin binaries in ../../bin/CYGWIN and Gnu/Linux binaries into ../../bin/GNU.</p>
 
 <p>Furthermore, the IMAGE variable can put each different build into a different subdirectory by
 using the SUBDIR variable instead of PLATFORM. The SUBDIR variable includes a prefix for the
 platform and the suffix for the different build configuration, so the debug build will be called
-CYGWIN-i686-debug for the Cygwin build and LINUX-i686-debug for the Linux build.</p>
+CYGWIN-i686-debug for the Cygwin build and GNU-i686-debug for the Linux build.</p>
 
 <h2 id="microsoft">Microsoft Visual Studio on Windows</h2>
 
@@ -549,7 +549,7 @@ building STLplus:</p>
 <dt>-D&lt;platform&gt;</dt>
 
 <dd>The name of the platform (i.e. operating system) that you are building on. The word
-&lt;platform&gt; should be replaced by the actual platform, e.g. -DLINUX or -DCYGWIN. This defines a
+&lt;platform&gt; should be replaced by the actual platform, e.g. -DGNU or -DCYGWIN. This defines a
 macro which is then used within the code as a compiler directive to control platform-specific
 features. If this is missing then you get a generic Unix build - which will be correct for any
 Posix-compliant variant of Unix. A native Windows build should define _WIN32 (Note: the Visual
@@ -638,7 +638,7 @@ currently used and which ones are actually used to make a difference.</p>
 </tr>
 
 <tr>
-  <td align="center">LINUX</td>
+  <td align="center">GNU</td>
 <td align="center">no</td>
 <td align="left">Posix-compliant Unix build on Gnu/Linux with gcc</td>
 </tr>
@@ -703,8 +703,8 @@ For example:</p>
 ld ... $STLPLUS3/portability/&lt;target_dir&gt;/libportability.a $STLPLUS3/containers/&lt;target_dir&gt;/libcontainers.a ...
 </pre>
 
-<p>In this case, &lt;target_dir&gt; will be something like <code>LINUX-alpha-debug</code> for a
-debug build and <code>LINUX-alpha-release</code> for a release build.</p>
+<p>In this case, &lt;target_dir&gt; will be something like <code>GNU-alpha-debug</code> for a
+debug build and <code>GNU-alpha-release</code> for a release build.</p>
 
 <p><strong>Note:</strong> when linking, you should list the libraries in their dependency order (see the <a
 href="#dependencies">section on dependencies</a>) with the higher-level libraries first
@@ -816,8 +816,8 @@ by one variant:</p>
 
 <pre class="script">
 # Build on Gnu/Linux
-ifneq ($(findstring Linux,$(UNAME)),)
-PLATFORM  := LINUX
+ifneq ($(findstring GNU,$(UNAME)),)
+PLATFORM  := GNU
 endif
 </pre>
 
@@ -826,18 +826,18 @@ be added as I try them.</p>
 
 <p>The PLATFORM name is used as the prefix to the subdirectory used to store object code. Thus the
 Cygwin debug build is stored in CYGWIN-i686-debug whilst the Gnu/Linux debug build is stored in
-LINUX-i686-debug. This organisation means that the same disk can be mounted on different operating
+GNU-i686-debug. This organisation means that the same disk can be mounted on different operating
 systems and built without the different operating systems conflicting with each other. It also keeps
 the different kinds of build (e.g. release or debug) in separate directories.</p>
 
 <p>The PLATFORM value is also passed to the compiler as a macro definition in the form
--D&lt;platform&gt;, where &lt;platform&gt; is the name of the platform (e.g. -DLINUX). This means
+-D&lt;platform&gt;, where &lt;platform&gt; is the name of the platform (e.g. -DGNU). This means
 that if it proves necessary to differentiate between platforms to get any part of the C++ code
-working, then this is done by adding "#ifdef LINUX" or whatever compiler switches to the code. The
+working, then this is done by adding "#ifdef GNU" or whatever compiler switches to the code. The
 macro _WIN32 is defined for native Windows builds regardless of the compiler - if this is not set
 then the default is to assume a vanilla Unix build. To date, only very minor differences have been
 found between different Unix platforms. However, if you use a different build system it is a good
-idea to pass this parameter to the compiler (e.g. -DLINUX) in case future updates to the library do
+idea to pass this parameter to the compiler (e.g. -DGNU) in case future updates to the library do
 need to have these switches. Check the ../../makefiles/gcc.mak file for the values currently
 supported, even if you don't plan to use my make system.</p>
 
