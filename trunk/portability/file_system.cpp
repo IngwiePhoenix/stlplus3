@@ -408,8 +408,8 @@ namespace stlplus
 
 // Under both Windows and Unix, the stat function is used for classification
 
-// Under Linux, the following classifications are defined
-// source: Linux man page for stat(2) http://linux.die.net/man/2/stat
+// Under Gnu/Linux, the following classifications are defined
+// source: Gnu/Linux man page for stat(2) http://linux.die.net/man/2/stat
 //   S_IFMT 	0170000	bitmask for the file type bitfields
 //   S_IFSOCK 	0140000	socket (Note this overlaps with S_IFDIR)
 //   S_IFLNK 	0120000	symbolic link

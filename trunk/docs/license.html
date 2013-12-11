@@ -35,10 +35,6 @@ C++ Library Collection</h1>
 <h1>License Agreement</h1> 
 
 <p style="text-align: center">
-<a href="http://www.opensource.org/"><img alt="Open Source" src="opensource-110x95-t.png" style="border:0" width="110" height="95"></a>
-</p>
-
-<p style="text-align: center">
 <a href="http://creativecommons.org/licenses/BSD/"><img alt="Creative Commons BSD License" src="http://creativecommons.org/images/license/40bsd.png" style="border:0" width="40" height="40"></a>
 </p>
 
@@ -93,11 +89,14 @@ the use of this software, even if advised of the possibility of such damage.</p>
 <p>I have chosen to use the <a href="http://opensource.org/licenses/bsd-license.php">BSD
 license</a> as my template. This is approximately equivalent to the
 <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons "Attribution"</a> license.
-I like this because it achieves my aims simply and reasonable briefly.
+I chose this because it achieves my aims simply and reasonable briefly.
 It is easy to understand and contains no traps for the unwary.</p>
 
-<p>I have two aims in having a license agreement for the STLplus library. I wish to protect myself
-from (1) intellectual property thieves and (2) litiginous idiots.</p>
+<p>I have two personal aims in having a license agreement for the STLplus
+library. I wish to protect myself from (1) intellectual property
+thieves and (2) litiginous idiots. However, another aspect of my
+choice is that this software's early development was publicly funded
+and I have a duty to make it widely available.</p>
 
 <p>To achieve the first aim, the STLplus library is copyrighted software. Basically I have utter
 contempt for people who steal other people's creative works and either use it unacknowledged or
@@ -116,12 +115,17 @@ not testing the product fully. If you use the library then you are implicitly ag
 terms. If you don't like that, don't use the STLplus library. Or the STL library, or the C run-time,
 or any part of the operating system for that matter.</p>
 
-<p>That's it really. I don't subscribe to the idealism of some open-source advocates who claim that
-open-source software should only be available to other open-source developers. I want this library
-to be used by anyone and everyone, well except intellectual property thieves and litiginous idiots.
-There are therefore no restrictions saying you have to make your products open source as well
-because I don't believe in that. If you wish to use this library in an open source project, great.
-If you wish to use it in a closed-source commercial product, equally great.</p>
+<p>That's it really. I have chosen not to restrict this software to
+only free software developers. I believe in the principles of the Free
+Software Foundation and of the Gnu Project (and early versions were
+licensed under the Gnu Public License), but my duty to the original
+funding source has led me to decide that I should allow the library to
+be used by anyone and everyone, well except intellectual property
+thieves and litiginous idiots.  There are therefore no restrictions
+saying you have to make your products open source as well because I
+don't believe in that. If you wish to use this library in an open
+source project, great.  If you wish to use it in a closed-source
+commercial product, equally great.</p>
 
 <p>I have tried two other licenses before this one. I started with the <a
 href="http://opensource.org/licenses/gpl-license.php">Gnu Public License (GPL)</a> but it was far
@@ -131,8 +135,7 @@ as well. This made the STLplus library unavailable for commercial developers. I 
 (LGPL)</a> which is supposedly aimed at libraries. However, a user pointed out that this also forced
 derivative works to be LGPLed unless STLplus was provided as a dynamically linked library, and I
 know from experience that dynamic linking is painful on many platforms, is a deterrent to library
-use so contrary to my aims and furthermore is useless anyway for a C++ library since
-template code gets inlined.</p>
+use so contrary to my aims and furthermore cannot be applied to a C++ template library anyway.</p>
 
 <h2 id="compliance">How to Comply with this License</h2>
 
@@ -144,8 +147,8 @@ template code gets inlined.</p>
 copyright must be kept. That means the license comments in the source code and this web page must be
 part of the distribution.</li>
 
-<li>You can distribute a modified STLplus library as source code, in which case you can claim
-authorship of your modifications, but must include the original license and copyright for the
+<li>You can distribute a modified STLplus library as source code, in which case you can and should claim
+authorship of your modifications only, but must include the original license and copyright for the
 original STLplus software as above.</li>
 
 <li>You can incorporate the STLplus library in an application or other object library by simply

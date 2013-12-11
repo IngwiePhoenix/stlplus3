@@ -440,8 +440,8 @@ namespace stlplus
     bool connected(unsigned wait)
       {
         if (!initialised()) return false;
-        // Linux and Windows docs say test with select for whether socket is
-        // writable. However, a problem has been reported with Linux whereby
+        // Gnu/Linux and Windows docs say test with select for whether socket is
+        // writable. However, a problem has been reported with Gnu/Linux whereby
         // the OS will report a socket as writable when it isn't
         // first use the select method
         if (!select(false, true, wait))

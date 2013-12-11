@@ -183,7 +183,7 @@ the specialisation of std::basic_string for 8-bit characters.</p>
 
 <p><strong>Note:</strong>The 'standard' type std::wstring is not supported because it is too weakly defined. 
 It is ostensibly the Unicode string, which requires a minimum of 21 bits. On Windows wstring is only
-16 bits wide so is actually UTF-16 encoded Unicode. On Linux, wstring is 32 bits wide and therefore
+16 bits wide so is actually UTF-16 encoded Unicode. On Gnu/Linux, wstring is 32 bits wide and therefore
 is unencoded UCS-4. Since UTF-16 and UCS-4 are not compatible and are not easily convertible, it is
 not possible to implement platform-independent persistence of this type. I recommend that you
 convert wide strings into UTF-8 encoding and dump/restore them using the std::string persistence
