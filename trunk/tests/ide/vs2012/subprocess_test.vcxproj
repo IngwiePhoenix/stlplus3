@@ -74,7 +74,7 @@
       <Culture>0x0809</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>subsystems.lib;strings.lib;persistence.lib;portability.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\subsystems\$(Configuration)\subsystems.lib;..\..\..\strings\$(Configuration)\strings.lib;..\..\..\persistence\$(Configuration)\persistence.lib;..\..\..\portability\$(Configuration)\portability.lib;Ws2_32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\subprocess_test\subprocess_test.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>..\..\subprocess_test\Release\subprocess_test.pdb</ProgramDatabaseFile>
@@ -115,7 +115,7 @@
       <Culture>0x0809</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>subsystems.lib;strings.lib;persistence.lib;portability.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\subsystems\$(Configuration)\subsystems.lib;..\..\..\strings\$(Configuration)\strings.lib;..\..\..\persistence\$(Configuration)\persistence.lib;..\..\..\portability\$(Configuration)\portability.lib;Ws2_32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\subprocess_test\subprocess_test.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
