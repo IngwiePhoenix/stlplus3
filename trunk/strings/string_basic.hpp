@@ -11,7 +11,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "string_address.hpp"
 #include "string_bool.hpp"
 #include "string_cstring.hpp"
 #include "string_float.hpp"
