@@ -36,9 +36,9 @@ namespace stlplus
     void reset(void);
 
     // get the elapsed time in seconds, expressed as a float
-    float elapsed(void) const;
+    double elapsed(void) const;
     // get the CPU time in seconds, expressed as a float
-    float cpu(void) const;
+    double cpu(void) const;
 
     // get a printable string representing the elapsed time and CPU time
     std::string text(void) const;

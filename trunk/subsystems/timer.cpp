@@ -32,14 +32,14 @@ namespace stlplus
     m_time = time(0);
   }
 
-  float timer::cpu(void) const
+  double timer::cpu(void) const
   {
-    return ((float)(clock() - m_clock)) / ((float)CLOCKS_PER_SEC);
+    return ((clock() - m_clock)) / (CLOCKS_PER_SEC);
   }
 
-  float timer::elapsed(void) const
+  double timer::elapsed(void) const
   {
-    return ((float)(time(0) - m_time));
+    return ((double)(time(0) - m_time));
   }
 
   std::string timer::text(void) const
