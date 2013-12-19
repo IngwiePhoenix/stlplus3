@@ -611,6 +611,12 @@ namespace stlplus
     return uimage(i, radix, display, width);
   }
 
+  std::string address_to_string(const void* i, unsigned radix, radix_display_t display, unsigned width)
+    throw(std::invalid_argument)
+  {
+    return simage((ptrdiff_t)i, radix, display, width);
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
   // Conversions FROM string
   // local template function
@@ -1104,6 +1110,12 @@ namespace stlplus
     throw(std::invalid_argument)
   {
     return uvalue<unsigned long>(str, radix);
+  }
+
+  void* string_to_address(const std::string& str, unsigned radix)
+    throw(std::invalid_argument)
+  {
+    return (void*)svalue<ptrdiff_t>(str, radix);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

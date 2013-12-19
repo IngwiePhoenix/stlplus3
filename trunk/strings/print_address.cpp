@@ -15,14 +15,6 @@
 namespace stlplus
 {
 
-  ////////////////////////////////////////////////////////////////////////////////
-
-  void print_address(std::ostream& device, const void* i, unsigned radix, radix_display_t display, unsigned width)
-    throw(std::invalid_argument)
-  {
-    print_unsigned_long(device, (unsigned long)i, radix, display, width);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
+  // moved to print_int.cpp
 
 } // end namespace stlplus

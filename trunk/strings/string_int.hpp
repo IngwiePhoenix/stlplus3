@@ -72,6 +72,13 @@ namespace stlplus
                                       unsigned width = 0)
     throw(std::invalid_argument);
 
+  // address displayed as an integer
+  std::string address_to_string(const void*,
+                                unsigned radix = 16,
+                                radix_display_t display = radix_c_style_or_hash,
+                                unsigned width = 0)
+    throw(std::invalid_argument);
+
   ////////////////////////////////////////////////////////////////////////////////
   // Convert a string to an integer type
   ////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +116,11 @@ namespace stlplus
 
   unsigned long string_to_unsigned_long(const std::string& value,
                                         unsigned radix = 0)
+    throw(std::invalid_argument);
+
+  // string representation of a pointer as an integer
+  void* string_to_address(const std::string& value,
+                          unsigned radix = 0)
     throw(std::invalid_argument);
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -50,6 +50,12 @@ namespace stlplus
     device << unsigned_long_to_string(i, radix, display, width);
   }
 
+  void print_address(std::ostream& device, const void* i, unsigned radix, radix_display_t display, unsigned width)
+    throw(std::invalid_argument)
+  {
+    device << address_to_string(i, radix, display, width);
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus

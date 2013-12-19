@@ -76,6 +76,14 @@ namespace stlplus
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  void print_address(std::ostream& device, const void*,
+                     unsigned radix = 16,
+                     radix_display_t display = radix_c_style_or_hash,
+                     unsigned width = 0)
+    throw(std::invalid_argument);
+
+  ////////////////////////////////////////////////////////////////////////////////
+
 } // end namespace stlplus
 
 #endif
