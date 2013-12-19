@@ -56,11 +56,13 @@ on different platforms. So in the past, the library collection has
 been extensively tested on a wide range of platforms. This enabled me,
 for example, to fix problems with data persistence on 64-bit CPUs and
 to provide a MacOS port. Unfortunately, the Compile Farm has now been
-withdrawn, so I can only test the library on my own Windows PC and on virtual machines for Free BSD and Gnu/Linux. However, this setup means that I can still test against a range
-of compiler/platform combinations, including gcc on Gnu/Linux and Free BSD, gcc on
-Windows using the Cygwin Unix emulator, Windows native builds using
-Visual Studio and Windows native builds using the MinGW version of the
-gcc compiler.</p>
+withdrawn, so I can only test the library on my own Windows PC and on
+virtual machines for Free BSD and Gnu/Linux variants. However, this
+setup means that I can still test against a range of compiler/platform
+combinations, including gcc on Gnu/Linux and Free BSD, gcc on Windows
+using the Cygwin Unix emulator, Windows native builds using Visual
+Studio and Windows native builds using the MinGW version of the gcc
+compiler.</p>
 
 <h2 id="issues">Porting Status</h2>
 
@@ -81,31 +83,37 @@ theory.</p>
 <p>STLplus has been built on the following Operating Systems:</p>
 
 <ul>
-  <li>Windows
+  <li>Any modern version of Windows
     <ul>
       <li>NT</li>
       <li>2000</li>
       <li>XP</li>
+      <li>7</li>
     </ul>
   </li>
-  <li>Gnu/Linux
+  <li>Any distribution of Gnu/Linux
     <ul>
+      <li>gNewSense</li>
+      <li>Ubuntu</li>
+      <li>Cygwin (Gnu/Linux emulation on Windows)</li>
       <li>Debian</li>
       <li>RedHat</li>
       <li>Suse</li>
-      <li>Ubuntu</li>
-      <li>Cygwin (Gnu/Linux emulation on Windows)</li>
     </ul>
   </li>
-  <li>other Unix
+  <li>Any BSD derivative
     <ul>
       <li>Open BSD</li>
       <li>Net BSD</li>
       <li>Free BSD</li>
+    </ul>
+  </li>
+  <li>other Unix-like OSs
+    <ul>
       <li>Solaris</li>
     </ul>
   </li>
-  <li>MacOS
+  <li>MacOS - which is also really a BSD derivative
     <ul>
       <li>X (Darwin)</li>
     </ul>
@@ -126,6 +134,7 @@ across.</p>
 <p>STLplus has been built on the following CPUs:</p>
 <ul>
   <li>Intel Pentium 686 (32-bit)</li>
+  <li>Intel Pentium x86_64 (642-bit)</li>
   <li>AMD Opteron (64-bit)</li>
   <li>IBM OpenPower (32-bit)</li>
   <li>DEC Alpha (64-bit)</li>
@@ -139,7 +148,7 @@ across.</p>
 
 <dd>
 
-<p>The concept of portability means portability between operating
+<p>The concept of portability usually means portability between operating
 systems, not necessarily portability between compilers. However, to
 cater for different tastes in compilers, I have supported as many as I
 have access to.</p>
@@ -147,10 +156,11 @@ have access to.</p>
 <p>It is also important that software will build with different
 versions of each compiler, because I have no control over which
 compiler you are using and there's a good chance that you don't
-either.  The STLplus library should ideally work in whatever
+either. The STLplus library should ideally work in whatever
 development environment you have chosen (within reason). So, STLplus
 works with different releases of these compilers, not just the latest
-one.</p>
+one. On the other hand, STLplus requires a good implementation of
+templates and so this limits the range of compilers supported.</p>
 
 <p>STLplus has been built on the following compilers:</p>
 
@@ -162,38 +172,52 @@ one.</p>
       <li>v8 (2005)</li>
       <li>v9 (2008)</li>
       <li>v10 (2010)</li>
+      <li>v11 (2012) - Note: <a href="http://stackoverflow.com/questions/14372706/visual-studio-cant-build-due-to-rc-exe">See this article on problems configuring VS 2012 for C++</a></li>
     </ul>
   </li>
   <li>Gnu gcc
     <ul>
       <li>v2, v2.95 onwards - tried on v2.95</li>
       <li>v3 - tried on v3.3, v3.4</li>
-      <li>v4 - tried on v4.3, v4.4, v4.5</li>
+      <li>v4 - tried on v4.3 to 4.8</li>
     </ul>
   </li>
   <li>Borland
     <ul>
-      <li>v5.5 (Free Command-line Tools)</li>
       <li>v5.8 (Turbo C++ 2006 Explorer)</li>
     </ul>
   </li>
 </ul>
 
 <p>On each operating system there are a number of different
-development environments available:</p>
+combinations of development environments available:</p>
 
 <ul>
 
-  <li>Windows
+  <li>Windows 32-bit build
     <ul>
-      <li>Visual Studio</li>
+      <li>Visual Studio (WIN32 target)</li>
+      <li>Native Windows using gnu gcc on <a href="http://www.mingw.org/">MinGW</a></li>
+      <li>GNU/Linux emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin</a></li>
       <li>Borland</li>
-      <li>native Windows using gnu gcc on <a href="http://www.mingw.org/">MinGW</a></li>
-      <li>Unix-emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin</a></li>
     </ul>
   </li>
 
-  <li>all Gnu/Linux or other Unix
+  <li>Windows 64-bit build
+    <ul>
+      <li>Visual Studio (x64 target)</li>
+      <li>Native Windows using gnu gcc on <a href="http://mingw-w64.sourceforge.net/">MinGW-w64</a></li>
+      <li>GNU/Linux emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin64</a></li>
+    </ul>
+  </li>
+
+  <li>all Gnu/Linux
+    <ul>
+      <li>gnu gcc</li>
+    </ul>
+  </li>
+
+  <li>all BSD derivatives
     <ul>
       <li>gnu gcc</li>
     </ul>
@@ -207,12 +231,11 @@ development environments available:</p>
 
 </ul>
 
-
 </dd>
 
 </dl>
 
-<p>I refer to a "platform" as a particular combination of CPU, Operating System and Compiler.</p>
+<p>I refer to a "platform" as a particular combination of CPU, Operating System, Word Length (32 or 64 bit) and Compiler.</p>
 
 <p>These requirements create some limitations on the extent of the library - the primary objective
 is for it to be portable such that it presents exactly the same interface on all platforms. This
@@ -312,7 +335,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code></code></td>
 <td>2013-06-22</td>
 <td>26/27</td>
-<td>Dynamic loader test needs 64-bit shared library</td>
+<td>Dynamic loader test failed - needs 64-bit shared library to load.</td>
 </tr>
 
 <tr>
@@ -325,12 +348,12 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td><code></code></td>
 <td>2013-06-22</td>
 <td>25/27</td>
-<td>Dynamic loader test needs 64-bit shared library, shared_ptr not supported</td>
+<td>Dynamic loader test needs 64-bit shared library, shared_ptr not supported on gcc 4.2.</td>
 </tr>
 
 <tr>
 <td>Intel 686</td>
-<td>64</td>
+<td>32</td>
 <td>Windows 7</td>
 <td>gcc</td>
 <td>4.7.2 (MinGW)</td>
@@ -346,6 +369,19 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>64</td>
 <td>Windows 7</td>
 <td>gcc</td>
+<td>4.8.1 (MinGW-w64)</td>
+<td><code>MINGW-x86_64</code></td>
+<td><code>_WIN64</code></td>
+<td>2013-12-19</td>
+<td>26/27</td>
+<td>Dynamic loader test failed - needs 64-bit shared library to load.</td>
+</tr>
+
+<tr>
+<td>Intel 686</td>
+<td>32</td>
+<td>Windows 7</td>
+<td>gcc</td>
 <td>4.5.3 (Cygwin)</td>
 <td><code>CYGWIN-i686</code></td>
 <td><code>CYGWIN</code></td>
@@ -358,6 +394,19 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>Intel 686</td>
 <td>64</td>
 <td>Windows 7</td>
+<td>gcc</td>
+<td>4.8.2 (Cygwin64)</td>
+<td><code>CYGWIN-x86_64</code></td>
+<td><code>CYGWIN</code></td>
+<td>2013-12-12</td>
+<td>27/27</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Intel 686</td>
+<td>32</td>
+<td>Windows 7</td>
 <td>Microsoft</td>
 <td>2010 Express Edition</td>
 <td>N/A</td>
@@ -369,15 +418,28 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 
 <tr>
 <td>Intel 686</td>
-<td>64</td>
+<td>32</td>
 <td>Windows 7</td>
 <td>Microsoft</td>
 <td>2012 VS Express for Desktop</td>
 <td>N/A</td>
 <td><code>_WIN32</code></td>
-<td>2013-06-22</td>
+<td>2013-12-12</td>
 <td>27/27</td>
-<td></a></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Intel 686</td>
+<td>64</td>
+<td>Windows 7</td>
+<td>Microsoft</td>
+<td>2012 VS Express for Desktop</td>
+<td>N/A</td>
+<td><code>_WIN64</code></td>
+<td>2013-12-13</td>
+<td>26/27</td>
+<td>Test needs a Win64 DLL to load</td>
 </tr>
 
 <tr>
