@@ -17,12 +17,12 @@ typedef stlplus::digraph<std::string,int> string_int_graph;
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::iterator i)
 {
-  return output << ((long)((void*)&*i)) << "->" << *i;
+  return output << ((void*)&*i) << "->" << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_iterator i)
 {
-  return output << ((long)((void*)&*i)) << "->" << *i;
+  return output << ((void*)&*i) << "->" << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_vector arcs)
