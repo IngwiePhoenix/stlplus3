@@ -129,10 +129,10 @@ int main (int argc, char* argv[])
   std::cerr << "build: " << stlplus::build() << std::endl;
   try
   {
-    srand(time(0));
+    srand((unsigned)time(0));
     signed long samples = (argc > 2) ? ((argc-1)/2) : argc == 2 ? atol(argv[1]) : SAMPLES;
     std::cerr << "testing " << samples << " samples" << std::endl;
-    float cpu = cpu_time.cpu();
+    double cpu = cpu_time.cpu();
     for (signed long i = 1; i <= samples; i++)
     {
       int a = (argc > 2) ? atol(argv[i*2-1]) : rand();
