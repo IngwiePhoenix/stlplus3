@@ -22,16 +22,34 @@ namespace stlplus
     return std::string("STLplus v") + version();
   }
 
-  // platform is the target operating system in the form "Windows" or "Generic Unix"
+  int platform_bits(void)
+  {
+    return sizeof(ptrdiff_t) * 8;
+  }
+
+  // platform name is the target operating system in the form "Windows" or "Unix"
+  std::string platform_name(void)
+  {
+    // for macros see http://sourceforge.net/p/predef/wiki/OperatingSystems/
+#if defined _WIN64 || defined _WIN32
+    return std::string("Windows");
+#elif defined __CYGWIN__
+    return std::string("Cygwin");
+#elif defined __gnu_linux__
+    return std::string("GNU/Linux");
+#elif defined BSD
+    return std::string("BSD");
+#else
+    // at present there are no variations between other different Unix platforms so
+    // they all map onto the generic platform
+    return std::string("Unix");
+#endif
+  }
+
+  // platform is the target operating system and its bit size in the form "Windows 32" or "Generic 64"
   std::string platform(void)
   {
-#if defined _WIN32
-    return std::string("Windows");
-#else
-    // at present there are no variations between different Unix platforms so
-    // they all map onto the generic Unix platform
-    return std::string("Generic Unix");
-#endif
+    return dformat("%s %d", platform_name().c_str(), platform_bits());
   }
 
   // compiler_name is the short name of the compiler, e.g. "gcc" or "MSVC"
@@ -58,7 +76,7 @@ namespace stlplus
 #elif defined __BORLANDC__
     return dformat("%d.%d%d",__BORLANDC__/256,__BORLANDC__/16%16,__BORLANDC__%16);
 #else
-    return std::string();
+    return std::string("?.?");
 #endif
   }
 
