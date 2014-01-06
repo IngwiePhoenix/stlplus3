@@ -30,13 +30,13 @@ namespace stlplus
   // iterator class
 
   template<typename K, typename T, class H, class E, typename V>
-  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, std::iterator<std::bidirectional_iterator_tag,V>
+  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, public std::iterator<std::forward_iterator_tag,V>
   {
   public:
     friend class hash<K,T,H,E>;
 
     // local type definitions
-    // an iterator points to a value whilst a const_iterator points to a const value
+    // an iterator points to a value pair whilst a const_iterator points to a const value pair
     typedef V                                                  value_type;
     typedef hash_iterator<K,T,H,E,std::pair<const K,T> >       iterator;
     typedef hash_iterator<K,T,H,E,const std::pair<const K,T> > const_iterator;
