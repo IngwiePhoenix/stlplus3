@@ -13,7 +13,7 @@ using namespace std;
 
 #ifdef STLPLUS_HAS_CXX11
 
-using string_ptr = shared_ptr<string>;
+typedef shared_ptr<string> string_ptr;
 
 void print(const string& label, const string_ptr& value)
 {
@@ -92,11 +92,11 @@ int main (int argc, char* argv[])
     print("created string_ptr s0", s0);
 
     // shared_ptr(T*)
-    string_ptr s1{new string("s1")};
+    string_ptr s1(new string("s1"));
     print("created string_ptr s1(new string)", s1);
 
     // shared_ptr(shared_ptr<T>)
-    string_ptr s2{s1};
+    string_ptr s2(s1);
     print("created string_ptr s2(s1)", s2);
     if (s1.get() != s2.get())
     {
@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
     }
 
     // shared_ptr(T*)
-    string_ptr s3{new string("s3")};
+    string_ptr s3(new string("s3"));
     print("created string_ptr s3(new string)", s3);
 
     // operator=(shared_ptr<T>)
@@ -129,7 +129,7 @@ int main (int argc, char* argv[])
     }
 
     // operator=(string_ptr)
-    s3 = string_ptr{new string("s3 copy")};
+    s3 = string_ptr(new string("s3 copy"));
     print("s3 = string_ptr(new string)", s3);
     print("s2", s2);
     print("s1", s1);
