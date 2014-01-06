@@ -244,6 +244,28 @@ int main(int argc, char* argv[])
       result = false;
     }
 
+    // test use with algorithms
+    string_tree::prefix_iterator found = std::find(data.m_tree.prefix_begin(), data.m_tree.prefix_end(), "left_left");
+    if (found.valid())
+    {
+      std::cerr << "Success: found present search term" << std::endl;
+    }
+    else
+    {
+      std::cerr << "ERROR: failed to find present search term" << std::endl;
+      result = false;
+    }
+    string_tree::postfix_iterator not_found = std::find(data.m_tree.postfix_begin(), data.m_tree.postfix_end(), "not_found");
+    if (!not_found.valid())
+    {
+      std::cerr << "Success: didn't find not-present search term" << std::endl;
+    }
+    else
+    {
+      std::cerr << "ERROR: found not-present search term" << std::endl;
+      result = false;
+    }
+
     // now dump to the file
     std::cerr << "dumping" << std::endl;
     stlplus::dump_to_file(data,DATA,dump_mapped_tree,0);
@@ -305,6 +327,7 @@ int main(int argc, char* argv[])
     string_tree branch = data.m_tree.cut(left);
     std::cerr << "cut left = " << std::endl << branch;
     std::cerr << "cut remainder = " << std::endl << data.m_tree;
+
   }
   catch(std::exception& except)
   {

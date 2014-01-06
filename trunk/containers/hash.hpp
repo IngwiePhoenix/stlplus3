@@ -15,6 +15,7 @@
 #include "safe_iterator.hpp"
 #include <map>
 #include <iostream>
+#include <iterator>
 
 namespace stlplus
 {
@@ -29,7 +30,7 @@ namespace stlplus
   // iterator class
 
   template<typename K, typename T, class H, class E, typename V>
-  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >
+  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, std::iterator<std::bidirectional_iterator_tag,V>
   {
   public:
     friend class hash<K,T,H,E>;

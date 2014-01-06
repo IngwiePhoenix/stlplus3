@@ -17,6 +17,7 @@
 #include "containers_fixes.hpp"
 #include "exceptions.hpp"
 #include "safe_iterator.hpp"
+#include <iterator>
 
 namespace stlplus
 {
@@ -96,7 +97,7 @@ namespace stlplus
   // require a simple iterator.
 
   template<typename T, typename TRef, typename TPtr>
-  class ntree_prefix_iterator
+  class ntree_prefix_iterator : public std::iterator<std::forward_iterator_tag,T>
   {
   public:
     typedef ntree_prefix_iterator<T,T&,T*>             iterator;
@@ -164,7 +165,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template<typename T, typename TRef, typename TPtr>
-  class ntree_postfix_iterator
+  class ntree_postfix_iterator : public std::iterator<std::forward_iterator_tag,T>
   {
   public:
     typedef ntree_postfix_iterator<T,T&,T*>             iterator;
