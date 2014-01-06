@@ -49,10 +49,10 @@ void stlplus::restore_cstring(restore_context& context, char*& data) throw(stlpl
   {
     // this pointer has never been seen before and is non-null
     // restore the string
-    unsigned size = 0;
+    size_t size = 0;
     stlplus::restore_size_t(context,size);
     data = new char[size+1];
-    for (unsigned i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
       stlplus::restore_char(context,data[i]);
     data[size] = '\0';
     // add this pointer to the set of already seen objects
