@@ -583,15 +583,15 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     i.assert_valid(this);
-    return i.node()->m_children.size();
+    return static_cast<unsigned>(i.node()->m_children.size());
   }
 
   template<typename T>
-  unsigned ntree<T>::children(const ntree_iterator<T,T&,T*>& i)
+  unsigned ntree<T>::children(const TYPENAME ntree<T>::iterator& i)
     throw(wrong_object,null_dereference,end_dereference)
   {
     i.assert_valid(this);
-    return i.node()->m_children.size();
+    return static_cast<unsigned>(i.node()->m_children.size());
   }
 
   template<typename T>

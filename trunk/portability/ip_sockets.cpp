@@ -499,7 +499,7 @@ namespace stlplus
       {
         if (!initialised()) return false;
         // send the data - this will never block but may not send all the data
-        int bytes = ::send(m_socket, data.c_str(), data.size(), SEND_FLAGS);
+        int bytes = ::send(m_socket, data.c_str(), (int)data.size(), SEND_FLAGS);
         if (bytes == SOCKET_ERROR)
         {
           set_error(ERRNO);
@@ -518,13 +518,13 @@ namespace stlplus
         int bytes = 0;
         if (!address)
         {
-          bytes = ::send(m_socket, data.c_str(), data.size(), SEND_FLAGS);
+          bytes = ::send(m_socket, data.c_str(), (int)data.size(), SEND_FLAGS);
         }
         else
         {
           sockaddr saddress;
           convert_address(address, port, saddress);
-          bytes = ::sendto(m_socket, data.c_str(), data.size(), SEND_FLAGS, &saddress, sizeof(saddress));
+          bytes = ::sendto(m_socket, data.c_str(), (int)data.size(), SEND_FLAGS, &saddress, sizeof(saddress));
         }
         if (bytes == SOCKET_ERROR)
         {

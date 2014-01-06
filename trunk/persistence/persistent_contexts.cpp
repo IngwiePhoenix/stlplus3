@@ -107,7 +107,7 @@ namespace stlplus
         if (found == m_pointers.end())
         {
           // add a new mapping
-          unsigned magic = m_pointers.size();
+          unsigned magic = static_cast<unsigned>(m_pointers.size());
           m_pointers[pointer] = magic;
           return std::pair<bool,unsigned>(false,magic);
         }
@@ -121,7 +121,7 @@ namespace stlplus
         if (found == m_objects.end())
         {
           // add a new mapping
-          unsigned magic = m_objects.size();
+          unsigned magic = static_cast<unsigned>(m_objects.size());
           m_objects[pointer] = magic;
           return std::pair<bool,unsigned>(false,magic);
         }

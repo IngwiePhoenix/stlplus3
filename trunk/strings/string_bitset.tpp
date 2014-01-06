@@ -14,7 +14,7 @@ namespace stlplus
   std::string bitset_to_string(const std::bitset<N>& data)
   {
     std::string result;
-    for (unsigned i = data.size(); i--; )
+    for (size_t i = data.size(); i--; )
       result += data.test(i) ? '1' : '0';
     return result;
   }

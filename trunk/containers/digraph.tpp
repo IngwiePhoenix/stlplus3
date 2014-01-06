@@ -552,7 +552,7 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     iter.assert_valid(this);
-    return iter.node()->m_inputs.size();
+    return static_cast<unsigned>(iter.node()->m_inputs.size());
   }
 
   template<typename NT, typename AT>
@@ -560,7 +560,7 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     iter.assert_valid(this);
-    return iter.node()->m_inputs.size();
+    return static_cast<unsigned>(iter.node()->m_inputs.size());
   }
 
   template<typename NT, typename AT>
@@ -586,7 +586,7 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     iter.assert_valid(this);
-    return iter.node()->m_outputs.size();
+    return static_cast<unsigned>(iter.node()->m_outputs.size());
   }
 
   template<typename NT, typename AT>
@@ -594,7 +594,7 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     iter.assert_valid(this);
-    return iter.node()->m_outputs.size();
+    return static_cast<unsigned>(iter.node()->m_outputs.size());
   }
 
   template<typename NT, typename AT>

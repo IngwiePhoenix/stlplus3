@@ -466,12 +466,12 @@ const stlplus::lm_file_dependency& stlplus::lm_dependencies::source_file(void) c
 unsigned stlplus::lm_dependencies::file_add(const lm_file_dependency& dependency)
 {
   m_files.push_back(dependency);
-  return m_files.size()-1;
+  return file_size()-1;
 }
 
 unsigned stlplus::lm_dependencies::file_size(void) const
 {
-  return m_files.size();
+  return static_cast<unsigned>(m_files.size());
 }
 
 const stlplus::lm_file_dependency& stlplus::lm_dependencies::file_dependency(unsigned i) const
@@ -487,12 +487,12 @@ void stlplus::lm_dependencies::file_erase(unsigned i)
 unsigned stlplus::lm_dependencies::unit_add(const lm_unit_dependency& dependency)
 {
   m_units.push_back(dependency);
-  return m_units.size()-1;
+  return unit_size()-1;
 }
 
 unsigned stlplus::lm_dependencies::unit_size(void) const
 {
-  return m_units.size();
+  return static_cast<unsigned>(m_units.size());
 }
 
 const stlplus::lm_unit_dependency& stlplus::lm_dependencies::unit_dependency(unsigned i) const

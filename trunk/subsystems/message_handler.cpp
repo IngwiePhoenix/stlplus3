@@ -431,7 +431,7 @@ namespace stlplus
             }
             // now get the text part and add the message to the message map
             std::string text = line.substr(i, line.size()-i);
-            m_messages[id] = message(m_files.size()-1, l, i, text);
+            m_messages[id] = message(static_cast<unsigned>(m_files.size())-1, l, i, text);
           }
         }
       }
@@ -470,7 +470,7 @@ namespace stlplus
 
     unsigned context_depth(void) const
       {
-        return m_context.size();
+        return static_cast<unsigned>(m_context.size());
       }
 
     std::vector<std::string> format_report(const message_position& position,

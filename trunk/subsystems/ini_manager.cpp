@@ -206,19 +206,19 @@ namespace stlplus
     bool add_variable(unsigned line, const std::string& variable, const std::string& value)
       {
         erase_variable(variable);
-        m_entries.push_back(ini_entry(line ? line : m_entries.size(), variable, value));
+        m_entries.push_back(ini_entry(line ? line : static_cast<unsigned>(m_entries.size()), variable, value));
         return true;
       }
 
     bool add_comment(unsigned line, const std::string& comment)
       {
-        m_entries.push_back(ini_entry(line ? line : m_entries.size(), comment));
+        m_entries.push_back(ini_entry(line ? line : static_cast<unsigned>(m_entries.size()), comment));
         return true;
       }
 
     bool add_blank(unsigned line)
       {
-        m_entries.push_back(ini_entry(line ? line : m_entries.size()));
+        m_entries.push_back(ini_entry(line ? line : static_cast<unsigned>(m_entries.size())));
         return true;
       }
 
@@ -448,7 +448,7 @@ namespace stlplus
 
     unsigned sections_size(void) const
       {
-        return m_sections.size();
+        return static_cast<unsigned>(m_sections.size());
       }
 
     const std::string& section_name(unsigned i) const
@@ -639,7 +639,7 @@ namespace stlplus
     bool save(void)
       {
         bool result = true;
-        for (unsigned i = 0; i < m_files.size(); i++)
+        for (unsigned i = 0; i < size(); i++)
           result &= m_files[i].save_file();
         return result;
       }
@@ -647,7 +647,7 @@ namespace stlplus
     // get the number of files being managed
     unsigned size(void) const
       {
-        return m_files.size();
+        return static_cast<unsigned>(m_files.size());
       }
 
     // get the ini filename associated with a depth

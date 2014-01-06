@@ -127,7 +127,7 @@ namespace stlplus
     void set_path(const std::vector<std::string>& path) {m_path = path;}
 
     void add_subpath(const std::string& subpath) {m_path.push_back(subpath);}
-    unsigned subpath_size(void) const {return m_path.size();}
+    unsigned subpath_size(void) const {return static_cast<unsigned>(m_path.size());}
     const std::string& subpath_element(unsigned i) const {return m_path[i];}
     void subpath_erase(unsigned i) {m_path.erase(m_path.begin()+i);}
 
@@ -254,7 +254,7 @@ namespace stlplus
   {
     m_filename.erase();
     // remove last element as the file and then treat the rest as a folder
-    unsigned i = spec.size();
+    size_t i = spec.size();
     while (--i)
     {
       if (is_separator(spec[i]))
@@ -707,7 +707,7 @@ namespace stlplus
     bool result = true;
 #ifdef MSWINDOWS
     std::string wildcard = create_filespec(dir, "*.*");
-    long handle = -1;
+    intptr_t handle = -1;
     _finddata_t fileinfo;
     for (bool OK = (handle = _findfirst((char*)wildcard.c_str(), &fileinfo)) != -1; OK; OK = (_findnext(handle, &fileinfo)==0))
     {
@@ -814,7 +814,7 @@ namespace stlplus
     std::vector<std::string> results;
 #ifdef MSWINDOWS
     std::string wildcard = create_filespec(dir, wild);
-    long handle = -1;
+    intptr_t handle = -1;
     _finddata_t fileinfo;
     for (bool OK = (handle = _findfirst((char*)wildcard.c_str(), &fileinfo)) != -1; OK; OK = (_findnext(handle, &fileinfo)==0))
     {
@@ -979,7 +979,7 @@ namespace stlplus
   {
     // scan back through filename until a preferred_separator is found and remove prefix;
     // if there is no preferred_separator then remove nothing, i.e. the whole filespec is filename
-    unsigned i = spec.size();
+    size_t i = spec.size();
     while (i--)
     {
       if (is_separator(spec[i]))
@@ -1005,7 +1005,7 @@ namespace stlplus
   {
     // scan back through filename until a separator is found and remove prefix
     // if there is no separator, remove the whole
-    unsigned i = spec.size();
+    size_t i = spec.size();
     while (i--)
     {
       if (is_separator(spec[i]))

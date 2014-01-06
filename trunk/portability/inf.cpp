@@ -527,9 +527,9 @@ namespace stlplus
         }
       }
       // now convert the value
-      result.resize(binary.size());
+      result.resize(static_cast<unsigned>(binary.size()));
       for (unsigned j = 0; j < binary.size(); j++)
-        result.preset(binary.size() - j - 1, binary[j] == '1');
+        result.preset(static_cast<unsigned>(binary.size()) - j - 1, binary[j] == '1');
     }
     else
     {
