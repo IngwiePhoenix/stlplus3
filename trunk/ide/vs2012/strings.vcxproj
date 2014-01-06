@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\strings\file_utilities.cpp" />
-    <ClCompile Include="..\..\strings\print_address.cpp" />
     <ClCompile Include="..\..\strings\print_bool.cpp" />
     <ClCompile Include="..\..\strings\print_cstring.cpp" />
     <ClCompile Include="..\..\strings\print_float.cpp" />
@@ -149,7 +148,6 @@
     <ClCompile Include="..\..\strings\print_int.cpp" />
     <ClCompile Include="..\..\strings\print_string.cpp" />
     <ClCompile Include="..\..\strings\print_vector.cpp" />
-    <ClCompile Include="..\..\strings\string_address.cpp" />
     <ClCompile Include="..\..\strings\string_bool.cpp" />
     <ClCompile Include="..\..\strings\string_cstring.cpp" />
     <ClCompile Include="..\..\strings\string_float.cpp" />
@@ -162,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\strings\file_utilities.hpp" />
     <ClInclude Include="..\..\strings\format_types.hpp" />
-    <ClInclude Include="..\..\strings\print_address.hpp" />
     <ClInclude Include="..\..\strings\print_basic.hpp" />
     <ClInclude Include="..\..\strings\print_bitset.hpp" />
     <ClInclude Include="..\..\strings\print_bool.hpp" />
@@ -191,7 +188,6 @@
     <ClInclude Include="..\..\strings\print_vector.hpp" />
     <ClInclude Include="..\..\strings\strings.hpp" />
     <ClInclude Include="..\..\strings\strings_fixes.hpp" />
-    <ClInclude Include="..\..\strings\string_address.hpp" />
     <ClInclude Include="..\..\strings\string_basic.hpp" />
     <ClInclude Include="..\..\strings\string_bitset.hpp" />
     <ClInclude Include="..\..\strings\string_bool.hpp" />

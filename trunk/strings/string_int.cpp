@@ -614,7 +614,7 @@ namespace stlplus
   std::string address_to_string(const void* i, unsigned radix, radix_display_t display, unsigned width)
     throw(std::invalid_argument)
   {
-    return simage((ptrdiff_t)i, radix, display, width);
+    return simage((std::ptrdiff_t)i, radix, display, width);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -1115,7 +1115,7 @@ namespace stlplus
   void* string_to_address(const std::string& str, unsigned radix)
     throw(std::invalid_argument)
   {
-    return (void*)svalue<ptrdiff_t>(str, radix);
+    return (void*)svalue<std::ptrdiff_t>(str, radix);
   }
 
   ////////////////////////////////////////////////////////////////////////////////

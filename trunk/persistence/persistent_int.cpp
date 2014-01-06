@@ -220,4 +220,14 @@ void stlplus::restore_unsigned_long(restore_context& context, unsigned long& dat
   ::restore_unsigned(context, sizeof(unsigned long),(unsigned char*)&data);
 }
 
+void stlplus::dump_size_t(stlplus::dump_context& context, const size_t& data) throw(stlplus::persistent_dump_failed)
+{
+  ::dump_unsigned(context, sizeof(size_t), (unsigned char*)&data);
+}
+
+void stlplus::restore_size_t(restore_context& context, size_t& data) throw(stlplus::persistent_restore_failed)
+{
+  ::restore_unsigned(context, sizeof(size_t),(unsigned char*)&data);
+}
+
 ////////////////////////////////////////////////////////////////////////////////

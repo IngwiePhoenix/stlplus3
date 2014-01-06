@@ -24,7 +24,7 @@ namespace stlplus
 
   int platform_bits(void)
   {
-    return sizeof(ptrdiff_t) * 8;
+    return sizeof(std::ptrdiff_t) * 8;
   }
 
   // platform name is the target operating system in the form "Windows" or "Unix"

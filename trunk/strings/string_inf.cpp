@@ -494,9 +494,9 @@ namespace stlplus
         }
       }
       // now convert the value
-      result.resize(binary.size());
-      for (unsigned j = 0; j < binary.size(); j++)
-        result.preset(binary.size() - j - 1, binary[j] == '1');
+      result.resize((unsigned)binary.size());
+      for (unsigned j = 0; j < (unsigned)binary.size(); j++)
+        result.preset((unsigned)binary.size() - j - 1, binary[j] == '1');
     }
     else
     {

@@ -14,16 +14,16 @@
 void stlplus::dump_vector_bool(stlplus::dump_context& context, const std::vector<bool>& data)
   throw(stlplus::persistent_dump_failed)
 {
-  stlplus::dump_unsigned(context,data.size());
-  unsigned size = data.size();
-  unsigned bytes = ((size + 7) / 8);
-  for (unsigned b = 0; b < bytes; b++)
+  stlplus::dump_size_t(context,data.size());
+  size_t size = data.size();
+  size_t bytes = ((size + 7) / 8);
+  for (size_t b = 0; b < bytes; b++)
   {
     unsigned char byte = 0;
     unsigned char mask = 1;
     for (unsigned e = 0; e < 8; e++)
     {
-      unsigned i = b*8 + e;
+      size_t i = b*8 + e;
       if (i >= size) break;
       if (data[i]) byte |= mask;
       mask <<= 1;
@@ -35,17 +35,17 @@ void stlplus::dump_vector_bool(stlplus::dump_context& context, const std::vector
 void stlplus::restore_vector_bool(stlplus::restore_context& context, std::vector<bool>& data)
   throw(stlplus::persistent_restore_failed)
 {
-  unsigned size = 0;
-  stlplus::restore_unsigned(context,size);
+  size_t size = 0;
+  stlplus::restore_size_t(context,size);
   data.resize(size);
-  unsigned bytes = ((size + 7) / 8);
-  for (unsigned b = 0; b < bytes; b++)
+  size_t bytes = ((size + 7) / 8);
+  for (size_t b = 0; b < bytes; b++)
   {
     unsigned char byte = context.get();
     unsigned char mask = 1;
     for (unsigned e = 0; e < 8; e++)
     {
-      unsigned i = b*8 + e;
+      size_t i = b*8 + e;
       if (i >= size) break;
       data[i] = ((byte & mask) != 0);
       mask <<= 1;

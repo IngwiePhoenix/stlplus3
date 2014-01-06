@@ -17,7 +17,7 @@ namespace stlplus
   void dump_set(dump_context& context, const std::set<K,P>& data, D dump_fn)
     throw(persistent_dump_failed)
   {
-    dump_unsigned(context,data.size());
+    dump_size_t(context,data.size());
     for (typename std::set<K,P>::const_iterator i = data.begin(); i != data.end(); i++)
       dump_fn(context,*i);
   }
@@ -27,10 +27,10 @@ namespace stlplus
     throw(persistent_restore_failed)
   {
     data.clear();
-    unsigned size = 0;
-    restore_unsigned(context,size);
+    size_t size = 0;
+    restore_size_t(context,size);
     typename std::set<K,P>::iterator i = data.begin();
-    for (unsigned j = 0; j < size; j++)
+    for (size_t j = 0; j < size; j++)
     {
       K key;
       restore_fn(context,key);

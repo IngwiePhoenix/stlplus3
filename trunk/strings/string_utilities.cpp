@@ -62,24 +62,24 @@ namespace stlplus
     {
     case align_left:
     {
-      unsigned padding = width>str.size() ? width - str.size() : 0;
-      unsigned i = 0;
+      std::string::size_type padding = width>str.size() ? width - str.size() : 0;
+      std::string::size_type i = 0;
       while (i++ < padding)
         result.insert(result.end(), padch);
       break;
     }
     case align_right:
     {
-      unsigned padding = width>str.size() ? width - str.size() : 0;
-      unsigned i = 0;
+      std::string::size_type padding = width>str.size() ? width - str.size() : 0;
+      std::string::size_type i = 0;
       while (i++ < padding)
         result.insert(result.begin(), padch);
       break;
     }
     case align_centre:
     {
-      unsigned padding = width>str.size() ? width - str.size() : 0;
-      unsigned i = 0;
+      std::string::size_type padding = width>str.size() ? width - str.size() : 0;
+      std::string::size_type i = 0;
       while (i++ < padding/2)
         result.insert(result.end(), padch);
       i--;

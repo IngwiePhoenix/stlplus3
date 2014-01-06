@@ -18,9 +18,9 @@ namespace stlplus
   void dump_basic_string(dump_context& context, const std::basic_string<charT,traits,allocator>& data, D dump_fn)
     throw(persistent_dump_failed)
   {
-    unsigned size = data.size();
-    dump_unsigned(context, size);
-    for (unsigned i = 0; i < size; i++)
+    size_t size = data.size();
+    dump_size_t(context, size);
+    for (size_t i = 0; i < size; i++)
     {
       charT ch = data[i];
       dump_fn(context,ch);
@@ -32,9 +32,9 @@ namespace stlplus
     throw(persistent_restore_failed)
   {
     data.erase();
-    unsigned size = 0;
-    restore_unsigned(context, size);
-    for (unsigned i = 0; i < size; i++)
+    size_t size = 0;
+    restore_size_t(context, size);
+    for (size_t i = 0; i < size; i++)
     {
       charT ch;
       restore_fn(context,ch);

@@ -17,7 +17,7 @@ namespace stlplus
   void dump_map(dump_context& context, const std::map<K,T,P>& data, DK key_fn, DT val_fn)
     throw(persistent_dump_failed)
   {
-    dump_unsigned(context,data.size());
+    dump_size_t(context,data.size());
     for (typename std::map<K,T,P>::const_iterator i = data.begin(); i != data.end(); i++)
     {
       key_fn(context,i->first);
@@ -30,9 +30,9 @@ namespace stlplus
     throw(persistent_restore_failed)
   {
     data.clear();
-    unsigned size = 0;
-    restore_unsigned(context,size);
-    for (unsigned j = 0; j < size; j++)
+    size_t size = 0;
+    restore_size_t(context,size);
+    for (size_t j = 0; j < size; j++)
     {
       K key;
       key_fn(context,key);

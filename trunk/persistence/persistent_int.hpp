@@ -43,6 +43,9 @@ namespace stlplus
   void dump_unsigned_long(dump_context&, const unsigned long& data) throw(persistent_dump_failed);
   void restore_unsigned_long(restore_context&, unsigned long& data) throw(persistent_restore_failed);
 
+  void dump_size_t(dump_context&, const size_t& data) throw(persistent_dump_failed);
+  void restore_size_t(restore_context&, size_t& data) throw(persistent_restore_failed);
+
   ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus

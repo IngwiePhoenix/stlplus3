@@ -5,6 +5,7 @@
 #include "persistent_string.hpp"
 #include "persistent_int.hpp"
 #include "persistent_shortcuts.hpp"
+#include "string_int.hpp"
 #include "build.hpp"
 #include <vector>
 #include <iostream>
@@ -17,12 +18,12 @@ typedef stlplus::digraph<std::string,int> string_int_graph;
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::iterator i)
 {
-  return output << ((void*)&*i) << "->" << *i;
+  return output << stlplus::address_to_string(&*i) << "->" << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_iterator i)
 {
-  return output << ((void*)&*i) << "->" << *i;
+  return output << stlplus::address_to_string(&*i) << "->" << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_vector arcs)

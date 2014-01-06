@@ -17,7 +17,7 @@ namespace stlplus
   void dump_list(dump_context& context, const std::list<T>& data, D dump_fn)
     throw(persistent_dump_failed)
   {
-    dump_unsigned(context,data.size());
+    dump_size_t(context,data.size());
     for (typename std::list<T>::const_iterator i = data.begin(); i != data.end(); i++)
       dump_fn(context,*i);
   }
@@ -27,9 +27,9 @@ namespace stlplus
     throw(persistent_restore_failed)
   {
     data.clear();
-    unsigned size = 0;
-    restore_unsigned(context,size);
-    for (unsigned i = 0; i < size; i++)
+    size_t size = 0;
+    restore_size_t(context,size);
+    for (size_t i = 0; i < size; i++)
     {
       data.push_back(T());
       restore_fn(context,data.back());
