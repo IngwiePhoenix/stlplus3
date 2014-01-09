@@ -22,6 +22,7 @@ namespace stlplus
     return std::string("STLplus v") + version();
   }
 
+  // calculate the word size dynamically by using the knowledge that ptrdiff_t is always a whole word
   int platform_bits(void)
   {
     return sizeof(std::ptrdiff_t) * 8;
@@ -30,7 +31,6 @@ namespace stlplus
   // platform name is the target operating system in the form "Windows" or "Posix"
   std::string platform_name(void)
   {
-    // for macros see http://sourceforge.net/p/predef/wiki/OperatingSystems/
 #if defined _WIN64 || defined _WIN32
     return std::string("Windows");
 #elif defined __CYGWIN__
@@ -40,16 +40,16 @@ namespace stlplus
 #elif defined __FreeBSD__
     return std::string("FreeBSD");
 #else
-    // at present there are no variations between other different Unix platforms so
+    // at present there are no distinctions made between other different Unix platforms so
     // they all map onto the generic platform
     return std::string("Posix");
 #endif
   }
 
-  // platform is the target operating system and its bit size in the form "Windows 32" or "Generic 64"
+  // platform is the target operating system and its bit size in the form "Windows 32-bit" or "Generic 64-bit"
   std::string platform(void)
   {
-    return dformat("%s %d", platform_name().c_str(), platform_bits());
+    return dformat("%s %d-bit", platform_name().c_str(), platform_bits());
   }
 
   // compiler_name is the short name of the compiler, e.g. "gcc" or "MSVC"
@@ -80,7 +80,7 @@ namespace stlplus
 #endif
   }
 
-  // compiler is the compilation system and version above combined into a human- readable form e.g. "gcc v3.4"
+  // compiler is the compilation system and version above combined into a human-readable form e.g. "gcc v3.4"
   std::string compiler(void)
   {
     return compiler_name() + std::string(" v") + compiler_version();
@@ -97,6 +97,7 @@ namespace stlplus
 
   }
 
+  // a string containing all the information
   std::string build(void)
   {
     return stlplus_version() + ", " + platform() + ", " + compiler() + ", " + variant();
