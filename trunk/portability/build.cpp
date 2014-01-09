@@ -27,7 +27,7 @@ namespace stlplus
     return sizeof(std::ptrdiff_t) * 8;
   }
 
-  // platform name is the target operating system in the form "Windows" or "Unix"
+  // platform name is the target operating system in the form "Windows" or "Posix"
   std::string platform_name(void)
   {
     // for macros see http://sourceforge.net/p/predef/wiki/OperatingSystems/
@@ -37,12 +37,12 @@ namespace stlplus
     return std::string("Cygwin");
 #elif defined __gnu_linux__
     return std::string("GNU/Linux");
-#elif defined BSD
-    return std::string("BSD");
+#elif defined __FREEBSD__
+    return std::string("FreeBSD");
 #else
     // at present there are no variations between other different Unix platforms so
     // they all map onto the generic platform
-    return std::string("Unix");
+    return std::string("Posix");
 #endif
   }
 
