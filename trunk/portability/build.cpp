@@ -37,7 +37,7 @@ namespace stlplus
     return std::string("Cygwin");
 #elif defined __gnu_linux__
     return std::string("GNU/Linux");
-#elif defined __FREEBSD__
+#elif defined __FreeBSD__
     return std::string("FreeBSD");
 #else
     // at present there are no variations between other different Unix platforms so
