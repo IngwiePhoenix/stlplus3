@@ -110,7 +110,7 @@ namespace stlplus
   // require a simple iterator.
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_prefix_iterator : public std::iterator&lt;std::forward_iterator_tag,T&gt;
+  class ntree_prefix_iterator : public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
   {
   public:
     typedef ntree_prefix_iterator&lt;T,T&amp;,T*&gt;             iterator;
@@ -178,7 +178,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_postfix_iterator : public std::iterator&lt;std::forward_iterator_tag,T&gt;
+  class ntree_postfix_iterator : public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
   {
   public:
     typedef ntree_postfix_iterator&lt;T,T&amp;,T*&gt;             iterator;
