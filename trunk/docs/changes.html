@@ -63,6 +63,25 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.10">Changes from Version 3.9 to 3.10</h2>
 
+<h3>Fixed iterator bug when using algorithms</h3>
+
+<p>The STLplus iterators gave a compiler error when used with standard
+algorithms such as std::find. I have made the iterators inherit from
+std::iterator to fix this.</p>
+
+<h3>Eliminated compiler warnings in 64-bit mode.</h3>
+
+<p>STLplus has supported 64-bit builds for a long time, but gave a
+number of compiler warnings. I have eliminated these warnings so the
+library collection should now compile cleanly in both 32-bit and
+  64-bit modes.</p>
+
+<h3>Added support for 64-bit platforms in Visual Studio 2012 Project Files</h3>
+
+<p>I have added the 64-bit target as an option in the Visual Studio
+2012 project files. So STLplus can now be compiled in either Win32
+mode or x64 mode.</p>
+
 <h3>Added support for Visual Studio 2012</h3>
 
 <p>There are now project files for Visual Studio 2012 as well as
@@ -72,13 +91,19 @@ log for all version 2 releases by looking at the
 <p>Developers: there is now an IDE directory in the tests directory which
   contains separate project files for the different Visual Studio versions.</p>
 
+<h3>Recreated project files for Visual Studio 2010</h3>
+
+<p>There were inconsistencies in the Visual Studio 2010 project files
+which showed up when converting them to 2012 project files. So I have
+regenerated the project files from scratch.</p>
+
 <h3>Changed Linux to GNU</h3>
 
 <p>It is technically incorrect to label GNU/Linux as Linux. Linux is
 the Kernel, whereas GNU is the OS. So I have changed the
 documentation, code and build tools to use the correct OS name of GNU.</p>
 
-<p>This also means that the buiuld subdirectory is now
+<p>This also means that the build subdirectory is now
 e.g. GNU-i686-debug rather than LINUX-i686-debug.</p>
 
 <h3>Ported to gNewSense</h3>
