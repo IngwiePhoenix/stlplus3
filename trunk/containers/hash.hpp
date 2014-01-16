@@ -30,7 +30,7 @@ namespace stlplus
   // iterator class
 
   template<typename K, typename T, class H, class E, typename V>
-  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, public std::iterator<std::forward_iterator_tag,V>
+  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, public std::iterator<std::forward_iterator_tag, V>
   {
   public:
     friend class hash<K,T,H,E>;

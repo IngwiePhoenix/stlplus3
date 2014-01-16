@@ -245,6 +245,7 @@ int main(int argc, char* argv[])
     }
 
     // test use with algorithms
+	// find an existent string
     string_tree::prefix_iterator found = std::find(data.m_tree.prefix_begin(), data.m_tree.prefix_end(), "left_left");
     if (found.valid())
     {
@@ -255,6 +256,7 @@ int main(int argc, char* argv[])
       std::cerr << "ERROR: failed to find present search term" << std::endl;
       result = false;
     }
+	// find a non-existent string
     string_tree::postfix_iterator not_found = std::find(data.m_tree.postfix_begin(), data.m_tree.postfix_end(), "not_found");
     if (!not_found.valid())
     {
@@ -265,6 +267,7 @@ int main(int argc, char* argv[])
       std::cerr << "ERROR: found not-present search term" << std::endl;
       result = false;
     }
+
 
     // now dump to the file
     std::cerr << "dumping" << std::endl;

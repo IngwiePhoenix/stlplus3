@@ -40,7 +40,7 @@ namespace stlplus
   // and this is the form in which they should be used
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
-  class digraph_iterator : public safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >, std::iterator<std::bidirectional_iterator_tag,NT>
+  class digraph_iterator : public safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >, public std::iterator<std::bidirectional_iterator_tag, NT, std::ptrdiff_t, NPtr, NRef>
   {
   public:
     friend class digraph<NT,AT>;
@@ -103,7 +103,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template<typename NT, typename AT, typename ARef, typename APtr>
-  class digraph_arc_iterator : public safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >, std::iterator<std::bidirectional_iterator_tag,AT>
+  class digraph_arc_iterator : public safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >, public std::iterator<std::bidirectional_iterator_tag, AT, std::ptrdiff_t, APtr, ARef>
   {
   public:
     friend class digraph<NT,AT>;

@@ -30,6 +30,7 @@
 #include &lt;vector&gt;
 #include &lt;map&gt;
 #include &lt;set&gt;
+#include &lt;iterator&gt;
 
 namespace stlplus
 {
@@ -52,7 +53,7 @@ namespace stlplus
   // and this is the form in which they should be used
 
   template&lt;typename NT, typename AT, typename NRef, typename NPtr&gt;
-  class digraph_iterator : public safe_iterator&lt;digraph&lt;NT,AT&gt;, digraph_node&lt;NT,AT&gt; &gt;
+  class digraph_iterator : public safe_iterator&lt;digraph&lt;NT,AT&gt;, digraph_node&lt;NT,AT&gt; &gt;, std::iterator&lt;std::bidirectional_iterator_tag,NT&gt;
   {
   public:
     friend class digraph&lt;NT,AT&gt;;
@@ -115,7 +116,7 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template&lt;typename NT, typename AT, typename ARef, typename APtr&gt;
-  class digraph_arc_iterator : public safe_iterator&lt;digraph&lt;NT,AT&gt;, digraph_arc&lt;NT,AT&gt; &gt;
+  class digraph_arc_iterator : public safe_iterator&lt;digraph&lt;NT,AT&gt;, digraph_arc&lt;NT,AT&gt; &gt;, std::iterator&lt;std::bidirectional_iterator_tag,AT&gt;
   {
   public:
     friend class digraph&lt;NT,AT&gt;;

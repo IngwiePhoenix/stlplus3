@@ -28,6 +28,7 @@
 #include &quot;safe_iterator.hpp&quot;
 #include &lt;map&gt;
 #include &lt;iostream&gt;
+#include &lt;iterator&gt;
 
 namespace stlplus
 {
@@ -42,13 +43,13 @@ namespace stlplus
   // iterator class
 
   template&lt;typename K, typename T, class H, class E, typename V&gt;
-  class hash_iterator : public safe_iterator&lt;hash&lt;K,T,H,E&gt;,hash_element&lt;K,T,H,E&gt; &gt;
+  class hash_iterator : public safe_iterator&lt;hash&lt;K,T,H,E&gt;,hash_element&lt;K,T,H,E&gt; &gt;, public std::iterator&lt;std::forward_iterator_tag,V&gt;
   {
   public:
     friend class hash&lt;K,T,H,E&gt;;
 
     // local type definitions
-    // an iterator points to a value whilst a const_iterator points to a const value
+    // an iterator points to a value pair whilst a const_iterator points to a const value pair
     typedef V                                                  value_type;
     typedef hash_iterator&lt;K,T,H,E,std::pair&lt;const K,T&gt; &gt;       iterator;
     typedef hash_iterator&lt;K,T,H,E,const std::pair&lt;const K,T&gt; &gt; const_iterator;
