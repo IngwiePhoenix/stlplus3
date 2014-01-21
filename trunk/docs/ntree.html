@@ -241,22 +241,22 @@ iterator ntree::move(iterator, ntree&lt;T&gt;&amp;);
   being moved so that they can continue to be used even though the
   nodes now belong to a different tree.</p>
 
-<p>There are three erase functions: one to erase the whole tree, one to erase
-a node and its children and one to erase a single child of a node:</p>
+<p>There are four erase functions:</p>
 
 <pre class="cpp">
 void ntree::erase(void);
 void ntree::erase(iterator);
-void ntree::erase(iterator, unsigned);
+void ntree::erase_child(iterator, unsigned);
+void ntree::erase_children(iterator);
 </pre>
 
-<p>The difference between the last two maybe needs more explanation. The first
-form erases the node pointed to by the iterator. It removes the node from its
-parent's child list and deletes all of its children. The second form is
-effectively the same, but seen from the point of view of the parent node. In
-this case, a single child node indicated by the unsigned offset is removed
-from the node's child list and deleted. In all cases the whole subtree below
-the deleted node is also deleted.</p>
+<p>The first form erases the whole tree. The second erases the node
+pointed to by the iterator. The third form erases a single child of
+the node, where the iterator refers to the node and the child is
+indicated by the unsigned offset into the node's set of children. The
+fourth form erases all of a node's children but leaves the node. In
+all cases the whole subtree below the deleted elements is also
+deleted.</p>
 
 <p>To copy a subtree of an ntree, use the subtree functions:</p>
 
@@ -361,6 +361,25 @@ const_iterator const_postfix_iterator::simplify(void) const;
 <p>Once the simple iterator has been extracted, it <em>can</em> be used to access other information
 from the ntree class.</p>
 
+<h2 id="breadth">Breadth-First Traversal</h2>
+
+<p>An alternative traversal order is the breadth-first traversal. In
+this, the nodes are visited in depth order, starting with depth 0 (the
+root), then depth 1 and so on. This is a complex algorithm so is not
+implemented using an iterator. Instead, a method returns a vector of
+iterators in breadth-first traversal order:</p>
+
+<pre class="cpp">
+const_iterator_vector breadth_first_traversal(void) const;
+iterator_vector breadth_first_traversal(void);
+</pre>
+
+<p>An iterator vector is a std::vector of iterator. A
+  const_iterator_vector is a std::vector of const_iterator.</p>
+
+<p>The vector will be empty if the tree is empty, otherwise element 0
+will be the root node, followed by its children and then their
+children etc.</p>
 
 <h2 id="exceptions">Exceptions Thrown by Ntree</h2>
 

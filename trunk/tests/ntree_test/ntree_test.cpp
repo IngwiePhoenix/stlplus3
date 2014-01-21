@@ -4,6 +4,7 @@
 #include "persistent_shortcuts.hpp"
 #include "file_system.hpp"
 #include "print_ntree.hpp"
+#include "print_vector.hpp"
 #include "print_map.hpp"
 #include "print_string.hpp"
 #include "build.hpp"
@@ -102,6 +103,23 @@ void print_string_tree_iterator(std::ostream& device, const string_tree::iterato
     device << *data;
 }
 
+void print_string_tree_const_iterator(std::ostream& device, const string_tree::const_iterator& data)
+{
+  print_string_tree_iterator(device, data.deconstify());
+}
+
+void print_string_tree_iterator_vector(std::ostream& device, const string_tree::iterator_vector& data)
+{
+  device << data.size() << ": ";
+  stlplus::print_vector(device, data, print_string_tree_iterator, ", ");
+}
+
+void print_string_tree_const_iterator_vector(std::ostream& device, const string_tree::const_iterator_vector& data)
+{
+  device << data.size() << ": ";
+  stlplus::print_vector(device, data, print_string_tree_const_iterator, ", ");
+}
+
 std::ostream& operator << (std::ostream& device, const string_tree::iterator& data)
 {
   print_string_tree_iterator(device, data);
@@ -117,6 +135,18 @@ std::ostream& operator << (std::ostream& device, const string_tree::prefix_itera
 std::ostream& operator << (std::ostream& device, const string_tree::postfix_iterator& data)
 {
   print_string_tree_iterator(device, data.simplify());
+  return device;
+}
+
+std::ostream& operator << (std::ostream& device, const string_tree::iterator_vector& data)
+{
+  print_string_tree_iterator_vector(device, data);
+  return device;
+}
+
+std::ostream& operator << (std::ostream& device, const string_tree::const_iterator_vector& data)
+{
+  print_string_tree_const_iterator_vector(device, data);
   return device;
 }
 
@@ -196,22 +226,35 @@ int main(int argc, char* argv[])
     // build the sample data structure
     mapped_tree data;
     std::cerr << "null root = " << data.m_tree.root() << std::endl;
+    // get breadth-first traversal of an empty tree
+    std::cerr << "empty breadth-first traversal = " << data.m_tree.breadth_first_traversal() << std::endl;
+
     string_tree::iterator root = data.m_tree.insert("root");
     std::cerr << "added root " << root << std::endl;
+
     string_tree::iterator left = data.m_tree.insert(root,"left");
     std::cerr << "added left " << left << std::endl;
+
     string_tree::iterator left_left = data.m_tree.insert(left,"left_left");
     std::cerr << "added left_left " << left_left << std::endl;
+
     string_tree::iterator left_right = data.m_tree.insert(left,"left_right");
     std::cerr << "added left_right " << left_right << std::endl;
+
     string_tree::iterator right = data.m_tree.insert(root,"right");
     std::cerr << "added right " << right << std::endl;
+
     string_tree::iterator right_left = data.m_tree.insert(right,"right_left");
     std::cerr << "added right_left " << right_left << std::endl;
+
     string_tree::iterator right_right = data.m_tree.insert(right,"right_right");
     std::cerr << "added right_right " << right_right << std::endl;
+
     data.add_mappings();
     std::cerr << "tree = " << std::endl << data;
+
+    // get breadth-first traversal
+    std::cerr << "breadth-first traversal = " << data.m_tree.breadth_first_traversal() << std::endl;
 
     // copy the tree
     mapped_tree copied;
@@ -219,6 +262,7 @@ int main(int argc, char* argv[])
     copied.add_mappings();
     std::cerr << "copied tree = " << std::endl << copied;
     result &= compare(copied,data);
+
     // move the tree by cutting
     mapped_tree moved;
     moved.m_tree.move(copied.m_tree);
@@ -245,7 +289,7 @@ int main(int argc, char* argv[])
     }
 
     // test use with algorithms
-	// find an existent string
+    // find an existent string
     string_tree::prefix_iterator found = std::find(data.m_tree.prefix_begin(), data.m_tree.prefix_end(), "left_left");
     if (found.valid())
     {
@@ -256,7 +300,7 @@ int main(int argc, char* argv[])
       std::cerr << "ERROR: failed to find present search term" << std::endl;
       result = false;
     }
-	// find a non-existent string
+    // find a non-existent string
     string_tree::postfix_iterator not_found = std::find(data.m_tree.postfix_begin(), data.m_tree.postfix_end(), "not_found");
     if (!not_found.valid())
     {
@@ -295,8 +339,16 @@ int main(int argc, char* argv[])
     }
 
     // experiment with iterators
-    data.m_tree.erase(right_right);
-    std::cerr << "erased right_right - tree = " << std::endl << data;
+    // erase children but keep the node
+    data.m_tree.erase_children(right);
+    std::cerr << "erased right's children - tree = " << std::endl << data;
+
+    // get breadth-first traversal
+    std::cerr << "breadth-first traversal = " << ((const string_tree)data.m_tree).breadth_first_traversal() << std::endl;
+
+    // now erase the node
+    data.m_tree.erase(right);
+    std::cerr << "erased right - tree = " << std::endl << data;
 
     // dereference an erased iterator
     try

@@ -30,6 +30,7 @@
 #include &quot;containers_fixes.hpp&quot;
 #include &quot;exceptions.hpp&quot;
 #include &quot;safe_iterator.hpp&quot;
+#include &lt;vector&gt;
 #include &lt;iterator&gt;
 
 namespace stlplus
@@ -53,7 +54,8 @@ namespace stlplus
   // the root node then you get a null iterator.
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_iterator : public safe_iterator&lt;ntree&lt;T&gt;,ntree_node&lt;T&gt; &gt;
+  class ntree_iterator :
+    public safe_iterator&lt;ntree&lt;T&gt;,ntree_node&lt;T&gt; &gt;
   {
   public:
     // local type definitions
@@ -110,7 +112,8 @@ namespace stlplus
   // require a simple iterator.
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_prefix_iterator : public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
+  class ntree_prefix_iterator : 
+    public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
   {
   public:
     typedef ntree_prefix_iterator&lt;T,T&amp;,T*&gt;             iterator;
@@ -141,7 +144,7 @@ namespace stlplus
     iterator deconstify(void) const;
 
     // generate a simple iterator from a traversal iterator
-    ntree_iterator&lt;T,TRef,TPtr&gt; simplify(void) const;
+    simple_iterator simplify(void) const;
 
     // tests useful for putting iterators into other STL structures and for testing whether iteration has completed
     bool operator == (const this_iterator&amp; r) const;
@@ -168,17 +171,18 @@ namespace stlplus
     friend class ntree_iterator&lt;T,TRef,TPtr&gt;;
 
   private:
-    ntree_iterator&lt;T,TRef,TPtr&gt; m_iterator;
+    simple_iterator m_iterator;
 
-    explicit ntree_prefix_iterator(const ntree_iterator&lt;T,TRef,TPtr&gt;&amp; i);
-    const ntree_iterator&lt;T,TRef,TPtr&gt;&amp; get_iterator(void) const;
-    ntree_iterator&lt;T,TRef,TPtr&gt;&amp; get_iterator(void);
+    explicit ntree_prefix_iterator(const simple_iterator&amp; i);
+    const simple_iterator&amp; get_iterator(void) const;
+    simple_iterator&amp; get_iterator(void);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_postfix_iterator : public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
+  class ntree_postfix_iterator :
+    public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
   {
   public:
     typedef ntree_postfix_iterator&lt;T,T&amp;,T*&gt;             iterator;
@@ -209,7 +213,7 @@ namespace stlplus
     iterator deconstify(void) const;
 
     // generate a simple iterator from a traversal iterator
-    ntree_iterator&lt;T,TRef,TPtr&gt; simplify(void) const;
+    simple_iterator simplify(void) const;
 
     // tests useful for putting iterators into other STL structures and for testing whether iteration has completed
     bool operator == (const this_iterator&amp; r) const;
@@ -236,11 +240,11 @@ namespace stlplus
     friend class ntree_iterator&lt;T,TRef,TPtr&gt;;
 
   private:
-    ntree_iterator&lt;T,TRef,TPtr&gt; m_iterator;
+    simple_iterator m_iterator;
 
-    explicit ntree_postfix_iterator(const ntree_iterator&lt;T,TRef,TPtr&gt;&amp; i);
-    const ntree_iterator&lt;T,TRef,TPtr&gt;&amp; get_iterator(void) const;
-    ntree_iterator&lt;T,TRef,TPtr&gt;&amp; get_iterator(void);
+    explicit ntree_postfix_iterator(const simple_iterator&amp; i);
+    const simple_iterator&amp; get_iterator(void) const;
+    simple_iterator&amp; get_iterator(void);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -262,6 +266,9 @@ namespace stlplus
 
     typedef ntree_postfix_iterator&lt;T,T&amp;,T*&gt; postfix_iterator;
     typedef ntree_postfix_iterator&lt;T,const T&amp;,const T*&gt; const_postfix_iterator;
+
+    typedef std::vector&lt;iterator&gt; iterator_vector;
+    typedef std::vector&lt;const_iterator&gt; const_iterator_vector;
 
     //////////////////////////////////////////////////////////////////////////////
     // Constructors, destructors and copies
@@ -327,6 +334,12 @@ namespace stlplus
     postfix_iterator postfix_end(void);
 
     //////////////////////////////////////////////////////////////////////////////
+    // breadth-first traversal
+
+    const_iterator_vector breadth_first_traversal(void) const;
+    iterator_vector breadth_first_traversal(void);
+
+    //////////////////////////////////////////////////////////////////////////////
     // modification
 
     // discard previous contents and create a new root node
@@ -378,7 +391,13 @@ namespace stlplus
     void erase(const iterator&amp; node)
       throw(wrong_object,null_dereference,end_dereference);
     // erase the specified child
+    void erase_child(const iterator&amp; node, unsigned child)
+      throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+    // synonym for above
     void erase(const iterator&amp; node, unsigned child)
+      throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+    // erase all children of the node, but leave the node
+    void erase_children(const iterator&amp; node)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
     // get a copy of the tree as a tree

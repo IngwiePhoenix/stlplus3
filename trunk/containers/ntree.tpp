@@ -681,6 +681,46 @@ namespace stlplus
   }
 
   template<typename T>
+  TYPENAME ntree<T>::iterator_vector ntree<T>::breadth_first_traversal(void)
+  {
+    TYPENAME ntree<T>::iterator_vector result;
+    if (m_root)
+    {
+      // seed the traversal the the root node
+      result.push_back(root());
+      // now walk through the result, appending each node's children
+      // allow for the vector to reallocate, so don't use vector iterators
+      for (unsigned i = 0; i < result.size(); i++)
+      {
+        unsigned count = children(result[i]);
+        for (unsigned c = 0; c < count; c++)
+          result.push_back(child(result[i], c));
+      }
+    }
+    return result;
+  }
+
+  template<typename T>
+  TYPENAME ntree<T>::const_iterator_vector ntree<T>::breadth_first_traversal(void) const
+  {
+    TYPENAME ntree<T>::const_iterator_vector result;
+    if (m_root)
+    {
+      // seed the traversal the the root node
+      result.push_back(root());
+      // now walk through the result, appending each node's children
+      // allow for the vector to reallocate, so don't use vector iterators
+      for (unsigned i = 0; i < result.size(); i++)
+      {
+        unsigned count = children(result[i]);
+        for (unsigned c = 0; c < count; c++)
+          result.push_back(child(result[i], c));
+      }
+    }
+    return result;
+  }
+
+  template<typename T>
   TYPENAME ntree<T>::iterator ntree<T>::insert(const T& data)
   {
     // insert a new node as the root
@@ -877,11 +917,34 @@ namespace stlplus
     }
   }
 
+  // erase a child designated by an offset into the node's children
+  template<typename T>
+  void ntree<T>::erase_child(const TYPENAME ntree<T>::iterator& i, unsigned offset)
+    throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
+  {
+    if (offset >= children(i)) throw std::out_of_range("stlplus::ntree");
+    // unhook from the children array
+    ntree_node<T>* node = i.node()->m_children[offset];
+    i.node()->m_children.erase(i.node()->m_children.begin() + offset);
+    // now delete the subtree
+    delete node;
+  }
+
+  // synonym of above
   template<typename T>
   void ntree<T>::erase(const TYPENAME ntree<T>::iterator& i, unsigned offset)
     throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
   {
-    erase(child(i, offset));
+    erase_child(i, offset);
+  }
+
+  // erase all children
+  template<typename T>
+  void ntree<T>::erase_children(const TYPENAME ntree<T>::iterator& i)
+    throw(wrong_object,null_dereference,end_dereference,std::out_of_range)
+  {
+    while(children(i) > 0)
+      erase_child(i, 0);
   }
 
   template<typename T>
