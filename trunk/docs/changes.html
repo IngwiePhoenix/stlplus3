@@ -37,6 +37,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.11">Changes from Version 3.10 to 3.11</a></li>
 <li class="internal"><a href="#v3.10">Changes from Version 3.9 to 3.10</a></li>
 <li class="internal"><a href="#v3.9">Changes from Version 3.8 to 3.9</a></li>
 <li class="internal"><a href="#v3.8">Changes from Version 3.7 to 3.8</a></li>
@@ -60,6 +61,32 @@ for this version are huge. Therefore only the changes since then have been docum
 <p>The official open-source version of STLplus starts at version 2.0 and you can access the change
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+
+<h2 id="v3.11">Changes from Version 3.10 to 3.11</h2>
+
+<h3>Added erase_children method to ntree</h3>
+
+<p>The option of erasing all the children of a node but keeping the
+node was missing from the ntree class, so I've added a method called
+erase_children.</p>
+
+<h3>Added erase_child synonym for erase to ntree</h3>
+
+<p>Previous versions allowed a single child to be deleted with the
+erase(i,offset) method. I've given this a synonym of erase_child for
+consistency with the new erase_children method. You can use either
+according to your preference.</p>
+
+<h3>Added breadth_first_traversal method to ntree</h3>
+
+<p>Implemented a breadth-first traversal algorithm as a method of the
+ntree class. This method returns a vector of iterators in traversal
+order. The traversal algorithm is really too complex to implement as a
+new kind of iterator.</p>
+
+<p>This approach is consistent with the digraph class which implements
+complex algorithms as methods returning vectors of iterators as
+results.</p>
 
 <h2 id="v3.10">Changes from Version 3.9 to 3.10</h2>
 
