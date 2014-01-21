@@ -12,12 +12,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "digraph.hpp"
-#include "foursome.hpp"
 #include "hash.hpp"
 #include "matrix.hpp"
 #include "ntree.hpp"
+
 #include "smart_ptr.hpp"
+#include "simple_ptr.hpp"
+
 #include "triple.hpp"
+#include "foursome.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 #endif
