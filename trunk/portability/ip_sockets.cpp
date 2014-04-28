@@ -17,6 +17,7 @@
 
 #ifdef MSWINDOWS
 // Windoze-specific includes
+
 #include <winsock2.h>
 #define ERRNO WSAGetLastError()
 #define HERRNO WSAGetLastError()
@@ -25,12 +26,15 @@
 #define SHUT_RDWR SD_BOTH
 #define SOCKLEN_T int
 #define SEND_FLAGS 0
-#if defined _MSC_VER && _MSC_VER < 1600 // not defined before Visual Studio 10
-#define EINPROGRESS WSAEINPROGRESS
-#define EWOULDBLOCK WSAEWOULDBLOCK
-#define ECONNRESET WSAECONNRESET
-#endif
+// not defined before Visual Studio 10, not defined in some Mingw combinations
+// assume if one is not defined, none of them is
+#define INPROGRESS WSAEINPROGRESS
+#define WOULDBLOCK WSAEWOULDBLOCK
+#define CONNRESET WSAECONNRESET
+
+
 #else
+
 // Generic Unix includes
 // fix for older versions of Darwin?
 #define _BSD_SOCKLEN_T_ int
@@ -51,6 +55,11 @@
 #define CLOSE ::close
 #define SOCKLEN_T socklen_t
 #define SEND_FLAGS MSG_NOSIGNAL
+
+#define INPROGRESS EINPROGRESS
+#define WOULDBLOCK EWOULDBLOCK
+#define CONNRESET ECONNRESET
+
 #ifdef SOLARIS
 // Sun put some definitions in a different place
 #include <sys/filio.h>
@@ -422,10 +431,10 @@ namespace stlplus
         // if connectioned it makes the connection
         if (::connect(m_socket, &connect_data, sizeof(connect_data)) == SOCKET_ERROR)
         {
-          // the socket is non-blocking, so connect will almost certainly fail with EINPROGRESS which is not an error
+          // the socket is non-blocking, so connect will almost certainly fail with INPROGRESS which is not an error
           // only catch real errors
           int error = ERRNO;
-          if (error != EINPROGRESS && error != EWOULDBLOCK)
+          if (error != INPROGRESS && error != WOULDBLOCK)
           {
             set_error(error);
             return false;
@@ -451,7 +460,7 @@ namespace stlplus
         return true;
 #else
         // Posix version needs further checking using the socket options
-        // DJDM: socket has returned EINPROGRESS on the first attempt at connection
+        // DJDM: socket has returned INPROGRESS on the first attempt at connection
         // it has also returned that it can be written to
         // we must now ask it if it has actually connected - using getsockopt
         int error = 0;
@@ -597,7 +606,7 @@ namespace stlplus
           // UDP connection reset means that a previous sent failed to deliver cos the address was unknown
           // this is NOT an error with the sending server socket, which IS still usable
           int error = ERRNO;
-          if (error != ECONNRESET)
+          if (error != CONNRESET)
           {
             delete[] buffer;
             set_error(error);
