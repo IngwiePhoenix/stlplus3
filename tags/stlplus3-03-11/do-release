@@ -1,0 +1,48 @@
+#!/bin/bash
+if [ $# -ne 0 ]; then
+  echo "$0: no arguments required, they are found automatically"
+  exit 1
+fi
+
+dir=$(dirname $0)
+cd "$dir"
+
+# get the product name from the current directory
+product=$(basename $PWD)
+
+# get the version from the version.hpp header
+version=$(grep '^\#define STLPLUS_VERSION' portability/version.hpp | sed -e "s|^\#define STLPLUS_VERSION ||" -e "s|\"||g")
+# the version must be converted into the form a.b and the rest discarded
+# split the version number at the first dot to give major and minor numbers
+major=`echo $version | cut -d . -f 1 -`
+minor=`echo $version | cut -s -d . -f 2 -`
+ # test for any errors
+if [ \( -z "$major" \) -o \( -z "$minor" \) ]; then
+  echo "Error: must be a version number in the form x.y"
+  exit 1
+else
+    # format the major and minor versions into MM-mm format
+  version=$(printf "%i.%i" "$major" "$minor")
+fi
+
+echo "#### Releasing $product version $version"
+
+# check that everything is up to date
+if ! vc-status; then
+  echo "Error: fix the above problems before release"
+  exit 1
+fi
+
+# release executable
+if ! release -z -t . "$version" release none; then
+  exit 1
+fi
+
+# now tag with this version
+tag=$(printf "%s-%02i-%02i" "$product" "$major" "$minor")
+echo "tagging $product with $tag"
+if ! cvs tag -F "$tag"; then
+  exit 1
+fi
+
+echo "#### Released $product version $version"
