@@ -88,6 +88,21 @@ new kind of iterator.</p>
 complex algorithms as methods returning vectors of iterators as
 results.</p>
 
+<h3>Fixed bug in IP Sockets for Visual Studio</h3>
+
+<p>A bug got introduced caused by a mismatch between the codes for the
+Posix codes EINPROGRESS etc. and the Windows sockets variants
+WSAEINPROGRESS etc. I had assumed that Microsoft had mapped one set
+onto the other (previous versions of Visual Studio didn't define the
+  Posix codes at all).</p>
+
+<p>The bug only shows itself with the Visual Studio compiler - so for
+  example using MingW to compile a native Windows program works.</p>
+
+<p>Unfortunately it also shows up a bug in the test pack (actually, two)
+so the problem didn't get caught in testing. This is why the bug made
+  it out into the field.</p>
+
 <h2 id="v3.10">Changes from Version 3.9 to 3.10</h2>
 
 <h3>Fixed iterator bug when using algorithms</h3>
