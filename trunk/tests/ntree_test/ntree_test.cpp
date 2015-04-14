@@ -77,6 +77,7 @@ bool compare(const string_tree& left, const string_tree& right)
 
 std::ostream& operator << (std::ostream& device, const string_tree& tree)
 {
+  device << "tree: ";
   stlplus::print_ntree(device, tree, stlplus::print_string, std::string("\n"), std::string("  "));
   device << std::endl;
   return device;
@@ -151,6 +152,7 @@ std::ostream& operator << (std::ostream& device, const string_tree::const_iterat
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// a tree map is a map from the content of a node to its iterator
 
 typedef std::map<std::string,string_tree::iterator> tree_map;
 
@@ -166,12 +168,15 @@ void restore_tree_map(stlplus::restore_context& context, tree_map& data)
 
 std::ostream& operator << (std::ostream& device, const tree_map& mappings)
 {
+  device << "map: ";
   stlplus::print_map(device, mappings, stlplus::print_string, print_string_tree_iterator, "=", ",");
   device << std::endl;
   return device;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// a test class that contains a tree and a tree map
+// usage: build a tree and then call add_mappings to built the tree map from the tree
 
 class mapped_tree
 {
@@ -379,6 +384,7 @@ int main(int argc, char* argv[])
     }
 
     // test for cut - testing a bug fix
+    // TODO - how to verify this?
     string_tree branch = data.m_tree.cut(left);
     std::cerr << "cut left = " << std::endl << branch;
     std::cerr << "cut remainder = " << std::endl << data.m_tree;
@@ -394,6 +400,86 @@ int main(int argc, char* argv[])
     std::cerr << "caught unknown exception" << std::endl;
     result = false;
   }
+
+  // test the child_offset method
+  // build a new simpler tree to test this
+  string_tree simple_tree;
+  string_tree::iterator root = simple_tree.insert("root");
+  string_tree::iterator left = simple_tree.append(root, "left");
+  string_tree::iterator middle = simple_tree.append(root, "middle");
+  string_tree::iterator right = simple_tree.append(root, "right");
+  std::cerr << "testing child offset handling, initial:\n" << simple_tree;
+  // now find the iterator offsets
+  unsigned left_offset = simple_tree.child_offset(root, left);
+  std::cerr << "left offset: " << left_offset << std::endl;
+  if (left_offset != 0)
+  {
+    std::cerr << "ERROR: left offset is wrong, should be 0, is " << left_offset << std::endl;
+    result = false;
+  }
+  unsigned right_offset = simple_tree.child_offset(root, right);
+  std::cerr << "right offset: " << right_offset << std::endl;
+  if (right_offset != 2)
+  {
+    std::cerr << "ERROR: right offset is wrong, should be 1, is " << right_offset << std::endl;
+    result = false;
+  }
+  unsigned not_found_offset = simple_tree.child_offset(left, right);
+  std::cerr << "not_found offset: " << not_found_offset << std::endl;
+  if (not_found_offset != (unsigned)-1)
+  {
+    std::cerr << "ERROR: not found offset is wrong, should be -1, is " << not_found_offset << std::endl;
+    result = false;
+  }
+
+  // test the reorder method
+  simple_tree.reorder(root, 0, 1);
+  std::cerr << "testing child offset handling, reordered:\n" << simple_tree;
+  unsigned reordered_left_offset = simple_tree.child_offset(root, left);
+  std::cerr << "reordered left offset: " << reordered_left_offset << std::endl;
+  if (reordered_left_offset != 1)
+  {
+    std::cerr << "ERROR: reordered left offset is wrong, should be 1, is " << reordered_left_offset << std::endl;
+    result = false;
+  }
+  // test reordering to the end
+  simple_tree.reorder(root, 0, 2);
+  std::cerr << "testing child offset handling, reordered:\n" << simple_tree;
+  unsigned reordered_middle_offset = simple_tree.child_offset(root, middle);
+  std::cerr << "reordered middle offset: " << reordered_middle_offset << std::endl;
+  if (reordered_middle_offset != 2)
+  {
+    std::cerr << "ERROR: reordered middle offset is wrong, should be 1, is " << reordered_middle_offset << std::endl;
+    result = false;
+  }
+  // test exception handling
+  try
+  {
+    simple_tree.reorder(root, 0, 3);
+    std::cerr << "ERROR: failed to throw out of range exception in reorder" << std::endl;
+    result = false;
+  }
+  catch(std::exception& except)
+  {
+    std::cerr << "success: caught standard exception " << except.what() << std::endl;
+  }
+  catch(...)
+  {
+    std::cerr << "ERROR: caught unknown exception" << std::endl;
+    result = false;
+  }
+
+  // test the swap method
+  simple_tree.swap(root, 1, 2);
+  std::cerr << "testing child offset handling, swapped:\n" << simple_tree;
+  unsigned reordered_right_offset = simple_tree.child_offset(root, right);
+  std::cerr << "reordered right offset: " << reordered_right_offset << std::endl;
+  if (reordered_right_offset != 2)
+  {
+    std::cerr << "ERROR: reordered right offset is wrong, should be 1, is " << reordered_right_offset << std::endl;
+    result = false;
+  }
+
 
   if (!result)
     std::cerr << "test failed" << std::endl;

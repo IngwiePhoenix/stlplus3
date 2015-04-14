@@ -289,19 +289,29 @@ namespace stlplus
     //////////////////////////////////////////////////////////////////////////////
     // direct traversal
 
+    // get the root node's iterator to start the traversal
     const_iterator root(void) const;
     iterator root(void);
 
+    // get the number of children of this node, so they can be accessed 0..n-1
     unsigned children(const const_iterator& node) const
       throw(wrong_object,null_dereference,end_dereference);
     unsigned children(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference);
 
+    // get the iterator for a child given it's offset into the children array
     const_iterator child(const const_iterator& node, unsigned child) const
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
     iterator child(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // search a node's children array to find a child given its iterator
+    unsigned child_offset(const const_iterator& node, const const_iterator& child) const
+      throw(wrong_object,null_dereference,end_dereference);
+    unsigned child_offset(const iterator& node, const iterator& child)
+      throw(wrong_object,null_dereference,end_dereference);
+
+    // go back up the tree by getting the iterator to a node's parent - the parent of root is null
     const_iterator parent(const const_iterator& node) const
       throw(wrong_object,null_dereference,end_dereference);
     iterator parent(const iterator& node)
@@ -403,6 +413,18 @@ namespace stlplus
       throw(wrong_object,null_dereference,end_dereference);
     // move the subtree to make a new tree with the specified child as root
     ntree<T> cut(const iterator& node, unsigned child)
+      throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+
+    // reorder the children of a node
+    // moves the child at the given offset to the new offset, reordering its siblings to make room
+    // this preserves the order of the remaining siblings but not their positions e.g. reorder([a,b,c,d],0,3) = [b,c,d,a]
+    void reorder(const iterator& node, unsigned child_offset, unsigned new_offset)
+      throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+
+    // swap two children of a node
+    // swaps the child at the given offset with the new offset
+    // this preserves the position but not the order of the remaining siblings e.g. swap([a,b,c,d],0,3) = [d,b,c,a]
+    void swap(const iterator& node, unsigned child1, unsigned child2)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
     //////////////////////////////////////////////////////////////////////////////
