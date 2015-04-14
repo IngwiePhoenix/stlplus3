@@ -81,6 +81,24 @@ have their own IDE folder so that they can be kept separate for users
 a signal has a different name from other Unix-like OSs. Fix supplied
 by Ingwie.</p>
 
+<h3>Added more methods to ntree</h3>
+
+<p>The ntree class is an ordered tree, but feedback has indicated that
+it is lacking in some methods for interchanging integer offsets of
+children with their iterators and manipulating the order of the tree
+once it has been built. These operations are possible, but difficult
+and should be built-in.</p>
+
+<p>So, the following methods have been added:</p>
+
+<ul>
+  <li>child_offset - find the integer offset of a child given its iterator</li>
+  <li>reorder - move a child to a new position in the node's child list</li>
+  <li>swap - swap two children in the node's child list</li>
+</ul>
+
+<p>See the <a href="ntree.html">documentation for ntree</a> to see how these are used.</p>
+
 <h2 id="v3.11">Changes from Version 3.10 to 3.11</h2>
 
 <h3>Added erase_children method to ntree</h3>
