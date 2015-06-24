@@ -78,10 +78,11 @@ namespace stlplus
   // load the library - return success or fail
   bool dynaload::load(const std::string& library)
   {
-    std::string full_library = library;
 #ifdef MSWINDOWS
+    std::string full_library = library;
     m_handle = (void*)LoadLibraryA(full_library.c_str());
 #elif defined(CYGWIN)
+    std::string full_library = library;
     m_handle = dlopen(full_library.c_str(),RTLD_NOW);
 #else
     std::string full_library = std::string("lib") + library + std::string(".so");
