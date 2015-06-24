@@ -19,7 +19,7 @@ namespace stlplus
   template <typename T, typename C>
   simple_ptr_base<T,C>::simple_ptr_base(void) :
     m_pointer(0),
-    m_count(new unsigned(1))
+    m_count(simple_ptr_refcount_new())
   {
   }
 
@@ -27,7 +27,7 @@ namespace stlplus
   template <typename T, typename C>
   simple_ptr_base<T,C>::simple_ptr_base(const T& data) throw(illegal_copy) :
     m_pointer(C()(data)),
-    m_count(new unsigned(1))
+    m_count(simple_ptr_refcount_new())
   {
   }
 
@@ -37,7 +37,7 @@ namespace stlplus
   template <typename T, typename C>
   simple_ptr_base<T,C>::simple_ptr_base(T* data) :
     m_pointer(data),
-    m_count(new unsigned(1))
+    m_count(simple_ptr_refcount_new())
   {
   }
 
@@ -65,7 +65,7 @@ namespace stlplus
     if(decrement()) 
     {
       delete m_pointer;
-      delete m_count;
+      simple_ptr_refcount_delete(m_count);
     }
   }
 
@@ -163,12 +163,12 @@ namespace stlplus
     	// and the contained object makes a copy of the pointer and then sets it to something.
     	// Very tenuous I know, but still it's possible. Whatever, the object should NOT
     	// be deleted, as it is probably in the middle of destruction already.
-      m_count = new unsigned(1);
+      m_count = simple_ptr_refcount_new();
     } else {
     	// Another pointer holds a reference to the current object, so just decrement
     	// and create a new counter for the given object
       --count;
-      m_count = new unsigned(1);
+      m_count = simple_ptr_refcount_new();
     }
     m_pointer = data;
   }
@@ -224,7 +224,7 @@ namespace stlplus
     if (m_pointer==r.m_pointer) return;
     if(decrement()) {
       delete m_pointer;
-      delete m_count;
+      simple_ptr_refcount_delete(m_count);
     }
     m_pointer = r.m_pointer;
     m_count = r.m_count;
@@ -262,7 +262,7 @@ namespace stlplus
     if (count <= 1) return;
     --count;
     if (m_pointer) m_pointer = C()(*m_pointer);
-    m_count = new unsigned(1);
+    m_count = simple_ptr_refcount_new();
   }
 
   template <typename T, typename C>
@@ -297,7 +297,7 @@ namespace stlplus
       if(decrement())
       {
         delete m_pointer;
-        delete m_count;
+        simple_ptr_refcount_delete(m_count);
       }
       m_pointer = pointer;
       m_count = count;
