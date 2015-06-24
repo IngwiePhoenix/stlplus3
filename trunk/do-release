@@ -12,12 +12,14 @@ product=$(basename $PWD)
 
 # get the version from the version.hpp header
 version=$(grep '^\#define STLPLUS_VERSION' portability/version.hpp | sed -e "s|^\#define STLPLUS_VERSION ||" -e "s|\"||g")
+major=`echo $version | cut -d . -f 1 -`
+minor=`echo $version | cut -s -d . -f 2 -`
 
 echo "#### Releasing $product version $version"
 
 # check that everything is up to date
 if ! cvs-status; then
-  echo "Error: CVS is not up to date"
+  echo "Warning: CVS is not up to date"
 #  exit 1
 fi
 
