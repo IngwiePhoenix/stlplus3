@@ -16,7 +16,7 @@ int main (int argc, char* argv[])
   stlplus::dynaload nonexistent;
   if (nonexistent.load("nonexistent"))
   {
-    std::cerr << "error: nonexistent library loaded OK" << std::endl;
+    std::cerr << "ERROR: nonexistent library LOADED!" << std::endl;
     errors++;
   }
   else
@@ -28,7 +28,7 @@ int main (int argc, char* argv[])
   }
   if (nonexistent.present("function"))
   {
-    std::cerr << "error: nonexistent function loaded OK" << std::endl;
+    std::cerr << "ERROR: nonexistent function LOADED" << std::endl;
     errors++;
   }
 
@@ -36,7 +36,7 @@ int main (int argc, char* argv[])
   stlplus::dynaload existent("sqlite3");
   if (!existent.loaded())
   {
-    std::cerr << "error: existent library sqlite3 load FAILED "
+    std::cerr << "ERROR: existent library sqlite3 load FAILED with code "
               << existent.error_type() << ": "
               << existent.error_text() << std::endl;
     existent.clear_error();
@@ -44,7 +44,7 @@ int main (int argc, char* argv[])
   }
   if (!existent.present("sqlite3_libversion"))
   {
-    std::cerr << "error: existent function load FAILED "
+    std::cerr << "ERROR: existent function load FAILED "
               << existent.error_type() << ": "
               << existent.error_text() << std::endl;
     existent.clear_error();
@@ -53,7 +53,7 @@ int main (int argc, char* argv[])
   sqlite3_libversion_t sqlite3_libversion = (sqlite3_libversion_t)existent.symbol("sqlite3_libversion");
   if (!sqlite3_libversion)
   {
-    std::cerr << "error: existent function load FAILED "
+    std::cerr << "ERROR: existent function load FAILED "
               << existent.error_type() << ": "
               << existent.error_text() << std::endl;
     existent.clear_error();

@@ -5,7 +5,7 @@ else
 LIBRARIES := ../../portability
 endif
 include ../../../makefiles/gcc.mak
-ifeq ($(PLATFORM),GNU)
+ifeq ($(PLATFORM),GNULINUX)
 LOADLIBES += -ldl
 endif
 
