@@ -339,6 +339,8 @@ namespace stlplus
     //////////////////////////////////////////////////////////////////////////////
     // modification
 
+    // insert a node
+
     // discard previous contents and create a new root node
     iterator insert(const T&);
     // add a new child inserted into the node's children at the specified place
@@ -350,6 +352,8 @@ namespace stlplus
     // old name for the above
     iterator append(const iterator& node, const T&) 
       throw(wrong_object,null_dereference,end_dereference);
+
+    // insert a copy of a subtree
 
     // discard previous contents and copy the tree
     iterator insert(const ntree<T>&);
@@ -363,6 +367,8 @@ namespace stlplus
     iterator append(const iterator& node, const ntree<T>&)
       throw(wrong_object,null_dereference,end_dereference);
 
+    // insert the subtree without copying
+
     // discard previous contents and move the tree without copying
     // invalidates all iterators to the old tree
     iterator move(ntree<T>&);
@@ -374,6 +380,8 @@ namespace stlplus
     iterator move(const iterator& node, ntree<T>&)
       throw(wrong_object,null_dereference,end_dereference);
 
+    // insert/erase in the middle of a tree
+
     // replace the node with the new value, pushing the old node down to make it the child
     // returns the iterator to the new, pushed node
     iterator push(const iterator& node, const T&) 
@@ -381,6 +389,8 @@ namespace stlplus
     // erases the specified child, moving its children up to become the node's children
     void pop(const iterator& node, unsigned child) 
       throw(wrong_object,null_dereference,end_dereference);
+
+    // erase nodes and subtrees
 
     // erase the whole tree
     void erase(void);
@@ -397,6 +407,8 @@ namespace stlplus
     void erase_children(const iterator& node)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // extract a subtree as a copy leaving the original tree unchanged
+
     // get a copy of the tree as a tree
     ntree<T> subtree(void);
     // get a copy of the subtree as a tree with the specified node as root
@@ -405,6 +417,8 @@ namespace stlplus
     // get a copy of the subtree as a tree with the specified child as root
     ntree<T> subtree(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
+
+    // extract a subtree by moving the contents
 
     // move the whole tree to make a new tree
     ntree<T> cut(void);
@@ -415,6 +429,8 @@ namespace stlplus
     ntree<T> cut(const iterator& node, unsigned child)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 
+    // re-ordering of child nodes
+
     // reorder the children of a node
     // moves the child at the given offset to the new offset, reordering its siblings to make room
     // this preserves the order of the remaining siblings but not their positions e.g. reorder([a,b,c,d],0,3) = [b,c,d,a]
@@ -423,7 +439,7 @@ namespace stlplus
 
     // swap two children of a node
     // swaps the child at the given offset with the new offset
-    // this preserves the position but not the order of the remaining siblings e.g. swap([a,b,c,d],0,3) = [d,b,c,a]
+    // this preserves the position of the remaining siblings e.g. swap([a,b,c,d],0,3) = [d,b,c,a]
     void swap(const iterator& node, unsigned child1, unsigned child2)
       throw(wrong_object,null_dereference,end_dereference,std::out_of_range);
 

@@ -389,11 +389,11 @@ namespace stlplus
     // Topographical Sort Algorithm
     // This generates a node ordering such that each node is visited after its fanin nodes.
 
-    // This only generates a valid ordering for a DAG. 
+    // This only generates a valid ordering for a Directed Acyclic Graph (DAG). 
 
     // The return value is a pair : 
     //  - the node vector which is a set of iterators to the nodes in sorted order
-    //  - the arc vector is the set of backward ards that were broken to achieve the sort
+    //  - the arc vector is the set of backward arcs that were broken to achieve the sort
     // If the arc vector is empty then the graph formed a DAG.
 
     // The arc selection callback can be used to ignore arcs that are not part
