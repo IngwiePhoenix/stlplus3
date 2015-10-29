@@ -262,9 +262,10 @@ int main(int argc, char* argv[])
 
   try
   {
+    // build a test graph and keep track of all its iterators
+    // the graph is a non-DAG but can be reduced to a DAG by ignoring known backward arcs
+    // backward arcs are labelled with negative values - this tests the filter function on the DAG sort
     test_graph graph;
-
-    // Note: backward arcs are labelled with negative values
     string_int_graph::iterator node1 = graph.insert("node1");
     string_int_graph::iterator node2 = graph.insert("node2");
     string_int_graph::iterator node3 = graph.insert("node3");
@@ -279,27 +280,91 @@ int main(int argc, char* argv[])
     graph.arc_insert(node4, node4, -7);
     std::cout << "### initial graph:" << std::endl;
     result &= graph.report();
+    // check the integrity of this graph and its iterators
+    // this also tests other functions especially the sort and dag_sort functions
     test(graph.m_graph);
 
+    // test the persistence of this graph
     std::cout << "dumping to file" << std::endl;
     stlplus::dump_to_file(graph, "test.tmp", dump_test_graph, 0);
-
-//     graph.m_graph.arc_move(arc4, node3, node1);
-//     std::cout << std::endl << "### after move:" << std::endl;
-//     result &= graph.report();
-//     test(graph.m_graph);
-
-//     graph.m_graph.arc_flip(arc4);
-//     std::cout << "after flip:" << std::endl;
-//     result &= graph.report();
-//     test(graph.m_graph);
-
     test_graph graph2;
     std::cout << "restoring from file" << std::endl;
     stlplus::restore_from_file("test.tmp", graph2, restore_test_graph, 0);
     std::cout << "after restore from file:" << std::endl;
     result &= graph2.report();
+    // check the integrity of the restored graph and its iterators
     test(graph2.m_graph);
+
+    // merging graphs
+    // create an empty graph to merge into
+    string_int_graph target;
+
+    // create a source graph
+    string_int_graph source1;
+    string_int_graph::iterator source1_node1 = source1.insert("source1 node1");
+    string_int_graph::iterator source1_node2 = source1.insert("source1 node2");
+    string_int_graph::arc_iterator source1_arc1 = source1.arc_insert(source1_node1, source1_node2, 11);
+
+    // merge it into an empty target
+    target.move(source1);
+    // check the iterators
+    if (!target.owns(source1_node1))
+    {
+      std::cout << "ERROR: node iterator source1_node1 not owned by target" << std::endl;
+      result = false;
+    }
+    if (!target.owns(source1_node2))
+    {
+      std::cout << "ERROR: node iterator source1_node2 not owned by target" << std::endl;
+      result = false;
+    }
+    if (!target.owns(source1_arc1))
+    {
+      std::cout << "ERROR: node iterator source1_arc1 not owned by target" << std::endl;
+      result = false;
+    }
+    // and print the result
+    std::cout << "target after merge of source1:\n" << target;
+
+    // create a second source graph
+    string_int_graph source2;
+    string_int_graph::iterator source2_node1 = source2.insert("source2 node1");
+    string_int_graph::iterator source2_node2 = source2.insert("source2 node2");
+    string_int_graph::arc_iterator source2_arc1 = source2.arc_insert(source2_node1, source2_node2, 21);
+
+    // merge it into a non-empty target
+    target.move(source2);
+    // check the iterators
+    if (!target.owns(source2_node1))
+    {
+      std::cout << "ERROR: node iterator source2_node1 not owned by target" << std::endl;
+      result = false;
+    }
+    if (!target.owns(source2_node2))
+    {
+      std::cout << "ERROR: node iterator source2_node2 not owned by target" << std::endl;
+      result = false;
+    }
+    if (!target.owns(source2_arc1))
+    {
+      std::cout << "ERROR: node iterator source2_arc1 not owned by target" << std::endl;
+      result = false;
+    }
+    // connect the two subgraphs
+    target.arc_insert(source1_node2, source2_node1, 1221);
+    // and print the result
+    std::cout << "target after merge of source2:\n" << target;
+
+    if (!source1.empty())
+    {
+      std::cout << "ERROR: source1 after merge with target:\n" << source1;
+      result = false;
+    }
+    if (!source2.empty())
+    {
+      std::cout << "ERROR: source2 after merge with target:\n" << source2;
+      result = false;
+    }
   }
   catch(const std::exception& exception)
   {
