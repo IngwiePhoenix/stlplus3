@@ -180,6 +180,12 @@ namespace stlplus
     typedef digraph_arc_iterator<NT,AT,AT&,AT*> arc_iterator;
     typedef digraph_arc_iterator<NT,AT,const AT&,const AT*> const_arc_iterator;
 
+    // iterator ownership - can check whether the graph owns an iterator
+    bool owns(iterator) const;
+    bool owns(const_iterator) const;
+    bool owns(arc_iterator) const;
+    bool owns(const_arc_iterator) const;
+
     // supplementary types used throughout
 
     // a path is represented as a vector of arcs so the forward traversal is
@@ -350,6 +356,14 @@ namespace stlplus
     // reverse the arc direction so that to becomes from and vice-versa
     void arc_flip(arc_iterator arc)
       throw(wrong_object,null_dereference,end_dereference);
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // whole graph manipulations
+
+    // move one graph into another by moving all its nodes/arcs
+    // this leaves the source graph empty
+    // all iterators to nodes/arcs in the source graph will still work and will be owned by this
+    void move(digraph<NT,AT>& source);
 
     ////////////////////////////////////////////////////////////////////////////////
     // Adjacency algorithms

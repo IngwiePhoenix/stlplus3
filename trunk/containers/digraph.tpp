@@ -32,6 +32,8 @@
 namespace stlplus
 {
 
+  // the raw node data structure used in the node list
+  // does very little itself, all node manipulations are carried out at a higher level
   template<typename NT, typename AT>
   class digraph_node
   {
@@ -42,7 +44,6 @@ namespace stlplus
     digraph_node<NT,AT>* m_next;
     std::vector<digraph_arc<NT,AT>*> m_inputs;
     std::vector<digraph_arc<NT,AT>*> m_outputs;
-  public:
     digraph_node(const digraph<NT,AT>* owner, const NT& d = NT()) :
       m_master(owner,this), m_data(d), m_prev(0), m_next(0)
       {
@@ -52,6 +53,8 @@ namespace stlplus
       }
   };
 
+  // the raw arc data structure used in the arc list
+  // does very little itself, all arc manipulations are carried out at a higher level
   template<typename NT, typename AT>
   class digraph_arc
   {
@@ -108,18 +111,23 @@ namespace stlplus
   {
   }
 
+  // convert an iterator to its const form
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::const_iterator digraph_iterator<NT,AT,NRef,NPtr>::constify (void) const
   {
     return digraph_iterator<NT,AT,const NT&,const NT*>(*this);
   }
 
+  // convert an iterator to its non-const form
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::iterator digraph_iterator<NT,AT,NRef,NPtr>::deconstify (void) const
   {
     return digraph_iterator<NT,AT,NT&,NT*>(*this);
   }
 
+  // increment/decrement operators implement iteration through the list
+
+  // pre-increment operator - must be valid to be able to increment, handles incrementing off the end by becoming an end iterator
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (void)
     throw(null_dereference,end_dereference)
@@ -132,6 +140,7 @@ namespace stlplus
     return *this;
   }
 
+  // post-increment operator - based on above but returns a copy of the iterator before the increment
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator ++ (int)
     throw(null_dereference,end_dereference)
@@ -142,6 +151,7 @@ namespace stlplus
     return result;
   }
 
+  // pre-decrement operator - must be valid to be able to decrement, handles stepping off the end by becoming an end iterator
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& digraph_iterator<NT,AT,NRef,NPtr>::operator -- (void)
     throw(null_dereference,end_dereference)
@@ -154,6 +164,7 @@ namespace stlplus
     return *this;
   }
 
+  // post-decrement operator - based on above but returns a copy of the iterator before the decrement
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator digraph_iterator<NT,AT,NRef,NPtr>::operator -- (int)
     throw(null_dereference,end_dereference)
@@ -163,6 +174,8 @@ namespace stlplus
     --(*this);
     return result;
   }
+
+  // comparisons
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
   bool digraph_iterator<NT,AT,NRef,NPtr>::operator == (const TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::this_iterator& r) const
@@ -182,6 +195,8 @@ namespace stlplus
     return this->compare(r) < 0;
   }
 
+  // dereference operators
+  
   template<typename NT, typename AT, typename NRef, typename NPtr>
   TYPENAME digraph_iterator<NT,AT,NRef,NPtr>::reference digraph_iterator<NT,AT,NRef,NPtr>::operator*(void) const
     throw(null_dereference,end_dereference)
@@ -399,6 +414,33 @@ namespace stlplus
   unsigned digraph<NT,AT>::npos(void)
   {
     return(unsigned)-1;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // iterator ownership
+
+  template<typename NT, typename AT>
+  bool digraph<NT,AT>::owns(TYPENAME digraph<NT,AT>::iterator iter) const
+  {
+    return iter.owned_by(this);
+  }
+
+  template<typename NT, typename AT>
+  bool digraph<NT,AT>::owns(TYPENAME digraph<NT,AT>::const_iterator iter) const
+  {
+    return iter.owned_by(this);
+  }
+
+  template<typename NT, typename AT>
+  bool digraph<NT,AT>::owns(TYPENAME digraph<NT,AT>::arc_iterator iter) const
+  {
+    return iter.owned_by(this);
+  }
+
+  template<typename NT, typename AT>
+  bool digraph<NT,AT>::owns(TYPENAME digraph<NT,AT>::const_arc_iterator iter) const
+  {
+    return iter.owned_by(this);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -924,6 +966,73 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     arc_move(arc,arc_to(arc),arc_from(arc));
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // whole graph manipulations
+
+  // move one graph into another by moving all its nodes/arcs
+  // this leaves the source graph empty
+  // all iterators to nodes/arcs in the source graph will still work and will be owned by this
+  template<typename NT, typename AT>
+  void digraph<NT,AT>::move(digraph<NT,AT>& source)
+  {
+    // disallow merging a graph with itself
+    if (&source == this) return;
+    
+    // move all the nodes/arcs from source
+    // since we're moving everything, there's no need to do any remapping, just hook the pointers into this
+
+    // change the ownership of the nodes/arcs - this will also change ownership of any iterators
+    // do this before the move so the traversal is easier to calculate
+    for (digraph_node<NT,AT>* node = source.m_nodes_begin; node != 0; node = node->m_next)
+      node->m_master.change_owner(this);
+    for (digraph_arc<NT,AT>* arc = source.m_arcs_begin; arc != 0; arc = arc->m_next)
+      arc->m_master.change_owner(this);
+    
+    // move the nodes
+    // do nothing if the source is empty
+    if (source.m_nodes_begin != 0)
+    {
+      if (m_nodes_begin == 0)
+      {
+        // inserting into an empty graph
+        m_nodes_begin = source.m_nodes_begin;
+        m_nodes_end = source.m_nodes_end;
+      }
+      else
+      {
+        // inserting into a non-empty graph
+        m_nodes_end->m_next = source.m_nodes_begin;
+        source.m_nodes_begin->m_prev = m_nodes_end;
+        m_nodes_end = source.m_nodes_end;
+      }
+    }
+    // unhook from the source
+    source.m_nodes_begin = 0;
+    source.m_nodes_end = 0;
+
+    // move the arcs
+    // do nothing if the source is empty
+    if (source.m_arcs_begin != 0)
+    {
+      if (m_arcs_begin == 0)
+      {
+        // inserting into an empty graph
+        m_arcs_begin = source.m_arcs_begin;
+        m_arcs_end = source.m_arcs_end;
+      }
+      else
+      {
+        // inserting into a non-empty graph
+        m_arcs_end->m_next = source.m_arcs_begin;
+        source.m_arcs_begin->m_prev = m_arcs_end;
+        m_arcs_end = source.m_arcs_end;
+      }
+    }
+    // unhook from the source
+    source.m_arcs_begin = 0;
+    source.m_arcs_end = 0;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
