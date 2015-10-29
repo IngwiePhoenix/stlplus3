@@ -288,6 +288,23 @@ namespace stlplus
   };
 
   ////////////////////////////////////////////////////////////////////////////////
+  // internally, simple_ptr allocates lots of count values, which are just
+  // unsigned reference counts. The allocation of these values benefit from
+  // being allocated from a dedicated pool, as this increases the speed
+  // therefore I have now provided the ability to override the memory management
+  // of these values without needing to override the global new/delete
+  // all you need to do is to define these functions BEFORE including this file
+  // and set the override definition
+#ifndef STLPLUS_SIMPLE_PTR_REFCOUNT_ALLOC_OVERRIDE
+  inline unsigned* simple_ptr_refcount_new() {
+	  return new unsigned(1);
+  }
+  inline void simple_ptr_refcount_delete(unsigned* pCount) {
+	  delete pCount;
+  }
+#endif
+
+  ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus
 

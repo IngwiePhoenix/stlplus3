@@ -99,6 +99,25 @@ and should be built-in.</p>
 
 <p>See the <a href="ntree.html">documentation for ntree</a> to see how these are used.</p>
 
+<h3>Added move operation to digraph</h3>
+
+<p>There is now a method called move in the digraph class which allows
+a whole graph to be moved into another graph, merging the two
+graphs. All arc connectivity is preserved in the move and all
+iterators to any nodes or arcs in the moved graph will continue to be
+valid and work.</p>
+
+<h3>Added owns operation to digraph</h3>
+
+<p>You can now test whether an iterator is owned by a graph and therefore can be used with it by using the owns method. The method declaration is:</p>
+
+<pre class="cpp">
+bool digraph::owns(iterator);
+</pre>
+
+<p>Note that a null iterator is not owned by any object. Valid or end
+iterators are owned and may only be used with their owner object.</p>
+
 <h2 id="v3.11">Changes from Version 3.10 to 3.11</h2>
 
 <h3>Added erase_children method to ntree</h3>
