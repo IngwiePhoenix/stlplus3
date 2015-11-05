@@ -1,6 +1,7 @@
 #include "dynaload.hpp"
 #include "debug.hpp"
 #include "build.hpp"
+#include "version.hpp"
 #include <iostream>
 
 typedef char* (*version_t)(void);
@@ -41,7 +42,7 @@ int main (int argc, char* argv[])
   else
   {
     std::cerr << "success: existent library " << library << " loaded OK" << std::endl;
-    version_t version = (version_t)existent.symbol("version");
+    version_t version = (version_t)existent.symbol("stlplus_version");
     if (!version)
     {
       std::cerr << "ERROR: existent function load FAILED "
@@ -53,6 +54,11 @@ int main (int argc, char* argv[])
     else
     {
       std::cerr << "STLplus version: " << version() << std::endl;
+      if (std::string(version()) != stlplus::version())
+      {
+        std::cerr << "ERROR: version mismatch" << std::endl;
+        errors++;
+      }
     }
   }
   if (errors == 0)
