@@ -4,6 +4,16 @@
 #include "version.hpp"
 #include <iostream>
 
+// parallel test directory containing the shared library
+std::string library = "shared_library_test";
+
+// subdirectory to find shared library
+// build system should set this up automatically
+std::string platform = PLATFORM;
+
+// name of function to callk in that library
+std::string library_function = "stlplus_version";
+// type of that function
 typedef char* (*version_t)(void);
 
 int main (int argc, char* argv[])
@@ -28,9 +38,8 @@ int main (int argc, char* argv[])
     nonexistent.clear_error();
   }
 
-  // test an existent library
-  std::string library = "shared_library_test";
-  stlplus::dynaload existent(library, "../shared_library_test/");
+  // test load an existent library
+  stlplus::dynaload existent(library, "../" + library + "/" + platform);
   if (!existent.loaded())
   {
     std::cerr << "ERROR: existent library " << library << " load FAILED with code "
@@ -42,10 +51,11 @@ int main (int argc, char* argv[])
   else
   {
     std::cerr << "success: existent library " << library << " loaded OK" << std::endl;
-    version_t version = (version_t)existent.symbol("stlplus_version");
+    // now get the function from the shared library
+    version_t version = (version_t)existent.symbol(library_function);
     if (!version)
     {
-      std::cerr << "ERROR: existent function load FAILED "
+      std::cerr << "ERROR: existent function " + library_function + " load FAILED "
                 << existent.error_type() << ": "
                 << existent.error_text() << std::endl;
       existent.clear_error();
@@ -53,11 +63,15 @@ int main (int argc, char* argv[])
     }
     else
     {
-      std::cerr << "STLplus version: " << version() << std::endl;
+      std::cerr << "success: existent function " << library_function << " loaded OK" << std::endl;
       if (std::string(version()) != stlplus::version())
       {
         std::cerr << "ERROR: version mismatch" << std::endl;
         errors++;
+      }
+      else
+      {
+        std::cerr << "success: STLplus version matches: " << version() << std::endl;
       }
     }
   }
