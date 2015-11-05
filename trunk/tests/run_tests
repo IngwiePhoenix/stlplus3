@@ -13,7 +13,7 @@ failed_names=""
 root=`pwd`
 for dir in *; do
   if [ -d "$dir" ]; then
-    if [ "$dir" != "CVS" ] && [ "$dir" != "ide" ]; then
+    if [ "$dir" != "CVS" ] && [ "$dir" != "ide" ] && [ ! -f "$dir/.norun" ]; then
       echo "### testing $dir"
       cd "$dir"
       time "./$dir"

@@ -6,7 +6,7 @@ set test_fail=0
 set fail_names=
 
 for /d %%a in (*) do (
-  if /i %%a neq CVS if /i %%a neq ide call :test_case %%a
+  if %%a neq CVS if %%a neq ide if not exist %%a\.norun call :test_case %%a
 )
 
 echo Tests passed: %test_pass%

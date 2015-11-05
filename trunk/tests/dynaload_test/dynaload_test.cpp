@@ -3,7 +3,7 @@
 #include "build.hpp"
 #include <iostream>
 
-typedef char* (*sqlite3_libversion_t)(void);
+typedef char* (*version_t)(void);
 
 int main (int argc, char* argv[])
 {
@@ -26,34 +26,13 @@ int main (int argc, char* argv[])
               << nonexistent.error_text() << std::endl;
     nonexistent.clear_error();
   }
-  if (nonexistent.present("function"))
-  {
-    std::cerr << "ERROR: nonexistent function LOADED" << std::endl;
-    errors++;
-  }
 
   // test an existent library
-  stlplus::dynaload existent("sqlite3");
+  std::string library = "shared_library_test";
+  stlplus::dynaload existent(library, "../shared_library_test/");
   if (!existent.loaded())
   {
-    std::cerr << "ERROR: existent library sqlite3 load FAILED with code "
-              << existent.error_type() << ": "
-              << existent.error_text() << std::endl;
-    existent.clear_error();
-    errors++;
-  }
-  if (!existent.present("sqlite3_libversion"))
-  {
-    std::cerr << "ERROR: existent function load FAILED "
-              << existent.error_type() << ": "
-              << existent.error_text() << std::endl;
-    existent.clear_error();
-    errors++;
-  }
-  sqlite3_libversion_t sqlite3_libversion = (sqlite3_libversion_t)existent.symbol("sqlite3_libversion");
-  if (!sqlite3_libversion)
-  {
-    std::cerr << "ERROR: existent function load FAILED "
+    std::cerr << "ERROR: existent library " << library << " load FAILED with code "
               << existent.error_type() << ": "
               << existent.error_text() << std::endl;
     existent.clear_error();
@@ -61,9 +40,21 @@ int main (int argc, char* argv[])
   }
   else
   {
-    std::cerr << "SQLite3 version: " << sqlite3_libversion() << std::endl;
+    std::cerr << "success: existent library " << library << " loaded OK" << std::endl;
+    version_t version = (version_t)existent.symbol("version");
+    if (!version)
+    {
+      std::cerr << "ERROR: existent function load FAILED "
+                << existent.error_type() << ": "
+                << existent.error_text() << std::endl;
+      existent.clear_error();
+      errors++;
+    }
+    else
+    {
+      std::cerr << "STLplus version: " << version() << std::endl;
+    }
   }
-
   if (errors == 0)
     std::cerr << "test PASSED" << std::endl;
   else
