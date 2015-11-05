@@ -3,9 +3,6 @@
 #include "version.hpp"
 #include <string.h>
 
-#define DLL_EXPORT __declspec(dllexport)
-
-
 static char* copy_string (const char* str)
 {
   char* result = new char[strlen(str)+1];
@@ -13,8 +10,7 @@ static char* copy_string (const char* str)
   return result;
 }
 
-extern "C"
-char* stlplus_version()
+extern "C" char* stlplus_version()
 {
   return copy_string(stlplus::version().c_str());
 }
