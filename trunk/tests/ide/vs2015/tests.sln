@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "digraph_test", "digraph_tes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dynaload_test", "dynaload_test.vcxproj", "{A832CBDA-190A-48E7-B854-95810E895FE1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shared_library_test", "shared_library_test.vcxproj", "{A832CBDA-190A-48E7-B854-95810E895FE2}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hash_test", "hash_test.vcxproj", "{33AA872F-1443-45CF-89CC-23A52ECFFB70}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "inf_test", "inf_test.vcxproj", "{755FF2C2-EC48-4E8D-B318-687C672BE011}"
@@ -119,6 +121,14 @@ Global
 		{A832CBDA-190A-48E7-B854-95810E895FE1}.Release|Win32.Build.0 = Release|Win32
 		{A832CBDA-190A-48E7-B854-95810E895FE1}.Release|x64.ActiveCfg = Release|x64
 		{A832CBDA-190A-48E7-B854-95810E895FE1}.Release|x64.Build.0 = Release|x64
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Debug|Win32.Build.0 = Debug|Win32
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Debug|x64.ActiveCfg = Debug|x64
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Debug|x64.Build.0 = Debug|x64
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Release|Win32.ActiveCfg = Release|Win32
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Release|Win32.Build.0 = Release|Win32
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Release|x64.ActiveCfg = Release|x64
+		{A832CBDA-190A-48E7-B854-95810E895FE2}.Release|x64.Build.0 = Release|x64
 		{33AA872F-1443-45CF-89CC-23A52ECFFB70}.Debug|Win32.ActiveCfg = Debug|Win32
 		{33AA872F-1443-45CF-89CC-23A52ECFFB70}.Debug|Win32.Build.0 = Debug|Win32
 		{33AA872F-1443-45CF-89CC-23A52ECFFB70}.Debug|x64.ActiveCfg = Debug|x64
