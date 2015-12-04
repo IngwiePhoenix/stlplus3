@@ -136,7 +136,7 @@
           <p>STLplus has been built on the following CPUs:</p>
           <ul>
             <li>Intel Pentium 686 (32-bit)</li>
-            <li>Intel Pentium x86_64 (642-bit)</li>
+            <li>Intel Pentium x86_64 (64-bit)</li>
             <li>AMD Opteron (64-bit)</li>
             <li>IBM OpenPower (32-bit)</li>
             <li>DEC Alpha (64-bit)</li>
@@ -409,17 +409,29 @@
 
           <tr>
             <td>Intel 686</td>
+            <td>64</td>
+            <td>PC-BSD v10</td>
+            <td>gcc</td>
+            <td>4.8.5</td>
+            <td><code>FREEBSD-amd64</code></td>
+            <td><code></code></td>
+            <td>2015-12-04</td>
+            <td>27/27</td>
+            <td>Built using Gnu compiler even though PC-BSD uses Clang by default.</td>
+          </tr>
+
+          <tr>
+            <td>Intel 686</td>
             <td>32</td>
-            <td>PC-BSD</td>
+            <td>PC-BSD v9</td>
             <td>gcc</td>
             <td>4.2.1</td>
             <td><code>FREEBSD-i686</code></td>
             <td><code></code></td>
-            <td>2014-04-28</td>
-            <td>25/27</td>
-            <td>Dynamic loader test needs 64-bit shared library, shared_ptr not supported on gcc 4.2.</td>
+            <td>2015-12-04</td>
+            <td>26/27</td>
+            <td>One test failed because shared_ptr not supported on gcc 4.2.</td>
           </tr>
-
 
           <tr>
             <td>Intel 686</td>
