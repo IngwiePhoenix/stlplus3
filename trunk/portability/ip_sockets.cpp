@@ -463,13 +463,14 @@ namespace stlplus
         return true;
 #else
         // Posix version needs further checking using the socket options
+        // http://linux.die.net/man/2/connect see description of EINPROGRESS
         // DJDM: socket has returned INPROGRESS on the first attempt at connection
         // it has also returned that it can be written to
         // we must now ask it if it has actually connected - using getsockopt
         int error = 0;
         socklen_t serror = sizeof(int);
-        if (::getsockopt(m_socket, SOL_SOCKET, SO_ERROR, &error, &serror)==0)
-          // handle the error value - one of them means that the socket has connected
+        if (::getsockopt(m_socket, SOL_SOCKET, SO_ERROR, &error, &serror) == 0)
+          // handle the error value - the EISCONN error actually means that the socket has connected (so no error then)
           if (!error || error == EISCONN)
             return true;
         return false;
