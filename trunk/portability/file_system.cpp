@@ -231,17 +231,17 @@ namespace stlplus
     unsigned start = i;
     while(i <= spec.size())
     {
-      if (i == spec.size())
+      // check for element terminated by either a separator or the end of the string
+      if ((i == spec.size()) || is_separator(spec[i]))
       {
         // path element terminated by the end of the string
-        // discard this element if it is zero length because that represents the trailing /
-        if (i != start)
-          m_path.push_back(spec.substr(start, i-start));
-      }
-      else if (is_separator(spec[i]))
-      {
-        // path element terminated by a separator
-        m_path.push_back(spec.substr(start, i-start));
+        // discard this element if it is zero length
+        // discard null elements - these are . in any position or .. at the start of an absolute path
+        std::string element = spec.substr(start, i-start);
+        if (!(element.empty() ||
+              (element.compare(".") == 0) ||
+              (!m_relative && (m_path.empty()) && (element.compare("..") == 0))))
+          m_path.push_back(element);
         start = i+1;
       }
       i++;
