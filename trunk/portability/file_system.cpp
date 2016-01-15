@@ -234,9 +234,9 @@ namespace stlplus
       // check for element terminated by either a separator or the end of the string
       if ((i == spec.size()) || is_separator(spec[i]))
       {
-        // path element terminated by the end of the string
-        // discard this element if it is zero length
-        // discard null elements - these are . in any position or .. at the start of an absolute path
+        // path element found
+        // discard null elements - zero length or .
+        // discard .. at the start of an absolute path (because going up from root takes you to root)
         std::string element = spec.substr(start, i-start);
         if (!(element.empty() ||
               (element.compare(".") == 0) ||
@@ -299,6 +299,7 @@ namespace stlplus
         else
         {
           // otherwise delete this element and the previous one
+          // TODO - this is unsafe if there is a link in the path
           m_path.erase(m_path.begin()+i);
           m_path.erase(m_path.begin()+i-1);
           i--;
@@ -314,9 +315,7 @@ namespace stlplus
 
   bool file_specification::make_absolute(const std::string& root)
   {
-    // test whether already an absolute path in which case there's nothing to do
-    if (absolute()) return true;
-    // now simply call the other version of make_absolute
+    // simply call the other version of make_absolute
     file_specification rootspec;
     rootspec.initialise_folder(root);
     return make_absolute(rootspec);
@@ -325,16 +324,18 @@ namespace stlplus
   bool file_specification::make_absolute(const file_specification& rootspec)
   {
     // test whether already an absolute path in which case there's nothing to do
-    if (absolute()) return true;
-    // initialise the result with the root and make the root absolute
-    file_specification result = rootspec;
-    result.make_absolute();
-    // now append this's relative path and filename to the root's absolute path
-    for (unsigned i = 0; i < subpath_size(); i++)
-      result.add_subpath(subpath_element(i));
-    result.set_file(file());
-    // now the result is the absolute path, so transfer it to this
-    *this = result;
+    if (!absolute())
+    {
+      // initialise the result with the root and make the root absolute
+      file_specification result = rootspec;
+      result.make_absolute();
+      // now append this's relative path and filename to the root's absolute path
+      for (unsigned i = 0; i < subpath_size(); i++)
+        result.add_subpath(subpath_element(i));
+      result.set_file(file());
+      // now the result is the absolute path, so transfer it to this
+      *this = result;
+    }
     // and simplify to get rid of any unwanted .. or . elements
     simplify();
     return true;
@@ -787,6 +788,8 @@ namespace stlplus
   {
     file_specification spec;
     spec.initialise_folder(directory);
+    // add .. elements for each level to go up, then use simplify
+    // TODO - doesn't work if any of the elements are links
     for (unsigned i = 0; i < levels; i++)
       spec.add_subpath("..");
     spec.simplify();
