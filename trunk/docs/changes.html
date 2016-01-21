@@ -65,6 +65,12 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.12">Changes from Version 3.11 to 3.12</h2>
 
+<h3>Reworked portability -&gt; file_system</h3>
+
+<p>This is a minor bug-fix so that paths are simplified more consistently. For example "/.." can be simplified to "/".</p>
+
+<p>Note: The simplification of paths used in file_system is a naive algorithm, it removes ".." elements on the assumption that none of the path is made of links, so that "/root/element/.." always maps onto "/root". This is not necessarily true.</p>
+
 <h3>Added IDE files for Visual Studio 2013</h3>
 
 <p>These are a simple conversion of the VS 2012 project files, but
