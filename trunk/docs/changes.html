@@ -37,6 +37,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
 <li class="internal"><a href="#v3.12">Changes from Version 3.11 to 3.12</a></li>
 <li class="internal"><a href="#v3.11">Changes from Version 3.10 to 3.11</a></li>
 <li class="internal"><a href="#v3.10">Changes from Version 3.9 to 3.10</a></li>
@@ -63,13 +64,22 @@ for this version are huge. Therefore only the changes since then have been docum
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
 
-<h2 id="v3.12">Changes from Version 3.11 to 3.12</h2>
+<h2 id="v3.13">Changes from Version 3.12 to 3.13</h2>
 
 <h3>Reworked portability -&gt; file_system</h3>
 
 <p>This is a minor bug-fix so that paths are simplified more consistently. For example "/.." can be simplified to "/".</p>
 
 <p>Note: The simplification of paths used in file_system is a naive algorithm, it removes ".." elements on the assumption that none of the path is made of links, so that "/root/element/.." always maps onto "/root". This is not necessarily true.</p>
+
+<h3>Fixed bug in IDE files</h3>
+
+<p>Some of the IDE project files still contained references to source
+files strings/print_address.hpp/cpp and strings/string_address.hpp/cpp
+which are obsolete - these functions were merged into other source
+files at the last release. These references have been removed.</p>
+
+<h2 id="v3.12">Changes from Version 3.11 to 3.12</h2>
 
 <h3>Added IDE files for Visual Studio 2013</h3>
 
