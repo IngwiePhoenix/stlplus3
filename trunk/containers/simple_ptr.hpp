@@ -188,11 +188,12 @@ namespace stlplus
     // in separate counter and pointer objects
     unsigned* _count(void) const;
     T* _pointer(void) const;
-    void _make_alias(T* pointer, unsigned* count);
+    void _make_alias(T* pointer, unsigned*& count);
 
   private:
-    void increment(void);
-    bool decrement(void);
+    inline void increment(void);
+    inline bool decrement(void);
+    inline void _delete_pointer(void);
   };
 
   ////////////////////////////////////////////////////////////////////////////////
