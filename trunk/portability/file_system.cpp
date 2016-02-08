@@ -248,7 +248,7 @@ namespace stlplus
       i++;
     }
     // TODO - some error handling?
-    return true;
+    return simplify();
   }
 
   bool file_specification::initialise_file(const std::string& spec)
@@ -338,8 +338,7 @@ namespace stlplus
       *this = result;
     }
     // and simplify to get rid of any unwanted .. or . elements
-    simplify();
-    return true;
+    return simplify();
   }
 
   bool file_specification::make_relative(const std::string& root)
@@ -380,8 +379,7 @@ namespace stlplus
       set_relative();
     }
     // and simplify to get rid of any unwanted .. or . elements
-    simplify();
-    return true;
+    return simplify();
   }
 
   std::string file_specification::image(void) const
