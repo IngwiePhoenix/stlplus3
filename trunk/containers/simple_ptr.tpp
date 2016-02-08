@@ -322,7 +322,7 @@ namespace stlplus
   unsigned* simple_ptr_base<T,C>::_count(void) const
   {
     if (!m_count) {
-      ((simple_ptr_base<T,C>)this)->m_count = simple_ptr_refcount_new();
+      ((simple_ptr_base<T,C>*)this)->m_count = simple_ptr_refcount_new();
     }
     return m_count;
   }
