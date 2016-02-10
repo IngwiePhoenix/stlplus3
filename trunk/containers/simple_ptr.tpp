@@ -334,7 +334,7 @@ namespace stlplus
   }
 
   template <typename T, typename C>
-  void simple_ptr_base<T,C>::_make_alias(T* pointer, unsigned*& count)
+  void simple_ptr_base<T,C>::_make_alias(T* pointer, unsigned* const& count)
   {
     // make it alias-copy safe - this means that I don't try to do the
     // assignment if r is either the same object or an alias of it
@@ -352,7 +352,8 @@ namespace stlplus
       if (count) {
         m_count = count;
       } else {
-        m_count = count = simple_ptr_refcount_new();
+        unsigned*& c = (unsigned*&)count;
+        m_count = c = simple_ptr_refcount_new();
       }
       increment();
     }

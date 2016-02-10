@@ -188,7 +188,7 @@ namespace stlplus
     // in separate counter and pointer objects
     unsigned* _count(void) const;
     T* _pointer(void) const;
-    void _make_alias(T* pointer, unsigned*& count);
+    void _make_alias(T* pointer, unsigned* const& count);
 
   private:
     inline void increment(void);
