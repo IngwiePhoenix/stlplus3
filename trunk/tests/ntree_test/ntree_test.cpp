@@ -449,10 +449,11 @@ int main(int argc, char* argv[])
   std::cerr << "reordered middle offset: " << reordered_middle_offset << std::endl;
   if (reordered_middle_offset != 2)
   {
-    std::cerr << "ERROR: reordered middle offset is wrong, should be 1, is " << reordered_middle_offset << std::endl;
+    std::cerr << "ERROR: reordered middle offset is wrong, should be 2, is " << reordered_middle_offset << std::endl;
     result = false;
   }
   // test exception handling
+  std::cerr << "testing out of range exception" << std::endl;
   try
   {
     simple_tree.reorder(root, 0, 3);
