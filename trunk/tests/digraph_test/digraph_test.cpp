@@ -365,6 +365,19 @@ int main(int argc, char* argv[])
       std::cout << "ERROR: source2 after merge with target:\n" << source2;
       result = false;
     }
+
+    // clear the graph and check that safe iterators are handled correctly
+    if (!source2_node1.valid())
+    {
+      std::cout << "ERROR: still valid iterator not valid!" << std::endl;
+      result = false;
+    }
+    target.clear();
+    if (!source2_node1.end())
+    {
+      std::cout << "ERROR: disabled iterator not end iterator" << std::endl;
+      result = false;
+    }
   }
   catch(const std::exception& exception)
   {

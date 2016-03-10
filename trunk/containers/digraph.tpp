@@ -554,9 +554,28 @@ namespace stlplus
   template<typename NT, typename AT>
   void digraph<NT,AT>::clear(void)
   {
-    // clearing the nodes also clears the arcs
-    for (digraph_iterator<NT,AT,NT&,NT*> i = begin(); i != end(); )
-      i = erase(i);
+    // delete all nodes and arcs from the graph leaving it empty
+    // old solution used erase on each node but that is quite slow since each erase carefully unpicks a node from the structure
+    // since we know that the whole data structure is being deleted, can do a more efficient job
+
+    // delete all the nodes
+    for (digraph_node<NT,AT>* node = m_nodes_begin; node != 0; )
+    {
+      digraph_node<NT,AT>* next = node->m_next;
+      delete node;
+      node = next;
+    }
+    m_nodes_begin = 0;
+    m_nodes_end = 0;
+    // delete all the arcs
+    for (digraph_arc<NT,AT>* arc = m_arcs_begin; arc != 0; )
+    {
+      digraph_arc<NT,AT>* next = arc->m_next;
+      delete arc;
+      arc = next;
+    }
+    m_arcs_begin = 0;
+    m_arcs_end = 0;
   }
 
   template<typename NT, typename AT>
