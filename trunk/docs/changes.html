@@ -66,7 +66,16 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.13">Changes from Version 3.12 to 3.13</h2>
 
-<h3>Reworked portability -&gt; file_system</h3>
+<h3>Reworked containers-&gt;digraph::path_exists algorithm</h3>
+
+<p>Bug reported by Simone D: The old digraph::path_exists algorithm
+was incorrect - it would stop searching for a path if an arc pointed
+to an already-visited node but before visiting any sibling arcs which
+might have been candidate paths.</p>
+
+<p>I have rewritten the path_exists algorithm using a simpler method.</p>
+
+<h3>Reworked portability-&gt;file_system</h3>
 
 <p>This is a minor bug-fix so that paths are simplified more consistently. For example "/.." can be simplified to "/".</p>
 
