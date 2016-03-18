@@ -18,19 +18,22 @@ typedef stlplus::digraph<std::string,int> string_int_graph;
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::iterator i)
 {
-  return output << stlplus::address_to_string(&*i) << "->" << *i;
+//  return output << stlplus::address_to_string(&*i) << "->" << *i;
+  return output << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_iterator i)
 {
-  return output << stlplus::address_to_string(&*i) << "->" << *i;
+//  return output << stlplus::address_to_string(&*i) << "->" << *i;
+  return output << *i;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::arc_vector arcs)
 {
+  output << arcs.size() << " arcs=";
   for (unsigned i = 0; i < arcs.size(); i++)
   {
-    if (i > 0) output << " : ";
+    if (i > 0) output << ",";
     output << arcs[i];
   }
   return output;
@@ -38,19 +41,21 @@ std::ostream& operator<<(std::ostream& output, string_int_graph::arc_vector arcs
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::path_vector paths)
 {
+  output << paths.size() << " paths= ";
   for (unsigned i = 0; i < paths.size(); i++)
   {
     if (i > 0) output << " - ";
-    output << paths[i];
+    output << '[' << paths[i] << ']';
   }
   return output;
 }
 
 std::ostream& operator<<(std::ostream& output, string_int_graph::node_vector nodes)
 {
+  output << nodes.size() << " nodes=";
   for (unsigned i = 0; i < nodes.size(); i++)
   {
-    if (i > 0) output << " - ";
+    if (i > 0) output << ",";
     output << nodes[i];
   }
   return output;
@@ -92,7 +97,12 @@ static void test (string_int_graph& graph)
       else
         std::cout << "  " << *i << " is adjacent to " << *j << std::endl;
       if (!graph.path_exists(i, j))
+      {
         std::cout << "  " << *i << " does NOT have a path to " << *j << std::endl;
+        // check against the all_paths algorithm
+        if (graph.all_paths(i,j).size() > 0)
+          std::cout << "  ERROR " << *i << " does have all_paths to " << *j << " = " << graph.all_paths(i,j) << std::endl;
+      }
       else
       {
         std::cout << "  " << *i << " has a path to " << *j << std::endl;
@@ -100,17 +110,14 @@ static void test (string_int_graph& graph)
         std::cout << "  " << "shortest path from " << *i << " to " << *j << " is: " << graph.shortest_path(i, j) << std::endl;
       }
     }
-    std::cout << "  " << "shortest paths for " << *i << " less than " << 4 << " are: " 
-         << graph.shortest_paths(i, select_less_than_4) << std::endl;
+    std::cout << "  " << "shortest paths for " << *i << " less than " << 4 << " are: " << graph.shortest_paths(i, select_less_than_4) << std::endl;
     std::cout << "  " << "reachable nodes from " << *i << " are: " << graph.reachable_nodes(i) << std::endl;
     std::cout << "  " << "nodes which can reach " << *i << " are: " << graph.reaching_nodes(i) << std::endl;
   }
   std::pair<string_int_graph::node_vector,string_int_graph::arc_vector> sort = graph.sort(select_natural);
   std::cout << "  " << "topographical sort: " << sort.first;
   if (!sort.second.empty())
-  {
     std::cout << ", errors = " << sort.second;
-  }
   std::cout << std::endl;
   std::cout << "  " << "DAG sort: " << graph.dag_sort(select_natural) << std::endl;
 }

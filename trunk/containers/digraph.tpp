@@ -1307,18 +1307,22 @@ namespace stlplus
     // a set of visited nodes. The visited set is updated when a candidate is
     // found but tested before the recursion on the candidate so that the number of
     // function calls is minimised.
+
+    // if the current node is the target, we have found a path so return immediately
+    // exclude the case where we're looking for a path from a node to itself unless at least one arc has been followed
+    if ((visited.size() > 0) && (from == to)) return true;
+    // update the visited set
+    // if the insert fails, that indicates that the node has already been visited so don't recurse on the fanout
+    if (!(visited.insert(from).second)) return false;
+    // now visit all of the fanout arcs of the current node to see if any of them complete a path
     for (unsigned i = 0; i < fanout(from); i++)
     {
       digraph_arc_iterator<NT,AT, const AT&,const AT*> arc = output(from,i);
+      // allow the optional select filter to choose whether this arc should be considered as part of a path
       if (!select || select(*this, arc))
       {
-        digraph_iterator<NT,AT,const NT&,const NT*> node = arc_to(arc);
-        // if the node is the target, return immediately
-        if (node == to) return true;
-        // update the visited set and give up if the insert fails, which indicates that the node has already been visited
-        if (!(visited.insert(node).second)) return false;
         // now recurse - a path exists from from to to if a path exists from an adjacent node to to
-        if (path_exists_r(node,to,visited,select)) return true;
+        if (path_exists_r(arc_to(arc),to,visited,select)) return true;
       }
     }
     return false;
@@ -1332,7 +1336,6 @@ namespace stlplus
   {
     // set up the recursion with its initial visited set and then recurse
     std::set<digraph_iterator<NT,AT,const NT&,const NT*> > visited;
-    visited.insert(from);
     return path_exists_r(from, to, visited, select);
   }
 
@@ -1363,8 +1366,9 @@ namespace stlplus
     for (unsigned i = 0; i < fanout(from); i++)
     {
       digraph_arc_iterator<NT,AT, const AT&,const AT*> candidate = output(from,i);
-      // assert_valid that the arc is selected and then assert_valid that the candidate has not
-      // been visited on this path and only allow further recursion if it hasn't
+      // test whether the arc is selected and then check that the candidate has not
+      // been visited already on this path and only allow further recursion if it hasn't
+      // this eliminates recursion loops
       if ((!select || select(*this, candidate)) && std::find(so_far.begin(), so_far.end(), candidate) == so_far.end())
       {
         // extend the path tracing the route to this arc
@@ -1387,8 +1391,8 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     // set up the recursion with empty data fields and then recurse
-    std::vector<std::vector<digraph_arc_iterator<NT,AT,const AT&,const AT*> > > result;
-    std::vector<digraph_arc_iterator<NT,AT,const AT&,const AT*> > so_far;
+    TYPENAME digraph<NT,AT>::const_path_vector result;
+    TYPENAME digraph<NT,AT>::const_arc_vector so_far;
     all_paths_r(from, to, so_far, result, select);
     return result;
   }
@@ -1431,13 +1435,13 @@ namespace stlplus
     throw(wrong_object,null_dereference,end_dereference)
   {
     // seed the recursion, marking the starting node as already visited
-    std::set<digraph_iterator<NT,AT,const NT&,const NT*> > visited;
+    TYPENAME digraph<NT,AT>::const_iterator_set visited;
     visited.insert(from);
     reachable_nodes_r(from, visited, select);
     // convert the visited set into the required output form
     // exclude the starting node
-    std::vector<digraph_iterator<NT,AT,const NT&,const NT*> > result;
-    for (TYPENAME std::set<digraph_iterator<NT,AT,const NT&,const NT*> >::iterator i = visited.begin(); i != visited.end(); i++)
+    TYPENAME digraph<NT,AT>::const_node_vector result;
+    for (TYPENAME digraph<NT,AT>::const_iterator_set::iterator i = visited.begin(); i != visited.end(); i++)
       if (*i != from)
         result.push_back(*i);
     return result;
