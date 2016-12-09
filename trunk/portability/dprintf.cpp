@@ -30,33 +30,49 @@ namespace stlplus
 
   int vdprintf(std::string& formatted, const char* format, va_list args)
   {
-#ifdef MSWINDOWS
-    int length = 0;
-    char* buffer = 0;
-    for(int buffer_length = 256; ; buffer_length*=2)
-    {
-      buffer = (char*)malloc(buffer_length);
-      if (!buffer) return -1;
-      length = _vsnprintf(buffer, buffer_length-1, format, args);
-      if (length >= 0)
-      {
-        buffer[length] = 0;
-        formatted += std::string(buffer);
-        free(buffer);
-        break;
-      }
-      free(buffer);
-    }
-    return length;
-#else
-    char* buffer = 0;
-    int length = vasprintf(&buffer, format, args);
+    // first call the print function with no buffer to determine the size of the output
+    int length = vsnprintf(0, 0, format, args);
+    // detect a coding error and give up straight away
+    // TODO - error handling? errno may be set and could be made into an exception
+    if (length < 0) return length;
+    // allocate a buffer just exactly the right size
+    char* buffer = (char*)malloc(length+1);
     if (!buffer) return -1;
-    if (length >= 0)
-      formatted += std::string(buffer);
+    // now call the print function again to generate the actual formatted string
+    int result = vsnprintf(buffer, length+1, format, args);
+    // TODO - error handling?
+    // now append this to the C++ string
+    formatted += buffer;
+    // recover the buffer memory
     free(buffer);
-    return length;
-#endif
+    return result;
+//#ifdef MSWINDOWS
+//    int length = 0;
+//    char* buffer = 0;
+//    for(int buffer_length = 256; ; buffer_length*=2)
+//    {
+//      buffer = (char*)malloc(buffer_length);
+//      if (!buffer) return -1;
+//      length = _vsnprintf(buffer, buffer_length-1, format, args);
+//      if (length >= 0)
+//      {
+//        buffer[length] = 0;
+//        formatted += std::string(buffer);
+//        free(buffer);
+//        break;
+//      }
+//      free(buffer);
+//    }
+//    return length;
+//#else
+//    char* buffer = 0;
+//    int length = vasprintf(&buffer, format, args);
+//    if (!buffer) return -1;
+//    if (length >= 0)
+//      formatted += std::string(buffer);
+//    free(buffer);
+//    return length;
+//#endif
   }
 
   int dprintf(std::string& formatted, const char* format, ...)

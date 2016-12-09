@@ -37,6 +37,7 @@ C++ Library Collection</h1>
 <div id="documentNavigation">
 <ul>
 <li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.14">Changes from Version 3.13 to 3.14</a></li>
 <li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
 <li class="internal"><a href="#v3.12">Changes from Version 3.11 to 3.12</a></li>
 <li class="internal"><a href="#v3.11">Changes from Version 3.10 to 3.11</a></li>
@@ -63,6 +64,21 @@ for this version are huge. Therefore only the changes since then have been docum
 <p>The official open-source version of STLplus starts at version 2.0 and you can access the change
 log for all version 2 releases by looking at the 
 <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+
+<h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
+
+<h3>Reworked portability/dprintf</h3>
+
+<p>This was written years ago to use vasprintf, a variant of printf
+that did its own low-level memory allocation. It was non-standard but
+common. However, it has been removed from some versions of the C
+runtime (specifically Cygwin) so I have written a more
+standard-conformant version using vsnprintf to print to a buffer.
+
+<p>Note: there are local copies of these functions in
+  strings/string_float and strings/string_utilities which were added
+  to eliminate a dependency from strings library to portability
+  library. These have been changed to the new implementation as well.</p>
 
 <h2 id="v3.13">Changes from Version 3.12 to 3.13</h2>
 

@@ -17,38 +17,35 @@ namespace stlplus
 {
 
   // added as a local copy to break the dependency on the portability library
+  static int local_vdprintf(std::string& formatted, const char* format, va_list args)
+  {
+    // first call the print function with no buffer to determine the size of the output
+    int length = vsnprintf(0, 0, format, args);
+    // detect a coding error and give up straight away
+    // TODO - error handling? errno may be set and could be made into an exception
+    if (length < 0) return length;
+    // allocate a buffer just exactly the right size
+    char* buffer = (char*)malloc(length+1);
+    if (!buffer) return -1;
+    // now call the print function again to generate the actual formatted string
+    int result = vsnprintf(buffer, length+1, format, args);
+    // TODO - error handling?
+    // now append this to the C++ string
+    formatted += buffer;
+    // recover the buffer memory
+    free(buffer);
+    return result;
+  }
+
+  // added as a local copy to break the dependency on the portability library
   static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
   {
     std::string formatted;
     va_list args;
     va_start(args, format);
-#ifdef MSWINDOWS
-    int length = 0;
-    char* buffer = 0;
-    for(int buffer_length = 256; ; buffer_length*=2)
-    {
-      buffer = (char*)malloc(buffer_length);
-      if (!buffer) throw std::invalid_argument("string_utilities");
-      length = _vsnprintf(buffer, buffer_length-1, format, args);
-      if (length >= 0)
-      {
-        buffer[length] = 0;
-        formatted += std::string(buffer);
-        free(buffer);
-        break;
-      }
-      free(buffer);
-    }
-#else
-    char* buffer = 0;
-    int length = vasprintf(&buffer, format, args);
-    if (!buffer) throw std::invalid_argument("string_utilities");
-    if (length >= 0)
-      formatted += std::string(buffer);
-    free(buffer);
-#endif
+    int length = local_vdprintf(formatted, format, args);
     va_end(args);
-    if (length < 0) throw std::invalid_argument("string_utilities");
+    if (length < 0) throw std::invalid_argument("dprintf");
     return formatted;
   }
 
