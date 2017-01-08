@@ -31,7 +31,10 @@ namespace stlplus
   int vdprintf(std::string& formatted, const char* format, va_list args)
   {
     // first call the print function with no buffer to determine the size of the output
-    int length = vsnprintf(0, 0, format, args);
+    // can only use a va_list once, so copy it first
+    va_list copy_args;
+    va_copy(copy_args, args);
+    int length = vsnprintf(0, 0, format, copy_args);
     // detect a coding error and give up straight away
     // TODO - error handling? errno may be set and could be made into an exception
     if (length < 0) return length;
