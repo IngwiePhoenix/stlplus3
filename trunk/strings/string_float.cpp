@@ -40,11 +40,35 @@ namespace stlplus
   static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
   {
     std::string formatted;
+
     va_list args;
+    // first work out the size of buffer needed to receive the formatted output
+    // do this by having a dummy run with a null buffer
+    // Note: cannot reuse a va_list, need to restart it each time it's used
     va_start(args, format);
-    int length = local_vdprintf(formatted, format, args);
+    int length = vsnprintf(0, 0, format, args);
     va_end(args);
-    if (length < 0) throw std::invalid_argument("dprintf");
+    // detect a coding error and give up straight away
+    // TODO - error handling? errno may be set and could be made into an exception
+    if (length < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
+
+    // allocate a buffer just exactly the right size, adding an extra byto for null termination
+    char* buffer = (char*)malloc(length+1);
+    if (!buffer) throw std::bad_alloc();
+
+    // now call the print function again to generate the actual formatted string
+    va_start(args, format);
+    int result = vsnprintf(buffer, length+1, format, args);
+    va_end(args);
+
+    // now append this to the C++ string
+    formatted += buffer;
+    // recover the buffer memory
+    free(buffer);
+
+    // error handling - done here after the buffer memory has been recovered
+    if (result < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
+
     return formatted;
   }
 
