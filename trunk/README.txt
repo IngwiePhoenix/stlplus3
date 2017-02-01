@@ -20,7 +20,7 @@ Download
 The source code for the STLplus library collection can be downloaded
 from the Sourceforge website:
 
-http://sourceforge.net/projects/stlplus/files/
+https://sourceforge.net/projects/stlplus/files/
 
 Download the latest 'stlplus3' project.
 
@@ -30,7 +30,7 @@ also download the latest version of the 'makefiles' project from the same place.
 You can also access the STLplus library using CVS, follow the
 instructions for anonymous access:
 
-http://sourceforge.net/scm/?type=cvs&group_id=99694
+https://sourceforge.net/p/stlplus/code/
 
 Then checkout the 'stlplus3' module and optionally the 'makefiles'
 module alongside it - the makefiles module should be installed in the same
@@ -73,7 +73,7 @@ The Makefile used by gnu make requires the makefiles project, which is available
 the same SourceForge site that you downloaded the STLplus library
 from. See:
 
-http://sourceforge.net/projects/stlplus/files/
+https://sourceforge.net/projects/stlplus/files/
 
 The makefiles module should be installed in the same directory as the
 stlplus3 module.
@@ -97,5 +97,5 @@ More information
 
 For more details about building the collection, see:
 
-http://stlplus.sourceforge.net/stlplus3/docs/building.html
+https://stlplus.sourceforge.net/stlplus3/docs/building.html
 
