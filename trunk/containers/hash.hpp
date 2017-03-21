@@ -166,6 +166,8 @@ namespace stlplus
     // find a key and return an iterator to it
     // The iterator is like a pointer to a pair<const K,T>
     // end() is returned if the find fails
+    // Note that ALL hash functions that use iterators are **NOT** thread safe!!!
+    // This is due to the usage of a reference counted master iterator.
     const_iterator find(const K& key) const;
     iterator find(const K& key);
 
@@ -174,6 +176,14 @@ namespace stlplus
     // non-const version is for non-const hashes and is like map - it creates a new key/data pair if find fails
     const T& operator[] (const K& key) const throw(std::out_of_range);
     T& operator[] (const K& key);
+
+    // synonym for const version of operator[]
+    // avoids problem where overloading of operator[] means non-const version can be called, causing a write operation
+    const T& at(const K& key) const throw(std::out_of_range);
+
+    // as above, but accesses a pointer to the value
+    // returns a null pointer if not found, eliminating an exception handler
+    const T* at_pointer(const K& key) const;
 
     // iterators allow the hash table to be traversed
     // iterators remain valid unless an item is removed or unless a rehash happens

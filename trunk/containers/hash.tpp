@@ -259,8 +259,8 @@ namespace stlplus
     // now every key in this must be in right and have the same data
     for (hash_iterator<K,T,H,E,const std::pair<const K,T> > i = begin(); i != end(); i++)
     {
-    	hash_element<K,T,H,E>* found = right._find_element(i->first);
-    	if (found == 0) return false;
+      hash_element<K,T,H,E>* found = right._find_element(i->first);
+      if (found == 0) return false;
       if (!(i->second == found->m_value.second)) return false;
 //      hash_iterator<K,T,H,E,const std::pair<const K,T> > found = right.find(i->first);
 //      if (found == right.end()) return false;
@@ -369,7 +369,7 @@ namespace stlplus
   template<typename K, typename T, class H, class E>
   bool hash<K,T,H,E>::present(const K& key) const
   {
-  	return _find_element(key) != 0;
+    return _find_element(key) != 0;
   }
 
   template<typename K, typename T, class H, class E>
@@ -516,21 +516,21 @@ namespace stlplus
 
   // search for a key in the table and return an iterator to it
   // if the search fails, returns an end() iterator
+  // Note that ALL hash functions that use iterators are **NOT** thread safe!!!
+  // This is due to the usage of a reference counted master iterator.
 
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::const_iterator hash<K,T,H,E>::find(const K& key) const
   {
-  	hash_element<K,T,H,E>* found = _find_element(key);
-  	return found ? hash_iterator<K,T,H,E,const std::pair<const K,T> >(found) : end();
-//  	return hash_iterator<K,T,H,E,const std::pair<const K,T> >(found ? found : this);
+    hash_element<K,T,H,E>* found = _find_element(key);
+    return found ? hash_iterator<K,T,H,E,const std::pair<const K,T> >(found) : end();
   }
 
   template<typename K, typename T, class H, class E>
   TYPENAME hash<K,T,H,E>::iterator hash<K,T,H,E>::find(const K& key)
   {
-  	hash_element<K,T,H,E>* found = _find_element(key);
-  	return found ? hash_iterator<K,T,H,E,std::pair<const K,T> >(found) : end();
-//  	return hash_iterator<K,T,H,E,std::pair<const K,T> >(found ? found : this);
+    hash_element<K,T,H,E>* found = _find_element(key);
+    return found ? hash_iterator<K,T,H,E,std::pair<const K,T> >(found) : end();
   }
 
   // table lookup by key using the index operator[], returning a reference to the data field, not an iterator
@@ -543,7 +543,7 @@ namespace stlplus
   const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
   {
     // this const version cannot change the hash, so has to raise an exception if the key is missing
-  	hash_element<K,T,H,E>* found = _find_element(key);
+    hash_element<K,T,H,E>* found = _find_element(key);
     if (!found)
       throw std::out_of_range("key not found in stlplus::hash::operator[]");
     return found->m_value.second;
@@ -553,8 +553,28 @@ namespace stlplus
   T& hash<K,T,H,E>::operator[] (const K& key)
   {
     // this non-const version can change the hash, so creates a new element if the key is missing
-  	hash_element<K,T,H,E>* found = _find_element(key);
+    hash_element<K,T,H,E>* found = _find_element(key);
     return found ? found->m_value.second : insert(key)->second;
+  }
+
+  // Thread-safe (doesn't use iterators), fast const access to the hash value at a given key.
+  template<typename K, typename T, class H, class E>
+  const T& hash<K,T,H,E>::at(const K& key) const throw(std::out_of_range)
+  {
+    // this const version cannot change the hash, so has to raise an exception if the key is missing
+    hash_element<K,T,H,E>* found = _find_element(key);
+    if (!found)
+      throw std::out_of_range("key not found in stlplus::hash::at");
+    return found->m_value.second;
+  }
+
+  // Thread-safe (doesn't use iterators), fast const pointer access to the hash value at a given key.
+  // This will not throw, instead returning a null pointer if the value is not found.
+  template<typename K, typename T, class H, class E>
+  const T* hash<K,T,H,E>::at_pointer(const K& key) const
+  {
+    hash_element<K,T,H,E>* found = _find_element(key);
+    return found ? &(found->m_value.second) : 0;
   }
 
   // iterators
