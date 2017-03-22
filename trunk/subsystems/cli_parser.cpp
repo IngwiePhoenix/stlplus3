@@ -340,6 +340,11 @@ namespace stlplus
           if (!name.empty() && name[0] == '-')
           {
             // we have a command line option
+            // Patch from Evgeny Pokhilko: Treat -- as - to support double dash command switches
+            // this is a simple work around that erases first -. Now it is -parameter as the parser needs
+            // TODO - implement idea of short and long parameters
+            if(name.length() > 1 && name[1] == '-')
+                name.erase(0, 1);
             unsigned found = find_definition(name.substr(1, name.size()-1));
             if (found < m_definitions.size())
             {
