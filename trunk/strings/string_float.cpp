@@ -18,17 +18,34 @@ namespace stlplus
   // added as a local copy to break the dependency on the portability library
   static int local_vdprintf(std::string& formatted, const char* format, va_list args)
   {
-    // first call the print function with no buffer to determine the size of the output
+    // Note: cannot reuse a va_list, need to restart it each time it's used
+    // make a copy here - this means the copy is started but not traversed
+    va_list copy_args;
+    va_copy(copy_args, args);
+    // first work out the size of buffer needed to receive the formatted output
+    // do this by having a dummy run with a null buffer
     int length = vsnprintf(0, 0, format, args);
     // detect a coding error and give up straight away
     // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0) return length;
-    // allocate a buffer just exactly the right size
+    if (length < 0)
+    {
+      va_end(copy_args);
+      return length;
+    }
+
+    // allocate a buffer just exactly the right size, adding an extra byto for null termination
     char* buffer = (char*)malloc(length+1);
-    if (!buffer) return -1;
+    if (!buffer)
+    {
+      va_end(copy_args);
+      return -1;
+    }
+
     // now call the print function again to generate the actual formatted string
-    int result = vsnprintf(buffer, length+1, format, args);
+    int result = vsnprintf(buffer, length+1, format, copy_args);
+    va_end(copy_args);
     // TODO - error handling?
+
     // now append this to the C++ string
     formatted += buffer;
     // recover the buffer memory
@@ -36,39 +53,31 @@ namespace stlplus
     return result;
   }
 
-  // added as a local copy to break the dependency on the portability library
+  static int local_dprintf(std::string& formatted, const char* format, ...)
+  {
+    va_list args;
+    va_start(args, format);
+    int result = local_vdprintf(formatted, format, args);
+    va_end(args);
+    return result;
+  }
+
+  static std::string local_vdformat(const char* format, va_list args) throw(std::invalid_argument)
+  {
+    std::string formatted;
+    int length = local_vdprintf(formatted, format, args);
+    if (length < 0) throw std::invalid_argument("dprintf");
+    return formatted;
+  }
+
   static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
   {
     std::string formatted;
-
     va_list args;
-    // first work out the size of buffer needed to receive the formatted output
-    // do this by having a dummy run with a null buffer
-    // Note: cannot reuse a va_list, need to restart it each time it's used
     va_start(args, format);
-    int length = vsnprintf(0, 0, format, args);
+    int length = local_vdprintf(formatted, format, args);
     va_end(args);
-    // detect a coding error and give up straight away
-    // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
-
-    // allocate a buffer just exactly the right size, adding an extra byto for null termination
-    char* buffer = (char*)malloc(length+1);
-    if (!buffer) throw std::bad_alloc();
-
-    // now call the print function again to generate the actual formatted string
-    va_start(args, format);
-    int result = vsnprintf(buffer, length+1, format, args);
-    va_end(args);
-
-    // now append this to the C++ string
-    formatted += buffer;
-    // recover the buffer memory
-    free(buffer);
-
-    // error handling - done here after the buffer memory has been recovered
-    if (result < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
-
+    if (length < 0) throw std::invalid_argument("dprintf");
     return formatted;
   }
 
