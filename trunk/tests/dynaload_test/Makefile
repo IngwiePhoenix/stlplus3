@@ -4,10 +4,10 @@ LIBRARIES := ../../../stlplus3/source
 else
 LIBRARIES := ../../portability
 endif
-CPPFLAGS += -DPLATFORM=\"$(SUBDIR)\"
+CPPFLAGS += -DTESTPLATFORM=\"$(SUBDIR)\"
 include ../../../makefiles/gcc.mak
 ifeq ($(PLATFORM),GNULINUX)
-LOADLIBES += -ldl
+LDLIBS += -ldl
 endif
 
 
