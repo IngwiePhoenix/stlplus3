@@ -9,7 +9,7 @@ std::string library = "shared_library_test";
 
 // subdirectory to find shared library
 // build system should set this up automatically
-std::string platform = PLATFORM;
+std::string platform = TESTPLATFORM;
 
 // name of function to callk in that library
 std::string library_function = "stlplus_version";
