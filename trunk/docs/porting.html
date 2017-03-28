@@ -184,6 +184,7 @@
                 <li>v3 - tried on v3.3, v3.4</li>
                 <li>v4 - tried on v4.3 to 4.9</li>
                 <li>v5 - tried on v5.2</li>
+                <li>v6 - tried on v6.2</li>
               </ul>
             </li>
             <li>Borland
@@ -308,36 +309,10 @@
             <td>64</td>
             <td>Ubuntu Gnu/Linux</td>
             <td>gcc</td>
-            <td>5.4.0</td>
+            <td>6.2.0</td>
             <td><code>GNULINUX-x86_64</code></td>
             <td><code></code></td>
-            <td>2017-01-13</td>
-            <td>27/27</td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>32</td>
-            <td>Ubuntu Gnu/Linux</td>
-            <td>gcc</td>
-            <td>4.6.3</td>
-            <td><code>GNULINUX-i686</code></td>
-            <td><code></code></td>
-            <td>2013-06-22</td>
-            <td>27/27</td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>32</td>
-            <td>Windows 10</td>
-            <td>gcc</td>
-            <td>4.8.1 (MinGW)</td>
-            <td><code>MINGW-i686</code></td>
-            <td><code>_WIN32</code></td>
-            <td>2015-11-05</td>
+            <td>2017-03-28</td>
             <td>27/27</td>
             <td></td>
           </tr>
@@ -350,22 +325,9 @@
             <td>5.1.0</td>
             <td><code>MINGW-x86_64</code></td>
             <td><code>_WIN64</code></td>
-            <td>2017-01-13</td>
+            <td>2017-01-28</td>
             <td>27/27</td>
-            <td>TDM 64-bit version of gcc</td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>32</td>
-            <td>Windows 7</td>
-            <td>gcc</td>
-            <td>4.8.2 (Cygwin)</td>
-            <td><code>CYGWIN-i686</code></td>
-            <td><code>CYGWIN</code></td>
-            <td>2014-04-28</td>
-            <td>27/27</td>
-            <td></td>
+            <td>TDM 64-bit version of gcc - native Windows build</td>
           </tr>
 
           <tr>
@@ -376,9 +338,9 @@
             <td>5.4.0 (Cygwin64)</td>
             <td><code>CYGWIN-x86_64</code></td>
             <td><code>CYGWIN</code></td>
-            <td>2017-01-13</td>
+            <td>2017-01-28</td>
             <td>27/27</td>
-            <td></td>
+            <td>Linux-emulation build n Windows</td>
           </tr>
 
           <tr>
@@ -389,7 +351,7 @@
             <td>Visual Studio 2015</td>
             <td>x64</td>
             <td><code>_WIN64</code></td>
-            <td>2017-01-13</td>
+            <td>2017-03-28</td>
             <td>27/27</td>
             <td></td>
           </tr>
@@ -402,7 +364,7 @@
             <td>Visual Studio 2015</td>
             <td>Win32</td>
             <td><code>_WIN32</code></td>
-            <td>2017-01-13</td>
+            <td>2017-03-28</td>
             <td>27/27</td>
             <td></td>
           </tr>
@@ -415,48 +377,9 @@
             <td>4.9.4</td>
             <td><code>FREEBSD-amd64</code></td>
             <td><code></code></td>
-            <td>2017-01-13</td>
+            <td>2017-01-28</td>
             <td>27/27</td>
-            <td>TrueOS used to be PC-BSD which is a distro of FreeBSD, Built using Gnu compiler even though PC-BSD uses Clang by default.</td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>32</td>
-            <td>PC-BSD v9</td>
-            <td>gcc</td>
-            <td>4.2.1</td>
-            <td><code>FREEBSD-i686</code></td>
-            <td><code></code></td>
-            <td>2015-12-04</td>
-            <td>26/27</td>
-            <td>One test failed because shared_ptr not supported on gcc 4.2.</td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>32</td>
-            <td>Windows XP</td>
-            <td>Borland</td>
-            <td>6.31 - Turbo C++ Builder</td>
-            <td>N/A</td>
-            <td><code>_WIN32</code></td>
-            <td>2011-02-15</td>
-            <td>27/27</td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Intel 686</td>
-            <td>64</td>
-            <td>gNewSense Gnu/Linux</td>
-            <td>gcc</td>
-            <td>4.4.5</td>
-            <td><code>GNU-x86_64</code></td>
-            <td><code></code></td>
-            <td>2013-12-11</td>
-            <td>25/27</td>
-            <td>Old compiler so no support for shared_ptr. Dynalinker test failed, but only because no 64-bit DLL available to load</td>
+            <td>TrueOS used to be PC-BSD which is a distro of FreeBSD. Built using gcc not Clang (the default).</td>
           </tr>
 
         </tbody>
