@@ -69,11 +69,19 @@ log for all version 2 releases by looking at the
 
 <h3>Reworked portability/dprintf</h3>
 
-<p>This was written years ago to use vasprintf, a variant of printf
-that did its own low-level memory allocation. It was non-standard but
-common. However, it has been removed from some versions of the C
+<p>This component was written originally to avoid the buffer-overrun
+problem of sprintf, it formats text in the same way as sprintf but
+  into a std::string.</p>
+
+<p>This was written originally to unpick the format string and use
+sprintf in a controlled way that ensured buffer overrun could not
+happen. It was rewritten a few years ago to use platform-specific
+functions that did their own low-level memory allocation, eliminating
+the need to unpick the format string. This solution was non-standard
+but used commonly available functions. However, one of these common
+functions (vasprintf) has been removed from some versions of the C
 runtime (specifically Cygwin) so I have written a more
-standard-conformant version using vsnprintf to print to a buffer.
+standard-conformant version using vsnprintf to print to a buffer.</p>
 
 <p>Note: there are local copies of these functions in
   strings/string_float and strings/string_utilities which were added
