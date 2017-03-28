@@ -67,6 +67,22 @@ log for all version 2 releases by looking at the
 
 <h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
 
+<h3>Added at and at_pointer methods to containers/hash</h3>
+
+<p>Patch submitted by DJDM:</p>
+
+<p>Added hash::at() and hash::at_pointer() methods to get the value
+associated with a key directly, avoiding the use of iterators. The
+motivation was to avaid a problem with iterators which are not
+thread-safe, but these are more generally useful functions.</p>
+
+<p>The hash::at() method has the same functionality as the
+hash::operator[] method in read-only mode, but does not have the catch
+that in read-write mode, [] creates a new value if the key is not
+found. The at() method throws an exception instead when the key is not
+found. The at_pointer() method returns a pointer to the value, rather
+than a reference and returns null if the key is not found.</p>
+
 <h3>Reworked portability/dprintf</h3>
 
 <p>This component was written originally to avoid the buffer-overrun
