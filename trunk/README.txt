@@ -12,7 +12,8 @@ which allow any C++ data structure to be made serialisable.
 Since v3.0 the library has been split into a collection of 5
 libraries. The idea is that some of these can be used stand-alone. For
 example, the extension data structures can be used without the rest of
-STLplus by just using the containers library.
+STLplus by just using the containers library. The libraries can be
+combined into one 'monolithic' library if desired.
 
 Download
 --------
@@ -42,7 +43,7 @@ Changes and Versions
 For details of the different versions and the changes between them,
 see the changes log:
 
-http://stlplus.sourceforge.net/stlplus3/docs/changes.html.
+http://stlplus.sourceforge.net/stlplus3/docs/changes.html
 
 Directory Structure
 -------------------
