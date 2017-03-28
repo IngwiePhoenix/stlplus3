@@ -17,6 +17,7 @@
 namespace stlplus
 {
 
+  // preferred method for accessing the version number, returned as a string in the form "Major.Minor"
   std::string version(void);
 
 }
