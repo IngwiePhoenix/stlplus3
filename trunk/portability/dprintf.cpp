@@ -22,9 +22,6 @@
 
 #include "dprintf.hpp"
 #include <stdio.h>
-#include <limits.h>
-#include <float.h>
-#include <ctype.h>
 #include <stdlib.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,27 +29,34 @@
 namespace stlplus
 {
 
-  int dprintf(std::string& formatted, const char* format, ...)
+  int vdprintf(std::string& formatted, const char* format, va_list args)
   {
-    va_list args;
+    // Note: cannot reuse a va_list, need to restart it each time it's used
+    // make a copy here - this means the copy is started but not traversed
+    va_list copy_args;
+    va_copy(copy_args, args);
     // first work out the size of buffer needed to receive the formatted output
     // do this by having a dummy run with a null buffer
-    // Note: cannot reuse a va_list, need to restart it each time it's used
-    va_start(args, format);
     int length = vsnprintf(0, 0, format, args);
-    va_end(args);
     // detect a coding error and give up straight away
     // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0) return length;
+    if (length < 0)
+    {
+      va_end(copy_args);
+      return length;
+    }
 
     // allocate a buffer just exactly the right size, adding an extra byto for null termination
     char* buffer = (char*)malloc(length+1);
-    if (!buffer) return -1;
+    if (!buffer)
+    {
+      va_end(copy_args);
+      return -1;
+    }
 
     // now call the print function again to generate the actual formatted string
-    va_start(args, format);
-    int result = vsnprintf(buffer, length+1, format, args);
-    va_end(args);
+    int result = vsnprintf(buffer, length+1, format, copy_args);
+    va_end(copy_args);
     // TODO - error handling?
 
     // now append this to the C++ string
@@ -62,38 +66,31 @@ namespace stlplus
     return result;
   }
 
+  int dprintf(std::string& formatted, const char* format, ...)
+  {
+    va_list args;
+    va_start(args, format);
+    int result = vdprintf(formatted, format, args);
+    va_end(args);
+    return result;
+  }
+
+  std::string vdformat(const char* format, va_list args) throw(std::invalid_argument)
+  {
+    std::string formatted;
+    int length = vdprintf(formatted, format, args);
+    if (length < 0) throw std::invalid_argument("dprintf");
+    return formatted;
+  }
+
   std::string dformat(const char* format, ...) throw(std::invalid_argument)
   {
     std::string formatted;
-
     va_list args;
-    // first work out the size of buffer needed to receive the formatted output
-    // do this by having a dummy run with a null buffer
-    // Note: cannot reuse a va_list, need to restart it each time it's used
     va_start(args, format);
-    int length = vsnprintf(0, 0, format, args);
+    int length = vdprintf(formatted, format, args);
     va_end(args);
-    // detect a coding error and give up straight away
-    // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
-
-    // allocate a buffer just exactly the right size, adding an extra byto for null termination
-    char* buffer = (char*)malloc(length+1);
-    if (!buffer) throw std::bad_alloc();
-
-    // now call the print function again to generate the actual formatted string
-    va_start(args, format);
-    int result = vsnprintf(buffer, length+1, format, args);
-    va_end(args);
-
-    // now append this to the C++ string
-    formatted += buffer;
-    // recover the buffer memory
-    free(buffer);
-
-    // error handling - done here after the buffer memory has been recovered
-    if (result < 0) throw std::invalid_argument(std::string("stlplus::dformat: formatting error in ") + format);
-
+    if (length < 0) throw std::invalid_argument("dprintf");
     return formatted;
   }
 
