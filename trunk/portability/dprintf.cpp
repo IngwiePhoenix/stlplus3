@@ -24,7 +24,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// fix for older Visual Studios
+// fix for Visual Studios pre-VS2013 which don't define va_copy in their stdarg.h
+// all other platforms *should* define this OK
+// see https://stackoverflow.com/questions/558223/va-copy-porting-to-visual-c
 #ifndef va_copy
 #define va_copy(dest,src)(dest=src)
 #endif
