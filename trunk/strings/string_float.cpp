@@ -53,23 +53,6 @@ namespace stlplus
     return result;
   }
 
-  static int local_dprintf(std::string& formatted, const char* format, ...)
-  {
-    va_list args;
-    va_start(args, format);
-    int result = local_vdprintf(formatted, format, args);
-    va_end(args);
-    return result;
-  }
-
-  static std::string local_vdformat(const char* format, va_list args) throw(std::invalid_argument)
-  {
-    std::string formatted;
-    int length = local_vdprintf(formatted, format, args);
-    if (length < 0) throw std::invalid_argument("dprintf");
-    return formatted;
-  }
-
   static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
   {
     std::string formatted;
