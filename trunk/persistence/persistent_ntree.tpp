@@ -18,7 +18,7 @@ namespace stlplus
   template<typename T, typename D>
   void dump_ntree_r(dump_context& context,
                     const ntree<T>& tree, 
-                    const TYPENAME ntree<T>::const_iterator& node,
+                    const typename ntree<T>::const_iterator& node,
                     D dump_fn)
     throw(persistent_dump_failed)
   {
@@ -59,7 +59,7 @@ namespace stlplus
   template<typename T, typename R>
   void restore_ntree_r(restore_context& context,
                        ntree<T>& tree,
-                       const TYPENAME ntree<T>::iterator& node,
+                       const typename ntree<T>::iterator& node,
                        R restore_fn)
     throw(persistent_restore_failed)
   {
