@@ -24,6 +24,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// fix for older Visual Studios
+#ifndef va_copy
+#define va_copy(dest,src)(dest=src)
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace stlplus

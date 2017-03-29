@@ -22,8 +22,9 @@
 // Microsoft Visual Studio
 // shut up the following irritating warnings
 //   4290 - C++ exception specification ignored
+//   4355 - 'this' used in base member initialisation list
 //   4996 - 'xxxx' was declared deprecated
-#pragma warning(disable: 4290 4996)
+#pragma warning(disable: 4290 4355 4996)
 #endif
 
 #ifdef __BORLANDC__
