@@ -1,0 +1,40 @@
+#!/bin/bash
+if [ $# -ne 0 ]; then
+  echo "$0: no arguments required, they are found automatically"
+  exit 1
+fi
+
+# do the release from the same directory as this script
+cd "$(dirname $0)"
+
+# get the product name from the current directory
+product=$(basename $PWD)
+
+# get the version from the version.hpp header
+version=$(grep '^\#define STLPLUS_VERSION' portability/version.hpp | sed -e "s|^\#define STLPLUS_VERSION ||" -e "s|\"||g")
+major=`echo $version | cut -d . -f 1 -`
+minor=`echo $version | cut -s -d . -f 2 -`
+
+echo "#### Releasing $product version $version"
+
+# check that everything is up to date
+if ! cvs-status; then
+  echo "Warning: CVS is not up to date"
+#  exit 1
+fi
+
+# release executable
+if ! release -z -t -v "$version"; then
+  echo "Error: zip packaging failed"
+  exit 1
+fi
+
+# now tag with this version
+tag=$(printf "%s-%02i-%02i" "$product" "$major" "$minor")
+echo "tagging $product with $tag"
+if ! cvs tag -F "$tag"; then
+  echo "Error: CVS tag failed"
+  exit 1
+fi
+
+echo "#### SUCCESS: Released $product version $version"
