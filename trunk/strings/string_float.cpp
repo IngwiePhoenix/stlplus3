@@ -4,70 +4,20 @@
 //   Copyright: (c) Southampton University 1999-2004
 //              (c) Andy Rushton           2004 onwards
 //   License:   BSD License, see ../docs/license.html
-
+//
+//  Originally this used the stlplus::dprintf function but rewritten to use
+//  iostreams to break the dependency between the libraries and to be more C++ey
+//
 ////////////////////////////////////////////////////////////////////////////////
 #include "string_float.hpp"
-#include <stdlib.h>
-#include <ctype.h>
-#include <stdarg.h>
-#include <stdio.h>
-
-// fix for older Visual Studios
-#ifndef va_copy
-#define va_copy(dest,src)(dest=src)
-#endif
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <stdexcept>
+#include <cstdlib>
 
 namespace stlplus
 {
-
-  // added as a local copy to break the dependency on the portability library
-  static int local_vdprintf(std::string& formatted, const char* format, va_list args)
-  {
-    // Note: cannot reuse a va_list, need to restart it each time it's used
-    // make a copy here - this means the copy is started but not traversed
-    va_list copy_args;
-    va_copy(copy_args, args);
-    // first work out the size of buffer needed to receive the formatted output
-    // do this by having a dummy run with a null buffer
-    int length = vsnprintf(0, 0, format, args);
-    // detect a coding error and give up straight away
-    // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0)
-    {
-      va_end(copy_args);
-      return length;
-    }
-
-    // allocate a buffer just exactly the right size, adding an extra byto for null termination
-    char* buffer = (char*)malloc(length+1);
-    if (!buffer)
-    {
-      va_end(copy_args);
-      return -1;
-    }
-
-    // now call the print function again to generate the actual formatted string
-    int result = vsnprintf(buffer, length+1, format, copy_args);
-    va_end(copy_args);
-    // TODO - error handling?
-
-    // now append this to the C++ string
-    formatted += buffer;
-    // recover the buffer memory
-    free(buffer);
-    return result;
-  }
-
-  static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
-  {
-    std::string formatted;
-    va_list args;
-    va_start(args, format);
-    int length = local_vdprintf(formatted, format, args);
-    va_end(args);
-    if (length < 0) throw std::invalid_argument("dprintf");
-    return formatted;
-  }
 
   ////////////////////////////////////////////////////////////////////////////////
   // floating-point types
@@ -81,17 +31,27 @@ namespace stlplus
   std::string double_to_string(double f, real_display_t display, unsigned width, unsigned precision)
     throw(std::invalid_argument)
   {
+    std::ostringstream stream;
     switch(display)
     {
-    case display_fixed:
-      return local_dformat("%*.*f", width, precision, f);
-    case display_floating:
-      return local_dformat("%*.*e", width, precision, f);
     case display_mixed:
-      return local_dformat("%*.*g", width, precision, f);
+      // default for iostream
+      break;
+    case display_fixed:
+      stream << std::fixed;
+      break;
+    case display_floating:
+      stream << std::scientific;
+      break;
     default:
-      throw std::invalid_argument("invalid radix display value");
+      throw std::invalid_argument("stlplus::double_to_string: invalid radix display value");
     }
+    if (width != 0)
+      stream << std::setw(width);
+    stream << std::setprecision(precision);
+    if (!(stream << f))
+      throw std::invalid_argument("stlplus::double_to_string: iostream error");
+    return std::string(stream.str());
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -106,9 +66,9 @@ namespace stlplus
     throw(std::invalid_argument)
   {
     // TODO - error checking
-    return strtod(value.c_str(), 0);
+    return std::atof(value.c_str());
   }
 
   ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace stlplus
+}

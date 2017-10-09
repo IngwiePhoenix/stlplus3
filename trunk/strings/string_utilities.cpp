@@ -8,67 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "string_utilities.hpp"
 #include "string_basic.hpp"
-#include <stdlib.h>
-#include <ctype.h>
-#include <stdarg.h>
-#include <stdio.h>
-
-// fix for older Visual Studios
-#ifndef va_copy
-#define va_copy(dest,src)(dest=src)
-#endif
+#include "string_float.hpp"
+#include "string_int.hpp"
 
 namespace stlplus
 {
-
-  // added as a local copy to break the dependency on the portability library
-  static int local_vdprintf(std::string& formatted, const char* format, va_list args)
-  {
-    // Note: cannot reuse a va_list, need to restart it each time it's used
-    // make a copy here - this means the copy is started but not traversed
-    va_list copy_args;
-    va_copy(copy_args, args);
-    // first work out the size of buffer needed to receive the formatted output
-    // do this by having a dummy run with a null buffer
-    int length = vsnprintf(0, 0, format, args);
-    // detect a coding error and give up straight away
-    // TODO - error handling? errno may be set and could be made into an exception
-    if (length < 0)
-    {
-      va_end(copy_args);
-      return length;
-    }
-
-    // allocate a buffer just exactly the right size, adding an extra byto for null termination
-    char* buffer = (char*)malloc(length+1);
-    if (!buffer)
-    {
-      va_end(copy_args);
-      return -1;
-    }
-
-    // now call the print function again to generate the actual formatted string
-    int result = vsnprintf(buffer, length+1, format, copy_args);
-    va_end(copy_args);
-    // TODO - error handling?
-
-    // now append this to the C++ string
-    formatted += buffer;
-    // recover the buffer memory
-    free(buffer);
-    return result;
-  }
-
-  static std::string local_dformat(const char* format, ...) throw(std::invalid_argument)
-  {
-    std::string formatted;
-    va_list args;
-    va_start(args, format);
-    int length = local_vdprintf(formatted, format, args);
-    va_end(args);
-    if (length < 0) throw std::invalid_argument("dprintf");
-    return formatted;
-  }
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -389,25 +333,25 @@ namespace stlplus
       result += '-';
       bytes = -bytes;
     }
-    static const long kB = 1024l;
-    static const long MB = kB * kB;
-    static const long GB = MB * kB;
+    long kB = 1024l;
+    long MB = kB * kB;
+    long GB = MB * kB;
     if (bytes < kB)
-      result += local_dformat("%i", bytes);
+      result += int_to_string(bytes);
     else if (bytes < (10l * kB))
-      result += local_dformat("%.2fk", ((float)bytes / (float)kB));
+      result += double_to_string(((double)bytes / kB), stlplus::display_fixed, 0, 2) + "k";
     else if (bytes < (100l * kB))
-      result += local_dformat("%.1fk", ((float)bytes / (float)kB));
+      result += double_to_string(((double)bytes / kB), stlplus::display_fixed, 0, 1) + "k";
     else if (bytes < MB)
-      result += local_dformat("%.0fk", ((float)bytes / (float)kB));
+      result += double_to_string(((double)bytes / kB), stlplus::display_fixed, 0, 0) + "k";
     else if (bytes < (10l * MB))
-      result += local_dformat("%.2fM", ((float)bytes / (float)MB));
+      result += double_to_string(((double)bytes / MB), stlplus::display_fixed, 0, 2) + "M";
     else if (bytes < (100l * MB))
-      result += local_dformat("%.1fM", ((float)bytes / (float)MB));
+      result += double_to_string(((double)bytes / MB), stlplus::display_fixed, 0, 1) + "M";
     else if (bytes < GB)
-      result += local_dformat("%.0fM", ((float)bytes / (float)MB));
+      result += double_to_string(((double)bytes / MB), stlplus::display_fixed, 0, 0) + "M";
     else
-      result += local_dformat("%.2fG", ((float)bytes / (float)GB));
+      result += double_to_string(((double)bytes / GB), stlplus::display_fixed, 0, 2) + "G";
     return result;
   }
 

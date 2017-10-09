@@ -1,22 +1,13 @@
 #include "persistence.hpp"
 #include "file_system.hpp"
 #include "build.hpp"
-#include <fstream>
-#include <string.h>
-#include <stdio.h>
+#include "string_utilities.hpp"
+#include "string_float.hpp"
+#include "string_int.hpp"
+#include "version.hpp"
 
 #define DATA "string_test.tmp"
 #define MASTER "string_test.dump"
-
-static std::string to_string(int number)
-{
-  // use sprintf in a very controlled way that cannot overrun
-  char* buffer = new char[50];
-  sprintf(buffer, "%i", number);
-  std::string result = buffer;
-  delete[] buffer;
-  return result;
-}
 
 static std::string print_bytes (const std::string& val)
 {
@@ -24,7 +15,7 @@ static std::string print_bytes (const std::string& val)
   for (unsigned i = 0; i < val.size(); i++)
   {
     if (i > 0) result += ":";
-    result += to_string((int)val[i]);
+    result += stlplus::int_to_string((int)val[i]);
   }
   return result;
 }
@@ -72,6 +63,25 @@ int main(int argc, char* argv[])
         result = false;
       }
     }
+
+    // short-term tests just to check new features
+
+    // conversions to/from double
+    std::string version = stlplus::version();
+    double double_version = stlplus::string_to_double(version);
+    std::string fixed_version = stlplus::double_to_string(double_version, stlplus::display_fixed);
+    std::string float_version = stlplus::double_to_string(double_version, stlplus::display_floating);
+    std::string default_version = stlplus::double_to_string(double_version, stlplus::display_mixed);
+    std::cerr << "version = " << version
+              << ", to_double = " << double_version
+              << ", fixed = " << fixed_version
+              << ", scientific = " << float_version
+              << ", mixed = " << default_version
+              << std::endl;
+
+    // display of bytes and multiples
+    for (long bytes = 1; bytes <= 1000000000; bytes *= 4)
+      std::cerr << "bytes = " << bytes << ", display = " << stlplus::display_bytes(bytes) << std::endl;
   }
   catch(std::exception& except)
   {
