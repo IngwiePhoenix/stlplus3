@@ -85,7 +85,7 @@ that the last alias has been destroyed.</p>
 goes out of scope, its destructor will deallocate its contents. However, there are some situations
 where you need to store pointers, not objects, in containers. Container classes will <strong>not</strong>
 deallocate those. These are the situations where a smart
-pointer is needed.</p>
+  pointer is needed. A vector of smart-pointers <strong>will</strong> manage it's memory.</p>
 
 <p>To illustrate this need, here's my top three situations where smart pointers are required:</p>
 
@@ -115,15 +115,18 @@ b-&gt;print(); // actually calls derived::print
 </pre>
 
 <p>The reason that you must use pointers here is that classes base and derived could be of different
-sizes - so you cannot assign a derived to a variable of type base. This rule is enforced by C++.
-However, you can assign a (derived*) to a (base*) as in the example. Thus, pointers have to be used
-to implement polymorphism in C++.</p>
+  sizes - so you cannot assign a derived to a variable of type base because it might not fit.
+  This rule is enforced by C++.
+  However, you can assign a (derived*) to a (base*) as in the example because class pointers are always the same size.
+  Thus, pointers <em>have</em> to be used to implement polymorphism in C++.</p>
 
-<p>However, as explained above, this makes memory problems an issue. The solution is to
-use smart pointers (the cloning variant in the case of polymorphic types) rather than simple
-pointers. Then the memory is managed by the smart pointer - if the pointer goes out of scope either
-because the function returns or because an exception is thrown, then all its contents will be
-destroyed correctly.</p>
+<p>However, as explained above, this makes memory problems an
+issue. The solution is to use smart pointers (the cloning variant in
+the case of polymorphic types) rather than simple pointers. Then the
+memory is managed by the smart pointer - if a pointer becomes
+inaccessible either because it's container data structure is
+destroyed, a function returns or because an exception is thrown, then
+all its contents will be destroyed correctly by the smart pointer's destructor.</p>
 
 <pre class="cpp">
 smart_ptr_clone&lt;base&gt; b = new derived;
@@ -137,14 +140,17 @@ when a vector has to resize, it does so by copying all of its contents into a ne
 by using the copy constructor of the contained type. Therefore a vector of 1000 objects results in
 1000 calls to the copy constructor.</p>
 
-<p>This is not itself a problem if the constructor is trivial since the call overhead is negligible.
-However, if the type stored in the vector is big and/or complicated, then the copy overhead can
-become serious. Storing a pointer to the object in the vector is not a good idea - the memory will
-then not be managed by the vector. The solution is to use a vector of smart pointers to objects.
-Then, when the vector resizes, it copies the smart pointer, not the object. The overhead of copying
-a smart pointer is negligible - only slightly more than a simple pointer. Then, when the vector is
-destroyed, its contents - smart pointers - are destroyed and they in turn delete their contained
-objects</p>
+<p>This is not itself a problem if the constructor is trivial since
+the call overhead is negligible.  However, if the type stored in the
+vector is big and/or complicated, then the copy overhead can become
+serious. Storing a pointer to the object in the vector is not a good
+idea - the memory will then not be managed by the vector as explained
+above in Reason 1. The solution is to use a vector of smart pointers
+to objects.  Then, when the vector resizes, it copies the smart
+pointer, not the object. The overhead of copying a smart pointer is
+negligible - only slightly more than a simple pointer. Then, when the
+vector is destroyed, its contents - smart pointers - are destroyed and
+they in turn delete their contained objects</p>
 
 <h3>Reason 3 - Returns Must be Implemented as Pass-by-Value</h3>
 
@@ -165,7 +171,7 @@ with either leaky code or double-deletion and the memory corruption that results
 
 <p>If you return by value, this causes a copy constructor to be called. This is fine for small data
 structures where the copy overhead is correspondingly small, but it is undesirable if the data
-staructure is big and impossible if the data structure cannot be copied (occasionally it is
+structure is big and impossible if the data structure cannot be copied (occasionally it is
 necessary to design data structures that are not copiable).</p>
 
 <p>The solution is to create the object in a smart pointer and return it by value. Pass by value
@@ -180,15 +186,19 @@ leakage diagnostics in programs is now well past. The smart pointer classes comb
 STL and STLplus container classes make it possible and practical to make every data structure
 self-managing.</p>
 
-<p>If I dare to say so, you end up programming in a similar style to Java. The delete operator is
+<p>In this style of programming, the delete operator is
 simply never used, since all objects are being managed by a container. The advantage of this
 approach over Java is that no garbage collection is needed because objects are deleted properly when
 they go out of scope rather than drifting off in the vain hope that the garbage collector might
-eventually spot them.</p>
+eventually spot them. So although the delete operator is never used, there will be no memory leaks.</p>
 
 <p>The STL doesn't deal with this issue, it doesn't provide a single-object container (or at least
 not a useful one - there is a class called auto_ptr but it is inadequate), which is a major
-oversight. The smart pointer classes are my solution to the issue.</p>
+  oversight. The smart pointer classes are my solution to the issue.</p>
+
+<p>Update: the C++ 2011 standard includes a smart pointer in the STL
+at last. You are recommended to use that class, but the STLplus
+will continue to provide smart pointers for backwards compatibility.</p>
 
 <p>To illustrate this approach, when I wrote the smart pointer classes I was about to embark on a
 two year programming project and decided to use the self-managing principles outlined above. The
@@ -196,7 +206,6 @@ approach works well and creates efficient and readable code. There is not one si
 anywhere in over a megabyte of application code that I'd written in that time. When analysed with a
 leak testing program, there was not a single memory leak nor double-deletion nor buffer overrun
 anywhere.</p>
-
 
 <h2 id="what">What Are Smart Pointers?</h2>
 
@@ -247,7 +256,7 @@ all aliases end up still being aliases and all pointing to the new object, whils
 gets deleted automatically because it is no longer pointed to.</p>
 
 <p>This behaviour is unlike conventional C pointers - if you allocate a new object to a pointer
-variable, you don't expect other pointer variables to change too. However, it can have very
+variable in C, you don't expect other pointer variables to change too. However, it can have very
 significant advantages in data structure design. It is common when designing large and complex data
 structures to have several different ways of accessing objects - for example you might store an
 object in a map which allows access to objects sorted in alphabetical order, but also store it in a
@@ -280,21 +289,23 @@ constructor to copy the object of type T that it contains.</dd>
 <dt>template&lt;typename T&gt; class stlplus::smart_ptr_clone</dt>
 
 <dd>This is a smart pointer intended for use on polymorphic types - that is families of classes and
-subclasses which are manipulated through a pointer to their superclass. It uses a clone() method
+subclasses which are manipulated through a pointer to their base class. It uses a clone() method
 to copy objects.</dd>
 
 <dt>template&lt;typename T&gt; class stlplus::smart_ptr_nocopy</dt>
 
-<dd>This is a smart pointer intended for use on objects that cannot be copied - for example a class
-that contains a system resource other than memory where copying makes no sense, or a data structure
-too complex to implement a copy operation in a reasonable time-frame. It is like smart_ptr but has
-all operations that cause copying of the pointed-to object stripped out.</dd>
+<dd>This is a smart pointer intended for use on objects that cannot be
+copied - for example a class that contains a system resource other
+than memory where copying makes no sense, or a data structure too
+complex to implement a copy operation or where there is simply no need
+to be able to copy it. It is like smart_ptr but has all operations
+that cause copying of the pointed-to object stripped out.</dd>
 
 </dl>
 
 <p>Although there are three smart pointer classes, they have almost identical interfaces, so they
-are described together here (in fact, they are all instances of a superclass called smart_ptr_base,
-with each variant a subclass of that with a different copy-functor). I use the most common variant -
+are described together here (in fact, they are all instances of a base class called smart_ptr_base,
+with each variant a derived class of that with a different copy-functor). I use the most common variant -
 smart_ptr - as the basis of this description and then describe the differences with the variants at
 the end.</p>
 
@@ -364,35 +375,35 @@ stlplus::smart_ptr&lt;std::string&gt; s2 = s1;
 </pre>
 
 <p>This example takes advantage of the C++ convention that an initialisation expressed as an
-assignment is in fact a call to the constructor. The first line creates a string initialised with
-the value "testing". The second line creates a smart pointer initialised with a <em>copy</em> of this
-(remember that the object contained by the smart pointer is copied into it). The third line creates
-another smart pointer which is an <em>alias</em> of the first one. Note that the second smart pointer
-is initialised from the first smart pointer, meaning they point to the same object.</p>
+  assignment is in fact a call to the constructor. The first line creates a string initialised with
+  the value "testing". The second line creates a smart pointer initialised with a <em>copy</em> of this
+  (remember that the object contained by the smart pointer is copied into it). The third line creates
+  another smart pointer which is an <em>alias</em> of the first one. Note that the second smart pointer
+  is initialised from the first smart pointer, meaning they point to the same internal object.</p>
 
 <p>Since both s1 and s2 point to the same string, modifying the string though s1 will result in the
-string pointed to by s2 apparently changing. However, the string in s1 and s2 is a <em>copy</em> of
-the original string s, so changing s will not change s1 or s2.</p>
+  string pointed to by s2 apparently changing. However, the string in s1 and s2 is a <em>copy</em> of
+  the original string s, so changing s will not change s1 or s2.</p>
 
 <p>Typically the object is constructed as an anonymous temporary in the call
-to the smart_ptr constructor:</p>
+  to the smart_ptr constructor:</p>
 
 <pre class="cpp">
 stlplus::smart_ptr&lt;std::string&gt; s1(std::string("testing"));
 </pre>
 
 <p>Note that an anonymous temporary object can be constructed by using the class
-name (in this case "std::string") as if it was a function call. This is a common
-convention in C++.</p>
+  name (in this case "std::string") as if it was a function call. This is a common
+  convention in C++.</p>
 
 <h2 id="assignments">Assignments</h2>
 
 <p>As is the usual convention with C++ classes, there is an assignment
-operator corresponding to each constructor with equivalent behaviour (except
-of course for the void constructor).</p>
+  operator corresponding to each constructor with equivalent behaviour (except
+  of course for the void constructor).</p>
 
 <p>First, there is an assignment that allows the object pointed to by
-smart_ptr to be replaced by a new-allocated object:</p>
+  smart_ptr to be replaced by a new-allocated object:</p>
 
 <pre class="cpp">
 smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(T* data);
@@ -405,37 +416,37 @@ s1 = new std::string("Hello World");
 </pre>
 
 <p>Once again you <em>must</em> allocate this with new. If you pass a pointer to
-an automatic variable, the smart pointer will later try to delete it.
-Similarly, don't pass the address of an object already contained in another
-data type - both containers will try to delete it.</p>
+  an automatic variable, the smart pointer will later try to delete it.
+  Similarly, don't pass the address of an object already contained in another
+  data type - both containers will try to delete it.</p>
 
 <p>The purpose of this function is to allow an object to be allocated and then handed over to the
-smart pointer to be managed by it without incurring the overhead of a copy operation. Assigning an
-object (rather than a pointer to the object) to a smart pointer causes a copy of the object to be
-made. This is fine for simple types and data structures since the copy overhead is small. For large
-data structures however, the copy overhead can become excessive. Furthermore some objects cannot be
-copied. In this case it is more efficient to use pointer assignment for this. However, it is
-potentially dangerous in that if an invalid address is passed in (for example the address of an
-automatic variable) then all hell will break loose.</p>
+  smart pointer to be managed by it without incurring the overhead of a copy operation. Assigning an
+  object (rather than a pointer to the object) to a smart pointer causes a copy of the object to be
+  made. This is fine for simple types and data structures since the copy overhead is small. For large
+  data structures however, the copy overhead can become excessive. Furthermore some objects cannot be
+  copied. In this case it is more efficient to use pointer assignment for this. However, it is
+  potentially dangerous in that if an invalid address is passed in (for example the address of an
+  automatic variable) then all hell will break loose.</p>
 
 <p><strong>Note</strong>: It is <em>your</em> fault if you get caught out by this. I have warned you to be
-careful! A good guideline is to only ever initialise a smart pointer this way by using the return
-value of the <code>new</code> operator.</p>
+  careful! A good guideline is to only ever initialise a smart pointer this way by using the return
+  value of the <code>new</code> operator.</p>
 
 <p>When you assign to a smart pointer in this way, not only that smart pointer
-but all aliases of it end up pointing to the new object.</p>
+  but all aliases of it end up pointing to the new object.</p>
 
 <p>Furthermore, assigning a null pointer will clear the smart pointer and all
-of its aliases.</p>
+  of its aliases.</p>
 
 <pre class="cpp">
 smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(const T&amp; data);
 </pre>
 
 <p>This assignment of the contained type T to the smart pointer changes the
-value pointed to by this smart pointer and of all other pointers that are
-aliases to it. It deletes the old value and then creates a new object which
-is a copy of the parameter.</p>
+  value pointed to by this smart pointer and of all other pointers that are
+  aliases to it. It deletes the old value and then creates a new object which
+  is a copy of the parameter.</p>
 
 <p>For example:</p>
 
@@ -444,8 +455,8 @@ s1 = "Hello World";
 </pre>
 
 <p>This is slightly strange behaviour - you are assigning a string to a smart_ptr&lt;string&gt;!
-With simple pointers this would be illegal, but smart pointers allow it. The old value of the string
-will be discarded and the new value copied into its place.</p>
+  With simple pointers this would be illegal, but smart pointers allow it. The old value of the string
+  will be discarded and the new value copied into its place.</p>
 
 <p>There's a final form of assignment:</p>
 
@@ -454,9 +465,9 @@ smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(const smart_ptr&lt;T&gt;&amp;);
 </pre>
 
 <p>This assignment of a smart pointer to another dealiases this smart
-pointer from any other aliases and deletes the contents if this was the
-last alias to it. It then makes this smart pointer a alias to the
-parameter.</p>
+  pointer from any other aliases and deletes the contents if this was the
+  last alias to it. It then makes this smart pointer a alias to the
+  parameter.</p>
 
 <h2 id="set">Setting a simple pointer</h2>
 
@@ -475,9 +486,9 @@ smart_ptr&lt;T&gt;&amp; smart_ptr::operator=(T* data);
 <h2 id="tests">Logical Tests</h2>
 
 <p>As the previous section showed, it is possible for a pointer to be null. Of course, it is
-therefore necessary to be able to test for a null pointer. The smart pointer has a set
-of four test functions, tests for null and non-null in two forms; explicit (function) form and
-implicit (operator) form. The implicit (operator) form is provided by the following operators:</p>
+  therefore necessary to be able to test for a null pointer. The smart pointer has a set
+  of four test functions, tests for null and non-null in two forms; explicit (function) form and
+  implicit (operator) form. The implicit (operator) form is provided by the following operators:</p>
 
 <pre class="cpp">
 smart_ptr::operator bool(void) const;
@@ -514,7 +525,7 @@ else if (s2.null())
 <p>The smart pointer classes look <em>quite</em> like pointers in use.</p>
 
 <p>To dereference a smart pointer, simply use the * operator just like a
-simple pointer. In fact there are two variants of this:</p>
+  simple pointer. In fact there are two variants of this:</p>
 
 <pre class="cpp">
 T&amp; smart_ptr::operator*(void) throw(stlplus::null_dereference);
@@ -522,15 +533,15 @@ const T&amp; smart_ptr::operator*(void) const throw(stlplus::null_dereference);
 </pre>
 
 <p>In other words, if you dereference a non-const smart_ptr you get a non-const reference to the
-object which you can then read from or write to. If you dereference a const
-smart_ptr, you get back a const reference which is therefore read-only.</p>
+  object which you can then read from or write to. If you dereference a const
+  smart_ptr, you get back a const reference which is therefore read-only.</p>
 
 <p>Dereferencing a null smart pointer causes the stlplus::null_dereference
-exception to be thrown. Therefore if you are unsure whether a smart pointer is
-null, use one of the logical tests to check first.</p>
+  exception to be thrown. Therefore if you are unsure whether a smart pointer is
+  null, use one of the logical tests to check first.</p>
 
 <p>Similarly, just as with simple pointers, to dereference and access a member
-in one go, use the -&gt; operator. There are two forms of this too:</p>
+  in one go, use the -&gt; operator. There are two forms of this too:</p>
 
 <pre class="cpp">
 T* smart_ptr::operator-&gt;(void) throw(stlplus::null_dereference);
@@ -538,16 +549,16 @@ const T* smart_ptr::operator-&gt;(void) const throw(stlplus::null_dereference);
 </pre>
 
 <p>So, if you dereference a non-const smart_ptr you get a pointer to a non-const
-object and therefore can call non-const methods. If you dereference a const
-smart_ptr you get back a pointer to a const object and therefore can only call
-const methods of that object.</p>
+  object and therefore can call non-const methods. If you dereference a const
+  smart_ptr you get back a pointer to a const object and therefore can only call
+  const methods of that object.</p>
 
 <p>These operators can only be used as a prefix to a method call or
-member access. Because of this it is illegal to use them to access a null
-pointer and the same stlplus::null_dereference exception is thrown as with operator*.</p>
+  member access. Because of this it is illegal to use them to access a null
+  pointer and the same stlplus::null_dereference exception is thrown as with operator*.</p>
 
 <p>There are functions with the same behaviour as these operators, to provide a more
-explicit access to the pointer or value pointed to:</p>
+  explicit access to the pointer or value pointed to:</p>
 
 <pre class="cpp">
 void smart_ptr::set_value(const T&amp; data);
@@ -575,11 +586,11 @@ const T* smart_ptr::pointer(void) const;
 </pre>
 
 <p><strong>Hint:</strong> The pointer() function does not throw an exception, so it is
-unlike the operator-&gt; form in that way. If the smart pointer is null, then
-it returns a null simple pointer.</p>
+  unlike the operator-&gt; form in that way. If the smart pointer is null, then
+  it returns a null simple pointer.</p>
 
 <p>To show how these operators are used, consider the previous smart pointer
-to a sring examples:</p>
+  to a sring examples:</p>
 
 <pre class="cpp">
 *s1 += " 1, 2, 3";
@@ -589,7 +600,7 @@ s2-&gt;insert(s2-&gt;begin(), "testing, ");
 <p>Note that the +=, insert and begin methods all come from the std::string class.</p>
 
 <p>This leaves both s1 and s2 pointing to a string containing the text "testing,
-testing 1, 2, 3".</p>
+  testing 1, 2, 3".</p>
 
 <p>Rewriting to use the functions rather than the operators:</p>
 
@@ -601,18 +612,18 @@ s2.pointer()-&gt;insert(s2.pointer()-&gt;begin(), "testing, ");
 <h2 id="copying">Forcing a Copy</h2>
 
 <p>It is sometimes desirable to detach two smart pointers to the same object by creating a new copy
-of the object and making one pointer point to the new object. This is achieved with the
-make_unique method. What this does is force the pointer being made unique to point to a
-unique copy of the object. If the pointer is already unique, it has no effect, but otherwise it
-creates a local copy unique to itself. For example, to make s1 and s2 in the earlier examples point
-to separate strings, do this:</p>
+  of the object and making one pointer point to the new object. This is achieved with the
+  make_unique method. What this does is force the pointer being made unique to point to a
+  unique copy of the object. If the pointer is already unique, it has no effect, but otherwise it
+  creates a local copy unique to itself. For example, to make s1 and s2 in the earlier examples point
+  to separate strings, do this:</p>
 
 <pre class="cpp">
 s2.make_unique();
 </pre>
 
 <p>It is also possible to test whether two pointers point to the same object by using the aliases
-method, which returns a bool and is usually used in a conditional:</p>
+  method, which returns a bool and is usually used in a conditional:</p>
 
 <pre class="cpp">
 if (s1.aliases(s2))
@@ -626,9 +637,9 @@ s1 = s2.copy();
 </pre>
 
 <p>The copy method returns a new smart pointer which contains a unique copy of the contents of the
-object - in this case s2. This smart pointer is then copied to s1 using the assignment operator -
-which makes the assignment efficiently by using alias counting methods. The end result is that s1
-and s2 now point to different strings containing the same text.</p>
+  object - in this case s2. This smart pointer is then copied to s1 using the assignment operator -
+  which makes the assignment efficiently by using alias counting methods. The end result is that s1
+  and s2 now point to different strings containing the same text.</p>
 
 <p>There is an alternative form of the copy function:</p>
 
@@ -637,15 +648,15 @@ s1.copy(s2);
 </pre>
 
 <p>This is functionally equivalent but saves an assignment - which is
-negligible anyway. However, some people prefer this style.</p>
+  negligible anyway. However, some people prefer this style.</p>
 
 <p><strong>Note:</strong> in the smart_ptr_nocopy variant, the stlplus::illegal_copy exception will be thrown
-in all these examples.</p>
+  in all these examples.</p>
 
 <h2 id="clear">Clearing</h2>
 
 <p>There are two functions which clear the contents of a smart pointer, making
-it a null pointer:</p>
+  it a null pointer:</p>
 
 <pre class="cpp">
 void clear(void);
@@ -653,18 +664,18 @@ void clear_unique(void);
 </pre>
 
 <p>To make a smart pointer null - i.e. to force the object pointed to to be
-deleted right now, simply call the clear method:</p>
+  deleted right now, simply call the clear method:</p>
 
 <pre class="cpp">
 s2.clear();
 </pre>
 
 <p><strong>Warning:</strong> this deletes the object and makes the pointer null. It does
-not make the pointer unique first! Thus any other smart pointers pointing to the
-same object will become null too.</p>
+  not make the pointer unique first! Thus any other smart pointers pointing to the
+  same object will become null too.</p>
 
 <p>To clear only one alias while leaving all others still pointing to the object, call clear_unique.
-This clears just this smart pointer by making it unique and null at the same time.</p>
+  This clears just this smart pointer by making it unique and null at the same time.</p>
 
 <pre class="cpp">
 s2.clear_unique();
@@ -678,39 +689,48 @@ s2.clear_unique();
 
 <dl>
 
-<dt>stlplus::null_dereference</dt>
+  <dt>stlplus::null_dereference</dt>
 
-<dd>Thrown if a smart pointer is dereferenced when it is null.</dd>
+  <dd>Thrown if a smart pointer is dereferenced when it is null.</dd>
 
-<dt>stlplus::illegal_copy</dt>
+  <dt>stlplus::illegal_copy</dt>
 
-<dd>Thrown by the smart_ptr_nocopy variant if any method is called that would require the object to
-be copied.</dd>
+  <dd>Thrown by the smart_ptr_nocopy variant if any method is called that would require the object to
+    be copied.</dd>
 
 </dl>
 
 <p>See also the STLplus <a href="exceptions.html">exceptions policy</a> for a
-discussion of how exceptions are used in the library</p>
+  discussion of how exceptions are used in the library</p>
 
 <h2 id="cloning">Clone Variant</h2>
 
 <p>The discussion so far has concentrated on the variant called smart_ptr. This is designed to be
-used on simple types and classes where a copy can be made by simply calling the copy constructor for
-the contained object. However, when using hierarchies of derived classes (also known as polymorphic
-classes), this is not possible because copy constructors are not virtual, so you cannot make a copy
-this way. This is a well-known problem with C++'s implementation of polymorphism.</p>
+  used on simple types and classes where a copy can be made by simply calling the copy constructor for
+  the contained object. However, when using hierarchies of derived classes (also known as polymorphic
+  classes), this is not possible because copy constructors are not virtual, so you cannot make a copy
+  this way. This is a well-known problem with C++'s implementation of polymorphism.</p>
 
-<p>The solution to this problem is the cloning variant - a class called smart_ptr_clone. This
-variant of the smart pointer is designed for use with polymorphic types. It uses a solution to the
-non-virtual copy constructor problem which is suggested by Ellis and Stroustrup in "The Annotated
-LRM". The solution is to require the user to provide a virtual <code>clone</code> method for every
-class which makes a copy using <code>new</code> and the correct copy constructor, returning the
-result as a pointer to the superclass. Each subclass overloads this function with its own variant
-which copies its own type. Thus the copy operation is now virtual and furthermore is localised to
-the individual subclass.</p>
+<p>The solution to the non-virtual copy constructor problem is
+  suggested by Ellis and Stroustrup in "The Annotated LRM". The
+  solution is to require the user to always provide a virtual
+  <code>clone</code> method for every polymorphic
+  class/ The clone method makes a copy using <code>new</code> and the
+  correct copy constructor for its own class, returning the result as
+  a pointer to the base class. Each derived class overloads this
+  function with its own variant which copies its own type. Thus the
+  copy operation is now virtual (since the clone method is virtual)
+  and furthermore is localised to the individual derived classes.</p>
 
-<p>As an example, consider the simple example of two classes, a superclass called <code>base</code> and
-a subclass called <code>derived</code>:</p>
+<p>The cloning variant, a class called smart_ptr_clone, uses the Ellis
+and Stroustrup proposal to solve the problem of providing smart
+pointers for polymorphic types. It works by replacing all copy
+operations with a call to the virtual clone method. This does mean
+that it will only work with classes that have the clone method!</p>
+
+<p>As an example, consider the simple example of two classes, a base
+class called <code>base</code> and
+a derived class called <code>derived</code>:</p>
 
 <pre class="cpp">
 class base
@@ -742,11 +762,14 @@ class derived : public base
 };
 </pre>
 
-<p><strong>Note:</strong> the clone method must return a pointer to the superclass, not the subclass. This is
-because C++ disallows overloading with different return types. In this case, both clone methods
-return a <code>base*</code>.</p>
+<p><strong>Note:</strong> the clone method must return a pointer to
+the base class, not the derived class. This is because C++ disallows
+overloading with different return types. In this case, both clone
+methods return a <code>base*</code>. Notice how each clone method copies it's
+own class by calling new followed by the copy constructor for its
+class.</p>
 
-<p>You then create a smart pointer for this by using the superclass as the
+<p>You then create a smart pointer for this by using the base class as the
 template parameter:</p>
 
 <pre class="cpp">
@@ -769,11 +792,11 @@ handle cannot be copied and is closed when the last alias is destroyed.</p>
 
 <p>The interface to the nocopy variant is the same as <code>smart_ptr</code> but with all operations
 that perform copying forbidden. In fact, because all three variants are instances of a common
-superclass, the forbidden methods do exist but will throw the exception
+base class, the forbidden methods do exist but will throw the exception
 <code>stlplus::illegal_copy</code> if they are called.</p>
 
 <p>The following operations from <code>smart_ptr_nocopy</code> cannot be used because they use
-copying of the pointed-to object and will thereore throw the stlplus::illegal_copy exception:</p>
+copying of the pointed-to object and will therefore throw the stlplus::illegal_copy exception:</p>
 
 <pre class="cpp">
 smart_ptr_nocopy::smart_ptr_nocopy(const T&amp; data);
