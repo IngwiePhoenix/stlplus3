@@ -45,11 +45,11 @@ public:
   friend std::ostream& operator << (std::ostream& str, const base& object) {return object.print(str);}
   friend bool operator == (const base& left, const base& right) {return typeid(left) == typeid(right) && left.value() == right.value();}
 
-  void dump(stlplus::dump_context& context) const throw(stlplus::persistent_dump_failed)
+  void dump(stlplus::dump_context& context) const 
     {
       stlplus::dump_int(context,m_value);
     }
-  void restore(stlplus::restore_context& context) throw(stlplus::persistent_restore_failed)
+  void restore(stlplus::restore_context& context) 
     {
       stlplus::restore_int(context,m_value);
     }
@@ -70,12 +70,12 @@ public:
 
   virtual std::ostream& print(std::ostream& str) const {return str << "derived: " << m_image << "(" << value() << ")";}
 
-  void dump(stlplus::dump_context& context) const throw(stlplus::persistent_dump_failed)
+  void dump(stlplus::dump_context& context) const 
     {
       base::dump(context);
       stlplus::dump_string(context,m_image);
     }
-  void restore(stlplus::restore_context& context) throw(stlplus::persistent_restore_failed)
+  void restore(stlplus::restore_context& context) 
     {
       base::restore(context);
       stlplus::restore_string(context,m_image);

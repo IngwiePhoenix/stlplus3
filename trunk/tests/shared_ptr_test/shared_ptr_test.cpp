@@ -27,13 +27,13 @@ void print(const string& label, const string_ptr& value)
 }
 
 void dump_string_ptr(stlplus::dump_context& context, const string_ptr& data)
-  throw(stlplus::persistent_dump_failed)
+  
 {
   stlplus::dump_shared_ptr(context, data, stlplus::dump_string);
 }
 
 void restore_string_ptr(stlplus::restore_context& context, string_ptr& data)
-  throw(stlplus::persistent_restore_failed)
+  
 {
   stlplus::restore_shared_ptr(context, data, stlplus::restore_string);
 }
@@ -50,13 +50,13 @@ void print(const string& label, const string_ptr_pair& values)
 }
 
 void dump_string_ptr_pair(stlplus::dump_context& context, const string_ptr_pair& data)
-  throw(stlplus::persistent_dump_failed)
+  
 {
   stlplus::dump_pair(context, data, dump_string_ptr, dump_string_ptr);
 }
 
 void restore_string_ptr_pair(stlplus::restore_context& context, string_ptr_pair& data)
-  throw(stlplus::persistent_restore_failed)
+  
 {
   stlplus::restore_pair(context, data, restore_string_ptr, restore_string_ptr);
 }

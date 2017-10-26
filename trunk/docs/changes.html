@@ -35,10 +35,11 @@ C++ Library Collection</h1>
 </div>
 
 <div id="documentNavigation">
-<ul>
-<li class="internal"><a href="#introduction">Introduction</a></li>
-<li class="internal"><a href="#v3.14">Changes from Version 3.13 to 3.14</a></li>
-<li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
+  <ul>
+    <li class="internal"><a href="#introduction">Introduction</a></li>
+    <li class="internal"><a href="#v3.15">Changes from Version 3.14 to 3.15</a></li>
+    <li class="internal"><a href="#v3.14">Changes from Version 3.13 to 3.14</a></li>
+    <li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
 <li class="internal"><a href="#v3.12">Changes from Version 3.11 to 3.12</a></li>
 <li class="internal"><a href="#v3.11">Changes from Version 3.10 to 3.11</a></li>
 <li class="internal"><a href="#v3.10">Changes from Version 3.9 to 3.10</a></li>
@@ -58,23 +59,39 @@ C++ Library Collection</h1>
 <h2 id="introduction">Introduction</h2>
 
 <p>This section is an attempt to document all the changes made to the STLplus library.
-However, the change log has been restarted for version 3 of the library since the changes
-for this version are huge. Therefore only the changes since then have been documented.</p>
+  However, the change log has been restarted for version 3 of the library since the changes
+  for this version are huge. Therefore only the changes since then have been documented.</p>
 
 <p>The official open-source version of STLplus starts at version 2.0 and you can access the change
-log for all version 2 releases by looking at the 
-<a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+  log for all version 2 releases by looking at the
+  <a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
+
+<h2 id="v3.15">Changes from Version 3.14 to 3.15</h2>
+
+<h3>Removed throw specifications</h3>
+
+<p>STLplus has always had exception specifications,
+e.g. throw(exception1,exception2), after function declarations so that
+both the compiler and user know what exceptions the function can
+throw.</p>
+
+<p>However, in C++11 the use of exception specifications is
+deprecated. This started to show up as compiler warnings in gcc
+v7.2. I have decided to go with the spirit of C++11 and removed all of
+the exception specifications from STLplus. Where possible in the
+headers I have turned them into a comment so there is still some user
+  information about what exceptions might be thrown by a function.</p>
 
 <h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
 
-<h3>Added at and at_pointer methods to containers/hash</h3>
+<h3>Added at() and at_pointer() methods to containers/hash</h3>
 
 <p>Patch submitted by DJDM:</p>
 
 <p>Added hash::at() and hash::at_pointer() methods to get the value
 associated with a key directly, avoiding the use of iterators. The
-motivation was to avaid a problem with iterators which are not
-thread-safe, but these are more generally useful functions.</p>
+motivation was to avoid a problem with iterators which are not
+thread-safe, but these are also generally useful functions.</p>
 
 <p>The hash::at() method has the same functionality as the
 hash::operator[] method in read-only mode, but does not have the catch

@@ -23,13 +23,11 @@ namespace stlplus
   // floating-point types
 
   std::string float_to_string(float f, real_display_t display, unsigned width, unsigned precision)
-    throw(std::invalid_argument)
   {
     return double_to_string((double)f, display, width, precision);
   }
 
   std::string double_to_string(double f, real_display_t display, unsigned width, unsigned precision)
-    throw(std::invalid_argument)
   {
     std::ostringstream stream;
     switch(display)
@@ -57,13 +55,11 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   float string_to_float(const std::string& value)
-    throw(std::invalid_argument)
   {
     return (float)string_to_double(value);
   }
 
   double string_to_double(const std::string& value)
-    throw(std::invalid_argument)
   {
     // TODO - error checking
     return std::atof(value.c_str());

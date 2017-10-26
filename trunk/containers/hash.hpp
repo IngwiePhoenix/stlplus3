@@ -60,11 +60,11 @@ namespace stlplus
     // it is only legal to increment a valid iterator
     // there's no decrement - I've only implemented this as a unidirectional iterator
     // pre-increment
-    this_iterator& operator ++ (void)
-      throw(null_dereference,end_dereference);
+    // exceptions: null_dereference,end_dereference
+    this_iterator& operator ++ (void);
     // post-increment
-    this_iterator operator ++ (int)
-      throw(null_dereference,end_dereference);
+    // exceptions: null_dereference,end_dereference
+    this_iterator operator ++ (int);
 
     // test useful for testing whether iteration has completed
     bool operator == (const this_iterator& r) const;
@@ -73,10 +73,10 @@ namespace stlplus
 
     // access the value - a const_iterator gives you a const value, an iterator a non-const value
     // it is illegal to dereference an invalid (i.e. null or end) iterator
-    reference operator*(void) const
-      throw(null_dereference,end_dereference);
-    pointer operator->(void) const
-      throw(null_dereference,end_dereference);
+    // exceptions: null_dereference,end_dereference
+    reference operator*(void) const;
+    // exceptions: null_dereference,end_dereference
+    pointer operator->(void) const;
 
   private:
     friend class hash_element<K,T,H,E>;
@@ -174,12 +174,14 @@ namespace stlplus
     // returns the data corresponding to the key
     // const version is used for const hashes and cannot change the hash, so failure causes an exception
     // non-const version is for non-const hashes and is like map - it creates a new key/data pair if find fails
-    const T& operator[] (const K& key) const throw(std::out_of_range);
+    // exceptions: std::out_of_range
+    const T& operator[] (const K& key) const ;
     T& operator[] (const K& key);
 
     // synonym for const version of operator[]
     // avoids problem where overloading of operator[] means non-const version can be called, causing a write operation
-    const T& at(const K& key) const throw(std::out_of_range);
+    // exceptions: std::out_of_range
+    const T& at(const K& key) const ;
 
     // as above, but accesses a pointer to the value
     // returns a null pointer if not found, eliminating an exception handler

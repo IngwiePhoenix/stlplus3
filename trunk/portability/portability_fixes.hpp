@@ -69,7 +69,7 @@ unsigned sleep(unsigned seconds);
 // Function for establishing endian-ness
 ////////////////////////////////////////////////////////////////////////////////
 // Different machine architectures store data using different byte orders.
-// This is referred to as Big- and Little-Endian Byte Ordering. 
+// This is referred to as Big- and Little-Endian Byte Ordering.
 //
 // The issue is: where does a pointer to an integer type actually point?
 //

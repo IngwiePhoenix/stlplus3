@@ -82,7 +82,7 @@ namespace stlplus
     return result;
   }
 
-  std::string vdformat(const char* format, va_list args) throw(std::invalid_argument)
+  std::string vdformat(const char* format, va_list args)
   {
     std::string formatted;
     int length = vdprintf(formatted, format, args);
@@ -90,7 +90,7 @@ namespace stlplus
     return formatted;
   }
 
-  std::string dformat(const char* format, ...) throw(std::invalid_argument)
+  std::string dformat(const char* format, ...)
   {
     std::string formatted;
     va_list args;

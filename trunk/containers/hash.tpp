@@ -105,7 +105,6 @@ namespace stlplus
   // if there isn't one, then this becomes an end() iterator with m_bin = m_bins
   template<typename K, typename T, class H, class E, typename V>
   typename hash_iterator<K,T,H,E,V>::this_iterator& hash_iterator<K,T,H,E,V>::operator ++ (void)
-    throw(null_dereference,end_dereference)
   {
     this->assert_valid();
     if (this->node()->m_next)
@@ -129,7 +128,6 @@ namespace stlplus
   // post-increment is defined in terms of pre-increment
   template<typename K, typename T, class H, class E, typename V>
   typename hash_iterator<K,T,H,E,V>::this_iterator hash_iterator<K,T,H,E,V>::operator ++ (int)
-    throw(null_dereference,end_dereference)
   {
     hash_iterator<K,T,H,E,V> old(*this);
     ++(*this);
@@ -159,7 +157,7 @@ namespace stlplus
   // iterator dereferencing is only legal on a non-null iterator
   template<typename K, typename T, class H, class E, typename V>
   V& hash_iterator<K,T,H,E,V>::operator*(void) const
-    throw(null_dereference,end_dereference)
+
   {
     this->assert_valid();
     return this->node()->m_value;
@@ -167,7 +165,7 @@ namespace stlplus
 
   template<typename K, typename T, class H, class E, typename V>
   V* hash_iterator<K,T,H,E,V>::operator->(void) const
-    throw(null_dereference,end_dereference)
+
   {
     return &(operator*());
   }
@@ -540,7 +538,7 @@ namespace stlplus
   // the non-const version is compatible with the behaviour of the map
 
   template<typename K, typename T, class H, class E>
-  const T& hash<K,T,H,E>::operator[] (const K& key) const throw(std::out_of_range)
+  const T& hash<K,T,H,E>::operator[] (const K& key) const
   {
     // this const version cannot change the hash, so has to raise an exception if the key is missing
     hash_element<K,T,H,E>* found = _find_element(key);
@@ -559,7 +557,7 @@ namespace stlplus
 
   // Thread-safe (doesn't use iterators), fast const access to the hash value at a given key.
   template<typename K, typename T, class H, class E>
-  const T& hash<K,T,H,E>::at(const K& key) const throw(std::out_of_range)
+  const T& hash<K,T,H,E>::at(const K& key) const
   {
     // this const version cannot change the hash, so has to raise an exception if the key is missing
     hash_element<K,T,H,E>* found = _find_element(key);
@@ -637,7 +635,7 @@ namespace stlplus
       str << "auto-rehash at " << m_rehash << std::endl;
     else
       str << "manual rehash" << std::endl;
-    str << "| occupied: " << occupied 
+    str << "| occupied: " << occupied
         << std::fixed << " (" << (100.0*(float)occupied/(float)m_bins) << "%)" << std::scientific
         << ", min = " << min_in_bin << ", max = " << max_in_bin << std::endl;
     str << "|-----------------------------------------------------------------------" << std::endl;
@@ -681,4 +679,3 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
 } // end namespace stlplus
-

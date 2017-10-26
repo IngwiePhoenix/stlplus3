@@ -17,7 +17,6 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   std::string pad(const std::string& str, alignment_t alignment, unsigned width, char padch)
-    throw(std::invalid_argument)
   {
     std::string result = str;
     switch(alignment)
