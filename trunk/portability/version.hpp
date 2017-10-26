@@ -12,7 +12,7 @@
 #include "portability_fixes.hpp"
 #include <string>
 
-#define STLPLUS_VERSION "3.14"
+#define STLPLUS_VERSION "3.15"
 
 namespace stlplus
 {

@@ -19,10 +19,7 @@ namespace stlplus
   // STLplus version in the form "STLplus v3.0" - see version.hpp for a way of getting just the version number
   std::string stlplus_version(void)
   {
-    std::string result = std::string("STLplus v") + version();
-    if (version() == std::string("3.14"))
-      result += " (pi)";
-    return result;
+    return std::string("STLplus v") + version();
   }
 
   // calculate the word size dynamically by using the knowledge that ptrdiff_t is always a whole word
