@@ -128,8 +128,10 @@ namespace stlplus
 
   // format into a new string and return the result
   // if there is an error, throw an exception
-  std::string dformat (const char* format, ...) throw(std::invalid_argument);
-  std::string vdformat (const char* format, va_list) throw(std::invalid_argument);
+  // exceptions: std::invalid_argument
+  std::string dformat (const char* format, ...) ;
+  // exceptions: std::invalid_argument
+  std::string vdformat (const char* format, va_list) ;
 
 }
 

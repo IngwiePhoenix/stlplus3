@@ -38,25 +38,25 @@ namespace stlplus
   class persistent_illegal_type : public std::logic_error
   {
   public:
-    persistent_illegal_type(const std::string&amp; type) throw();
-    persistent_illegal_type(unsigned key) throw();
-    ~persistent_illegal_type(void) throw();
+    persistent_illegal_type(const std::string&amp; type) ;
+    persistent_illegal_type(unsigned key) ;
+    ~persistent_illegal_type(void) ;
   };
 
   // exception thrown if a dump fails for any reason - but typically because the output stream couldn't take the data
   class persistent_dump_failed : public std::runtime_error
   {
   public:
-    persistent_dump_failed(const std::string&amp; message) throw();
-    ~persistent_dump_failed(void) throw();
+    persistent_dump_failed(const std::string&amp; message) ;
+    ~persistent_dump_failed(void) ;
   };
 
   // exception thrown if you try to restore from an out of date or unrecognised byte stream
   class persistent_restore_failed : public std::runtime_error
   {
   public:
-    persistent_restore_failed(const std::string&amp; message) throw();
-    ~persistent_restore_failed(void) throw();
+    persistent_restore_failed(const std::string&amp; message) ;
+    ~persistent_restore_failed(void) ;
   };
 
   ////////////////////////////////////////////////////////////////////////////////
