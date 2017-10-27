@@ -23,19 +23,33 @@ from the Sourceforge website:
 
 https://sourceforge.net/projects/stlplus/files/
 
-Download the latest 'stlplus3' project.
+Download the latest 'stlplus3' project and unpack it.
 
 If you are going to be using gcc make to compile the stlplus3 project,
-also download the latest version of the 'makefiles' project from the same place.
+also download and unpack the latest version of the 'makefiles' project
+from the same place.
 
-You can also access the STLplus library using CVS, follow the
-instructions for anonymous access:
+Subversion
+----------
 
-https://sourceforge.net/p/stlplus/code/
+If you want the latest development version (which might occasionally
+break because it is a development version), get it via Subversion:
 
-Then checkout the 'stlplus3' module and optionally the 'makefiles'
-module alongside it - the makefiles module should be installed in the same
-directory as the stlplus3 module.
+svn checkout svn://svn.code.sf.net/p/stlplus/stlplus3/trunk stlplus3
+svn checkout svn://svn.code.sf.net/p/stlplus/makefiles/trunk makefiles
+
+You can also get stable releases this way, these are stored in the
+'tags' directory:
+
+To get a listing of the versions available:
+
+svn list svn://svn.code.sf.net/p/stlplus/stlplus3/tags
+svn list svn://svn.code.sf.net/p/stlplus/makefiles/tags
+
+In the following example you are checking out stlplus3 v3.15 and makefiles v1.11.
+
+svn checkout svn://svn.code.sf.net/p/stlplus/stlplus3/tags/stlplus3-03-15 stlplus3
+svn checkout svn://svn.code.sf.net/p/stlplus/makefiles/tags/makefiles-01-11 makefiles
 
 Changes and Versions
 --------------------
@@ -60,7 +74,7 @@ library in the colection is be found in a subdirectory:
 The documentation is in the 'docs' directory and starts with index.html.
 
 Build files for IDEs are found in the 'ide' directory, but the gcc
-command-line tools use make and the makefiles are kept in the library
+command-line tools use make and the Makefiles are kept in the library
 directories.
 
 Multi-Library Build
@@ -70,11 +84,9 @@ To build the STLplus3 library collection as 5 separate libraries, use
 either gnu make at the top level for gcc, or the project files in the
 'ide/' directory for Borland or Microsoft compilers.
 
-The Makefile used by gnu make requires the makefiles project, which is available from
-the same SourceForge site that you downloaded the STLplus library
-from. See:
-
-https://sourceforge.net/projects/stlplus/files/
+The Makefile used by gnu make requires the makefiles project, which is
+available from the same SourceForge site that you downloaded the
+STLplus library from, as explained in Download above.
 
 The makefiles module should be installed in the same directory as the
 stlplus3 module.
@@ -86,12 +98,12 @@ The 'source' directory is provided with script files that allow the library
 collection to be merged into one large library - termed the monolithic build.
 
 To build the monolithic STLplus3 library, use either make in the
-source directory for gcc, or the project files ending in '_monolithic'
+'source' directory for gcc, or the project files ending in '_monolithic'
 in the 'ide/' directory for Borland or Microsoft compilers.
 
 You may need to run the make_monolithic script from within the source directory
 (i.e. from a command shell). This is run automatically when using gnu
-make, but not necessarily by the other IDEs.
+make and Visual Studio, but not necessarily by other IDEs.
 
 More information
 ----------------
