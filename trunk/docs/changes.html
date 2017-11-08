@@ -68,6 +68,15 @@ C++ Library Collection</h1>
 
 <h2 id="v3.15">Changes from Version 3.14 to 3.15</h2>
 
+<h3>Clang Build and Recognition of the Clang Compiler</h3>
+
+<p>Experiments on FreeBSD (the TrueOS distribution) confirm that
+STLplus builds with clang instead of Gnu gcc. Small changes, such as
+the reintroduction of a small number of exception specifications
+mentioned below were necessary, but no functional changes were
+needed. The portability/build.cpp utilities now recognises a clang
+build and correctly identifies the compiler and version.</p>
+
 <h3>Removed throw specifications</h3>
 
 <p>STLplus has always had exception specifications,
@@ -81,6 +90,11 @@ v7.2. I have decided to go with the spirit of C++11 and removed all of
 the exception specifications from STLplus. Where possible in the
 headers I have turned them into a comment so there is still some user
   information about what exceptions might be thrown by a function.</p>
+
+<p>I have left exception specifications on exceptions derived from
+system exceptions because otherwise I was seeing compiler errors on
+older compilers - the derivative had a different exception
+specification than the base class.</p>
 
 <h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
 

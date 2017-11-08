@@ -56,7 +56,7 @@ C++ Library Collection</h1>
 
 <p>The STLplus library collection is intended to be portable between operating
 systems and compilers. At present, this means Windows/Unix/MacOSX systems and
-Gnu gcc/Microsoft/Borland compilers. Whether this will be extended to other
+Clang/Gnu gcc/Microsoft/Borland compilers. Whether this will be extended to other
 operating systems and compilers is a moot point, since the library requires a
 good implementation of C++ templates.</p>
 
@@ -73,7 +73,7 @@ a bit more work.</p>
 <p>As far as is reasonable, the STLplus libraries have been designed to be used separately. However,
 some of the libraries use the STLplus containers and portability libraries to make them easier to
 code and to make them portable too. Also, two of the libraries (persistence and strings) provide
-additional functionality for the containers and portability libraries and therefore depend on them. 
+additional functionality for the containers and portability libraries and therefore depend on them.
 The following table lists the dependencies:</p>
 
 <table cellspacing="0">
@@ -141,7 +141,7 @@ collection, but should be easy to relate to the use of the monolithic build inst
 
 <h3>About my Make System</h3>
 
-<p>If you are using Gnu gcc as your compiler, then I supply a set of make rules with
+<p>If you are using Clang or Gnu gcc as your compiler, then I supply a set of make rules with
 STLplus that will not only build this project but any other projects you are using too. In
 each of the STLplus source directories is a <code>Makefile</code>. This is usually quite small. The
 simplest <code>Makefile</code> contains the following:</p>
@@ -393,11 +393,11 @@ CYGWIN-i686-debug for the Cygwin build and GNU-i686-debug for the Linux build.</
 
 <p>The STLplus library collection can alternatively be built on
 Windows using the native Microsoft Visual Studio compiler. The STLplus
-library includes a Visual Studio solution for Visual Studio 6
-(deprecated), 2010, 2012, 2013 and 2015 Each library in the collection
-has its own project file which can be incorporated into any other
-workspace or solution. So individual libraries can be incorporated
-stand-alone in this way.</p>
+library includes a Visual Studio solution for Visual Studio 2010,
+2012, 2013, 2015 and 2017. Each library in the collection has its own
+project file which can be incorporated into any other workspace or
+solution. So individual libraries can be incorporated stand-alone in
+this way.</p>
 
 <p>Beware that there is a terminology problem here - Microsoft call a library a project and a
 project a solution, and so on. I will try to remember to use Microsoft terminology here.</p>
@@ -422,7 +422,7 @@ configuration is stored separately so they do not overwrite each
 other.</p>
 
 <p><strong>Note:</strong> the supplied project file will build STLplus so that
-it uses the multi-threaded DLL versions of the C runtime library (msvcrt.dll). 
+it uses the multi-threaded DLL versions of the C runtime library (msvcrt.dll).
 You may need to adjust the project settings,
 either for STLplus or for your application so that all projects use the same
 settings. The symptom that will tell you that you have this problem is that,
@@ -518,6 +518,15 @@ found between different Unix platforms. However, if you use a different build sy
 idea to pass this parameter to the compiler (e.g. -DGNU) in case future updates to the library do
 need to have these switches. Check the ../../makefiles/gcc.mak file for the values currently
 supported, even if you don't plan to use my make system.</p>
+
+<p>The makefile system is set up assuming the Gnu gcc compiler is to
+be used on all platforms that use the makefiles system. However, I
+have found that on FreeBSD platforms (and maybe others?), the Gnu make
+(installed as gmake) can be used as described here to build the
+libraries with the built-in <b>clang</b> compiler. The
+STLplus libraries build without a hitch with clang and the operating
+system seems to automatically map the makefiles calls to g++/gcc onto the
+clang equivalents.</p>
 
 </div>
 
