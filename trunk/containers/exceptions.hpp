@@ -25,7 +25,7 @@ namespace stlplus
   public:
     null_dereference(const std::string& description)  :
       std::logic_error(std::string("stlplus::null_dereference: ") + description) {}
-    ~null_dereference(void)  {}
+    ~null_dereference(void) throw() {}
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace stlplus
   public:
     end_dereference(const std::string& description)  :
       std::logic_error("stlplus::end_dereference: " + description) {}
-    ~end_dereference(void)  {}
+    ~end_dereference(void) throw() {}
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace stlplus
   public:
     wrong_object(const std::string& description)  :
       std::logic_error("stlplus::wrong_object: " + description) {}
-    ~wrong_object(void)  {}
+    ~wrong_object(void) throw() {}
   };
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ namespace stlplus
   public:
     illegal_copy(const std::string& description)  :
       std::logic_error("stlplus::illegal_copy: " + description) {}
-    ~illegal_copy(void)  {}
+    ~illegal_copy(void) throw() {}
   };
 
   ////////////////////////////////////////////////////////////////////////////////

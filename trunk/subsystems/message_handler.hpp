@@ -100,7 +100,7 @@ namespace stlplus
   {
   public:
     message_handler_read_error(const message_position& position, const std::string& reason);
-    ~message_handler_read_error(void) ;
+    ~message_handler_read_error(void) throw();
 
     const message_position& where(void) const;
 
@@ -115,7 +115,7 @@ namespace stlplus
   public:
     message_handler_format_error(const std::string& format, unsigned offset);
     message_handler_format_error(const message_position& pos, const std::string& format, unsigned offset);
-    ~message_handler_format_error(void) ;
+    ~message_handler_format_error(void) throw();
 
     const message_position& where(void) const;
     const std::string& format(void) const;
@@ -133,7 +133,7 @@ namespace stlplus
   {
   public:
     message_handler_id_error(const std::string& id);
-    ~message_handler_id_error(void) ;
+    ~message_handler_id_error(void) throw();
 
     const std::string& id(void) const;
 
@@ -147,7 +147,7 @@ namespace stlplus
   {
   public:
     message_handler_limit_error(unsigned limit);
-    ~message_handler_limit_error(void) ;
+    ~message_handler_limit_error(void) throw();
 
     unsigned limit(void) const;
 
@@ -161,7 +161,7 @@ namespace stlplus
   {
   public:
     message_handler_fatal_error(const std::string& id);
-    ~message_handler_fatal_error(void) ;
+    ~message_handler_fatal_error(void) throw();
 
     const std::string& id(void) const;
 

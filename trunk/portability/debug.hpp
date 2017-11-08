@@ -41,7 +41,7 @@ namespace stlplus
   {
   public:
     assert_failed(const char* file, int line, const char* function, const char* message) ;
-    ~assert_failed(void) ;
+    ~assert_failed(void) throw();
   };
 
 } // end namespace stlplus

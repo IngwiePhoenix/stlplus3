@@ -27,7 +27,7 @@ namespace stlplus
   public:
     persistent_illegal_type(const std::string& type) ;
     persistent_illegal_type(unsigned key) ;
-    ~persistent_illegal_type(void) ;
+    ~persistent_illegal_type(void) throw();
   };
 
   // exception thrown if a dump fails for any reason - but typically because the output stream couldn't take the data
@@ -35,7 +35,7 @@ namespace stlplus
   {
   public:
     persistent_dump_failed(const std::string& message) ;
-    ~persistent_dump_failed(void) ;
+    ~persistent_dump_failed(void) throw();
   };
 
   // exception thrown if you try to restore from an out of date or unrecognised byte stream
@@ -43,7 +43,7 @@ namespace stlplus
   {
   public:
     persistent_restore_failed(const std::string& message) ;
-    ~persistent_restore_failed(void) ;
+    ~persistent_restore_failed(void) throw();
   };
 
   ////////////////////////////////////////////////////////////////////////////////

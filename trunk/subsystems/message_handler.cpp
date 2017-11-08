@@ -200,7 +200,7 @@ namespace stlplus
   {
   }
 
-  message_handler_read_error::~message_handler_read_error(void)
+  message_handler_read_error::~message_handler_read_error(void) throw()
   {
   }
 
@@ -223,7 +223,7 @@ namespace stlplus
   {
   }
 
-  message_handler_format_error::~message_handler_format_error(void)
+  message_handler_format_error::~message_handler_format_error(void) throw()
   {
   }
 
@@ -249,7 +249,7 @@ namespace stlplus
   {
   }
 
-  message_handler_id_error::~message_handler_id_error(void)
+  message_handler_id_error::~message_handler_id_error(void) throw()
   {
   }
 
@@ -266,7 +266,7 @@ namespace stlplus
   {
   }
 
-  message_handler_limit_error::~message_handler_limit_error(void)
+  message_handler_limit_error::~message_handler_limit_error(void) throw()
   {
   }
 
@@ -283,7 +283,7 @@ namespace stlplus
   {
   }
 
-  message_handler_fatal_error::~message_handler_fatal_error(void)
+  message_handler_fatal_error::~message_handler_fatal_error(void) throw()
   {
   }
 

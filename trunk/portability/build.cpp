@@ -72,7 +72,7 @@ namespace stlplus
   std::string compiler_version(void)
   {
 #if defined __clang__
-    return dformat("%d.%02d",__clang_major__,__clang_minor__);
+    return dformat("%d.%d",__clang_major__,__clang_minor__);
 #elif defined __GNUC__
     return dformat("%d.%d.%d",__GNUC__,__GNUC_MINOR__,__GNUC_PATCHLEVEL__);
 #elif defined _MSC_VER

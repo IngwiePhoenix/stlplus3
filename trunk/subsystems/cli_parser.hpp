@@ -117,7 +117,7 @@ namespace stlplus
   {
   public:
     cli_mode_error(const std::string& arg) : std::invalid_argument(arg) {}
-    ~cli_mode_error(void)  {}
+    ~cli_mode_error(void) throw() {}
   };
 
   // similar to std::out_of_range thrown for using an index out of range
@@ -125,7 +125,7 @@ namespace stlplus
   {
   public:
     cli_index_error(const std::string& arg) : std::out_of_range(arg) {}
-    ~cli_index_error(void)  {}
+    ~cli_index_error(void) throw() {}
   };
 
   // similar to std::invalid_argument - thrown for passing an illegal argument to a method
@@ -133,7 +133,7 @@ namespace stlplus
   {
   public:
     cli_argument_error(const std::string& arg) : std::invalid_argument(arg) {}
-    ~cli_argument_error(void)  {}
+    ~cli_argument_error(void) throw() {}
   };
 
   ////////////////////////////////////////////////////////////////////////////////

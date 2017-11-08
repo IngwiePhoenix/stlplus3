@@ -35,7 +35,7 @@ stlplus::persistent_illegal_type::persistent_illegal_type(unsigned key)  :
 {
 }
 
-stlplus::persistent_illegal_type::~persistent_illegal_type(void)
+stlplus::persistent_illegal_type::~persistent_illegal_type(void) throw()
 {
 }
 
@@ -46,7 +46,7 @@ stlplus::persistent_dump_failed::persistent_dump_failed(const std::string& messa
 {
 }
 
-stlplus::persistent_dump_failed::~persistent_dump_failed(void)
+stlplus::persistent_dump_failed::~persistent_dump_failed(void) throw()
 {
 }
 
@@ -57,7 +57,7 @@ stlplus::persistent_restore_failed::persistent_restore_failed(const std::string&
 {
 }
 
-stlplus::persistent_restore_failed::~persistent_restore_failed(void)
+stlplus::persistent_restore_failed::~persistent_restore_failed(void) throw()
 {
 }
 

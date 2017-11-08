@@ -37,7 +37,7 @@ namespace stlplus
   {
   }
 
-  assert_failed::~assert_failed(void)
+  assert_failed::~assert_failed(void) throw()
   {
   }
 
