@@ -33,11 +33,11 @@
 </div>
 
 <div id="documentNavigation">
-  <ul>
-    <li class="internal"><a href="#introduction">Introduction</a></li>
-    <li class="internal"><a href="#v3.15">Changes from Version 3.14 to 3.15</a></li>
-    <li class="internal"><a href="#v3.14">Changes from Version 3.13 to 3.14</a></li>
-    <li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
+<ul>
+<li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#v3.15">Changes from Version 3.14 to 3.15</a></li>
+<li class="internal"><a href="#v3.14">Changes from Version 3.13 to 3.14</a></li>
+<li class="internal"><a href="#v3.13">Changes from Version 3.12 to 3.13</a></li>
 <li class="internal"><a href="#v3.12">Changes from Version 3.11 to 3.12</a></li>
 <li class="internal"><a href="#v3.11">Changes from Version 3.10 to 3.11</a></li>
 <li class="internal"><a href="#v3.10">Changes from Version 3.9 to 3.10</a></li>
@@ -77,24 +77,46 @@ build and correctly identifies the compiler and version.</p>
 
 <h3>Removed throw specifications</h3>
 
-<p>STLplus has always had exception specifications,
-e.g. throw(exception1,exception2), after function declarations so that
-both the compiler and user know what exceptions the function can
-throw.</p>
+<p>STLplus has always had throw specifications (also known as
+exception specifications), e.g. throw(exception1,exception2), after
+function declarations so that both the compiler and user know what
+exceptions the function can throw.</p>
 
-<p>However, in C++11 the use of exception specifications is
+<p>However, in C++11 the use of throw specifications is
 deprecated. This started to show up as compiler warnings in gcc
 v7.2. I have decided to go with the spirit of C++11 and removed all of
-the exception specifications from STLplus. Where possible in the
+the throw specifications from STLplus. Where possible in the
 headers I have turned them into a comment so there is still some user
   information about what exceptions might be thrown by a function.</p>
 
-<p>I have left exception specifications on exceptions derived from
-system exceptions because otherwise I was seeing compiler errors on
-older compilers - the derivative had a different exception
-specification than the base class.</p>
+<p>I have left throw specifications on exception classes derived from
+system exceptions because otherwise I was seeing compiler errors due
+to the derivative having a different throw specification than its base
+class.</p>
 
 <h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
+
+<h3>Scrapped support for old compilers</h3>
+
+<p>Traditionally, the STLplus code has been littered with macros to
+allow for differences in support for C++ features between
+compilers. This was always difficult to maintain. The fixes are
+localised in each library to a single header called
+&lt;library&gt;_fixes.hpp.</p>
+
+<p>I have decided to scrap support for old compilers that require
+these work-arounds. These are:</p>
+
+<ul>
+  <li>Visual Studio v6</li>
+  <li>Borland v5.5</li>
+  <li>gcc v2.xx</li>
+</ul>
+
+<p>This decision has enabled significant simplifications to the code
+and now nearly all the fixes are gone from the code - it is almost
+exactly the same on all platforms and all compilers. It is a relief at
+last to see C++ standardisation reaching this point.</p>
 
 <h3>Added at() and at_pointer() methods to containers/hash</h3>
 
