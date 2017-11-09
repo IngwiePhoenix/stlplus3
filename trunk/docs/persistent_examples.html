@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - Data Persistence Examples</title>
+<title>STLplus C++ Library Collection - Data Persistence Examples</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -13,9 +13,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -716,7 +714,7 @@ should never use knowledge of the internals of the superclass. This convention
 is easy to follow: call the dump/restore method of the immediate superclass
 first, then dump/restore the subclass-specific data.</p>
 
-<p>The STLplus approach to persistence of Polymorphic classes requires that every subclass 
+<p>The STLplus approach to persistence of Polymorphic classes requires that every subclass
 be registered with the dump_context or restore_context before the dump or restore operation
 commences. Furthermore, where there are many polymorphic types being handled, the order of
 registration must be the same for the restore operation as it was for the dump operation.</p>

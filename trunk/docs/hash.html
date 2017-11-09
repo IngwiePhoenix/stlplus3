@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - containers/hash.hpp - A Chained Hash Table Container</title>
+<title>STLplus C++ Library Collection - containers/hash.hpp - A Chained Hash Table Container</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -13,9 +13,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -94,7 +92,7 @@ struct hash_string
 {
   unsigned operator()(const std::string&amp; s) const
   {
-    ... 
+    ...
   }
 };
 </pre>
@@ -300,7 +298,7 @@ iterator insert(const K&amp; key);
 </pre>
 
 <p>This insert method adds a new key/data pair to the hash, but this time with a default-contructed
-data field. If the key is already present in the hash, then the new value replaces the old value. 
+data field. If the key is already present in the hash, then the new value replaces the old value.
 The insert method returns an iterator to the new element so that it can be inspected or its data
 field modified.</p>
 

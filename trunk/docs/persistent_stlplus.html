@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - persistence/persistent_stlplus.hpp - Data Persistence for the STLplus Containers</title>
+<title>STLplus C++ Library Collection - persistence/persistent_stlplus.hpp - Data Persistence for the STLplus Containers</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -13,9 +13,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -121,7 +119,7 @@ implementation is one line of code.</p>
 
 <p><strong>Note:</strong>The function passed as a parameter <em>must</em> have only two parameters - the context
 and the data. To pass a function that takes extra parameters, wrap those functions in a wrapper
-function, like the stlplus::dump_string_int_int_triple and stlplus::restore_string_int_int_triple functions above. 
+function, like the stlplus::dump_string_int_int_triple and stlplus::restore_string_int_int_triple functions above.
 These functions can be used in a higher-level data structure, whereas the stlplus::dump_pair and
 stlplus:restore_pair cannot because they take more than two parameters.</p>
 
@@ -262,7 +260,7 @@ collection.</p>
 
 <pre class="cpp">
 template&lt;typename T1, typename T2, typename T3, typename D1, typename D2, typename D3&gt;
-void stlplus::dump_triple(stlplus::dump_context&amp;, const stlplus::triple&lt;T1,T2,T3&gt;&amp; data, 
+void stlplus::dump_triple(stlplus::dump_context&amp;, const stlplus::triple&lt;T1,T2,T3&gt;&amp; data,
                  D1 stlplus::dump_fn1, D2 stlplus::dump_fn2, D3 stlplus::dump_fn3)
   throw(stlplus::persistent_dump_failed);
 
@@ -307,7 +305,7 @@ collection.</p>
 
 <pre class="cpp">
 template&lt;typename T1, typename T2, typename T3, typename T4, typename D1, typename D2, typename D3, typename D4&gt;
-void stlplus::dump_foursome(stlplus::dump_context&amp;, const stlplus::foursome&lt;T1,T2,T3,T4&gt;&amp; data, 
+void stlplus::dump_foursome(stlplus::dump_context&amp;, const stlplus::foursome&lt;T1,T2,T3,T4&gt;&amp; data,
                    D1 stlplus::dump_fn1, D2 stlplus::dump_fn2, D3 stlplus::dump_fn3, D4 stlplus::dump_fn4)
   throw(stlplus::persistent_dump_failed);
 

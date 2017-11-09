@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - subsystems/message_handler.hpp - A General-Purpose Error Handler</title>
+<title>STLplus C++ Library Collection - subsystems/message_handler.hpp - A General-Purpose Error Handler</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -14,9 +14,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -218,7 +216,7 @@ World!".</p>
 them. Arguments are specified in the message file by the substitution strings "@0", "@1" etc. The
 index number (0, 1 etc.) refers to the order in which the arguments are passed to the message
 printing functions. Note that they are numbered from zero, not from one. There is no limit to the
-number of arguments that can be substituted and the index number can have more than one digit (e.g. 
+number of arguments that can be substituted and the index number can have more than one digit (e.g.
 "@10"). The use of numbered arguments was chosen in preference to C-style substitutions because it
 allows a message to be reworded in a different order without changing the source code. This becomes
 particularly useful for multi-lingual support since different human languages will be worded with
@@ -390,7 +388,7 @@ is used as the arguments to substitute into the message. For example, here's the
 general form of the simple informational message handler:</p>
 
 <pre class="cpp">
-bool message_handler::information(const std::string&amp; id, 
+bool message_handler::information(const std::string&amp; id,
                                   const std::vector&lt;std::string&gt;&amp; args)
   throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
 </pre>
@@ -443,7 +441,7 @@ message handlers.</p>
 
 <p>The error functions can throw an extra stlplus::message_handler_limit_error
 exception if the error limit is reached. The fatal functions always throw a
-stlplus::message_handler_fatal_error exception.</p> 
+stlplus::message_handler_fatal_error exception.</p>
 
 
 <h2 id="plaintext">Printing Plain Text</h2>

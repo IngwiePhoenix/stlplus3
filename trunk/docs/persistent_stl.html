@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - persistence/persistent_stl.hpp - Data Persistence for the STL Classes</title>
+<title>STLplus C++ Library Collection - persistence/persistent_stl.hpp - Data Persistence for the STL Classes</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -13,9 +13,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -171,7 +169,7 @@ void stlplus::restore_basic_string(stlplus::restore_context&amp;, std::basic_str
 void stlplus::dump_string(stlplus::dump_context&amp;, const std::string&amp; data)
   throw(stlplus::persistent_dump_failed);
 
-void stlplus::restore_string(stlplus::restore_context&amp;, std::string&amp; data) 
+void stlplus::restore_string(stlplus::restore_context&amp;, std::string&amp; data)
   throw(stlplus::persistent_restore_failed);
 </pre>
 
@@ -181,7 +179,7 @@ std::basic_string which can be used to represent strings of any character width.
 <p>The second pair of functions are non-templatised functions for the persistence of std::string -
 the specialisation of std::basic_string for 8-bit characters.</p>
 
-<p><strong>Note:</strong>The 'standard' type std::wstring is not supported because it is too weakly defined. 
+<p><strong>Note:</strong>The 'standard' type std::wstring is not supported because it is too weakly defined.
 It is ostensibly the Unicode string, which requires a minimum of 21 bits. On Windows wstring is only
 16 bits wide so is actually UTF-16 encoded Unicode. On Gnu/Linux, wstring is 32 bits wide and therefore
 is unencoded UCS-4. Since UTF-16 and UCS-4 are not compatible and are not easily convertible, it is
@@ -440,7 +438,7 @@ void stlplus::restore_complex(stlplus::restore_context&amp;, std::complex&lt;T&g
 </pre>
 
 <p>This pair of functions are templatised functions for the persistence of a complex containing an
-element of any class and takes as its third parameter the function for managing the contained type. 
+element of any class and takes as its third parameter the function for managing the contained type.
 For example, for a complex of int, the element functions would be stlplus::dump_int and
 stlplus::restore_int.</p>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>STLplus Library Collection - subsystems/cli_parser.hpp - A General-Purpose Command-Line Parser</title>
+<title>STLplus C++ Library Collection - subsystems/cli_parser.hpp - A General-Purpose Command-Line Parser</title>
 <link rel="icon" href="plus.png" type="image/png"/>
 <meta name="Author" content="Andy Rushton"/>
 <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
@@ -14,9 +14,7 @@
 <div id="header">
 
 <div id="headerBanner">
-<h1>The
-<span style="color:red">S</span><span style="color:blue">T</span><span style="color:green">L</span><span style="color:#ecec80">plus</span>
-C++ Library Collection</h1>
+<h1>STLplus C++ Library Collection</h1>
 </div>
 
 <div id="headerNavigation">
@@ -324,7 +322,7 @@ public:
 
   cli_definition(const std::string&amp; name,
                  stlplus::cli_kind_t kind,
-                 stlplus::cli_mode_t mode, 
+                 stlplus::cli_mode_t mode,
                  const std::string&amp; message,
                  const std::string&amp; default_value = std::string());
 };
@@ -791,7 +789,7 @@ int main (int argc, char* argv[])
     }
     else if (parser.name(i) == "create")
     {
-      // create a new library 
+      // create a new library
 
       // This demonstrates how to handle a value-mode argument. First, detect
       // that the option has been specified as with the above switch-mode
