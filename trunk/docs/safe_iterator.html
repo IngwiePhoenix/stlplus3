@@ -125,34 +125,34 @@ class stlplus::safe_iterator
 {
 public:
   // construct a null iterator
-  safe_iterator(void) throw();
+  safe_iterator(void);
 
   // construct a valid iterator from the owner node's master iterator
-  safe_iterator(const master_iterator&lt;O,N&gt;&amp;) throw();
+  safe_iterator(const master_iterator&lt;O,N&gt;&amp;);
 
   // comparison - used to create comparison operators for putting
   // iterators into maps and hashes
-  bool equal(const safe_iterator&lt;O,N&gt;&amp; right) const throw();
-  int compare(const safe_iterator&lt;O,N&gt;&amp; right) const throw();
+  bool equal(const safe_iterator&lt;O,N&gt;&amp; right) const;
+  int compare(const safe_iterator&lt;O,N&gt;&amp; right) const;
 
   // dereference
-  N&amp; operator*(void) const throw(null_dereference,end_dereference);
-  N* operator-&gt;(void) const throw(null_dereference,end_dereference);
+  N&amp; operator*(void) const;
+  N* operator-&gt;(void) const;
 
   // a null iterator is one that has not been initialised with a value yet
   // i.e. you just declared it but didn't assign to it
-  bool null(void) const throw();
+  bool null(void) const;
 
   // an end iterator is one that points to the end element of the list of nodes
   // in STL conventions this is one past the last valid element and must not be dereferenced
-  bool end(void) const throw();
+  bool end(void) const;
 
   // a valid iterator is one that can be dereferenced
   // i.e. non-null and non-end
-  bool valid(void) const throw();
+  bool valid(void) const;
 
   // called by the owner class to check the rules
-  void assert_valid(const O* owner) const throw(wrong_object,null_dereference,end_dereference);
+  void assert_valid(const O* owner) const;
 };
 </pre>
 

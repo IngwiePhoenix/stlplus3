@@ -68,12 +68,10 @@ dump_to_file/restore_from_file:</p>
 
 <pre class="cpp">
 template&lt;typename T, class D&gt;
-void stlplus::dump_to_file(const T&amp; source, const std::string&amp; filename, D dump_fn, dump_context::installer installer)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_to_file(const T&amp; source, const std::string&amp; filename, D dump_fn, dump_context::installer installer);
 
 template&lt;typename T, class R&gt;
-void stlplus::restore_from_file(const std::string&amp; filename, T&amp; result, R restore_fn, restore_context::installer installer)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_from_file(const std::string&amp; filename, T&amp; result, R restore_fn, restore_context::installer installer);
 </pre>
 
 <p>To dump a data structure to a file, simply call dump_to_file with the first argument being the
@@ -102,12 +100,10 @@ string:</p>
 
 <pre class="cpp">
 template&lt;typename T, class D&gt;
-void stlplus::dump_to_string(const T&amp; source, std::string&amp; result, D dump_fn, dump_context::installer installer)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_to_string(const T&amp; source, std::string&amp; result, D dump_fn, dump_context::installer installer);
 
 template&lt;typename T, class R&gt;
-void stlplus::restore_from_string(const std::string&amp; source, T&amp; result, R restore_fn, restore_context::installer installer)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_from_string(const std::string&amp; source, T&amp; result, R restore_fn, restore_context::installer installer);
 </pre>
 
 <p>This is very similar to the previous section's file-based persistence,
@@ -137,12 +133,10 @@ common ones of files and in-memory strings.</p>
 
 <pre class="cpp">
 template&lt;typename T, class D&gt;
-void stlplus::dump_to_device(const T&amp; source, std::ostream&amp; result, D dump_fn, dump_context::installer installer)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_to_device(const T&amp; source, std::ostream&amp; result, D dump_fn, dump_context::installer installer);
 
 template&lt;typename T, class R&gt;
-void stlplus::restore_from_device(std::istream&amp; source, T&amp; result, R restore_fn, restore_context::installer installer)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_from_device(std::istream&amp; source, T&amp; result, R restore_fn, restore_context::installer installer);
 </pre>
 
 <p>To dump a data structure to an output device, simply call dump_to_device

@@ -206,7 +206,7 @@ truncates the value to fit the type, changing its value. The default is for chec
 method actually looks like:</p>
 
 <pre class="cpp">
-short inf::to_short(bool check = false) const throw(std::overflow_error)
+short inf::to_short(bool check = false) const
 </pre>
 
 
@@ -400,11 +400,9 @@ hash format ("12#12345") which allows the use of any base from base 2 to base
 std::string to_string(const inf&amp; i,
                       unsigned radix = 10,
                       radix_display_t display = radix_c_style_or_hash,
-                      unsigned width = 0)
-  throw(std::invalid_argument);
+                      unsigned width = 0);
 
-inf to_inf(const std::string&amp;, unsigned radix = 0)
-  throw(std::invalid_argument);
+inf to_inf(const std::string&amp;, unsigned radix = 0);
 </pre>
 
 <p>Note that these are non-member functions. See the string_utilities

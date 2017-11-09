@@ -108,8 +108,7 @@ Start with the simplest constructor:</p>
 <pre class="cpp">
 message_handler::message_handler(std::ostream&amp; device,
                                  unsigned limit = 0,
-                                 bool show = true)
-  throw();
+                                 bool show = true);
 </pre>
 
 <p>The <em>device</em> argument is an IOStream output device which is used as the
@@ -152,8 +151,7 @@ next section. The modified constructor looks like this:</p>
 message_handler::message_handler(std::ostream&amp; device,
                                  const std::string&amp; message_file,
                                  unsigned limit = 0,
-                                 bool show = true)
-  throw(stlplus::message_handler_read_error);
+                                 bool show = true);
 </pre>
 
 <p>The only difference is that this constructor takes the name of a message file as its second
@@ -169,8 +167,7 @@ href="#message_files">Handling Message Files</a>.</p>
 Each file is added to the message handler by the add_message_file function:</p>
 
 <pre class="cpp">
-void message_handler::add_message_file(const std::string&amp; message_file)
-  throw(stlplus::message_handler_read_error);
+void message_handler::add_message_file(const std::string&amp; message_file);
 </pre>
 
 <p>The message file will be read into the message handler and the messages stored ready for use. If
@@ -278,13 +275,13 @@ apart from the column number.</p>
 <p>The default formats can be overridden by the set_****_format functions:</p>
 
 <pre class="cpp">
-void message_handler::set_information_format(const std::string&amp; format) throw();
-void message_handler::set_context_format(const std::string&amp; format) throw();
-void message_handler::set_supplement_format(const std::string&amp; format) throw();
-void message_handler::set_warning_format(const std::string&amp; format) throw();
-void message_handler::set_error_format(const std::string&amp; format) throw();
-void message_handler::set_fatal_format(const std::string&amp; format) throw();
-void message_handler::set_position_format(const std::string&amp; format) throw();
+void message_handler::set_information_format(const std::string&amp; format);
+void message_handler::set_context_format(const std::string&amp; format);
+void message_handler::set_supplement_format(const std::string&amp; format);
+void message_handler::set_warning_format(const std::string&amp; format);
+void message_handler::set_error_format(const std::string&amp; format);
+void message_handler::set_fatal_format(const std::string&amp; format);
+void message_handler::set_position_format(const std::string&amp; format);
 </pre>
 
 <p><strong>Note:</strong> at present there is no sanity check on the format strings. It is up to you to get
@@ -389,8 +386,7 @@ general form of the simple informational message handler:</p>
 
 <pre class="cpp">
 bool message_handler::information(const std::string&amp; id,
-                                  const std::vector&lt;std::string&gt;&amp; args)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                  const std::vector&lt;std::string&gt;&amp; args);
 </pre>
 
 <p>The first field is the ID of the message to print and the second is the set
@@ -403,23 +399,19 @@ make life easier in the majority of cases, short-cut forms are provided for 0
 to 3 argument messages. For informational messages these are:</p>
 
 <pre class="cpp">
-bool message_handler::information(const std::string&amp; id)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+bool message_handler::information(const std::string&amp; id);
 
 bool message_handler::information(const std::string&amp; id,
-                                  const std::string&amp; arg1)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                  const std::string&amp; arg1);
 
 bool message_handler::information(const std::string&amp; id,
                                   const std::string&amp; arg1,
-                                  const std::string&amp; arg2)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                  const std::string&amp; arg2);
 
 bool message_handler::information(const std::string&amp; id,
                                   const std::string&amp; arg1,
                                   const std::string&amp; arg2,
-                                  const std::string&amp; arg3)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                  const std::string&amp; arg3);
 </pre>
 
 <p>Each of these functions also has a positional equivalent. The position is
@@ -430,8 +422,7 @@ placed before the id parameter.</p>
 <pre class="cpp">
 bool message_handler::information(const position&amp;,
                                   const std::string&amp; id,
-                                  const std::vector&lt;std::string&gt;&amp; args)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                  const std::vector&lt;std::string&gt;&amp; args);
 </pre>
 
 <p>There are similar methods for 0, 1, 2 and 3 arguments as above.</p>
@@ -517,8 +508,7 @@ permutations.</p>
 
 <pre class="cpp">
 void message_handler::push_context (const std::string&amp; id,
-                                    const std::vector&lt;std::string&gt;&amp; args)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                    const std::vector&lt;std::string&gt;&amp; args);
 </pre>
 
 <p>This is the general form for simple messages.</p>
@@ -541,8 +531,7 @@ when it goes out of scope. An example of the auto_push_context method is:</p>
 
 <pre class="cpp">
 stlplus::message_context message_handler::auto_push_context(const std::string&amp; id,
-                                                            const std::vector&lt;std::string&gt;&amp; args)
-  throw(stlplus::message_handler_id_error,stlplus::message_handler_format_error);
+                                                            const std::vector&lt;std::string&gt;&amp; args);
 </pre>
 
 <p>In use the return object should be assigned to a local variable. When that

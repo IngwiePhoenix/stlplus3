@@ -526,8 +526,8 @@ else if (s2.null())
   simple pointer. In fact there are two variants of this:</p>
 
 <pre class="cpp">
-T&amp; smart_ptr::operator*(void) throw(stlplus::null_dereference);
-const T&amp; smart_ptr::operator*(void) const throw(stlplus::null_dereference);
+T&amp; smart_ptr::operator*(void);
+const T&amp; smart_ptr::operator*(void) const;
 </pre>
 
 <p>In other words, if you dereference a non-const smart_ptr you get a non-const reference to the
@@ -542,8 +542,8 @@ const T&amp; smart_ptr::operator*(void) const throw(stlplus::null_dereference);
   in one go, use the -&gt; operator. There are two forms of this too:</p>
 
 <pre class="cpp">
-T* smart_ptr::operator-&gt;(void) throw(stlplus::null_dereference);
-const T* smart_ptr::operator-&gt;(void) const throw(stlplus::null_dereference);
+T* smart_ptr::operator-&gt;(void);
+const T* smart_ptr::operator-&gt;(void) const;
 </pre>
 
 <p>So, if you dereference a non-const smart_ptr you get a pointer to a non-const
@@ -560,8 +560,8 @@ const T* smart_ptr::operator-&gt;(void) const throw(stlplus::null_dereference);
 
 <pre class="cpp">
 void smart_ptr::set_value(const T&amp; data);
-T&amp; smart_ptr::value(void) throw(stlplus::null_dereference);
-const T&amp; smart_ptr::value(void) const throw(stlplus::null_dereference);
+T&amp; smart_ptr::value(void);
+const T&amp; smart_ptr::value(void) const;
 </pre>
 
 <p>The set_value method allows the contents of a smart pointer to be changed:</p>
@@ -585,10 +585,10 @@ const T* smart_ptr::pointer(void) const;
 
 <p><strong>Hint:</strong> The pointer() function does not throw an exception, so it is
   unlike the operator-&gt; form in that way. If the smart pointer is null, then
-  it returns a null simple pointer.</p>
+  it returns a null pointer.</p>
 
 <p>To show how these operators are used, consider the previous smart pointer
-  to a sring examples:</p>
+  to a string examples:</p>
 
 <pre class="cpp">
 *s1 += " 1, 2, 3";
@@ -713,8 +713,8 @@ s2.clear_unique();
   suggested by Ellis and Stroustrup in "The Annotated LRM". The
   solution is to require the user to always provide a virtual
   <code>clone</code> method for every polymorphic
-  class/ The clone method makes a copy using <code>new</code> and the
-  correct copy constructor for its own class, returning the result as
+  class. The clone method makes a copy using <code>new</code> and the
+  correct copy constructor for its own derivative class, returning the result as
   a pointer to the base class. Each derived class overloads this
   function with its own variant which copies its own type. Thus the
   copy operation is now virtual (since the clone method is virtual)

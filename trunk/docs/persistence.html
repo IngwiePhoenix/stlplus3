@@ -161,11 +161,9 @@ for string. Two sets of functions are written, one for dumping and one for resto
 here are the dump/restore functions for std::string:</p>
 
 <pre class="cpp">
-void stlplus::dump_string(stlplus::dump_context&amp;, const std::string&amp; data)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_string(stlplus::dump_context&amp;, const std::string&amp; data);
 
-void stlplus::restore_string(stlplus::restore_context&amp;, std::string&amp; data)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_string(stlplus::restore_context&amp;, std::string&amp; data);
 </pre>
 
 <p>The persistence functions for container templates take an extra parameter - the name of a
@@ -174,12 +172,10 @@ functions for vector:</p>
 
 <pre class="cpp">
 template&lt;typename T, typename D&gt;
-void stlplus::dump_vector(stlplus::dump_context&amp;, const std::vector&lt;T&gt;&amp; data, D dump_fn)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_vector(stlplus::dump_context&amp;, const std::vector&lt;T&gt;&amp; data, D dump_fn);
 
 template&lt;typename T, typename R&gt;
-void stlplus::restore_vector(stlplus::restore_context&amp;, std::vector&lt;T&gt;&amp; data, R restore_fn)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_vector(stlplus::restore_context&amp;, std::vector&lt;T&gt;&amp; data, R restore_fn);
 </pre>
 
 <p>Note how there is a final parameter dump_fn/restore_fn. In use, these must be provided with the
@@ -195,24 +191,22 @@ stlplus::dump_vector(context, data, stlplus::dump_string);
 
 <pre class="cpp">
 template&lt;typename T, typename D&gt;
-void stlplus::dump_list(stlplus::dump_context&amp;, const std::list&lt;T&gt;&amp; data, D dump_fn)
-  throw(stlplus::persistent_dump_failed);
+void stlplus::dump_list(stlplus::dump_context&amp;, const std::list&lt;T&gt;&amp; data, D dump_fn);
 
 template&lt;typename T, typename R&gt;
-void stlplus::restore_list(stlplus::restore_context&amp;, std::list&lt;T&gt;&amp; data, R restore_fn)
-  throw(stlplus::persistent_restore_failed);
+void stlplus::restore_list(stlplus::restore_context&amp;, std::list&lt;T&gt;&amp; data, R restore_fn);
 </pre>
 
 <p>However, the last parameter - the dump_fn and restore_fn - must be only two-parameter functions.
 This means you need to wrap the existing dump_vector call into a specialisation function:</p>
 
 <pre class="cpp">
-void dump_string_vector(stlplus::dump_context&amp;, const std::vector&lt;std::string&gt;&amp; data) throw(stlplus::persistent_dump_failed)
+void dump_string_vector(stlplus::dump_context&amp;, const std::vector&lt;std::string&gt;&amp; data)
 {
   stlplus::dump_vector(context, data, stlplus::dump_string);
 }
 
-void restore_string_vector(stlplus::restore_context&amp;, std::vector&lt;std::string&gt;&amp; data) throw(stlplus::persistent_restore_failed)
+void restore_string_vector(stlplus::restore_context&amp;, std::vector&lt;std::string&gt;&amp; data)
 {
   stlplus::restore_vector(context, data, stlplus::restore_string);
 }
@@ -229,12 +223,12 @@ stlplus::dump_list(context, data, dump_string_vector);
 level of data structure.</p>
 
 <pre class="cpp">
-void dump_string_vector_list(stlplus::dump_context&amp;, const std::list&lt;std::vector&lt;std::string&gt; &gt;&amp; data) throw(stlplus::persistent_dump_failed)
+void dump_string_vector_list(stlplus::dump_context&amp;, const std::list&lt;std::vector&lt;std::string&gt; &gt;&amp; data)
 {
   stlplus::dump_list(context, data, stlplus::dump_string_vector);
 }
 
-void restore_string_vector_list(stlplus::restore_context&amp;, std::list&lt;std::vector&lt;std::string&gt; &gt;&amp; data) throw(stlplus::persistent_restore_failed)
+void restore_string_vector_list(stlplus::restore_context&amp;, std::list&lt;std::vector&lt;std::string&gt; &gt;&amp; data)
 {
   stlplus::restore_list(context, data, stlplus::restore_string_vector);
 }

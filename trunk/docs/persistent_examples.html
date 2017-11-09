@@ -611,8 +611,8 @@ must provide for all subclasses to be made persistent:</p>
 class stlplus::persistent
 {
 public:
-  virtual void dump(stlplus::dump_context&amp;) const throw(persistent_dump_failed) = 0;
-  virtual void restore(stlplus::restore_context&amp;)  throw(persistent_restore_failed) = 0;
+  virtual void dump(stlplus::dump_context&amp;) const = 0;
+  virtual void restore(stlplus::restore_context&amp;)  = 0;
   virtual stlplus::persistent* clone(void) const = 0;
   virtual ~persistent(void) {}
 };
@@ -670,11 +670,11 @@ public:
   {
     return new base(*this);
   }
-  void dump(stlplus::dump_context&amp; context) const throw(stlplus::persistent_dump_failed)
+  void dump(stlplus::dump_context&amp; context) const
   {
     stlplus::dump_int(context,m_value);
   }
-  void restore(stlplus::restore_context&amp; context) throw(stlplus::persistent_restore_failed)
+  void restore(stlplus::restore_context&amp; context)
   {
     stlplus::restore_int(context,m_value);
   }</strong>
@@ -694,12 +694,12 @@ public:
   {
     return new derived(*this);
   }
-  void dump(stlplus::dump_context&amp; context) const throw(stlplus::persistent_dump_failed)
+  void dump(stlplus::dump_context&amp; context) const
   {
     base::dump(context);
     stlplus::dump_string(context,m_image);
   }
-  void restore(stlplus::restore_context&amp; context) throw(stlplus::persistent_restore_failed)
+  void restore(stlplus::restore_context&amp; context)
   {
     base::restore(context);
     stlplus::restore_string(context,m_image);

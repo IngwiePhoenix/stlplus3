@@ -323,7 +323,7 @@ for hashes because they are unsorted and therefore there is no meaningful interp
 of keys.So there is no equivalent erase method in the hash.</p>
 
 <pre class="cpp">
-const T&amp; operator[] (const K&amp; key) const throw(std::out_of_range);
+const T&amp; operator[] (const K&amp; key) const;
 T&amp; operator[] (const K&amp; key);
 </pre>
 
@@ -353,7 +353,7 @@ change the contents of the hash. If you don't want this, either guard against
 it using present() or avoid the issue completely by using find().</p>
 
 <pre class="cpp">
-const T&amp; at(const K&amp; key) const throw(std::out_of_range);
+const T&amp; at(const K&amp; key) const;
 T* at_pointer(const K&amp; key) const;
 </pre>
 

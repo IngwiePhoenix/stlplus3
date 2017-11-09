@@ -208,24 +208,24 @@ caption
 
 thead
 {
+  font-weight: bold;
+  background-color: #eee;
 }
 
 th, td
 {
   text-align: left;
   padding: 3px 5px;
+  border: 1px solid #ccc;
 }
 
 th
 {
-  font-weight: bold;
-  border: 1px solid #ffffff;
 }
 
 
 td
 {
-  border: 1px solid #ccc;
 }
 
 tr

@@ -347,8 +347,8 @@ else if (s2.null())
 pointer. In fact there are two variants of this:</p>
 
 <pre class="cpp">
-T&amp; simple_ptr::operator*(void) throw(stlplus::null_dereference);
-const T&amp; simple_ptr::operator*(void) const throw(stlplus::null_dereference);
+T&amp; simple_ptr::operator*(void);
+const T&amp; simple_ptr::operator*(void) const;
 </pre>
 
 <p>In other words, if you dereference a non-const simple_ptr you get a non-const reference to the
@@ -363,8 +363,8 @@ null, use one of the logical tests to check first.</p>
 in one go, use the -&gt; operator. There are two forms of this too:</p>
 
 <pre class="cpp">
-T* simple_ptr::operator-&gt;(void) throw(stlplus::null_dereference);
-const T* simple_ptr::operator-&gt;(void) const throw(stlplus::null_dereference);
+T* simple_ptr::operator-&gt;(void);
+const T* simple_ptr::operator-&gt;(void) const;
 </pre>
 
 <p>So, if you dereference a non-const simple_ptr you get a pointer to a non-const
@@ -381,8 +381,8 @@ explicit access to the pointer or value pointed to:</p>
 
 <pre class="cpp">
 void simple_ptr::set_value(const T&amp; data);
-T&amp; simple_ptr::value(void) throw(stlplus::null_dereference);
-const T&amp; simple_ptr::value(void) const throw(stlplus::null_dereference);
+T&amp; simple_ptr::value(void);
+const T&amp; simple_ptr::value(void) const;
 </pre>
 
 <p>The set_value method allows the contents of a simple pointer to be changed:</p>
