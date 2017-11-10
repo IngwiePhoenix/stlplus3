@@ -1,366 +1,366 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STLplus C++ Library Collection - containers/digraph.hpp - A Directed Graph Container</title>
-    <link rel="icon" href="plus.png" type="image/png"/>
-    <meta name="Author" content="Andy Rushton"/>
-    <link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
-    <link rel="stylesheet" media="print" type="text/css" href="print.css"/>
-  </head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STLplus C++ Library Collection - containers/digraph.hpp - A Directed Graph Container</title>
+<link rel="icon" href="plus.png" type="image/png"/>
+<meta name="Author" content="Andy Rushton"/>
+<link rel="stylesheet" media="screen" type="text/css" href="screen.css"/>
+<link rel="stylesheet" media="print" type="text/css" href="print.css"/>
+</head>
 
-  <body>
+<body>
 
-    <div id="header">
+<div id="header">
 
-      <div id="headerBanner">
-        <h1>STLplus C++ Library Collection</h1>
-      </div>
+<div id="headerBanner">
+<h1>STLplus C++ Library Collection</h1>
+</div>
 
-      <div id="headerNavigation">
-        <p>
-          <a href="http://stlplus.sourceforge.net/">Website</a>
-          <a href="index.html">Collection</a>
-          <a href="containers.html">Library</a>
-        </p>
-      </div>
-
-
-    </div>
-
-    <div id="document">
-
-      <div id="documentTitle">
-        <h1>containers/digraph.hpp<br>A Directed Graph Container</h1>
-      </div>
-
-      <div id="documentNavigation">
-
-        <ul>
-          <li class="external"><a href="digraph_hpp.html">Browse Header digraph.hpp</a></li>
-          <li class="internal"><a href="#introduction">Introduction</a></li>
-          <li class="internal"><a href="#instantiation">Instantiation</a></li>
-          <li class="internal"><a href="#basics">Basics - Nodes, Arcs and Iterators</a></li>
-          <li class="internal"><a href="#supplementary">Supplementary Data Types</a></li>
-          <li class="internal"><a href="#graph">Whole Graph Operations</a></li>
-          <li class="internal"><a href="#nodes">Basic Node Functions</a></li>
-          <li class="internal"><a href="#arcs">Basic Arc Functions</a></li>
-          <li class="internal"><a href="#adjacency">Adjacency Functions</a></li>
-          <li class="internal"><a href="#sort">Topographical Sort Algorithms</a></li>
-          <li class="internal"><a href="#paths">Path Algorithms</a></li>
-          <li class="internal"><a href="#exceptions">Exceptions</a></li>
-          <li class="internal"><a href="#example">Example</a></li>
-        </ul>
-
-      </div>
-
-      <h2 id="introduction">Introduction</h2>
-
-      <p>This component is an STL-like template class which implements a
-        directed-graph data structure. A directed graph is a graph in which all arcs
-        have a direction associated with them - so can be interrogated as to which node
-        they come from and which they go to.</p>
-
-      <p>This document assumes you know what a graph is and only deals with how to use
-        the digraph class.</p>
+<div id="headerNavigation">
+<p>
+<a href="http://stlplus.sourceforge.net/">Website</a>
+<a href="index.html">Collection</a>
+<a href="containers.html">Library</a>
+</p>
+</div>
 
 
-      <h2 id="instantiation">Instantiation</h2>
+</div>
 
-      <p>The digraph template takes two types:</p>
+<div id="document">
 
-      <pre class="cpp">
+<div id="documentTitle">
+<h1>containers/digraph.hpp<br>A Directed Graph Container</h1>
+</div>
+
+<div id="documentNavigation">
+
+<ul>
+<li class="external"><a href="digraph_hpp.html">Browse Header digraph.hpp</a></li>
+<li class="internal"><a href="#introduction">Introduction</a></li>
+<li class="internal"><a href="#instantiation">Instantiation</a></li>
+<li class="internal"><a href="#basics">Basics - Nodes, Arcs and Iterators</a></li>
+<li class="internal"><a href="#supplementary">Supplementary Data Types</a></li>
+<li class="internal"><a href="#graph">Whole Graph Operations</a></li>
+<li class="internal"><a href="#nodes">Basic Node Functions</a></li>
+<li class="internal"><a href="#arcs">Basic Arc Functions</a></li>
+<li class="internal"><a href="#adjacency">Adjacency Functions</a></li>
+<li class="internal"><a href="#sort">Topographical Sort Algorithms</a></li>
+<li class="internal"><a href="#paths">Path Algorithms</a></li>
+<li class="internal"><a href="#exceptions">Exceptions</a></li>
+<li class="internal"><a href="#example">Example</a></li>
+</ul>
+
+</div>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>This component is an STL-like template class which implements a
+directed-graph data structure. A directed graph is a graph in which all arcs
+have a direction associated with them - so can be interrogated as to which node
+they come from and which they go to.</p>
+
+<p>This document assumes you know what a graph is and only deals with how to use
+the digraph class.</p>
+
+
+<h2 id="instantiation">Instantiation</h2>
+
+<p>The digraph template takes two types:</p>
+
+<pre class="cpp">
 template&lt;typename NT, typename AT&gt; class digraph
-      </pre>
+</pre>
 
-      <p>The first type is the type to be stored on the nodes of the graph, whilst the
-        second is the type to be stored on the arcs (yes, you can store data on the
-        arcs!). You must specify both types - so if you are not going to be storing data
-        on, say, the arcs, then it is recommended that you put a bool or a char in that
-        space, since these are the smallest types. Sadly, you cannot use void as a
-        zero-byte type here (shame!).</p>
+<p>The first type is the type to be stored on the nodes of the graph, whilst the
+second is the type to be stored on the arcs (yes, you can store data on the
+arcs!). You must specify both types - so if you are not going to be storing data
+on, say, the arcs, then it is recommended that you put a bool or a char in that
+space, since these are the smallest types. Sadly, you cannot use void as a
+zero-byte type here (shame!).</p>
 
-      <p>For example, here is how to create a variable called graph which is a digraph
-        with a string on the node and an int on the arc:</p>
+<p>For example, here is how to create a variable called graph which is a digraph
+with a string on the node and an int on the arc:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph&lt;string,int&gt; graph;
-      </pre>
+</pre>
 
 
-      <h2 id="basics">Basics - Nodes, Arcs and Iterators</h2>
+<h2 id="basics">Basics - Nodes, Arcs and Iterators</h2>
 
-      <p>The digraph class is written in the style of all STL containers. It is a
-        templatised class which is traversed and manipulated using iterators. The main
-        difference with digraph is that it contains two different kinds of object - the
-        node and the arc - and each one has its own iterator. The convention throughout
-        the class is to place the prefix arc_ on any function or iterator which acts on
-        an arc, but there is no prefix on node functions or iterators. Thus, the
-        following four iterators are provided:</p>
+<p>The digraph class is written in the style of all STL containers. It is a
+templatised class which is traversed and manipulated using iterators. The main
+difference with digraph is that it contains two different kinds of object - the
+node and the arc - and each one has its own iterator. The convention throughout
+the class is to place the prefix arc_ on any function or iterator which acts on
+an arc, but there is no prefix on node functions or iterators. Thus, the
+following four iterators are provided:</p>
 
-      <ul>
-        <li>iterator - a node iterator</li>
-        <li>const_iterator - a node iterator for const graphs</li>
-        <li>arc_iterator - an arc iterator</li>
-        <li>const_arc_iterator - an arc iterator for const graphs</li>
-      </ul>
+<ul>
+<li>iterator - a node iterator</li>
+<li>const_iterator - a node iterator for const graphs</li>
+<li>arc_iterator - an arc iterator</li>
+<li>const_arc_iterator - an arc iterator for const graphs</li>
+</ul>
 
-      <p>The iterators act very much like list iterators - they can be traversed
-        forwards using the ++ operator from the begin() to the end() to visit every node
-        or arc in the graph. The traversal order, however, is undefined. You may find it
-        is the creation order but this is a coincidence and may change if I redesign the
-        class, so do not rely on this coincidence in your code.</p>
+<p>The iterators act very much like list iterators - they can be traversed
+forwards using the ++ operator from the begin() to the end() to visit every node
+or arc in the graph. The traversal order, however, is undefined. You may find it
+is the creation order but this is a coincidence and may change if I redesign the
+class, so do not rely on this coincidence in your code.</p>
 
-      <p>Thus, to visit every node, you use a standard iteration loop, STL-style:</p>
+<p>Thus, to visit every node, you use a standard iteration loop, STL-style:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 for (digraph&lt;string,int&gt;::iterator node = graph.begin(); node != graph.end(); node++)
   std::cerr &lt;&lt; *node &lt;&lt; std::endl;
-      </pre>
+</pre>
 
-      <p>The other point about this loop is that the graph's node type (NT), in this
-        case a string, is accessed by simply dereferencing the iterator as if it was a
-        pointer, as with any other STL iterator.</p>
+<p>The other point about this loop is that the graph's node type (NT), in this
+case a string, is accessed by simply dereferencing the iterator as if it was a
+pointer, as with any other STL iterator.</p>
 
-      <p>The iterators remain valid when you add nodes to a graph - again, like the
-        list class. Furthermore, removing nodes only invalidates iterators pointing to
-        the removed node. However, be aware that deleting a node also deletes all arcs
-        attached to it. You cannot have unconnected arcs in a digraph.</p>
+<p>The iterators remain valid when you add nodes to a graph - again, like the
+list class. Furthermore, removing nodes only invalidates iterators pointing to
+the removed node. However, be aware that deleting a node also deletes all arcs
+attached to it. You cannot have unconnected arcs in a digraph.</p>
 
-      <p>A similar loop can be used to visit all the arcs in the graph:</p>
+<p>A similar loop can be used to visit all the arcs in the graph:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 for (digraph&lt;string,int&gt;::arc_iterator arc = graph.arc_begin(); arc != graph.arc_end(); arc++)
   std::cerr &lt;&lt; *arc &lt;&lt; std::endl;
-      </pre>
+</pre>
 
-      <p>Note that the arc_iterator and the access functions arc_begin() and arc_end()
-        have the arc_ prefix. In this case, dereferencing the arc_iterator returns the
-        NA type, in this case an int.</p>
+<p>Note that the arc_iterator and the access functions arc_begin() and arc_end()
+have the arc_ prefix. In this case, dereferencing the arc_iterator returns the
+NA type, in this case an int.</p>
 
-      <p>When an iterator is first declared, but not assigned to, it is known as a <em>null</em>
-        iterator. Then, when it is assigned to so that it points to a node in the tree, it is known as a
-        <em>valid</em> iterator. If the iterator is made to point off the edge of the tree - for example the
-        parent of the root node, then it becomes an <em>end</em> iterator.</p>
+<p>When an iterator is first declared, but not assigned to, it is known as a <em>null</em>
+iterator. Then, when it is assigned to so that it points to a node in the tree, it is known as a
+<em>valid</em> iterator. If the iterator is made to point off the edge of the tree - for example the
+parent of the root node, then it becomes an <em>end</em> iterator.</p>
 
-      <p>This concept is similar to STL iterators like the list iterator, where an iterator that walks off
-        the end of the list becomes an end iterator. However, the STL has no concept of a null iterator and
-        therefore no direct equivalent of a valid iterator.</p>
+<p>This concept is similar to STL iterators like the list iterator, where an iterator that walks off
+the end of the list becomes an end iterator. However, the STL has no concept of a null iterator and
+therefore no direct equivalent of a valid iterator.</p>
 
-      <p>The iterator has a set of functions for testing these
-        conditions:</p>
+<p>The iterator has a set of functions for testing these
+conditions:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool iterator::null(void) const;
 bool iterator::end(void) const;
 bool iterator::valid(void) const;
-      </pre>
+</pre>
 
-      <p>Note that these functions are members of the iterator class, not the digraph
-        class.</p>
+<p>Note that these functions are members of the iterator class, not the digraph
+class.</p>
 
-      <p>Exactly one of these conditions will always be true, since the iterator must be one of null, end
-        or valid.</p>
+<p>Exactly one of these conditions will always be true, since the iterator must be one of null, end
+or valid.</p>
 
-      <p>Only a valid iterator can be dereferenced to access the node type T pointed to by the iterator.
-        Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
-        section below on <a href="#exceptions">Exceptions</a> to see which.</p>
+<p>Only a valid iterator can be dereferenced to access the node type T pointed to by the iterator.
+Any attempt to dereference an end or null iterator will result in an exception being thrown. See the
+section below on <a href="#exceptions">Exceptions</a> to see which.</p>
 
-      <p>STLplus iterators are slightly different to STL iterators in that
-        they know which graph object they belong to. The graph is referred
-        to as the "owner" of the iterator. An iterator can only be used with
-        it's owner. Using an iterator with the wrong graph throws an
-        exception (specifically, the stlplus::wrong_object exception).</p>
+<p>STLplus iterators are slightly different to STL iterators in that
+they know which graph object they belong to. The graph is referred
+to as the "owner" of the iterator. An iterator can only be used with
+it's owner. Using an iterator with the wrong graph throws an
+exception (specifically, the stlplus::wrong_object exception).</p>
 
-      <p>You can test whether a graph owns an iterator with the owns method:</p>
+<p>You can test whether a graph owns an iterator with the owns method:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool digraph::owns(iterator);
-      </pre>
+</pre>
 
-      <h2 id="supplementary">Supplementary Data Types</h2>
+<h2 id="supplementary">Supplementary Data Types</h2>
 
-      <p>Many of the functions in digraph return data structures or take data
-        structures as arguments. These data structures are all STL vectors of iterators
-        or other data structures. This section simply defines these types and explains
-        how they are used.</p>
+<p>Many of the functions in digraph return data structures or take data
+structures as arguments. These data structures are all STL vectors of iterators
+or other data structures. This section simply defines these types and explains
+how they are used.</p>
 
-      <h3>arc_vector and const_arc_vector</h3>
+<h3>arc_vector and const_arc_vector</h3>
 
-      <pre class="cpp">
+<pre class="cpp">
 typedef std::vector&lt;arc_iterator&gt; arc_vector;
 typedef std::vector&lt;const_arc_iterator&gt; const_arc_vector;
-      </pre>
+</pre>
 
-      <p>An arc_vector is a collection of arcs, used to represent either the set of
-        arcs entering or leaving a node or a path between nodes. When used in the first
-        form - as a set of arcs - the ordering is irrelevant, it should be treated just
-        as a set. When used as a path, the ordering is significant because it represents
-        the sequence of arcs that need to be traversed to get from one node to the
-        other.</p>
+<p>An arc_vector is a collection of arcs, used to represent either the set of
+arcs entering or leaving a node or a path between nodes. When used in the first
+form - as a set of arcs - the ordering is irrelevant, it should be treated just
+as a set. When used as a path, the ordering is significant because it represents
+the sequence of arcs that need to be traversed to get from one node to the
+other.</p>
 
-      <p>Note that a const_arc_vector is a vector of const_arc_iterator: it does not
-        mean that the vector itself is constant.</p>
+<p>Note that a const_arc_vector is a vector of const_arc_iterator: it does not
+mean that the vector itself is constant.</p>
 
-      <p>To convert a const_arc_vector to an arc_vector or vice versa, two functions
-        are provided:</p>
+<p>To convert a const_arc_vector to an arc_vector or vice versa, two functions
+are provided:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_arc_vector constify(const arc_vector&amp;) const;
 arc_vector deconstify(const const_arc_vector&amp;) const;
-      </pre>
+</pre>
 
-      <p>So, the constify function adds the const_ to the data type, whilst the
-        deconstify function removes it.</p>
+<p>So, the constify function adds the const_ to the data type, whilst the
+deconstify function removes it.</p>
 
-      <h3>path_vector and const_path_vector</h3>
+<h3>path_vector and const_path_vector</h3>
 
-      <p>A path_vector is a set of paths, each of which is a set of arcs represented
-        as an arc_vector as defined
-        above. So this means that a path_vector is a vector of vectors of arc_iterator.
-        The type declarations are:</p>
+<p>A path_vector is a set of paths, each of which is a set of arcs represented
+as an arc_vector as defined
+above. So this means that a path_vector is a vector of vectors of arc_iterator.
+The type declarations are:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 typedef std::vector&lt;arc_vector&gt; path_vector;
 typedef std::vector&lt;const_arc_vector&gt; const_path_vector;
-      </pre>
+</pre>
 
-      <p>These types are only used to store paths as the name suggests. In this case
-        the vector is again acting as a set in that there is no particular ordering to
-        the paths. For example, the all_paths function returns a path_vector containing
-        all the paths between two nodes in no particular order.</p>
+<p>These types are only used to store paths as the name suggests. In this case
+the vector is again acting as a set in that there is no particular ordering to
+the paths. For example, the all_paths function returns a path_vector containing
+all the paths between two nodes in no particular order.</p>
 
-      <p>As before, the const and non-const forms can be inter-converted.</p>
+<p>As before, the const and non-const forms can be inter-converted.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_path_vector constify(const path_vector&amp;) const;
 path_vector deconstify(const const_path_vector&amp;) const;
-      </pre>
+</pre>
 
-      <h3>node_vector and const_node_vector</h3>
+<h3>node_vector and const_node_vector</h3>
 
-      <p>A node vector is a collection of nodes. Again, it is most usually treated as
-        a set of nodes. For example, the adjacent_inputs function gives the set of all
-        nodes connected to the inputs of a node as a node_vector. The declarations are:</p>
+<p>A node vector is a collection of nodes. Again, it is most usually treated as
+a set of nodes. For example, the adjacent_inputs function gives the set of all
+nodes connected to the inputs of a node as a node_vector. The declarations are:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 typedef std::vector&lt;iterator&gt; node_vector;
 typedef std::vector&lt;const_iterator&gt; const_node_vector;
 const_node_vector constify(const node_vector&amp;) const;
 node_vector deconstify(const const_node_vector&amp;) const;
-      </pre>
+</pre>
 
-      <h3>arc_select_fn</h3>
+<h3>arc_select_fn</h3>
 
-      <p>This final supplementary type declaration in digraph is a bit different
-        because it represents the type of a callback function:</p>
+<p>This final supplementary type declaration in digraph is a bit different
+because it represents the type of a callback function:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 typedef bool (*arc_select_fn) (const digraph&lt;NT,AT&gt;&amp;, const_arc_iterator);
-      </pre>
+</pre>
 
-      <p>The arc_select_fn type defines the type profile for an 'arc select' function
-        which is used in the path algorithms to restrict the search for paths to a set
-        of arcs. Basically, the select function is called for each arc which is
-        considered a candidate for a path. If the select function returns true, then the
-        arc is traversed in trying to form a path. If, however, the select function
-        returns false, the arc will be ignored and therefore cannot form part of a
-        path.</p>
+<p>The arc_select_fn type defines the type profile for an 'arc select' function
+which is used in the path algorithms to restrict the search for paths to a set
+of arcs. Basically, the select function is called for each arc which is
+considered a candidate for a path. If the select function returns true, then the
+arc is traversed in trying to form a path. If, however, the select function
+returns false, the arc will be ignored and therefore cannot form part of a
+path.</p>
 
-      <p>The arguments to the select function are the graph and an arc iterator. If
-        the arc is tagged with selection information, that information can be accessed
-        by simply dereferencing the arc iterator. For instance, say we have an arc type
-        that has a select() member function that returns a bool to indicate whether that
-        arc is selected. Then the select function would be written like this:</p>
+<p>The arguments to the select function are the graph and an arc iterator. If
+the arc is tagged with selection information, that information can be accessed
+by simply dereferencing the arc iterator. For instance, say we have an arc type
+that has a select() member function that returns a bool to indicate whether that
+arc is selected. Then the select function would be written like this:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool select_arc(const digraph&lt;my_node,my_arc&gt;&amp; graph,digraph&lt;my_node,my_arc&gt;::const_arc_iterator arc)
 {
   return arc-&gt;select();
 }
-      </pre>
+</pre>
 
-      <p>Sometimes the selection
-        information is on the nodes instead. Since the select function has access to the
-        graph as well as the iterator, it is possible to access either the <em>to</em> or
-        the <em>from</em> nodes of the arc and retrieve the selection information from
-        there. For example, lets say we have a node data structure with a member
-        function called select() which simply returns a bool. Lets also say that an arc
-        is selected only if it is connected <em>to</em> a selected node. This is how you'd
-        write the selection function:</p>
+<p>Sometimes the selection
+information is on the nodes instead. Since the select function has access to the
+graph as well as the iterator, it is possible to access either the <em>to</em> or
+the <em>from</em> nodes of the arc and retrieve the selection information from
+there. For example, lets say we have a node data structure with a member
+function called select() which simply returns a bool. Lets also say that an arc
+is selected only if it is connected <em>to</em> a selected node. This is how you'd
+write the selection function:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool select_arc_from_node(const digraph&lt;my_node,my_arc&gt;&amp; graph,digraph&lt;my_node,my_arc&gt;::const_arc_iterator arc)
 {
   return graph.arc_to(arc)-&gt;select();
 }
-      </pre>
+</pre>
 
-      <p>Once you have defined a select function, it can be used as the final argument
-        in any of the path functions. If you omit the function or set the pointer
-        (because the arc_select_fn type defines a function pointer) to null, then all
-        arcs are selected. To pass a function pointer as an argument, simply use the
-        name of the function with no parentheses. For example:</p>
+<p>Once you have defined a select function, it can be used as the final argument
+in any of the path functions. If you omit the function or set the pointer
+(because the arc_select_fn type defines a function pointer) to null, then all
+arcs are selected. To pass a function pointer as an argument, simply use the
+name of the function with no parentheses. For example:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph&lt;my_node,my_arc&gt;::path_vector paths = graph.all_paths(from,to,select_arc_from_node);
-      </pre>
+</pre>
 
 
-      <h2 id="graph">Whole Graph Operations</h2>
+<h2 id="graph">Whole Graph Operations</h2>
 
-      <p>The only operations on a whole graph are the copy constructor, assignment and
-        the clear function:</p>
+<p>The only operations on a whole graph are the copy constructor, assignment and
+the clear function:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph(const digraph&lt;NT,AT&gt;&amp;);
 digraph&lt;NT,AT&gt;&amp; operator=(const digraph&lt;NT,AT&gt;&amp;);
 void clear(void);
-      </pre>
+</pre>
 
-      <p>The copy constructor and assignment both make copies of the graph,
-        maintaining the connectivity of the arcs. Clever huh? The clear function, as its
-        name suggests, trashes the entire contents of the graph.</p>
+<p>The copy constructor and assignment both make copies of the graph,
+maintaining the connectivity of the arcs. Clever huh? The clear function, as its
+name suggests, trashes the entire contents of the graph.</p>
 
 
-      <h2 id="nodes">Basic Node Functions</h2>
+<h2 id="nodes">Basic Node Functions</h2>
 
-      <h3>Creating a Node - insert</h3>
+<h3>Creating a Node - insert</h3>
 
-      <p>Usually the first function you will use apart from the constructors. You create a node using the insert
-        member function which takes as its argument the NT type of the graph - in this
-        example a string. The return value of the insert function is an iterator pointing
-        to the newly created node. This can then be used as an argument for the
-        arc_insert function - see later.</p>
+<p>Usually the first function you will use apart from the constructors. You create a node using the insert
+member function which takes as its argument the NT type of the graph - in this
+example a string. The return value of the insert function is an iterator pointing
+to the newly created node. This can then be used as an argument for the
+arc_insert function - see later.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 iterator insert(const NT&amp; node_data);
-      </pre>
+</pre>
 
-      <p>For example:</p>
+<p>For example:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph&lt;string,int&gt;::iterator node1 = graph.insert("node1");
 digraph&lt;string,int&gt;::iterator node2 = graph.insert("node2");
-      </pre>
+</pre>
 
-      <h3>Deleting a Node - erase</h3>
+<h3>Deleting a Node - erase</h3>
 
-      <p>When a node is tired of life, or when you believe a node's misdemeanors
-        justify euthanasia, you delete it using the erase function:</p>
+<p>When a node is tired of life, or when you believe a node's misdemeanors
+justify euthanasia, you delete it using the erase function:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 iterator erase(iterator);
-      </pre>
+</pre>
 
-      <p>The iterator passed to the erase function is invalidated by the erasure, as
-        are any other iterators pointing to that node. The erase function returns the
-        iterator to the next node in the iteration sequence or end() if it is the last
-        one. This is so that you can continue an iteration even after erasing a node
-        (again, this is just like the list). For example:</p>
+<p>The iterator passed to the erase function is invalidated by the erasure, as
+are any other iterators pointing to that node. The erase function returns the
+iterator to the next node in the iteration sequence or end() if it is the last
+one. This is so that you can continue an iteration even after erasing a node
+(again, this is just like the list). For example:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 for (digraph&lt;string,int&gt;::iterator node = graph.begin(); node != graph.end(); )
 {
   if (&lt;some condition&gt;)
@@ -368,65 +368,65 @@ for (digraph&lt;string,int&gt;::iterator node = graph.begin(); node != graph.end
   else
     node++;
 }
-      </pre>
+</pre>
 
-      <p>Note that there is no increment in the for loop control part, but the
-        increment is deferred to the body of the loop. If the node is deleted, then the
-        return iterator from the erase function is the next node, otherwise the ++
-        operator is used to increment to the next node.</p>
+<p>Note that there is no increment in the for loop control part, but the
+increment is deferred to the body of the loop. If the node is deleted, then the
+return iterator from the erase function is the next node, otherwise the ++
+operator is used to increment to the next node.</p>
 
-      <p>Deleting a node also deletes all arcs connected to it. It is illegal to have
-        unconnected arcs in a digraph.</p>
+<p>Deleting a node also deletes all arcs connected to it. It is illegal to have
+unconnected arcs in a digraph.</p>
 
-      <h3>Deleting all Nodes - clear</h3>
+<h3>Deleting all Nodes - clear</h3>
 
-      <p>When a digraph is full of junk, just delete all the nodes using the clear
-        function. Since deleting a node deletes all arcs connected to it, this function
-        has the side-effect of deleting all arcs too.</p>
+<p>When a digraph is full of junk, just delete all the nodes using the clear
+function. Since deleting a node deletes all arcs connected to it, this function
+has the side-effect of deleting all arcs too.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void clear(void);
-      </pre>
+</pre>
 
-      <h3>Counting Nodes - empty and size</h3>
+<h3>Counting Nodes - empty and size</h3>
 
-      <p>Sometimes you need to know whether a graph has any nodes in it and if so, how
-        many. Easy - just use one or both of these two functions:</p>
+<p>Sometimes you need to know whether a graph has any nodes in it and if so, how
+many. Easy - just use one or both of these two functions:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool empty(void) const;
 unsigned size(void) const;
-      </pre>
+</pre>
 
-      <p>These functions have no other use - the digraph is not like a vector, so you
-        cannot get a node by its unsigned offset. Note that empty() is not equivalent to
-        size()==0 in terms of performance (it is of course logically equivalent). The
-        empty() function is more efficient.</p>
+<p>These functions have no other use - the digraph is not like a vector, so you
+cannot get a node by its unsigned offset. Note that empty() is not equivalent to
+size()==0 in terms of performance (it is of course logically equivalent). The
+empty() function is more efficient.</p>
 
-      <h3>Iterators - begin and end</h3>
+<h3>Iterators - begin and end</h3>
 
-      <p>The use of iterators has already been covered. The first and last nodes in
-        the iteration sequence are obtained using the begin() and end() functions:</p>
+<p>The use of iterators has already been covered. The first and last nodes in
+the iteration sequence are obtained using the begin() and end() functions:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_iterator begin(void) const;
 iterator begin(void);
 const_iterator end(void) const;
 iterator end(void);
-      </pre>
+</pre>
 
-      <p>Note that these functions have been overloaded so that begin() on a const
-        digraph gives you a const_iterator whereas a begin() on a non-const digraph just
-        gives you an iterator. You need to match the iterator to the context. For
-        example, when passing a digraph to a function which cannot modify it, the
-        convention is to pass it as a const reference. Therefore, within that function,
-        only const_iterator can be used. This const_iterator can only be used to iterate
-        through the graph or to access the contents of a node by dereferencing - and
-        even then it returns a const reference to the contents so you cannot modify the
-        node data. Here's an example function which prints the nodes of a graph and
-        shows how the const-ness is preserved:</p>
+<p>Note that these functions have been overloaded so that begin() on a const
+digraph gives you a const_iterator whereas a begin() on a non-const digraph just
+gives you an iterator. You need to match the iterator to the context. For
+example, when passing a digraph to a function which cannot modify it, the
+convention is to pass it as a const reference. Therefore, within that function,
+only const_iterator can be used. This const_iterator can only be used to iterate
+through the graph or to access the contents of a node by dereferencing - and
+even then it returns a const reference to the contents so you cannot modify the
+node data. Here's an example function which prints the nodes of a graph and
+shows how the const-ness is preserved:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void print_nodes(const digraph&lt;string,int&gt;&amp; graph)
 {
   std::cout &lt;&lt; "  empty: " &lt;&lt; graph.empty() &lt;&lt; std::endl;
@@ -434,194 +434,194 @@ void print_nodes(const digraph&lt;string,int&gt;&amp; graph)
   for (digraph&lt;string,int&gt;::const_iterator node = graph.begin(); node != graph.end(); node++)
     std::cout &lt;&lt; "    - " &lt;&lt; *node;
 }
-      </pre>
+</pre>
 
-      <p>Sometimes you need to store an iterator in another data structure - it is
-        recommended that you always store an iterator and not a const_iterator. The
-        problem then is that you might actually want it to be a const_iterator. It is
-        possible to convert between iterator and const_iterator by using the constify
-        and deconstify methods of the iterator class (Notice that they are methods of
-        the iterator, not the digraph):</p>
+<p>Sometimes you need to store an iterator in another data structure - it is
+recommended that you always store an iterator and not a const_iterator. The
+problem then is that you might actually want it to be a const_iterator. It is
+possible to convert between iterator and const_iterator by using the constify
+and deconstify methods of the iterator class (Notice that they are methods of
+the iterator, not the digraph):</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_iterator iterator::constify(void) const;
 iterator const_iterator::deconstify(void) const;
-      </pre>
+</pre>
 
-      <p>In use, you use them like this:</p>
+<p>In use, you use them like this:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph&lt;string,int&gt;::iterator i = ...;
 digraph&lt;string,int&gt;::const_iterator ci = i.constify();
-      </pre>
+</pre>
 
-      <p>or:</p>
+<p>or:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 digraph&lt;string,int&gt;::const_iterator ci = ...;
 digraph&lt;string,int&gt;::iterator i = ci.deconstify();
-      </pre>
+</pre>
 
-      <h3>Arc access - fanin, input, fanout, output</h3>
+<h3>Arc access - fanin, input, fanout, output</h3>
 
-      <p>The digraph class implements a directed graph, so the arcs connected to each
-        node are split into two groups - the inputs and outputs. There can be any number
-        of inputs and outputs to a node. The number of inputs to a node is the node's
-        fanin and the number of outputs its fanout. Inputs and outputs are acccessed by
-        their integer offset. The following functions are provided for inputs:</p>
+<p>The digraph class implements a directed graph, so the arcs connected to each
+node are split into two groups - the inputs and outputs. There can be any number
+of inputs and outputs to a node. The number of inputs to a node is the node's
+fanin and the number of outputs its fanout. Inputs and outputs are acccessed by
+their integer offset. The following functions are provided for inputs:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 unsigned fanin(const_iterator) const;
 unsigned fanin(iterator);
 const_arc_iterator input(const_iterator, unsigned) const;
 arc_iterator input(iterator, unsigned);
-      </pre>
+</pre>
 
-      <p>The fanin function gives the number of inputs, which can then be used in a
-        loop which counts from 0 to fanin-1. i.e.:</p>
+<p>The fanin function gives the number of inputs, which can then be used in a
+loop which counts from 0 to fanin-1. i.e.:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 for (unsigned i = 0; i &lt; graph.fanin(node); i++)
 {
   arc_iterator arc = graph.input(node, i);
   ...
 }
-      </pre>
+</pre>
 
-      <p>Note that an arc_iterator is retrieved from a non-const digraph, whilst a
-        const_arc_iterator is retrieved from a const digraph.</p>
+<p>Note that an arc_iterator is retrieved from a non-const digraph, whilst a
+const_arc_iterator is retrieved from a const digraph.</p>
 
-      <p>Similarly, the following set of functions can be used to access the output
-        arcs of a node:</p>
+<p>Similarly, the following set of functions can be used to access the output
+arcs of a node:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 unsigned fanout(const_iterator) const;
 unsigned fanout(iterator);
 const_arc_iterator output(const_iterator, unsigned) const;
 arc_iterator output(iterator, unsigned);
-      </pre>
+</pre>
 
-      <h3>Arc access - inputs, outputs</h3>
+<h3>Arc access - inputs, outputs</h3>
 
-      <p>Another way of obtaining the inputs and outputs of a node is as an arc vector.
-        The type declaration for arc_vector is a member of digraph and there are two
-        functions inputs(node) and outputs(node) to get these lists. The function
-        profiles are:</p>
+<p>Another way of obtaining the inputs and outputs of a node is as an arc vector.
+The type declaration for arc_vector is a member of digraph and there are two
+functions inputs(node) and outputs(node) to get these lists. The function
+profiles are:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 arc_vector inputs(const_iterator) const;
 arc_vector outputs(const_iterator) const;
-      </pre>
+</pre>
 
-      <p>Once you have an arc_vector, it can be iteratoed through using the STL list
-        iterator. Remember that each arc in the arc_vector is represented by an arc
-        iterator, so the arc itself is accessed by dereferencing that iterator.</p>
+<p>Once you have an arc_vector, it can be iteratoed through using the STL list
+iterator. Remember that each arc in the arc_vector is represented by an arc
+iterator, so the arc itself is accessed by dereferencing that iterator.</p>
 
-      <h3>Arc access - input_offset, output_offset</h3>
+<h3>Arc access - input_offset, output_offset</h3>
 
-      <p>The remaining arc access functions are utility functions that allow you to
-        find the fanin or fanout index of an arc from a node.</p>
+<p>The remaining arc access functions are utility functions that allow you to
+find the fanin or fanout index of an arc from a node.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 unsigned output_offset(const_iterator from, const_arc_iterator arc) const;
 unsigned output_offset(iterator from, arc_iterator arc);
 unsigned input_offset(const_iterator to, const_arc_iterator arc) const;
 unsigned input_offset(iterator to, arc_iterator arc);
-      </pre>
+</pre>
 
-      <p>The value returned is an index in the range 0..fanin-1 for inputs,
-        0..fanout-1 for outputs. If the arc is not an input or output of the specified
-        node, then the value npos() is returned (that is, digraph&lt;NT,AT&gt;::npos()).
-        Don't blame me for the name, I adopted the name used in the STL string template
-        which serves a similar purpose.</p>
+<p>The value returned is an index in the range 0..fanin-1 for inputs,
+0..fanout-1 for outputs. If the arc is not an input or output of the specified
+node, then the value npos() is returned (that is, digraph&lt;NT,AT&gt;::npos()).
+Don't blame me for the name, I adopted the name used in the STL string template
+which serves a similar purpose.</p>
 
 
-      <h2 id="arcs">Basic Arc Functions</h2>
+<h2 id="arcs">Basic Arc Functions</h2>
 
-      <p>To avoid name conflicts, arc functions have the arc_ prefix. Arcs, like
-        nodes, are referred to by a list iterator which is returned by the arc_insert
-        function. They may also be visited from arc_begin() to arc_end(). Each arc has a
-        <em>from</em> field and a <em>to</em> field which contain the node iterators of the endpoints of
-        the arc. Of course, the arc data can be accessed by simply dereferencing the
-        iterator.</p>
+<p>To avoid name conflicts, arc functions have the arc_ prefix. Arcs, like
+nodes, are referred to by a list iterator which is returned by the arc_insert
+function. They may also be visited from arc_begin() to arc_end(). Each arc has a
+<em>from</em> field and a <em>to</em> field which contain the node iterators of the endpoints of
+the arc. Of course, the arc data can be accessed by simply dereferencing the
+iterator.</p>
 
-      <h3>Creating an Arc - arc_insert</h3>
+<h3>Creating an Arc - arc_insert</h3>
 
-      <p>An arc is created using the arc_insert function. Since it is illegal to have
-        an unconnected arc in a digraph, the nodes it is connected to must be created
-        first. Then the arc is connected at the time of its creation by passing the node
-        iterators to the arc_insert function. Since arcs have a direction, the nodes it
-        is connected to are referred to as the <em>from</em> node and the <em>to</em> node.
-        The final argument of the arc_insert function is the data to be stored on the
-        arc. Since it is common to store data only on the nodes and not on the arcs, the
-        arc data field is optional:</p>
+<p>An arc is created using the arc_insert function. Since it is illegal to have
+an unconnected arc in a digraph, the nodes it is connected to must be created
+first. Then the arc is connected at the time of its creation by passing the node
+iterators to the arc_insert function. Since arcs have a direction, the nodes it
+is connected to are referred to as the <em>from</em> node and the <em>to</em> node.
+The final argument of the arc_insert function is the data to be stored on the
+arc. Since it is common to store data only on the nodes and not on the arcs, the
+arc data field is optional:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 arc_iterator arc_insert(iterator from, iterator to, const AT&amp; arc_data = AT());
-      </pre>
+</pre>
 
-      <p>As with the node iterator, the returned arc_iterator points to the
-        newly-created arc.</p>
+<p>As with the node iterator, the returned arc_iterator points to the
+newly-created arc.</p>
 
-      <h3>Deleting an Arc - arc_erase</h3>
+<h3>Deleting an Arc - arc_erase</h3>
 
-      <p>An arc is deleted using the arc_erase function. As with the node erase
-        function, it returns an arc_iterator to the next arc in the iteration
-        sequence:</p>
+<p>An arc is deleted using the arc_erase function. As with the node erase
+function, it returns an arc_iterator to the next arc in the iteration
+sequence:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 arc_iterator arc_erase(arc_iterator);
-      </pre>
+</pre>
 
-      <p>Deleting the last arc connected to a node does <strong>not</strong> cause the node to
-        be deleted - it is perfectly legal to have floating nodes in a digraph.</p>
+<p>Deleting the last arc connected to a node does <strong>not</strong> cause the node to
+be deleted - it is perfectly legal to have floating nodes in a digraph.</p>
 
-      <h3>Deleting all Arcs - arc_clear</h3>
+<h3>Deleting all Arcs - arc_clear</h3>
 
-      <p>Obvious really:</p>
+<p>Obvious really:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void arc_clear(void);
-      </pre>
+</pre>
 
-      <p>This leaves all the nodes in the digraph floating aimlessly in the void.</p>
+<p>This leaves all the nodes in the digraph floating aimlessly in the void.</p>
 
-      <h3>Counting Arcs - arc_empty, arc_size</h3>
+<h3>Counting Arcs - arc_empty, arc_size</h3>
 
-      <p>The number of arcs can be obtained with the arc_size function or
-        alternatively, the special case of zero arcs can be tested for with the
-        arc_empty function:</p>
+<p>The number of arcs can be obtained with the arc_size function or
+alternatively, the special case of zero arcs can be tested for with the
+arc_empty function:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool arc_empty (void) const;
 unsigned arc_size(void) const;
-      </pre>
+</pre>
 
-      <p>As with the node functions, remember that it is more efficient to test for
-        empty() than to test for size()==0 and that !empty() is more efficient than
-        size()&gt;0.</p>
+<p>As with the node functions, remember that it is more efficient to test for
+empty() than to test for size()==0 and that !empty() is more efficient than
+size()&gt;0.</p>
 
-      <h3>Arc Iterators - arc_begin, arc_end</h3>
+<h3>Arc Iterators - arc_begin, arc_end</h3>
 
-      <p>The first and last arcs in the iteration sequence are obtained using the
-        arc_begin() and arc_end() functions:</p>
+<p>The first and last arcs in the iteration sequence are obtained using the
+arc_begin() and arc_end() functions:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_arc_iterator arc_begin(void) const;
 arc_iterator arc_begin(void);
 const_arc_iterator arc_end(void) const;
 arc_iterator arc_end(void);
-      </pre>
+</pre>
 
-      <p>You then step through the arcs using the ++ operator on the iterator.</p>
+<p>You then step through the arcs using the ++ operator on the iterator.</p>
 
-      <p>Note that these functions have been overloaded so that arc_begin() on a const
-        digraph gives you a const_arc_iterator whereas an arc_begin() on a non-const
-        digraph just gives you an arc_iterator, just as with nodes. Here's an example
-        function which prints the arcs of a graph and shows how the const-ness is
-        preserved:</p>
+<p>Note that these functions have been overloaded so that arc_begin() on a const
+digraph gives you a const_arc_iterator whereas an arc_begin() on a non-const
+digraph just gives you an arc_iterator, just as with nodes. Here's an example
+function which prints the arcs of a graph and shows how the const-ness is
+preserved:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void print_arcs(const digraph&lt;string,int&gt;&amp; graph)
 {
   std::cout &lt;&lt; "  empty: " &lt;&lt; graph.arc_empty() &lt;&lt; std::endl;
@@ -629,321 +629,321 @@ void print_arcs(const digraph&lt;string,int&gt;&amp; graph)
   for (digraph&lt;string,int&gt;::const_arc_iterator arc = graph.arc_begin(); arc != graph.arc_end(); arc++)
     std::cout &lt;&lt; "    - " &lt;&lt; *arc &lt;&lt; std::endl;
 }
-      </pre>
+</pre>
 
-      <h3>Node Access - arc_from, arc_to</h3>
+<h3>Node Access - arc_from, arc_to</h3>
 
-      <p>You can go from an arc to its connected nodes using the arc_from and arc_to
-        functions. Remember that an arc is directed and so goes <em>from</em> a node
-        <em>to</em> another. The arc_from function, obviously (Doh) gives the <em>from</em>
-        node and so on...</p>
+<p>You can go from an arc to its connected nodes using the arc_from and arc_to
+functions. Remember that an arc is directed and so goes <em>from</em> a node
+<em>to</em> another. The arc_from function, obviously (Doh) gives the <em>from</em>
+node and so on...</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_iterator arc_from(const_arc_iterator) const;
 iterator arc_from(arc_iterator);
 const_iterator arc_to(const_arc_iterator) const;
 iterator arc_to(arc_iterator);
-      </pre>
+</pre>
 
-      <h3>Changing Arc Connectivity - arc_move, arc_move_from, arc_move_to and arc_flip</h3>
+<h3>Changing Arc Connectivity - arc_move, arc_move_from, arc_move_to and arc_flip</h3>
 
-      <p>You can change the nodes that an arc is connected to using these
-        functions.</p>
+<p>You can change the nodes that an arc is connected to using these
+functions.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void arc_move(arc_iterator arc, iterator from, iterator to);
 void arc_move_from(arc_iterator arc, iterator from);
 void arc_move_to(arc_iterator arc, iterator to);
 void arc_flip(arc_iterator arc);
-      </pre>
+</pre>
 
-      <p>The arc_move function disconnects the arc from its current from/to nodes and reconnects
-        to a new from/to pair. The arc_move_from function only changes the from node of the
-        arc, leaving the to node untouched. Similarly the arc_move_to function only
-        changes the to node and leaves the from node untouched. Finally, the arc_flip
-        function swaps the from and to nodes so as to flip the arc's direction.</p>
+<p>The arc_move function disconnects the arc from its current from/to nodes and reconnects
+to a new from/to pair. The arc_move_from function only changes the from node of the
+arc, leaving the to node untouched. Similarly the arc_move_to function only
+changes the to node and leaves the from node untouched. Finally, the arc_flip
+function swaps the from and to nodes so as to flip the arc's direction.</p>
 
-      <h2 id="whole">Whole Graph Methods</h2>
+<h2 id="whole">Whole Graph Methods</h2>
 
-      <p>The whole-graph operations allow large-scale manipulations of
-        graphs. At present there is only one whole-graph operation:</p>
+<p>The whole-graph operations allow large-scale manipulations of
+graphs. At present there is only one whole-graph operation:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 void move(digraph&amp; source);
-      </pre>
+</pre>
 
-      <p>This moves the source graph's nodes and arcs into the target
-        graph. The source will be left empty by this move. All iterators to
-        the source graph will become owned by the target graph, so the
-        iterators will continue working and pointing to the same node or arc.</p>
+<p>This moves the source graph's nodes and arcs into the target
+graph. The source will be left empty by this move. All iterators to
+the source graph will become owned by the target graph, so the
+iterators will continue working and pointing to the same node or arc.</p>
 
-      <h2 id="adjacency">Adjacency Functions</h2>
+<h2 id="adjacency">Adjacency Functions</h2>
 
-      <p>Nodes are adjacent if they are connected by an arc. Since digraph is a
-        directed graph, the direction of the arc is significant. For example, if there
-        is an arc from London to Manchester, London is considered adjacent to Manchester,
-        but Manchester is not considered adjacent to London (a principle well
-        understood by the owner of Virgin trains). The following functions
-        allow operations on adjacent nodes. They are simply composite oprations which
-        combine basic node and arc access functions to give a slightly more abstract
-        approach. To put it another way, you can manipulate nodes without having to go
-        via arcs all the time.</p>
+<p>Nodes are adjacent if they are connected by an arc. Since digraph is a
+directed graph, the direction of the arc is significant. For example, if there
+is an arc from London to Manchester, London is considered adjacent to Manchester,
+but Manchester is not considered adjacent to London (a principle well
+understood by the owner of Virgin trains). The following functions
+allow operations on adjacent nodes. They are simply composite oprations which
+combine basic node and arc access functions to give a slightly more abstract
+approach. To put it another way, you can manipulate nodes without having to go
+via arcs all the time.</p>
 
-      <h3>Adjacency test - adjacent, adjacent_arc, adjacent_arcs</h3>
+<h3>Adjacency test - adjacent, adjacent_arc, adjacent_arcs</h3>
 
-      <p>The first function is the test for whether two nodes are adjacent:</p>
+<p>The first function is the test for whether two nodes are adjacent:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool adjacent(const_iterator from, const_iterator to) const;
 bool adjacent(iterator from, iterator to);
-      </pre>
+</pre>
 
-      <p>The next set of functions find which arc makes two nodes adjacent. There is
-        no need to test for adjacency first though, because if the lookup fails, these
-        functions simply return arc_end().</p>
+<p>The next set of functions find which arc makes two nodes adjacent. There is
+no need to test for adjacency first though, because if the lookup fails, these
+functions simply return arc_end().</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_arc_iterator adjacent_arc(const_iterator from, const_iterator to) const;
 arc_iterator adjacent_arc(iterator from, iterator to);
-      </pre>
+</pre>
 
-      <p>There may be any number of arcs connecting two nodes. The following functions return the set of
-        all arcs connecting two nodes. If there are no arcs then the return vector will be zero length.</p>
+<p>There may be any number of arcs connecting two nodes. The following functions return the set of
+all arcs connecting two nodes. If there are no arcs then the return vector will be zero length.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_arc_vector adjacent_arcs(const_iterator from, const_iterator to) const;
 arc_vector adjacent_arcs(iterator from, iterator to);
-      </pre>
+</pre>
 
-      <h3>Adjacency sets - input_adjacencies, output_adjacencies</h3>
+<h3>Adjacency sets - input_adjacencies, output_adjacencies</h3>
 
-      <p>The final set of functions access the set of nodes adjacent to a particular
-        node as a node list. This list can then be traversed using the normal STL list
-        iterators.</p>
+<p>The final set of functions access the set of nodes adjacent to a particular
+node as a node list. This list can then be traversed using the normal STL list
+iterators.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_node_vector input_adjacencies(const_iterator to) const;
 node_vector input_adjacencies(iterator to);
 const_node_vector output_adjacencies(const_iterator from) const;
 node_vector output_adjacencies(iterator from);
-      </pre>
+</pre>
 
 
-      <h2 id="sort">Topographical Sort Algorithms</h2>
+<h2 id="sort">Topographical Sort Algorithms</h2>
 
-      <p>A topographical sort is an ordering of a graph's nodes such that each node is visited after all
-        of its inputs have been visited. It is purely a function of the connectivity of the graph and
-        nothing to do with the data sored in the graph.</p>
+<p>A topographical sort is an ordering of a graph's nodes such that each node is visited after all
+of its inputs have been visited. It is purely a function of the connectivity of the graph and
+nothing to do with the data sored in the graph.</p>
 
-      <p>There are four methods provided for this:</p>
+<p>There are four methods provided for this:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 std::pair&lt;const_node_vector,const_arc_vector&gt; sort(arc_select_fn = 0) const;
 std::pair&lt;node_vector,arc_vector&gt; sort(arc_select_fn = 0);
 
 const_node_vector dag_sort(arc_select_fn = 0) const;
 node_vector dag_sort(arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <p>The <code>sort</code> methods are the full form of the algorithm. It returns two vectors: the
-        first is the sorted set of node iterators in topographical order. The second is the set of iterators
-        to error arcs: these are the arcs that had to be broken to perform the sort. This is because the
-        sort is otherwise impossible in the presence of loops - you cannot visit every node after all of its
-        inputs. If the error arcs vector is empty, that means the graph had no loops and is a Directed
-        Acyclic Graph or DAG.</p>
+<p>The <code>sort</code> methods are the full form of the algorithm. It returns two vectors: the
+first is the sorted set of node iterators in topographical order. The second is the set of iterators
+to error arcs: these are the arcs that had to be broken to perform the sort. This is because the
+sort is otherwise impossible in the presence of loops - you cannot visit every node after all of its
+inputs. If the error arcs vector is empty, that means the graph had no loops and is a Directed
+Acyclic Graph or DAG.</p>
 
-      <p>The <code>dag_sort</code> methods are for cases where you already know that a graph is a DAG, for
-        example because of the way it was constructed. In that case the extra checking of the error arcs is
-        unnecessary. This returns a vector of node iterators in topographical order. If it turns out that
-        the graph is not a DAG (i.e. there are loops), it returns an empty vector.</p>
+<p>The <code>dag_sort</code> methods are for cases where you already know that a graph is a DAG, for
+example because of the way it was constructed. In that case the extra checking of the error arcs is
+unnecessary. This returns a vector of node iterators in topographical order. If it turns out that
+the graph is not a DAG (i.e. there are loops), it returns an empty vector.</p>
 
-      <h3>Arc selection callback</h3>
+<h3>Arc selection callback</h3>
 
-      <p>The sort methods just presented and all the path algorithms in later sections take an arc_select
-        callback which allows arcs to be selected or ignored for consideration in the sort or path. The
-        selection callback function is applied to each arc in the traversal. If no function is provided
-        (i.e. a null pointer is passed, which is the default) all of the arcs in the graph are selected.</p>
+<p>The sort methods just presented and all the path algorithms in later sections take an arc_select
+callback which allows arcs to be selected or ignored for consideration in the sort or path. The
+selection callback function is applied to each arc in the traversal. If no function is provided
+(i.e. a null pointer is passed, which is the default) all of the arcs in the graph are selected.</p>
 
-      <p>If you want to use arc selection you should create a function with the type profile given by the
-        arc_select_fn type. The select function is passed both the graph and the arc iterator so that it is
-        possible to select an arc on the basis of the nodes it is connected to. Within the function, write
-        code that returns false if the arc is to be ignored and true when selected.</p>
+<p>If you want to use arc selection you should create a function with the type profile given by the
+arc_select_fn type. The select function is passed both the graph and the arc iterator so that it is
+possible to select an arc on the basis of the nodes it is connected to. Within the function, write
+code that returns false if the arc is to be ignored and true when selected.</p>
 
-      <p>For example, consider a graph with an integer value on each arc:</p>
+<p>For example, consider a graph with an integer value on each arc:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 typedef digraph&lt;string,int&gt; sgraph;
-      </pre>
+</pre>
 
-      <p>You could make forward ards natural and backward arcs negative. The following selection callback
-        will then select only the forward arcs:</p>
+<p>You could make forward ards natural and backward arcs negative. The following selection callback
+will then select only the forward arcs:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool select_natural (const sgraph&amp; graph, sgraph::const_arc_iterator arc)
 {
   return *arc &gt;= 0;
 }
-      </pre>
+</pre>
 
-      <p>This is applied by using the function name as a parameter to the sort methods:</p>
+<p>This is applied by using the function name as a parameter to the sort methods:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 sgraph::node_vector sort = graph.dag_sort(select_natural);
-      </pre>
+</pre>
 
-      <p>After this call, the node vector will be the topographical sort order of the forward arcs only.</p>
+<p>After this call, the node vector will be the topographical sort order of the forward arcs only.</p>
 
-      <p>Note: I used a callback because the STL-like predicate idea wasn't working
-        for me... I kept hitting against the limitations of templates, or at least their
-        limitations as implemented by gcc and by VC++.</p>
+<p>Note: I used a callback because the STL-like predicate idea wasn't working
+for me... I kept hitting against the limitations of templates, or at least their
+limitations as implemented by gcc and by VC++.</p>
 
 
-      <h2 id="paths">Path Algorithms</h2>
+<h2 id="paths">Path Algorithms</h2>
 
-      <p>A path is a series of arcs - you can use arc_from and arc_to to convert
-        that into a series of nodes. The arc_from of the first arc in the path is the
-        start node of the path, whilst the arc_to of the last arc is the end node of the
-        path. A path must have at least one arc in it, but an empty arc_vector can be
-        returned by some of these functions to indicate an error.</p>
+<p>A path is a series of arcs - you can use arc_from and arc_to to convert
+that into a series of nodes. The arc_from of the first arc in the path is the
+start node of the path, whilst the arc_to of the last arc is the end node of the
+path. A path must have at least one arc in it, but an empty arc_vector can be
+returned by some of these functions to indicate an error.</p>
 
-      <p>As with the topographical sorts in the last section, arcs can be selected or ignored as
-        candidates for forming paths by using a select callback which is passed as an optional parameter to
-        all of the path functions.</p>
+<p>As with the topographical sorts in the last section, arcs can be selected or ignored as
+candidates for forming paths by using a select callback which is passed as an optional parameter to
+all of the path functions.</p>
 
-      <h3>Paths between two nodes - path_exists, all_paths</h3>
+<h3>Paths between two nodes - path_exists, all_paths</h3>
 
-      <p>The simplest path function is the test of whether two nodes are connected by
-        a path:</p>
+<p>The simplest path function is the test of whether two nodes are connected by
+a path:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 bool path_exists(const_iterator from, const_iterator to, arc_select_fn = 0) const;
 bool path_exists(iterator from, iterator to, arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <p>Nuff said?</p>
+<p>Nuff said?</p>
 
-      <p>You can also get the set of all paths between two nodes.</p>
+<p>You can also get the set of all paths between two nodes.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_path_vector all_paths(const_iterator from, const_iterator to, arc_select_fn = 0) const;
 path_vector all_paths(iterator from, iterator to, arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <p>The return value is a vector of paths, where an empty return vector means that there are no paths
-        between the nodes.</p>
+<p>The return value is a vector of paths, where an empty return vector means that there are no paths
+between the nodes.</p>
 
-      <p>Note: path_exists() is faster than calling all_paths() and
-        then checking for an empty result. However, calling both functions is only a
-        good idea if there is a high false rate expected. In other words if you write
-        this:</p>
+<p>Note: path_exists() is faster than calling all_paths() and
+then checking for an empty result. However, calling both functions is only a
+good idea if there is a high false rate expected. In other words if you write
+this:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 ...
 if (graph.path_exists(from,to))
 {
   digraph&lt;my_node,my_arc&gt;::path_vector paths = graph.all_paths(from,to);
   ...
 }
-      </pre>
+</pre>
 
-      <p>This is worthwhile if there are few paths so that the path_exists nearly
-        always returns false, but inefficient if the path is likely to exist. In that
-        case it is better to rewrite:</p>
+<p>This is worthwhile if there are few paths so that the path_exists nearly
+always returns false, but inefficient if the path is likely to exist. In that
+case it is better to rewrite:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 ...
 digraph&lt;my_node,mo_arc&gt;::path_vector paths = graph.all_paths(from,to);
 if (!paths.empty())
 {
   ...
 }
-      </pre>
+</pre>
 
-      <h3>Paths to/from a single node - reachable_nodes, reaching_nodes</h3>
+<h3>Paths to/from a single node - reachable_nodes, reaching_nodes</h3>
 
-      <p>The next set of path algorithms are functions which calculate the set of all
-        nodes in the graph which are reachable from a particular node (i.e. there exists
-        an output path) and a complementary set which calculate the set of nodes which
-        can reach that node (i.e. there exists a path to the node's inputs). I refer to
-        the former set as the reachable nodes and the latter as the reaching nodes.</p>
+<p>The next set of path algorithms are functions which calculate the set of all
+nodes in the graph which are reachable from a particular node (i.e. there exists
+an output path) and a complementary set which calculate the set of nodes which
+can reach that node (i.e. there exists a path to the node's inputs). I refer to
+the former set as the reachable nodes and the latter as the reaching nodes.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_node_vector reachable_nodes(const_iterator from, arc_select_fn = 0) const;
 node_vector reachable_nodes(iterator from, arc_select_fn = 0);
 const_node_vector reaching_nodes(const_iterator to, arc_select_fn = 0) const;
 node_vector reaching_nodes(iterator to, arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <h3>Shortest paths - shortest_path, shortest_paths</h3>
+<h3>Shortest paths - shortest_path, shortest_paths</h3>
 
-      <p>The shortest path algorithms analyse the paths between nodes and calculate
-        the shortest. This is an unweighted algorith which simply counts the number of
-        arcs to get the path length. However, it is more efficient than calling
-        all_nodes and then selecting the shortest.</p>
+<p>The shortest path algorithms analyse the paths between nodes and calculate
+the shortest. This is an unweighted algorith which simply counts the number of
+arcs to get the path length. However, it is more efficient than calling
+all_nodes and then selecting the shortest.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_arc_vector shortest_path(const_iterator from, const_iterator to, arc_select_fn = 0) const;
 arc_vector shortest_path(iterator from, iterator to, arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <p>The functions return a single path. If that path is empty, then no paths were
-        found between the nodes specified. Otherwise, the size of the vector is the path
-        length.</p>
+<p>The functions return a single path. If that path is empty, then no paths were
+found between the nodes specified. Otherwise, the size of the vector is the path
+length.</p>
 
-      <p>A variant of the shortest path function is the shortest_paths function
-        (notice the plural). This calculates the set of all reachable nodes form the
-        specified node and then calculates the shortest path for each of those nodes.
-        The algorithm is, however, more efficient than calling reachable_nodes followed
-        by repeated calls to shortest_path.</p>
+<p>A variant of the shortest path function is the shortest_paths function
+(notice the plural). This calculates the set of all reachable nodes form the
+specified node and then calculates the shortest path for each of those nodes.
+The algorithm is, however, more efficient than calling reachable_nodes followed
+by repeated calls to shortest_path.</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 const_path_vector shortest_paths(const_iterator from, arc_select_fn = 0) const;
 path_vector shortest_paths(iterator from, arc_select_fn = 0);
-      </pre>
+</pre>
 
-      <p>The result is a vector of paths in no particular order. To find which
-        reachable node each path referes to, you can find the arc_to node of the last
-        arc in the path. There is one path in the path_vector for each reachable nodes,
-        so the set of arc_to nodes for the path_vector is also the set of all reachable
-        nodes.</p>
+<p>The result is a vector of paths in no particular order. To find which
+reachable node each path referes to, you can find the arc_to node of the last
+arc in the path. There is one path in the path_vector for each reachable nodes,
+so the set of arc_to nodes for the path_vector is also the set of all reachable
+nodes.</p>
 
-      <h2 id="exceptions">Exceptions</h2>
+<h2 id="exceptions">Exceptions</h2>
 
-      <p>There are three exceptions that can be thrown by digraph, all indicating a
-        misuse of the iterators:</p>
+<p>There are three exceptions that can be thrown by digraph, all indicating a
+misuse of the iterators:</p>
 
-      <dl>
+<dl>
 
-        <dt><strong>null_dereference</strong> - logic_error</dt>
+<dt><strong>null_dereference</strong> - logic_error</dt>
 
-        <dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
-          be sure that iterators are non-null before using the <code>*</code> or <code>-&gt;</code>
-          operators.</dd>
+<dd>This is used to indicate that an iterator which is null has been dereferenced. You should always
+be sure that iterators are non-null before using the <code>*</code> or <code>-&gt;</code>
+operators.</dd>
 
-        <dt><strong>end_dereference</strong> - logic_error</dt>
+<dt><strong>end_dereference</strong> - logic_error</dt>
 
-        <dd>This is used to indicate that an iterator that is pointing to an end element has been
-          dereferenced. In line with STL conventions, the end iterator points to the element after the last
-          element in a container, so dereferencing such an iterator is illegal (the memory pointed to will be
-          unconstructed).</dd>
+<dd>This is used to indicate that an iterator that is pointing to an end element has been
+dereferenced. In line with STL conventions, the end iterator points to the element after the last
+element in a container, so dereferencing such an iterator is illegal (the memory pointed to will be
+unconstructed).</dd>
 
-        <dt><strong>wrong_object</strong> - logic_error</dt>
+<dt><strong>wrong_object</strong> - logic_error</dt>
 
-        <dd>This is used to indicate that an iterator which was created by one container has been used in a
-          different container. For example, if you have two graph objects in your program, create an iterator
-          from one graph and then use it in another, then this will throw the wrong_object exception.</dd>
+<dd>This is used to indicate that an iterator which was created by one container has been used in a
+different container. For example, if you have two graph objects in your program, create an iterator
+from one graph and then use it in another, then this will throw the wrong_object exception.</dd>
 
-      </dl>
+</dl>
 
-      <p>These exceptions are common to all STLplus iterators and are explained in
-        the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
+<p>These exceptions are common to all STLplus iterators and are explained in
+the STLplus <a href="exceptions.html">exceptions policy</a>.</p>
 
 
-      <h2 id="example">Example</h2>
+<h2 id="example">Example</h2>
 
-      <p>Here's an example which just shows how all the bits fit together:</p>
+<p>Here's an example which just shows how all the bits fit together:</p>
 
-      <pre class="cpp">
+<pre class="cpp">
 #include "digraph.hpp"
 #include "persistent_contexts.hpp"
 #include "persistent_digraph.hpp"
@@ -1245,11 +1245,11 @@ int main(int argc, char* argv[])
     std::cout &lt;&lt; "... test FAILED" &lt;&lt; std::endl;
   return result ? 0 : 1;
 }
-      </pre>
+</pre>
 
-      <p>And here's the output:</p>
+<p>And here's the output:</p>
 
-      <pre class="terminal">
+<pre class="terminal">
 STLplus version 3.2, Windows, gcc v3.4.5 (mingw-vista special r3), debug
 ### initial graph:
 == Graph ====================
