@@ -21,7 +21,7 @@ body
 
 #header
 {
-  background-color: #ccd;
+  background-color: #d3ccd3;
   margin: 0px;
   padding: 0px;
 /*
@@ -89,6 +89,11 @@ body
 
 /* Headers */
 
+h1, h2, h3, h4, h5, h6, caption
+{
+  color: #690068;
+}
+
 h1
 {
   margin: 10px 0;
@@ -115,18 +120,24 @@ h3
 
 /* lists */
 
-#document ul
-{
-  margin: 0 0 0 20px;
-}
-
+#document ul,
 #document ol
 {
-  margin: 0 0 0 20px;
+  margin: 0;
+  padding: 0;
+}
+
+#document li>ul,
+#document li>ol
+{
+  margin: 0;
+  padding: 0;
 }
 
 #document li
 {
+  margin: 0 0 0 24px;
+  padding: 0;
 }
 
 li.file
@@ -170,7 +181,7 @@ a:link, a:visited
 
 a:hover, a:active
 {
-  color: #669;
+  color: #690068;
 }
 
 /* Definition List */
@@ -236,6 +247,7 @@ tr
 
 pre
 {
+  padding-left: 20px;
   font-family: monospace;
   font-size: small;
 }
