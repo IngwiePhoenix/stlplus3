@@ -310,19 +310,25 @@ digraph&lt;my_node,my_arc&gt;::path_vector paths = graph.all_paths(from,to,selec
 
 <h2 id="graph">Whole Graph Operations</h2>
 
-<p>The only operations on a whole graph are the copy constructor, assignment and
-the clear function:</p>
+<p>The operations on a whole graph are the copy constructor, assignment, move method and clear method:</p>
 
 <pre class="cpp">
-digraph(const digraph&lt;NT,AT&gt;&amp;);
-digraph&lt;NT,AT&gt;&amp; operator=(const digraph&lt;NT,AT&gt;&amp;);
+digraph(const digraph&lt;NT,AT&gt;&amp; source);
+digraph&lt;NT,AT&gt;&amp; operator=(const digraph&lt;NT,AT&gt;&amp; source);
+void move(digraph&amp; source);
 void clear(void);
 </pre>
 
-<p>The copy constructor and assignment both make copies of the graph,
-maintaining the connectivity of the arcs. Clever huh? The clear function, as its
-name suggests, trashes the entire contents of the graph.</p>
+<p>The copy constructor and assignment both make copies of the source graph,
+maintaining the connectivity of the arcs.</p>
 
+<p>The move method moves the source graph's nodes and arcs into the target
+graph. The source will be left empty by this move. All iterators to
+the source graph will become owned by the target graph, so the
+iterators will continue working and pointing to the same node or arc.</p>
+
+<p>The clear function, as its name suggests, removes the entire
+contents of the graph.</p>
 
 <h2 id="nodes">Basic Node Functions</h2>
 
@@ -663,20 +669,6 @@ arc, leaving the to node untouched. Similarly the arc_move_to function only
 changes the to node and leaves the from node untouched. Finally, the arc_flip
 function swaps the from and to nodes so as to flip the arc's direction.</p>
 
-<h2 id="whole">Whole Graph Methods</h2>
-
-<p>The whole-graph operations allow large-scale manipulations of
-graphs. At present there is only one whole-graph operation:</p>
-
-<pre class="cpp">
-void move(digraph&amp; source);
-</pre>
-
-<p>This moves the source graph's nodes and arcs into the target
-graph. The source will be left empty by this move. All iterators to
-the source graph will become owned by the target graph, so the
-iterators will continue working and pointing to the same node or arc.</p>
-
 <h2 id="adjacency">Adjacency Functions</h2>
 
 <p>Nodes are adjacent if they are connected by an arc. Since digraph is a
@@ -684,7 +676,7 @@ directed graph, the direction of the arc is significant. For example, if there
 is an arc from London to Manchester, London is considered adjacent to Manchester,
 but Manchester is not considered adjacent to London (a principle well
 understood by the owner of Virgin trains). The following functions
-allow operations on adjacent nodes. They are simply composite oprations which
+allow operations on adjacent nodes. They are simply composite operations which
 combine basic node and arc access functions to give a slightly more abstract
 approach. To put it another way, you can manipulate nodes without having to go
 via arcs all the time.</p>
@@ -727,7 +719,6 @@ node_vector input_adjacencies(iterator to);
 const_node_vector output_adjacencies(const_iterator from) const;
 node_vector output_adjacencies(iterator from);
 </pre>
-
 
 <h2 id="sort">Topographical Sort Algorithms</h2>
 
