@@ -165,12 +165,10 @@ templates and so this limits the range of compilers supported.</p>
 <ul>
 <li>Visual Studio
 <ul>
-<li>v7 (.NET)</li>
-<li>v8 (2005)</li>
-<li>v9 (2008)</li>
-<li>v10 (2010)</li>
-<li>v11 (2012) - Note: <a href="http://stackoverflow.com/questions/14372706/visual-studio-cant-build-due-to-rc-exe">See this article on problems configuring VS 2012 for C++</a></li>
-<li>v14 (2015)</li>
+<li>2010</li>
+<li>2012 - Note: <a href="http://stackoverflow.com/questions/14372706/visual-studio-cant-build-due-to-rc-exe">See this article on problems configuring VS 2012 for C++</a></li>
+<li>2015</li>
+<li>2017</li>
 </ul>
 </li>
 <li>Gnu gcc
@@ -179,6 +177,11 @@ templates and so this limits the range of compilers supported.</p>
 <li>v4 - tried on v4.3 to 4.9</li>
 <li>v5 - tried on v5.2</li>
 <li>v6 - tried on v6.2</li>
+</ul>
+</li>
+<li>Clang
+<ul>
+<li>v4 - tried on v4.0</li>
 </ul>
 </li>
 <li>Borland
@@ -197,8 +200,8 @@ combinations of development environments available:</p>
 <ul>
 <li>Visual Studio (WIN32 target)</li>
 <li>Native Windows (WIN32 target) using gnu gcc on <a href="http://www.mingw.org/">MinGW</a></li>
-<li>GNU/Linux emulation on Windows (WIN32 target) using gnu gcc on <a href="http://www.cygwin.com/">Cygwin</a></li>
-<li>Borland Turbo C++</li>
+<li>Gnu/Linux emulation on Windows (WIN32 target) using gnu gcc on <a href="http://www.cygwin.com/">Cygwin</a></li>
+<li>Borland Turbo C++ (WIN32 target)</li>
 </ul>
 </li>
 
@@ -206,25 +209,33 @@ combinations of development environments available:</p>
 <ul>
 <li>Visual Studio (x64 target)</li>
 <li>Native Windows (WIN64 target) using gnu gcc on <a href="http://www.mingw.org/">MinGW</a> with <a href="http://tdm-gcc.tdragon.net/">TDM</a></li>
-<li>GNU/Linux emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin64</a></li>
+<li>Gnu/Linux emulation on Windows using gnu gcc on <a href="http://www.cygwin.com/">Cygwin64</a></li>
 </ul>
 </li>
 
 <li>all Gnu/Linux - 32-bit and 64-bit
 <ul>
-<li>gnu gcc</li>
+<li>Gnu gcc</li>
 </ul>
 </li>
 
 <li>all BSD derivatives
 <ul>
-<li>gnu gcc</li>
+<li>Gnu gcc</li>
+<li>Clang</li>
 </ul>
 </li>
 
 <li>MacOS X
 <ul>
 <li>gnu gcc</li>
+<li>Clang</li>
+</ul>
+</li>
+
+<li>all other Posix Unixen
+<ul>
+<li>Gnu gcc</li>
 </ul>
 </li>
 
@@ -319,7 +330,7 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>5.1.0</td>
 <td><code>MINGW-x86_64</code></td>
 <td><code>_WIN64</code></td>
-<td>2017-01-28</td>
+<td>2017-11-09</td>
 <td>27/27</td>
 <td>TDM 64-bit version of gcc - native Windows build</td>
 </tr>
@@ -329,10 +340,10 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>64</td>
 <td>Windows 10</td>
 <td>gcc</td>
-<td>5.4.0 (Cygwin64)</td>
+<td>6.4.0 (Cygwin64)</td>
 <td><code>CYGWIN-x86_64</code></td>
 <td><code>CYGWIN</code></td>
-<td>2017-01-28</td>
+<td>2017-11-09</td>
 <td>27/27</td>
 <td>Linux-emulation build on Windows</td>
 </tr>
@@ -342,10 +353,10 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>64</td>
 <td>Windows 10</td>
 <td>Microsoft</td>
-<td>Visual Studio 2015</td>
+<td>Visual Studio 2017</td>
 <td>x64</td>
 <td><code>_WIN64</code></td>
-<td>2017-03-28</td>
+<td>2017-11-09</td>
 <td>27/27</td>
 <td></td>
 </tr>
@@ -355,10 +366,10 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>32</td>
 <td>Windows 10</td>
 <td>Microsoft</td>
-<td>Visual Studio 2015</td>
+<td>Visual Studio 2017</td>
 <td>Win32</td>
 <td><code>_WIN32</code></td>
-<td>2017-03-28</td>
+<td>2017-11-09</td>
 <td>27/27</td>
 <td></td>
 </tr>
@@ -367,13 +378,13 @@ know the details - Compiler, Compiler version, OS, CPU etc.</p>
 <td>Intel 686</td>
 <td>64</td>
 <td>TrueOS</td>
-<td>gcc</td>
-<td>4.9.4</td>
+<td>clang</td>
+<td>4.0</td>
 <td><code>FREEBSD-amd64</code></td>
 <td><code></code></td>
-<td>2017-01-28</td>
+<td>2017-11-09</td>
 <td>27/27</td>
-<td>TrueOS used to be PC-BSD which is a distro of FreeBSD. Built using gcc not Clang (the default).</td>
+<td>TrueOS used to be PC-BSD which is a distro of FreeBSD. Built using Clang (the default) and not gcc.</td>
 </tr>
 
 </tbody>
@@ -386,11 +397,12 @@ Windows application will use different system calls to a Unix application. The
 correct directive for the platform must be defined for the STLplus library to
 build on the target platform. Typically this is set as an option to the
 compiler - for example with the gcc compiler you would specify "<code>gcc
--DSOLARIS</code>" when building on Solaris. The _WIN32 value that selects the
-Windows native build is set automatically by the compilers so you don't have
-to do this. If no -D directive is shown, then the default build is a generic
-Unix build and needs no special rules. See the documentation on <a
-                                                                  href="building.html">building the library</a> for more on this.</p>
+-DSOLARIS</code>" when building on Solaris. The _WIN32 value that
+selects the Windows native build is set automatically by the compilers
+so you don't have to do this. If no -D directive is shown, then the
+default build is a generic Unix build and needs no special rules. See
+the documentation on <a href="building.html">building the library</a>
+for more on this.</p>
 
 
 </div>
