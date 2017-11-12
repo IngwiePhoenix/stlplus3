@@ -32,7 +32,6 @@
 
 #ifdef MSWINDOWS
 #include <windows.h>
-#include <dos.h>
 #include <direct.h>
 #include <fcntl.h>
 #include <io.h>
