@@ -249,6 +249,7 @@ pre
   padding-left: 20px;
   font-family: monospace;
   font-size: small;
+  overflow: auto;
 }
 
 pre.vhdl
