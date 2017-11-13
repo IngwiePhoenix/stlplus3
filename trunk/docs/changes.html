@@ -61,10 +61,6 @@
 However, the change log has been restarted for version 3 of the library since the changes
 for this version are huge. Therefore only the changes since then have been documented.</p>
 
-<p>The official open-source version of STLplus starts at version 2.0 and you can access the change
-log for all version 2 releases by looking at the
-<a href="http://stlplus.sourceforge.net/stlplus/docs/changes.html">version 2 documentation</a>.</p>
-
 <h2 id="v3.15">Changes from Version 3.14 to 3.15</h2>
 
 <h3>Clang Build and Recognition of the Clang Compiler</h3>
@@ -816,10 +812,12 @@ needed quoting (i.e. contained special characters). This has been fixed.</p>
 <h3>Split the library into a Collection</h3>
 
 <p>The original STLplus was a single, rather large, library. It has now been split into 5 libraries.
-So STLplus is now referred to as a Library Collection, containing within it the STLplus <a
-                                                                                          href="containers.html">containers</a>, <a href="portability.html">portability</a>, <a
-                                                                                                                                                                               href="persistence.html">persistence</a>, <a href="subsystems.html">subsystems</a> and <a
-                                                                                                                                                                                                                                                                       href="strings.html">strings</a> libraries.</p>
+So STLplus is now referred to as a Library Collection, containing within it the STLplus
+<a href="containers.html">containers</a>,
+<a href="portability.html">portability</a>,
+<a href="persistence.html">persistence</a>,
+<a href="subsystems.html">subsystems</a> and
+<a href="strings.html">strings</a> libraries.</p>
 
 <h3>Added the stlplus Namespace</h3>
 
@@ -865,16 +863,17 @@ to be in the global namespace. This approach is not compatible with placing all 
 a separate namespace. All these functions have been rewritten to take an extra parameter so
 that those external resources are now passed as parameters.</p>
 
-<p>This rewrite applies to the <a href="persistence.html">persistence</a> library and the <a
-                                                                                            href="strings.html">strings</a> library.</p>
+<p>This rewrite applies to the
+<a href="persistence.html">persistence</a> library and the
+<a href="strings.html">strings</a> library.</p>
 
 <h3>Persistence Functions Renamed</h3>
 
 <p>STLplus 2 relied on overloading the functions dump and restore to implement persistence. However,
 because of the redesign of the functions discussed above, persistence functions are now passed as
 parameters to other persistence functions. To avoid ambiguity, all persistence functions now have
-unique names - dump_<em>type</em> and restore_<em>type</em>. See the <a
-                                                                       href="persistence.html">persistence library</a> for more information.</p>
+unique names - dump_<em>type</em> and restore_<em>type</em>. See the
+<a href="persistence.html">persistence library</a> for more information.</p>
 
 <p><strong>Note:</strong> the persistence file format is unchanged by this rewrite, so STLplus version 2 files
 can be read by version 3 and vice versa.</p>
