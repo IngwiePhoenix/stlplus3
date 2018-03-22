@@ -48,23 +48,31 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
   // Iterators
 
-  // Simple iterators which are just used as pointers to tree nodes. These have
-  // no increment or decrement operations defined. An uninitialised iterator is
-  // null - similarly, if you ask for the root of an empty tree or the parent of
+  // Simple iterators which are just used as pointers to tree nodes.
+  // this is not really an iterator - it is a reference, i.e. an iterator with no increment
+  // unfortunately the STL does not provide for this rather useful concept
+  // I have called it an iterator for consistency, but it is really an element reference
+  // An uninitialised iterator is null - similarly, if you ask for the root of an empty tree or the parent of
   // the root node then you get a null iterator.
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_iterator :
-    public safe_iterator&lt;ntree&lt;T&gt;,ntree_node&lt;T&gt; &gt;
+  class ntree_iterator : public safe_iterator&lt;ntree&lt;T&gt;,ntree_node&lt;T&gt; &gt;
   {
   public:
     // local type definitions
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // there is no relevant iterator category since this is not incremenable
+    typedef void iterator_category;
+    typedef T value_type;
+    typedef TPtr pointer;
+    typedef TRef reference;
+    typedef void difference_type;
+
     // an iterator points to an object whilst a const_iterator points to a const object
     typedef ntree_iterator&lt;T,T&amp;,T*&gt; iterator;
     typedef ntree_iterator&lt;T,const T&amp;,const T*&gt; const_iterator;
     typedef ntree_iterator&lt;T,TRef,TPtr&gt; this_iterator;
-    typedef TRef reference;
-    typedef TPtr pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     ntree_iterator(void);
@@ -112,16 +120,25 @@ namespace stlplus
   // require a simple iterator.
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_prefix_iterator :
-    public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
+  class ntree_prefix_iterator
   {
   public:
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // the ntree iterators are unidirectional
+    typedef std::forward_iterator_tag iterator_category;
+    typedef T value_type;
+    typedef TPtr pointer;
+    typedef TRef reference;
+    // this is not random access, so declare a void difference type, not sure this is supported by everything
+    // typedef std::ptrdiff_t  difference_type;
+    typedef void difference_type;
+
+    // an iterator points to an object whilst a const_iterator points to a const object
     typedef ntree_prefix_iterator&lt;T,T&amp;,T*&gt;             iterator;
     typedef ntree_prefix_iterator&lt;T,const T&amp;,const T*&gt; const_iterator;
     typedef ntree_prefix_iterator&lt;T,TRef,TPtr&gt;         this_iterator;
     typedef ntree_iterator&lt;T,TRef,TPtr&gt;                simple_iterator;
-    typedef TRef                                       reference;
-    typedef TPtr                                       pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     ntree_prefix_iterator(void);
@@ -181,16 +198,24 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template&lt;typename T, typename TRef, typename TPtr&gt;
-  class ntree_postfix_iterator :
-    public std::iterator&lt;std::forward_iterator_tag, T, std::ptrdiff_t, TPtr, TRef&gt;
+  class ntree_postfix_iterator
   {
   public:
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // the ntree iterators are unidirectional
+    typedef std::forward_iterator_tag iterator_category;
+    typedef T value_type;
+    typedef TPtr pointer;
+    typedef TRef reference;
+    // this is not random access, so declare a void difference type, not sure this is supported by everything
+    // typedef std::ptrdiff_t  difference_type;
+    typedef void difference_type;
+
     typedef ntree_postfix_iterator&lt;T,T&amp;,T*&gt;             iterator;
     typedef ntree_postfix_iterator&lt;T,const T&amp;,const T*&gt; const_iterator;
     typedef ntree_postfix_iterator&lt;T,TRef,TPtr&gt;         this_iterator;
     typedef ntree_iterator&lt;T,TRef,TPtr&gt;                 simple_iterator;
-    typedef TRef                                        reference;
-    typedef TPtr                                        pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     ntree_postfix_iterator(void);
