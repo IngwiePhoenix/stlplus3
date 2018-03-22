@@ -40,18 +40,26 @@ namespace stlplus
   // and this is the form in which they should be used
 
   template<typename NT, typename AT, typename NRef, typename NPtr>
-  class digraph_iterator : public safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >, public std::iterator<std::bidirectional_iterator_tag, NT, std::ptrdiff_t, NPtr, NRef>
+  class digraph_iterator : public safe_iterator<digraph<NT,AT>, digraph_node<NT,AT> >
   {
   public:
     friend class digraph<NT,AT>;
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // the digraph iterators are bidirectional but not random-access
+    typedef std::bidirectional_iterator_tag iterator_category;
+    typedef NT value_type;
+    typedef NPtr pointer;
+    typedef NRef reference;
+    // this is not random access, so declare a void difference type, not sure this is supported by everything
+    // typedef std::ptrdiff_t  difference_type;
+    typedef void difference_type;
 
     // local type definitions
     // an iterator points to an object whilst a const_iterator points to a const object
     typedef digraph_iterator<NT,AT,NT&,NT*> iterator;
     typedef digraph_iterator<NT,AT,const NT&,const NT*> const_iterator;
     typedef digraph_iterator<NT,AT,NRef,NPtr> this_iterator;
-    typedef NRef reference;
-    typedef NPtr pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     digraph_iterator(void);
@@ -103,18 +111,26 @@ namespace stlplus
   ////////////////////////////////////////////////////////////////////////////////
 
   template<typename NT, typename AT, typename ARef, typename APtr>
-  class digraph_arc_iterator : public safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >, public std::iterator<std::bidirectional_iterator_tag, AT, std::ptrdiff_t, APtr, ARef>
+  class digraph_arc_iterator : public safe_iterator<digraph<NT,AT>, digraph_arc<NT,AT> >
   {
   public:
     friend class digraph<NT,AT>;
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // the digraph iterators are bidirectional but not random-access
+    typedef std::bidirectional_iterator_tag iterator_category;
+    typedef AT value_type;
+    typedef APtr pointer;
+    typedef ARef reference;
+    // this is not random access, so declare a void difference type, not sure this is supported by everything
+    // typedef std::ptrdiff_t difference_type;
+    typedef void difference_type;
 
     // local type definitions
     // an iterator points to an object whilst a const_iterator points to a const object
     typedef digraph_arc_iterator<NT,AT,AT&,AT*> iterator;
     typedef digraph_arc_iterator<NT,AT,const AT&,const AT*> const_iterator;
     typedef digraph_arc_iterator<NT,AT,ARef,APtr> this_iterator;
-    typedef ARef reference;
-    typedef APtr pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     digraph_arc_iterator(void);

@@ -30,19 +30,27 @@ namespace stlplus
   // iterator class
 
   template<typename K, typename T, class H, class E, typename V>
-  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >, public std::iterator<std::forward_iterator_tag, V>
+  class hash_iterator : public safe_iterator<hash<K,T,H,E>,hash_element<K,T,H,E> >
   {
   public:
     friend class hash<K,T,H,E>;
 
     // local type definitions
+
+    // iterator traits, were inherited from std::iterator but inheriting from that was deprecated in C++17
+    // the hash iterators are unidirectional, not random-access
+    typedef std::forward_iterator_tag iterator_category;
+    typedef V value_type;
+    typedef V* pointer;
+    typedef V& reference;
+    // this is not random access, so declare a void difference type, not sure this is supported by everything
+    // typedef std::ptrdiff_t difference_type;
+    typedef void difference_type;
+
     // an iterator points to a value pair whilst a const_iterator points to a const value pair
-    typedef V                                                  value_type;
     typedef hash_iterator<K,T,H,E,std::pair<const K,T> >       iterator;
     typedef hash_iterator<K,T,H,E,const std::pair<const K,T> > const_iterator;
     typedef hash_iterator<K,T,H,E,V>                           this_iterator;
-    typedef V&                                                 reference;
-    typedef V*                                                 pointer;
 
     // constructor to create a null iterator - you must assign a valid value to this iterator before using it
     // any attempt to dereference or use a null iterator is an error
