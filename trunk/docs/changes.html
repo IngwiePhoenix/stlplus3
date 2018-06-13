@@ -63,6 +63,39 @@ for this version are huge. Therefore only the changes since then have been docum
 
 <h2 id="v3.15">Changes from Version 3.14 to 3.15</h2>
 
+<h3>Iterators are no longer derived from std::iterator</h3>
+
+<p>Inheriting from std::iterator is deprecated in C++17.</p>
+
+<p>In order to make the STLplus containers conformant, I have inlined
+the typedefs required to specify iterator traits and removed the
+inheritance.</p>
+
+<p>I was curious about why the standards committee would do this, so I did a bit more research.</p>
+
+<p>The rationale for this change is here:</p>
+
+<p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0174r1.html#2.1">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0174r1.html#2.1</a></p>
+
+<p>It seems to make sense, the committee have recognised that typedefs
+are not inherited quite how you expect them to be, so using
+inheritance of std::iterator to define iterator traits doesn't
+work. The STL has worked round this for years. Presumably the problem
+is shown when using iterators in algorithms that use traits for
+optimisation, I have never tried this with STLplus iterators. So the
+old recommendation of inheriting std::iterator, as stated here:</p>
+
+<p><a href="http://www.cplusplus.com/reference/iterator/iterator/">http://www.cplusplus.com/reference/iterator/iterator/</a></p>
+
+<p>Which says "This is a base
+class template that can be used to derive iterator classes from it."
+has been reversed and now inheriting from std::iterator is deprecated
+and the recommendation is to define traits yourself, inlined in the
+iterator declaration.</p>
+
+<p>It turns out that this is a trivially easy change to make, so I have
+inlined the traits for all iterators in the containers library.</p>
+
 <h3>Clang Build and Recognition of the Clang Compiler</h3>
 
 <p>Experiments on FreeBSD (the TrueOS distribution) confirm that
@@ -72,24 +105,31 @@ mentioned below were necessary, but no functional changes were
 needed. The portability/build.cpp utilities now recognises a clang
 build and correctly identifies the compiler and version.</p>
 
-<h3>Removed throw specifications</h3>
+<h3>Removed exception specifications</h3>
 
-<p>STLplus has always had throw specifications (also known as
-exception specifications), e.g. throw(exception1,exception2), after
+<p>STLplus has exception specifications, e.g. throw(exception1,exception2), after
 function declarations so that both the compiler and user know what
 exceptions the function can throw.</p>
 
 <p>However, in C++11 the use of throw specifications is
-deprecated. This started to show up as compiler warnings in gcc
-v7.2. I have decided to go with the spirit of C++11 and removed all of
+deprecated and in C++17 they have been removed.</p>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/except_spec">http://en.cppreference.com/w/cpp/language/except_spec</a></p>
+
+<p>This started to show up as compiler warnings in gcc
+v7.2 and in Visual Studio. I have removed all of
 the throw specifications from STLplus. Where possible in the
 headers I have turned them into a comment so there is still some user
 information about what exceptions might be thrown by a function.</p>
 
-<p>I have left throw specifications on exception classes derived from
-system exceptions because otherwise I was seeing compiler errors due
-to the derivative having a different throw specification than its base
-class.</p>
+<p>I have left empty throw() specifications on exception classes
+derived from system exceptions because otherwise I was seeing compiler
+errors due to the derivative having a different throw specification
+than its base class. This specific empty form of exception
+specification is being kept for the time being to manage the
+transition to C++17 and is equivalent to the directive noexcept(true).</p>
+
+<p><a href="http://en.cppreference.com/w/cpp/language/noexcept_spec">http://en.cppreference.com/w/cpp/language/noexcept_spec</a></p>
 
 <h2 id="v3.14">Changes from Version 3.13 to 3.14</h2>
 
