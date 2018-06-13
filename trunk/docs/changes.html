@@ -63,6 +63,11 @@ for this version are huge. Therefore only the changes since then have been docum
 
 <h2 id="v3.15">Changes from Version 3.14 to 3.15</h2>
 
+<h3>Removed messages/stlplus_messages.txt</h3>
+
+<p>This was a legacy part of the message handler which originally got its default language messages from this file.
+For some time now it has used built-in strings for the default values so only locale-specific translations use message files, so it is time this file was deleted.</p>
+
 <h3>Iterators are no longer derived from std::iterator</h3>
 
 <p>Inheriting from std::iterator is deprecated in C++17.</p>
@@ -111,10 +116,13 @@ build and correctly identifies the compiler and version.</p>
 function declarations so that both the compiler and user know what
 exceptions the function can throw.</p>
 
-<p>However, in C++11 the use of throw specifications is
-deprecated and in C++17 they have been removed.</p>
-
 <p><a href="http://en.cppreference.com/w/cpp/language/except_spec">http://en.cppreference.com/w/cpp/language/except_spec</a></p>
+
+<p>However, in C++11 the use of throw specifications is deprecated and
+in C++17 they have been removed. The rationale for this change is
+explained here:</p>
+
+<p><a href="http://www.gotw.ca/publications/mill22.htm">http://www.gotw.ca/publications/mill22.htm</a></p>
 
 <p>This started to show up as compiler warnings in gcc
 v7.2 and in Visual Studio. I have removed all of
