@@ -1032,12 +1032,12 @@ namespace stlplus
       set_error(GetLastError());
 //      return false;
     }
-	// we also terminate the pid (not relying on TerminateJobObject)
-	if (!TerminateProcess(m_pid.hProcess, (UINT)-1))
-	{
-		set_error(GetLastError());
-		return false;
-	}
+    // we also terminate the pid (not relying on TerminateJobObject)
+    if (!TerminateProcess(m_pid.hProcess, (UINT)-1))
+    {
+      set_error(GetLastError());
+      return false;
+    }
     return true;
   }
 
